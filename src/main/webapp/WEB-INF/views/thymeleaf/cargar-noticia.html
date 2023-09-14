@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+  <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+
+
+
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+  <script>
+      tinymce.init({
+        selector: '#mytextarea'
+      });
+    </script>
+
+
+  <title>Document</title>
+</head>
+
+<body class="bg-black">
+
+  <!-- Main navigation container -->
+  <nav
+    class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+    <div class="flex w-full flex-wrap items-center justify-between px-3">
+      <!-- Logo -->
+      <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
+        href="#">
+        <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px" alt="TE Logo"
+          loading="lazy" />
+      </a>
+      <!--Search-->
+
+      <form class="flex items-center w-6/12">
+        <label for="simple-search" class="sr-only">Search</label>
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6">
+              <path fill-rule="evenodd"
+                d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+                clip-rule="evenodd" />
+            </svg>
+          </div>
+          <input type="text" id="simple-search"
+            class="bg-black-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-grey-500 focus:border-grey-500 block w-full pl-10 p-2.5  dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-grey-800 dark:focus:border-grey-800"
+            placeholder="Search branch name..." required>
+        </div>
+      </form>
+
+      <!-- Right elements -->
+      <div class="relative flex items-center">
+
+
+        <!-- Container with two dropdown menus -->
+        <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+          <!-- First dropdown trigger -->
+          <a class="hidden-arrow mr-4 flex items-center text-secondary-500 transition duration-200 hover:text-secondary-400 hover:ease-in-out focus:text-secondary-400 disabled:text-black/30 motion-reduce:transition-none"
+            href="#" id="dropdownMenuButton1" role="button" data-te-dropdown-toggle-ref aria-expanded="false">
+            <!-- Dropdown trigger icon -->
+            <span class="[&>svg]:w-5">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+                <path fill-rule="evenodd"
+                  d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                  clip-rule="evenodd" />
+              </svg>
+            </span>
+            <!-- Notification counter -->
+            <span
+              class="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white">1</span>
+          </a>
+          <!-- First dropdown menu -->
+          <ul
+            class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+            aria-labelledby="dropdownMenuButton1" data-te-dropdown-menu-ref>
+            <!-- First dropdown menu items -->
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                href="#" data-te-dropdown-item-ref>Action</a>
+            </li>
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                href="#" data-te-dropdown-item-ref>Another action</a>
+            </li>
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                href="#" data-te-dropdown-item-ref>Something else here</a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Second dropdown container -->
+        <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+          <!-- Second dropdown trigger -->
+          <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+            href="#" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref aria-expanded="false">
+            <!-- User avatar -->
+            <img src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg" class="rounded-full"
+              style="height: 25px; width: 25px" alt="" loading="lazy" />
+          </a>
+          <!-- Second dropdown menu -->
+          <ul
+            class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+            aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
+            <!-- Second dropdown menu items -->
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                href="#" data-te-dropdown-item-ref>Action</a>
+            </li>
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                href="#" data-te-dropdown-item-ref>Another action</a>
+            </li>
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                href="#" data-te-dropdown-item-ref>Something else here</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <!-- Sidenav -->
+
+  <main class=" container m-auto">
+
+    <h1
+      class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">
+      Nueva Noticia</h1>
+
+    <section class="flex justify-center ">
+      <div
+        class="h-[100px] w-[100px] rounded-md text-white flex mr-2 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500">
+        <div class="text-4xl font-bold m-auto">1</div>
+      </div>
+      <div class="h-[5px] w-[100px] bg-white mt-auto mb-auto mr-2"></div>
+      <div class="h-[100px] w-[100px] border-solid border-white border-2 bg-black rounded-md text-white flex mr-2 ">
+        <div class="text-4xl font-bold m-auto">2</div>
+      </div>
+      <div class="h-[5px] w-[100px] bg-white mt-auto mb-auto mr-2"></div>
+      <div class="h-[100px] w-[100px] border-solid border-white border-2 bg-black rounded-md text-white flex mr-2 ">
+        <div class="text-4xl font-bold m-auto">3</div>
+      </div>
+    </section>
+    <section class="mt-10">
+      <form  th:action="@{/nueva-noticia}" method="POST" th:object="${datosNoticia}" enctype="multipart/form-data">
+        <div class="flex">
+          <div class="w-1/2">
+            <div class="relative z-0 mb-6 group">
+              <input th:field="*{titulo}" type="text" name="titulo" id="titulo"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" " value="12" />
+              <label for="titulo"
+                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+                Titulo</label>
+            </div>
+            <div class="relative z-0 mb-6 group">
+              <label for="descripcion" class="block mb-2 text-sm text-gray-500 dark:text-gray-400">Descripción</label>
+              <textarea th:field="*{descripcion}" id="descripcion" rows="4" name="descripcion"
+                class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Leave a comment..."></textarea>
+            </div>
+            <div class="relative z-0 mb-6 group">
+              <label for="multiSelection" class="block mb-2 text-sm text-gray-500 dark:text-gray-400">Categoria</label>
+              <select name="categoriasLista" id="multiSelection" multiple  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option th:each="categoria : ${categorias}" th:value="${categoria.idCategoria}" th:text="${categoria.descripcion}"></option>
+              </select>
+              </div>
+            </div>
+          <div class="w-1/2 p-2 m-auto">
+            <div class="mb-3">
+              <label for="imagenArchivo" class="mb-2 inline-block text-neutral-700 dark:text-neutral-200">Default file input
+                example</label>
+              <input
+                      class="relative m-0 block w-full min-w-0 flex-auto rounded border border-solid border-neutral-300 bg-clip-padding px-3 py-[0.32rem] text-base font-normal text-neutral-700 transition duration-300 ease-in-out file:-mx-3 file:-my-[0.32rem] file:overflow-hidden file:rounded-none file:border-0 file:border-solid file:border-inherit file:bg-neutral-100 file:px-3 file:py-[0.32rem] file:text-neutral-700 file:transition file:duration-150 file:ease-in-out file:[border-inline-end-width:1px] file:[margin-inline-end:0.75rem] hover:file:bg-neutral-200 focus:border-primary focus:text-neutral-700 focus:shadow-te-primary focus:outline-none dark:border-neutral-600 dark:text-neutral-200 dark:file:bg-neutral-700 dark:file:text-neutral-100 dark:focus:border-primary"
+                      type="file" id="imagenArchivo" name="imagenArchivo"  accept="image/png, image/jpeg"/>
+            </div>
+          </div>
+          </div>
+
+        </div>
+        <div class="relative z-0 w-full mb-6 group bg-grey">
+
+          <textarea th:field="*{noticia}" id="mytextarea">Hello, World!</textarea>
+        </div>
+
+        <button type="submit"
+          class="text-white bg-[#ff0fad] hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center  dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
+      </form>
+
+
+    </section>
+  </main>
+
+
+
+
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+</body>
+
+</html>

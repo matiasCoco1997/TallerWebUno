@@ -106,6 +106,12 @@
             <version>${playwright.version}</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.28</version>
+            <scope>compile</scope>
+        </dependency>
         <!-- compile only, deployed container will provide this -->
         <!--
         <dependency>
@@ -115,6 +121,19 @@
             <scope>provided</scope>
         </dependency>
         -->
+        <!-- Para cargar la imagen-->
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.4</version> <!-- Puedes ajustar la versión si es necesario -->
+        </dependency>
+        <!-- Para el motor de base de datos-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.28</version> <!-- Puedes ajustar la versión según la que necesites -->
+        </dependency>
+
     </dependencies>
 
     <build>
