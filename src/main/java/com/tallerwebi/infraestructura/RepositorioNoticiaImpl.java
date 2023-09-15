@@ -21,7 +21,7 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
         final Session session = sessionFactory.getCurrentSession();
         return (Noticia) session.createCriteria(Noticia.class)
                 .add(Restrictions.eq("titulo", titulo))
-                .uniqueResult();
+                .uniqueResult();//TIENE QUE DEVOLVER UNA LISTA ACA, PUEDE HABER VARIAS NOTAS CON TITULOS PARECIDOS
     }
 
     @Override

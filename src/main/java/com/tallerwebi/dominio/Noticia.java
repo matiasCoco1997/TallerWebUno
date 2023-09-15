@@ -17,6 +17,7 @@ public class Noticia {
     private Integer idNoticia;
     private String titulo;
     private String descripcion;
+
     @ManyToMany
     @JoinTable(
             name = "noticia_categoria",
@@ -31,4 +32,5 @@ public class Noticia {
     private byte[] imagen;
     private LocalDate fechaPublicacion;
     private String audioPodcastRuta;
+    private Boolean activa; //habria que hacer un boton para que el usuario periodista pueda dar una baja logica de la nota
 }
