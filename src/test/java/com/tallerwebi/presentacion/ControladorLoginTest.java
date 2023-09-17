@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.ServicioLogin;
-import com.tallerwebi.dominio.Usuario;
+import com.tallerwebi.dominio.Usuario.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -28,7 +28,15 @@ public class ControladorLoginTest {
 	public void init(){
 		datosLoginMock = new DatosLogin("dami@unlam.com", "123");
 		usuarioMock = mock(Usuario.class);
+		when(usuarioMock.getNombre()).thenReturn("nombre");
+		when(usuarioMock.getApellido()).thenReturn("apellido");
+		when(usuarioMock.getPais()).thenReturn("pais");
+		when(usuarioMock.getCiudad()).thenReturn("ciudad");
+		when(usuarioMock.getFechaDeNacimiento()).thenReturn("01/01/2000");
 		when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
+		when(usuarioMock.getPassword()).thenReturn("password");
+		when(usuarioMock.getFotoPerfil()).thenReturn("fotoPerfil");
+		when(usuarioMock.getRol()).thenReturn("Lector");
 		requestMock = mock(HttpServletRequest.class);
 		sessionMock = mock(HttpSession.class);
 		servicioLoginMock = mock(ServicioLogin.class);

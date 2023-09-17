@@ -1,7 +1,7 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Categoria;
-import com.tallerwebi.dominio.RepositorioCategoria;
+import com.tallerwebi.dominio.Categoria.Categoria;
+import com.tallerwebi.dominio.Categoria.RepositorioCategoria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 import java.util.ArrayList;
 
 @Repository("repositorioCategoria")
-@Transactional
+//@Transactional
 public class RepositorioCategoriaImpl implements RepositorioCategoria {
     private SessionFactory sessionFactory;
     @Autowired
@@ -32,8 +32,11 @@ public class RepositorioCategoriaImpl implements RepositorioCategoria {
     }
 
     @Override
-    public Categoria buscar(String descripcion) {
-        return null;
+    public Categoria buscarPorDescripcion(String descripcion) {
+        final Session session = sessionFactory.getCurrentSession();
+        return (Categoria) session.createCriteria(Categoria.class)
+                .add(Restrictions.eq("descripcion", descripcion))
+                .uniqueResult();
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.tallerwebi.dominio;
+package com.tallerwebi.dominio.Categoria;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -1,7 +1,7 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Noticia;
-import com.tallerwebi.dominio.RepositorioNoticia;
+import com.tallerwebi.dominio.Noticia.Noticia;
+import com.tallerwebi.dominio.Noticia.RepositorioNoticia;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -10,28 +10,20 @@ import org.springframework.stereotype.Repository;
 
 @Repository("repositorioNoticia")
 public class RepositorioNoticiaImpl implements RepositorioNoticia {
-    private SessionFactory sessionFactory;
 
-    @Autowired
-    public RepositorioNoticiaImpl(SessionFactory sessionFactory){
-        this.sessionFactory = sessionFactory;
-    }
+
     @Override
     public Noticia buscarNoticia(String titulo) {
-        final Session session = sessionFactory.getCurrentSession();
-        return (Noticia) session.createCriteria(Noticia.class)
-                .add(Restrictions.eq("titulo", titulo))
-                .uniqueResult();//TIENE QUE DEVOLVER UNA LISTA ACA, PUEDE HABER VARIAS NOTAS CON TITULOS PARECIDOS
+        return null;
     }
 
     @Override
-    public void guardar(Noticia noticia) {
-        sessionFactory.getCurrentSession().save(noticia);
+    public Boolean guardar(Noticia noticia) {
+        return null;
     }
 
-
     @Override
-    public void modificar(Noticia noticia) {
-
+    public Boolean modificar(Noticia noticia) {
+        return null;
     }
 }
