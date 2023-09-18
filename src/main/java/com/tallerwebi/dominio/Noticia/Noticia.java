@@ -13,8 +13,7 @@ import java.util.Set;
 @Getter
 @Setter
 public class Noticia {
-    private Integer idNoticia;
-    private Long idUsuario;
+    private Long idNoticia;
     private String titulo;
     private String descripcion;
     private String categoria;

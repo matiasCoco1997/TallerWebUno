@@ -30,14 +30,29 @@ public class ControladorNoticia {
 
     @RequestMapping(path = "/crearNuevaNoticia", method = RequestMethod.POST)
     //@RequestParam("imagenArchivo") String multipartFile
-    public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia ) { //, HttpSession session
+    public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia ) {
 
         ModelMap model = new ModelMap();
 
         try{
             servicioNoticia.crearNoticia(noticia);
             return new ModelAndView("home");
-        } catch (Exception e){
+        } catch (Exception e) {
+            model.put("error", "Error al registrar el nuevo usuario");
+            return new ModelAndView("prueba");
+        }
+    }
+
+    @RequestMapping(path = "/borrarNoticia", method = RequestMethod.POST)
+    //@RequestParam("imagenArchivo") String multipartFile
+    public ModelAndView borrarNoticiaPorId( @ModelAttribute("datosNoticia") Long idNoticia ) {
+
+        ModelMap model = new ModelMap();
+
+        try{
+            servicioNoticia.borrarNoticiaPorId(idNoticia);
+            return new ModelAndView("home");
+        } catch (Exception e) {
             model.put("error", "Error al registrar el nuevo usuario");
             return new ModelAndView("prueba");
         }

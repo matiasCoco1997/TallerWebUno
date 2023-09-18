@@ -13,17 +13,17 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
 
 
     @Override
-    public Noticia buscarNoticia(String titulo) {
-        return null;
-    }
-
-    @Override
     public Boolean guardar(Noticia noticia) {
-        return null;
+        return true;
     }
 
     @Override
     public Boolean modificar(Noticia noticia) {
-        return null;
+        return true;
+    }
+
+    @Override
+    public void borrarNoticia(Noticia noticia) {
+
     }
 }

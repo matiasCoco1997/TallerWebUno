@@ -60,7 +60,7 @@ public class ControladorNoticiaTest {
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
         when(noticiaMock.getCategoria()).thenReturn("categoria");
-        when(noticiaMock.getIdUsuario()).thenReturn(1L);
+        when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getDescripcion()).thenReturn("descripcion");
         when(noticiaMock.getNoticia()).thenReturn("noticia");
         when(noticiaMock.getImagen()).thenReturn("imagen");
@@ -93,7 +93,7 @@ public class ControladorNoticiaTest {
 
     @Test
     public void queRedireccioneAUnaVistaIncorrectaAlCrearUnaNoticia(){
-
+        when(noticiaMock.getTitulo()).thenReturn("titulo");
         // preparacion
         ModelAndView resultado = controladorNoticia.crearNuevaNoticia(new Noticia());
 
@@ -102,6 +102,17 @@ public class ControladorNoticiaTest {
 
         // validacion
         assertThat(vista, not(equalToIgnoringCase("home")));
+    }
+
+    @Test
+    public void queCuandoSeBorreUnaNoticiaMeRedirijaAlHome(){
+        // preparacion
+
+        // ejecucion
+        ModelAndView resultado = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
+
+        // validacion
+        assertThat(resultado.getViewName() , equalToIgnoringCase("home"));
     }
 
 }
