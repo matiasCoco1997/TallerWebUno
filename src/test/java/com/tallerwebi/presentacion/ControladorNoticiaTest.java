@@ -22,9 +22,12 @@ import java.time.LocalDate;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
+import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
+import static org.hamcrest.Matchers.not;
+
 
 public class ControladorNoticiaTest {
 
@@ -72,27 +75,33 @@ public class ControladorNoticiaTest {
 
         repositorioCategoriaMock = mock(RepositorioCategoria.class);
 
-        controladorNoticia = new ControladorNoticia(servicioNoticiaMock, repositorioCategoriaMock);
-
+        controladorNoticia = new ControladorNoticia(servicioNoticiaMock);
     }
 
 
     @Test
-    public void queElLectorNoPuedaSubirUnaNoticia(){
+    public void queSePuedaCrearUnaNoticia(){
+
         // preparacion
-        //Usuario usuarioEncontradoMock = mock(Usuario.class);
-        //when(usuarioEncontradoMock.getRol()).thenReturn("Lector");
-
-        when(requestMock.getSession()).thenReturn(sessionMock);
-
-        when(servicioNoticiaMock.crearNoticia(any())).thenReturn(Usuario usuario);
-
-        String resultado = controladorNoticia.crearNuevaNoticia(new Noticia(), sessionMock);
+        ModelAndView resultado = controladorNoticia.crearNuevaNoticia(new Noticia());
 
         // ejecucion
 
+        // validacion
+        assertThat(resultado.getViewName(), equalToIgnoringCase("home"));
+    }
+
+    @Test
+    public void queRedireccioneAUnaVistaIncorrectaAlCrearUnaNoticia(){
+
+        // preparacion
+        ModelAndView resultado = controladorNoticia.crearNuevaNoticia(new Noticia());
+
+        // ejecucion
+        String vista = resultado.getViewName() + "11";
 
         // validacion
-        assertThat(resultado, equalToIgnoringCase("Editor"));
+        assertThat(vista, not(equalToIgnoringCase("home")));
     }
+
 }

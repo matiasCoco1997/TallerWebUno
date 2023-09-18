@@ -10,25 +10,16 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 
 @Service("servicioNoticia")
-//@Transactional
 public class ServicioNoticiaImpl implements ServicioNoticia {
+
+    @Autowired
     private RepositorioNoticia repositorioNoticia;
 
-
     @Override
-    public boolean crearNoticia(Noticia noticia, String rol) {
+    public void crearNoticia(Noticia noticia) {
 
-        boolean resultado = false;
+        repositorioNoticia.guardar(noticia);
 
-        if(rol == "Editor"){
-            resultado = true;
-        }
-
-        return resultado;
     }
 
-    @Override
-    public Noticia consultarNoticiaTitulo(String titulo) {
-        return null;
-    }
 }

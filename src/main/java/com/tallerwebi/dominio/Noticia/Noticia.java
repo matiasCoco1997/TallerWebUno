@@ -22,5 +22,5 @@ public class Noticia {
     private String imagen;
     private String fechaPublicacion;
     private String audioPodcastRuta;
-    private Boolean activa; //habria que hacer un boton para que el usuario periodista pueda dar una baja logica de la nota
+    private Boolean activa;
 }

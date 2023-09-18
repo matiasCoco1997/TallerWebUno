@@ -22,55 +22,24 @@ import java.util.Set;
 @Controller
 public class ControladorNoticia {
     private ServicioNoticia servicioNoticia;
-    private RepositorioCategoria repositorioCategoria;
 
     @Autowired
-    public ControladorNoticia(ServicioNoticia servicioNoticia, RepositorioCategoria repositorioCategoria) {
+    public ControladorNoticia(ServicioNoticia servicioNoticia) {
         this.servicioNoticia = servicioNoticia;
-        this.repositorioCategoria = repositorioCategoria;
     }
 
-    /*
-    @RequestMapping("/nueva-noticia")
-    public ModelAndView irNuevaNoticia() {
-        ModelMap modelo = new ModelMap();
-        modelo.put("datosNoticia", new Noticia());
-        modelo.put("categorias", repositorioCategoria.buscarTodasCategoria());
-        return new ModelAndView("cargar-noticia", modelo);
-    }
-*/
     @RequestMapping(path = "/crearNuevaNoticia", method = RequestMethod.POST)
     //@RequestParam("imagenArchivo") String multipartFile
-    public String crearNuevaNoticia(  @ModelAttribute("datosNoticia") Noticia noticia, HttpSession session) {
+    public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia ) { //, HttpSession session
 
-        ModelAndView resultado;
+        ModelMap model = new ModelMap();
 
-        String rolUsuario = (String)session.getAttribute("ROL");
-
-        return rolUsuario;
-/*
-        if (rolUsuario == "Editor") {
-
-
-            Categoria categoriaSeleccionada = repositorioCategoria.buscarPorDescripcion(String.valueOf(noticia.getCategoria()));
-
-            if (categoriaSeleccionada != null) {
-                noticia.setCategoria(categoriaSeleccionada.getDescripcion());
-            }
-
-            servicioNoticia.crearNoticia(noticia, rolDelUsuarioLogueado);
-
-            ModelAndView modelAndView = new ModelAndView("home");
-
-            modelAndView.addObject("noticia", noticia);
-
-
-            resultado = new ModelAndView("redirect:/pruebas");
+        try{
+            servicioNoticia.crearNoticia(noticia);
+            return new ModelAndView("home");
+        } catch (Exception e){
+            model.put("error", "Error al registrar el nuevo usuario");
+            return new ModelAndView("prueba");
         }
-
-        resultado = new ModelAndView("redirect:/pruebas");
-*/
-
     }
-
 }
