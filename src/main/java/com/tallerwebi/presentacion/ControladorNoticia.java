@@ -38,8 +38,8 @@ public class ControladorNoticia {
             servicioNoticia.crearNoticia(noticia);
             return new ModelAndView("home");
         } catch (Exception e) {
-            model.put("error", "Error al registrar el nuevo usuario");
-            return new ModelAndView("prueba");
+            model.put("error", "Error al crear la noticia");
+            return new ModelAndView("home");
         }
     }
 
@@ -53,8 +53,8 @@ public class ControladorNoticia {
             servicioNoticia.borrarNoticiaPorId(idNoticia);
             return new ModelAndView("home");
         } catch (Exception e) {
-            model.put("error", "Error al registrar el nuevo usuario");
-            return new ModelAndView("prueba");
+            model.put("error", "Error al borrar la noticia.");
+            return new ModelAndView("home");
         }
     }
 }
