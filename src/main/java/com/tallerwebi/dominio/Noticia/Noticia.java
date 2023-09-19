@@ -9,10 +9,12 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
-
+@Entity
 @Getter
 @Setter
 public class Noticia {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idNoticia;
     private String titulo;
     private String descripcion;

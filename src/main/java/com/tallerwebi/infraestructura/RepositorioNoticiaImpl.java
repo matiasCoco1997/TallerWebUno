@@ -2,19 +2,33 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.Noticia.Noticia;
 import com.tallerwebi.dominio.Noticia.RepositorioNoticia;
+import com.tallerwebi.dominio.Usuario.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository("repositorioNoticia")
 public class RepositorioNoticiaImpl implements RepositorioNoticia {
 
+    private SessionFactory sessionFactory;
 
+    @Autowired
+    public RepositorioNoticiaImpl(SessionFactory sessionFactory){
+        this.sessionFactory = sessionFactory;
+    }
     @Override
     public Boolean guardar(Noticia noticia) {
-        return true;
+        try {
+            sessionFactory.getCurrentSession().save(noticia);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -24,6 +38,23 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
 
     @Override
     public void borrarNoticia(Noticia noticia) {
+        final Session session = sessionFactory.getCurrentSession();
+        session.delete(noticia);
+    }
 
+    @Override
+    public Noticia buscarPorId(long idNoticia) {
+        final Session session = sessionFactory.getCurrentSession();
+        return (Noticia) session.createCriteria(Noticia.class)
+                .add(Restrictions.eq("idNoticia", idNoticia))
+                .uniqueResult();
+    }
+
+    @Override
+    public List<Noticia> buscarPorTitulo(String tituloDeLaNoticia) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createCriteria(Noticia.class)
+                .add(Restrictions.eq("titulo", tituloDeLaNoticia))
+                .list();
     }
 }
