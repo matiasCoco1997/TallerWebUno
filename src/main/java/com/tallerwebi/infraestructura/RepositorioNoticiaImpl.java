@@ -1,8 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Noticia.Noticia;
-import com.tallerwebi.dominio.Noticia.RepositorioNoticia;
-import com.tallerwebi.dominio.Usuario.Usuario;
+import com.tallerwebi.dominio.Entidades.Noticia;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -43,7 +41,7 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     }
 
     @Override
-    public Noticia buscarPorId(long idNoticia) {
+    public Noticia buscarPorId(Long idNoticia) {
         final Session session = sessionFactory.getCurrentSession();
         return (Noticia) session.createCriteria(Noticia.class)
                 .add(Restrictions.eq("idNoticia", idNoticia))

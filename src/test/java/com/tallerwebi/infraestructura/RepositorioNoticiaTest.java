@@ -6,8 +6,7 @@ import static org.hamcrest.Matchers.hasSize;
 
 import java.util.List;
 
-import com.tallerwebi.dominio.Noticia.Noticia;
-import com.tallerwebi.dominio.Noticia.RepositorioNoticia;
+import com.tallerwebi.dominio.Entidades.Noticia;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,26 +18,37 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
+
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
-@ContextConfiguration(classes = { SpringWebTestConfig.class, HibernateTestConfig.class })
+@ContextConfiguration(classes = {SpringWebTestConfig.class, HibernateTestConfig.class})
 public class RepositorioNoticiaTest {
     @Autowired
     private RepositorioNoticia repositorioNoticia;
 
+
     @Transactional
     @Rollback
     @Test
-    public void guardarEscuelaDeberiaPersistirla() {
+    public void buscarNoticiaPorId() {
 
         Noticia noticia = new Noticia();
+
+        noticia.setTitulo("titulo");
 
         repositorioNoticia.guardar(noticia);
 
         Noticia buscada = repositorioNoticia.buscarPorId(1L);
 
         assertThat(buscada, is(notNullValue()));
+    }
 
+    @Transactional
+    @Rollback
+    @Test
+    public void guardarNoticiaDeberiaPersistirla() {
+        Noticia noticia = new Noticia();
+        assertThat(repositorioNoticia.guardar(noticia), is(true));
     }
 
     @Transactional
@@ -56,9 +66,10 @@ public class RepositorioNoticiaTest {
 
         List<Noticia> buscadas = repositorioNoticia.buscarPorTitulo("Titulo de la noticia");
 
-        assertThat(buscadas,hasSize(2));
+        assertThat(buscadas, hasSize(2));
 
     }
+
     @Transactional
     @Rollback
     @Test
@@ -72,7 +83,7 @@ public class RepositorioNoticiaTest {
 
         List<Noticia> buscadas = repositorioNoticia.buscarPorTitulo("Titulo de la noticia");
 
-        assertThat(buscadas,hasSize(0));
+        assertThat(buscadas, hasSize(0));
 
     }
 
@@ -84,8 +95,6 @@ public class RepositorioNoticiaTest {
         Noticia noticia = new Noticia();
         repositorioNoticia.guardar(noticia);
         noticia.setTitulo("Titulo de la noticia");
-
-
 
     }*/
 }

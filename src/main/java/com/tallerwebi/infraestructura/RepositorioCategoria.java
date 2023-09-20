@@ -1,6 +1,6 @@
-package com.tallerwebi.dominio.Categoria;
+package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Categoria.Categoria;
+import com.tallerwebi.dominio.Entidades.Categoria;
 
 import java.util.ArrayList;
 

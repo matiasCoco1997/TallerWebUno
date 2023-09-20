@@ -1,5 +1,7 @@
-package com.tallerwebi.dominio.Noticia;
+package com.tallerwebi.dominio.Servicios;
 
+import com.tallerwebi.dominio.Entidades.Noticia;
+import com.tallerwebi.infraestructura.RepositorioNoticia;
 import org.springframework.stereotype.Service;
 
 @Service("servicioNoticia")
@@ -27,9 +29,13 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     @Override
     public Noticia buscarNoticiaPorId(Long idNoticia) {
 
-        return new Noticia();
+        return repositorioNoticia.buscarPorId(idNoticia);
     }
 
+    @Override
+    public void editarNoticia(Long idNoticia) {
+
+    }
 
 
 }

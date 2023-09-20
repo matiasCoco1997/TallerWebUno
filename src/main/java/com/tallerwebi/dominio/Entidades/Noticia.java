@@ -1,13 +1,9 @@
-package com.tallerwebi.dominio.Noticia;
+package com.tallerwebi.dominio.Entidades;
 
-import com.tallerwebi.dominio.Categoria.Categoria;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.Set;
 
 @Entity
 @Getter
@@ -24,4 +20,7 @@ public class Noticia {
     private String fechaPublicacion;
     private String audioPodcastRuta;
     private Boolean activa;
+
+    public Noticia() {
+    }
 }

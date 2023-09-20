@@ -1,6 +1,6 @@
-package com.tallerwebi.dominio.Noticia;
+package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Noticia.Noticia;
+import com.tallerwebi.dominio.Entidades.Noticia;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ public interface RepositorioNoticia {
 
     void borrarNoticia(Noticia noticia);
 
-    Noticia buscarPorId(long idNoticia);
+    Noticia buscarPorId(Long idNoticia);
 
     List<Noticia> buscarPorTitulo(String tituloDeLaNoticia);
 }
