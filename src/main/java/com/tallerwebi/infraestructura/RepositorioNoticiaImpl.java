@@ -1,6 +1,8 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.Entidades.Noticia;
+import com.tallerwebi.infraestructura.RepositorioNoticia;
+import com.tallerwebi.dominio.Entidades.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -31,7 +33,14 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
 
     @Override
     public Boolean modificar(Noticia noticia) {
-        return true;
+        try {
+            final Session session = sessionFactory.getCurrentSession();
+            session.update(noticia);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
     @Override
@@ -41,7 +50,7 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     }
 
     @Override
-    public Noticia buscarPorId(Long idNoticia) {
+    public Noticia buscarPorId(long idNoticia) {
         final Session session = sessionFactory.getCurrentSession();
         return (Noticia) session.createCriteria(Noticia.class)
                 .add(Restrictions.eq("idNoticia", idNoticia))
@@ -55,4 +64,13 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
                 .add(Restrictions.eq("titulo", tituloDeLaNoticia))
                 .list();
     }
+
+    @Override
+    public List<Noticia> buscarPorCategoria(String categoria) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createCriteria(Noticia.class)
+                .add(Restrictions.eq("categoria", categoria))
+                .list();
+    }
+
 }

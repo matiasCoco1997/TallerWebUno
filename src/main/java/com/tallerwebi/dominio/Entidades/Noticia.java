@@ -12,6 +12,7 @@ public class Noticia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idNoticia;
+    @Column(nullable = false)
     private String titulo;
     private String descripcion;
     private String categoria;
@@ -20,7 +21,4 @@ public class Noticia {
     private String fechaPublicacion;
     private String audioPodcastRuta;
     private Boolean activa;
-
-    public Noticia() {
-    }
 }

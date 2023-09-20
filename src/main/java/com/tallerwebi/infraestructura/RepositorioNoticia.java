@@ -1,4 +1,4 @@
-package com.tallerwebi.dominio.Noticia;
+package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.Entidades.Noticia;
 
