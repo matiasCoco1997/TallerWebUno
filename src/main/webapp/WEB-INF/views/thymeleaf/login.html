@@ -1,48 +1,35 @@
-<!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <title>Taller Web I</title>
-
-    <!-- Boostrap core css -->
-    <link rel="stylesheet" th:href="@{/webjars/bootstrap/5.2.0/css/bootstrap.min.css}"/>
-
-    <!-- custom style -->
-    <link rel="stylesheet" th:href="@{/css/main.css}"/>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="header.css" type="text/css">
+    <title>Document</title>
 </head>
-
-<body>
-
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <a class="navbar-brand" href="#">UNLAM</a>
-</nav>
-
-<main role="main" class="container">
-
-    <div class = "container">
-        <div id="loginbox" style="margin-top:50px;" class="mainbox col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-            <form action="#" th:action="@{/validar-login}" method="POST" th:object="${datosLogin}">
-                <h3 class="form-signin-heading">Taller Web I</h3>
-                <hr class="colorgraph"><br>
-
-                <input th:field="*{email}" id="email" type="email" class="form-control" required/>
-                <input th:field="*{password}" type="password" id="password" class="form-control" required/>
-
-                <button id="btn-login" class="btn btn-lg btn-primary btn-block" Type="Submit">Login</button>
-
-                <p th:if="${error != null}" class="alert alert-danger" th:text="'Error ' + ${error}">
-                </p>
+<body class="">
+<main class="h-[100vh] lg:flex">
+    <div class="bg-black lg:w-[40%]">
+        <img src="/public/imgs/logo.jpg" class="lg:w-[45%] w-[70%]">
+        <div class="mt-16 pb-4">
+            <h3 class="text-white text-4xl text-center">Iniciar Sesión</h3>
+            <form action="#" method="POST" class="flex flex-col mt-14 mb-14">
+                <input type="text" name="email"
+                       class="lg:w-[70%] w-[80%] h-[45px] mx-auto mb-8 pl-2 text-white text-xl bg-black border border-black border-b-[#444]" placeholder="Email">
+                <input type="password" name="password"
+                       class="lg:w-[70%] w-[80%] h-[45px] mx-auto mb-2 pl-2 text-white text-xl bg-black border border-black border-b-[#444]" placeholder="Contraseña">
+                <a href="#" class="text-s text-white text-right lg:mr-20 mr-8">Olvidé mi contraseña</a>
+                <input type="submit" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl" value="Iniciar Sesión" name="iniciarSesion">
             </form>
-            <a id="ir-a-registrarme" href="nuevo-usuario">Registrarme</a>
         </div>
     </div>
+    <div class="bg-[#1A1A1A] lg:w-[60%] p-10">
+        <p class="text-white text-2xl text-left lg:mt-48 mt-8"><strong class="text-3xl">Bienvenidos a SUNN</strong>, <br> la red social donde podrás informarte con las noticias más importantes del mundo.</p>
+        <h1 class="text-white text-xl text-right mt-10">¿No tenés una cuenta? ¡Registrate gratis!</h1>
+    </div>
 </main>
-<!-- /.container -->
+<footer>
 
-<!-- Boostrap core js -->
-<script type="text/javascript" th:src="@{webjars/bootstrap/5.2.0/js/bootstrap.min.js}"></script>
+</footer>
 </body>
 </html>
