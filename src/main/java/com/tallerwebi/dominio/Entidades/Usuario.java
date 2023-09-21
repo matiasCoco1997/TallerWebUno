@@ -1,121 +1,34 @@
 package com.tallerwebi.dominio.Entidades;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.sql.Date;
 
 @Entity
+@Getter
+@Setter
 public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    private Long idUsuario;
     private String nombre;
     private String apellido;
     private String pais;
     private String ciudad;
-    private String fechaDeNacimiento;
+    private Date fechaDeNacimiento;
     private String email;
     private String password;
     private String fotoPerfil;
-    private String rol;
+    //private String rol;
     private Boolean activo = false;
+    private Plan plan; //Relacionado a la tabla plan, idPlan
+    private Integer cantidadSeguidores;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getRol() {
-        return rol;
-    }
-
-    public void setRol(String rol) {
-        this.rol = rol;
-    }
-
-    public Boolean getActivo() {
-        return activo;
-    }
-
-    public void setActivo(Boolean activo) {
-        this.activo = activo;
-    }
-
-    public boolean activo() {
-        return activo;
-    }
-
-    public void activar() {
-        activo = true;
-    }
-
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
-    }
-
-    public String getPais() {
-        return pais;
-    }
-
-    public void setPais(String pais) {
-        this.pais = pais;
-    }
-
-    public String getCiudad() {
-        return ciudad;
-    }
-
-    public void setCiudad(String ciudad) {
-        this.ciudad = ciudad;
-    }
-
-    public String getFechaDeNacimiento() {
-        return fechaDeNacimiento;
-    }
-
-    public void setFechaDeNacimiento(String fechaDeNacimiento) {
-        this.fechaDeNacimiento = fechaDeNacimiento;
-    }
-
-    public String getFotoPerfil() {
-        return fotoPerfil;
-    }
-
-    public void setFotoPerfil(String fotoPerfil) {
-        this.fotoPerfil = fotoPerfil;
-    }
 }
