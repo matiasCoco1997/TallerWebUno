@@ -16,9 +16,9 @@ public class Noticia {
     private String titulo;
     private String descripcion;
     private String categoria;
-    private String noticia;
-    private String imagen;
-    private String fechaPublicacion;
-    private String audioPodcastRuta;
+    private String resumen;
+    private String rutaDeimagen;
+    private String fechaDePublicacion;
+    private String rutaDeAudioPodcast;
     private Boolean activa;
 }
