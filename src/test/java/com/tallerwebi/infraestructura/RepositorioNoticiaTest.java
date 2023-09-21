@@ -84,10 +84,10 @@ public class RepositorioNoticiaTest {
         noticia.setTitulo("Título de la noticia");
         noticia.setDescripcion("Descripción de la noticia");
         noticia.setCategoria("Categoría de la noticia");
-        noticia.setNoticia("Contenido de la noticia");
-        noticia.setImagen("URL de la imagen");
-        noticia.setFechaPublicacion("Fecha de publicación");
-        noticia.setAudioPodcastRuta("Ruta del archivo de audio del podcast");
+        noticia.setResumen("Contenido de la noticia");
+        noticia.setRutaDeimagen("URL de la imagen");
+        noticia.setFechaDePublicacion("Fecha de publicación");
+        noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
         noticia.setActiva(true);
 
         repositorioNoticia.guardar(noticia);

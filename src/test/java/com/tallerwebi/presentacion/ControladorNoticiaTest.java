@@ -50,10 +50,10 @@ public class ControladorNoticiaTest {
         when(noticiaMock.getTitulo()).thenReturn("titulo");
         when(noticiaMock.getCategoria()).thenReturn("categoria");
         when(noticiaMock.getDescripcion()).thenReturn("descripcion");
-        when(noticiaMock.getNoticia()).thenReturn("noticia");
-        when(noticiaMock.getImagen()).thenReturn("imagen");
-        when(noticiaMock.getFechaPublicacion()).thenReturn("fecha");
-        when(noticiaMock.getAudioPodcastRuta()).thenReturn("audio");
+        when(noticiaMock.getResumen()).thenReturn("noticia");
+        when(noticiaMock.getRutaDeimagen()).thenReturn("imagen");
+        when(noticiaMock.getFechaDePublicacion()).thenReturn("fecha");
+        when(noticiaMock.getRutaDeAudioPodcast()).thenReturn("audio");
         when(noticiaMock.getActiva()).thenReturn(true);
 
         requestMock = mock(HttpServletRequest.class);
