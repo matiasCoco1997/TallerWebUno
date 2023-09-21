@@ -28,7 +28,7 @@ public class Usuario {
     private String fotoPerfil;
     //private String rol;
     private Boolean activo = false;
-    private Plan plan; //Relacionado a la tabla plan, idPlan
+    private Integer idPlan; //Relacionado a la tabla plan, idPlan
     private Integer cantidadSeguidores;
 
 }
