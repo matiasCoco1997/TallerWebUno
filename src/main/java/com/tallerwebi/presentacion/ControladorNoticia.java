@@ -1,7 +1,6 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Entidades.Noticia;
-import com.tallerwebi.dominio.excepcion.ErrorDeBusqueda;
 import com.tallerwebi.dominio.Servicios.ServicioNoticia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

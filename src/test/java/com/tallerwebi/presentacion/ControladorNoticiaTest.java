@@ -1,14 +1,11 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.excepcion.ErrorDeBusqueda;
-import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.dominio.Entidades.Noticia;
 import com.tallerwebi.dominio.Servicios.ServicioNoticia;
 import com.tallerwebi.dominio.Entidades.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,11 +14,10 @@ import javax.servlet.http.HttpSession;
 import java.sql.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
-import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.Mockito.*;
-import static org.hamcrest.Matchers.not;
+
 
 
 public class ControladorNoticiaTest {
@@ -133,7 +129,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void buscarNoticiasPorTituloYRedireccioneAlHome(){
+    public void buscarNoticiasPorTituloYLasCargueEnElHome(){
 
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getTitulo());
@@ -143,6 +139,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
+    //PREGUNTAR POR ESTE TEST PORQUE NO SE BIEN COMO FUNCIONA
     public void buscarNoticiasPorTituloYRetorneUnaException() throws Exception {
 
         when(controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getTitulo())).thenThrow(RuntimeException.class);
