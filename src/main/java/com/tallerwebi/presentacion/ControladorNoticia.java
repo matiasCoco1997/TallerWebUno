@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Entidades.Noticia;
+import com.tallerwebi.dominio.excepcion.ErrorDeBusqueda;
 import com.tallerwebi.dominio.Servicios.ServicioNoticia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -72,18 +73,18 @@ public class ControladorNoticia {
     }
 
     @RequestMapping(path = "/noticia/listar?busqueda=", method = RequestMethod.POST)
-    //@RequestParam("imagenArchivo") String multipartFile
-    public ModelAndView buscarNoticiaPorId( @ModelAttribute("datosNoticia") String tituloNoticia ) {
+    public ModelAndView buscarNoticiaPorTitulo( @ModelAttribute("datosNoticia") String tituloNoticia ) {
 
         ModelMap model = new ModelMap();
 
         try{
             servicioNoticia.buscarNoticiaPorTitulo(tituloNoticia);
-        } catch (Exception e) {
+
+        }  catch (Exception e) {
             model.put("error", "Error al buscar noticia.");
-            return new ModelAndView("error");
+            return new ModelAndView("redirect:/error", model);
         }
-        return new ModelAndView("redirect:/noticiaBuscada", model);
+        return new ModelAndView("redirect:/home", model);
     }
 
 }

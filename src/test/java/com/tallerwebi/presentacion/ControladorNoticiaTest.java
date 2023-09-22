@@ -1,11 +1,14 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.excepcion.ErrorDeBusqueda;
+import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.dominio.Entidades.Noticia;
 import com.tallerwebi.dominio.Servicios.ServicioNoticia;
 import com.tallerwebi.dominio.Entidades.Usuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.sql.Date;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.AdditionalMatchers.not;
 import static org.mockito.Mockito.*;
@@ -126,13 +130,57 @@ public class ControladorNoticiaTest {
         // ejecucion
 
         // validacion
-
     }
 
     @Test
-    public void buscarNoticiaPorTituloYRetorneUnaListaDeNoticias(){
+    public void buscarNoticiasPorTituloYRedireccioneAlHome(){
 
+        // ejecucion
+        ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getTitulo());
+
+        // validacion
+        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/home"));
     }
+
+    @Test
+    public void buscarNoticiasPorTituloYRetorneUnaException() throws Exception {
+
+        when(controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getTitulo())).thenThrow(RuntimeException.class);
+
+        // ejecucion
+        ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getTitulo());
+
+        // validacion
+        assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al buscar noticia."));
+    }
+
+    /*
+    @Test
+    public void buscarNoticiasPorTituloYRetorneUnaException(){
+
+
+        List<Noticia> noticiasEncontradas = new ArrayList<Noticia>();
+
+        noticiasEncontradas.add(noticiaMock);
+        noticiasEncontradas.add(noticiaMock);
+
+        Noticia noticiaMockDos = mock(Noticia.class);
+        when(noticiaMockDos.getTitulo()).thenReturn("titulo diferente");
+
+        noticiasEncontradas.add(noticiaMockDos);
+
+
+        // preparacion
+        when(servicioNoticiaMock.buscarNoticiaPorTitulo(anyString())).thenReturn(noticiasEncontradas);
+
+        // ejecucion
+
+        //noticiasEncontradas = controladorNoticia.buscarNoticiaPorTitulo("titulo");
+
+        // validacion
+        assertThat(3, is(noticiasEncontradas.size()));
+    }
+    */
 
 
 
