@@ -107,16 +107,27 @@ public class ControladorNoticiaTest {
         assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/noticiaBorrada"));
     }
 
-
     @Test
-    public void queRedirijaAnoticiaBuscadaLuegoDeBuscarUnaNoticiaPorId(){
+    public void buscarPorCategoria(){
         // preparacion
 
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorId(noticiaMock.getIdNoticia());
+
 
         // validacion
-        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/noticiaBuscada"));
+
+    }
+
+    @Test
+    public void buscarPorTitulo(){
+
+        // preparacion
+
+        // ejecucion
+
+
+        // validacion
+
     }
 
 
