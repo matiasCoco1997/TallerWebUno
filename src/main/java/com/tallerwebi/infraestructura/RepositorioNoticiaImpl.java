@@ -17,9 +17,10 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     private SessionFactory sessionFactory;
 
     @Autowired
-    public RepositorioNoticiaImpl(SessionFactory sessionFactory){
+    public RepositorioNoticiaImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
+
     @Override
     public Boolean guardar(Noticia noticia) {
         try {

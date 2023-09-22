@@ -71,7 +71,7 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home");
     }
 
-    @RequestMapping(path = "/noticia/listar?busqueda=", method = RequestMethod.POST)
+    @RequestMapping(path = "/noticia/buscarNoticiaPorTitulo", method = RequestMethod.POST)
     public ModelAndView buscarNoticiaPorTitulo( @ModelAttribute("datosNoticia") String tituloNoticia ) {
 
         ModelMap model = new ModelMap();
@@ -86,7 +86,7 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home", model);
     }
 
-    @RequestMapping(path = "/noticia/listar?busqueda=", method = RequestMethod.POST)
+    @RequestMapping(path = "/noticia/buscarNoticiaPorCategoria", method = RequestMethod.POST)
     public ModelAndView buscarNoticiaPorCategoria( @ModelAttribute("datosNoticia") String categoria ) {
 
         ModelMap model = new ModelMap();

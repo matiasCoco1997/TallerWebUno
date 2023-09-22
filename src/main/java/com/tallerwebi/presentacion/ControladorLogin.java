@@ -59,7 +59,7 @@ public class ControladorLogin {
         return new ModelAndView("redirect:/login");
     }
 
-    @RequestMapping(path = "/nuevo-usuario", method = RequestMethod.GET)
+    @RequestMapping(path = "/registrarse", method = RequestMethod.GET)
     public ModelAndView nuevoUsuario() {
         ModelMap model = new ModelMap();
         model.put("usuario", new Usuario());
