@@ -27,10 +27,10 @@ public class ControladorNoticia {
             servicioNoticia.crearNoticia(noticia);
         } catch (Exception e) {
             model.put("error", "Error al crear la noticia");
-            return new ModelAndView("error");
+            return new ModelAndView("home");
         }
 
-        return new ModelAndView("redirect:/home");
+        return new ModelAndView("redirect:/home" );
     }
 
 
