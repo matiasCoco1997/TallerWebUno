@@ -168,9 +168,9 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.4.45.v20220203</version>
                 <configuration>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <scanIntervalSeconds>2</scanIntervalSeconds>
                     <webApp>
-                        <contextPath>/spring</contextPath>
+                        <contextPath>/sunn</contextPath>
                     </webApp>
                 </configuration>
             </plugin>

@@ -20,7 +20,7 @@ public class HibernateConfig {
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver"); // Controlador JDBC de MySQL
         dataSource.setUrl("jdbc:mysql://localhost:3306/sunn"); // URL de conexión a tu base de datos MySQL
         dataSource.setUsername("root"); // Usuario de MySQL
-        dataSource.setPassword("indio2018"); // Contraseña de MySQL
+        dataSource.setPassword("root"); // Contraseña de MySQL
         return dataSource;
     }
 
