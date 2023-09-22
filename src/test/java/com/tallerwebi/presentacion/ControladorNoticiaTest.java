@@ -120,12 +120,14 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void buscarNoticiasPorCategoriaYRetorneUnaListaDeNoticias(){
+    public void buscarNoticiasPorCategoriaYLasCargueEnElHome(){
         // preparacion
 
         // ejecucion
+        ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getCategoria());
 
         // validacion
+        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/home"));
     }
 
     @Test
@@ -150,39 +152,5 @@ public class ControladorNoticiaTest {
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al buscar noticia."));
     }
-
-    /*
-    @Test
-    public void buscarNoticiasPorTituloYRetorneUnaException(){
-
-
-        List<Noticia> noticiasEncontradas = new ArrayList<Noticia>();
-
-        noticiasEncontradas.add(noticiaMock);
-        noticiasEncontradas.add(noticiaMock);
-
-        Noticia noticiaMockDos = mock(Noticia.class);
-        when(noticiaMockDos.getTitulo()).thenReturn("titulo diferente");
-
-        noticiasEncontradas.add(noticiaMockDos);
-
-
-        // preparacion
-        when(servicioNoticiaMock.buscarNoticiaPorTitulo(anyString())).thenReturn(noticiasEncontradas);
-
-        // ejecucion
-
-        //noticiasEncontradas = controladorNoticia.buscarNoticiaPorTitulo("titulo");
-
-        // validacion
-        assertThat(3, is(noticiasEncontradas.size()));
-    }
-    */
-
-
-
-
-
-
 
 }

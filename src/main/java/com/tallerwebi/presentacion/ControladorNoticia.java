@@ -86,4 +86,19 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home", model);
     }
 
+    @RequestMapping(path = "/noticia/listar?busqueda=", method = RequestMethod.POST)
+    public ModelAndView buscarNoticiaPorCategoria( @ModelAttribute("datosNoticia") String categoria ) {
+
+        ModelMap model = new ModelMap();
+
+        try{
+            servicioNoticia.buscarNoticiaPorCategoria(categoria);
+
+        }  catch (Exception e) {
+            model.put("error", "Error al buscar noticia.");
+            return new ModelAndView("redirect:/error", model);
+        }
+        return new ModelAndView("redirect:/home", model);
+    }
+
 }

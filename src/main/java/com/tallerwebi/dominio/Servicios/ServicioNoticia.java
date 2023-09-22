@@ -16,4 +16,6 @@ public interface ServicioNoticia {
     void editarNoticia(Long idNoticia);
 
     List<Noticia> listarNoticias();
+
+    List<Noticia> buscarNoticiaPorCategoria(String categoria);
 }

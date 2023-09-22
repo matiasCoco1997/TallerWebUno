@@ -57,6 +57,14 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
+    public List<Noticia> buscarNoticiaPorCategoria(String categoria) {
+
+        List<Noticia> noticiasEncontradas = repositorioNoticia.buscarPorCategoria(categoria);
+
+        return noticiasEncontradas;
+    }
+
+    @Override
     public void editarNoticia(Long idNoticia) {
 
     }
