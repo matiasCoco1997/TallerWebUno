@@ -48,7 +48,7 @@ public class ControladorNoticia {
             servicioNoticia.crearNoticia(noticia);
         } catch (Exception e) {
             model.put("error", "Error al crear la noticia");
-            return new ModelAndView("home");
+            return new ModelAndView("error");
         }
 
         return new ModelAndView("redirect:/home" );
@@ -68,7 +68,7 @@ public class ControladorNoticia {
             return new ModelAndView("error");
         }
 
-        return new ModelAndView("redirect:/noticiaBorrada");
+        return new ModelAndView("redirect:/home");
     }
 
     @RequestMapping(path = "/noticia/listar?busqueda=", method = RequestMethod.POST)
@@ -78,13 +78,12 @@ public class ControladorNoticia {
         ModelMap model = new ModelMap();
 
         try{
-            //model.put(servicioNoticia.buscarNoticiaPorTitulo(tituloNoticia));
+            servicioNoticia.buscarNoticiaPorTitulo(tituloNoticia);
         } catch (Exception e) {
             model.put("error", "Error al buscar noticia.");
             return new ModelAndView("error");
         }
         return new ModelAndView("redirect:/noticiaBuscada", model);
     }
-
 
 }

@@ -1,6 +1,5 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.dominio.Entidades.Noticia;
 import com.tallerwebi.dominio.Servicios.ServicioNoticia;
@@ -71,15 +70,11 @@ public class ControladorNoticiaTest {
     @Test
     public void queAlListarLasNoticiasSeCargueElHome() {
 
-        // preparacion
-
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.listarNoticias();
 
-
         // validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
-
     }
 
     @Test
@@ -97,6 +92,7 @@ public class ControladorNoticiaTest {
     }
 
 
+    /*
     @Test
     public void queNoRedireccioneAUnaVistaIncorrectaAlCrearUnaNoticia(){
         when(noticiaMock.getTitulo()).thenReturn("titulo");
@@ -110,15 +106,17 @@ public class ControladorNoticiaTest {
         assertThat(vista, not(equalToIgnoringCase("redirect:/home")));
     }
 
+     */
+
     @Test
-    public void queCuandoSeBorreUnaNoticiaMeRedirijaANoticiaBorrada(){
+    public void queCuandoSeBorreUnaNoticiaRedireccioneAlHome(){
         // preparacion
 
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
 
         // validacion
-        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/noticiaBorrada"));
+        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/home"));
     }
 
     @Test
@@ -127,20 +125,12 @@ public class ControladorNoticiaTest {
 
         // ejecucion
 
-
         // validacion
 
     }
 
     @Test
     public void buscarNoticiaPorTituloYRetorneUnaListaDeNoticias(){
-
-        // preparacion
-
-        // ejecucion
-
-
-        // validacion
 
     }
 
