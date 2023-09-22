@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.sql.Date;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.AdditionalMatchers.not;
@@ -39,11 +41,10 @@ public class ControladorNoticiaTest {
         when(usuarioMock.getApellido()).thenReturn("apellido");
         when(usuarioMock.getPais()).thenReturn("pais");
         when(usuarioMock.getCiudad()).thenReturn("ciudad");
-        when(usuarioMock.getFechaDeNacimiento()).thenReturn("01/01/2000");
+        when(usuarioMock.getFechaDeNacimiento()).thenReturn(new Date(2018,12,9));
         when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
         when(usuarioMock.getPassword()).thenReturn("password");
         when(usuarioMock.getFotoPerfil()).thenReturn("/fotoPerfil");
-        when(usuarioMock.getRol()).thenReturn("Lector");
 
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);

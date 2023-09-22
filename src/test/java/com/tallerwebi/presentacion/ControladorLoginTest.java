@@ -10,6 +10,8 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.sql.Date;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.Mockito.*;
@@ -32,11 +34,10 @@ public class ControladorLoginTest {
 		when(usuarioMock.getApellido()).thenReturn("apellido");
 		when(usuarioMock.getPais()).thenReturn("pais");
 		when(usuarioMock.getCiudad()).thenReturn("ciudad");
-		when(usuarioMock.getFechaDeNacimiento()).thenReturn("01/01/2000");
+		when(usuarioMock.getFechaDeNacimiento()).thenReturn(new Date(2018,12,9));
 		when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
 		when(usuarioMock.getPassword()).thenReturn("password");
 		when(usuarioMock.getFotoPerfil()).thenReturn("fotoPerfil");
-		when(usuarioMock.getRol()).thenReturn("Lector");
 		requestMock = mock(HttpServletRequest.class);
 		sessionMock = mock(HttpSession.class);
 		servicioLoginMock = mock(ServicioLogin.class);
@@ -61,7 +62,6 @@ public class ControladorLoginTest {
 	public void loginConUsuarioYPasswordCorrectosDeberiaLLevarAHome(){
 		// preparacion
 		Usuario usuarioEncontradoMock = mock(Usuario.class);
-		when(usuarioEncontradoMock.getRol()).thenReturn("ADMIN");
 
 		when(requestMock.getSession()).thenReturn(sessionMock);
 		when(servicioLoginMock.consultarUsuario(anyString(), anyString())).thenReturn(usuarioEncontradoMock);
@@ -71,7 +71,6 @@ public class ControladorLoginTest {
 		
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
-		verify(sessionMock, times(1)).setAttribute("ROL", usuarioEncontradoMock.getRol());
 	}
 
 	@Test
