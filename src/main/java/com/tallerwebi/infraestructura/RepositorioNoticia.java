@@ -18,5 +18,7 @@ public interface RepositorioNoticia {
 
     List<Noticia> buscarPorTitulo(String tituloDeLaNoticia);
 
-    List<Noticia> buscarPorCategoria(String deportes);
+    List<Noticia> buscarPorCategoria(String categoria);
+
+    List<Noticia> listarNoticias();
 }

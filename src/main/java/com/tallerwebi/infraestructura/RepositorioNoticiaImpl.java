@@ -73,4 +73,10 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
                 .list();
     }
 
+    @Override
+    public List<Noticia> listarNoticias() {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Noticia").list();
+    }
+
 }

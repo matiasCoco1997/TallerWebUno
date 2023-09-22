@@ -69,6 +69,20 @@ public class ControladorNoticiaTest {
 
 
     @Test
+    public void queAlListarLasNoticiasSeCargueElHome() {
+
+        // preparacion
+
+        // ejecucion
+        ModelAndView modelAndView = controladorNoticia.listarNoticias();
+
+
+        // validacion
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
+
+    }
+
+    @Test
     public void queAlCrearUnaNoticiaRedireccioneAlHome() {
 
         // preparacion
@@ -76,11 +90,11 @@ public class ControladorNoticiaTest {
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock);
 
+
         // validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
 
     }
-
 
 
     @Test
@@ -108,7 +122,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void buscarPorCategoria(){
+    public void buscarNoticiasPorCategoriaYRetorneUnaListaDeNoticias(){
         // preparacion
 
         // ejecucion
@@ -119,7 +133,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void buscarPorTitulo(){
+    public void buscarNoticiaPorTituloYRetorneUnaListaDeNoticias(){
 
         // preparacion
 

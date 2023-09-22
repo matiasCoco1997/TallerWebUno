@@ -8,6 +8,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.List;
+
 @Controller
 public class ControladorNoticia {
     private ServicioNoticia servicioNoticia;
@@ -17,7 +19,26 @@ public class ControladorNoticia {
         this.servicioNoticia = servicioNoticia;
     }
 
-    @RequestMapping(path = "/crearNuevaNoticia", method = RequestMethod.POST)
+
+
+    @RequestMapping(path = "/noticia/listar", method = RequestMethod.GET)
+    public ModelAndView listarNoticias() {
+
+        ModelMap model = new ModelMap();
+
+        try{
+            List<Noticia> noticias = servicioNoticia.listarNoticias();
+            model.put("noticias", noticias);
+
+        } catch (Exception e) {
+            model.put("error", "Error al crear la noticia");
+            return new ModelAndView("error");
+        }
+
+        return new ModelAndView("redirect:/home");
+    }
+
+    @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
     //@RequestParam("imagenArchivo") String multipartFile
     public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia ) {
 
@@ -34,7 +55,7 @@ public class ControladorNoticia {
     }
 
 
-    @RequestMapping(path = "/borrarNoticia", method = RequestMethod.POST)
+    @RequestMapping(path = "/noticia/borrar", method = RequestMethod.POST)
     //@RequestParam("imagenArchivo") String multipartFile
     public ModelAndView borrarNoticiaPorId( @ModelAttribute("datosNoticia") Long idNoticia ) {
 
@@ -50,19 +71,19 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/noticiaBorrada");
     }
 
-    @RequestMapping(path = "/buscarNoticiaPorId", method = RequestMethod.POST)
+    @RequestMapping(path = "/noticia/listar?busqueda=", method = RequestMethod.POST)
     //@RequestParam("imagenArchivo") String multipartFile
-    public ModelAndView buscarNoticiaPorId( @ModelAttribute("datosNoticia") Long idNoticia ) {
+    public ModelAndView buscarNoticiaPorId( @ModelAttribute("datosNoticia") String tituloNoticia ) {
 
         ModelMap model = new ModelMap();
 
         try{
-            servicioNoticia.buscarNoticiaPorId(idNoticia);
+            //model.put(servicioNoticia.buscarNoticiaPorTitulo(tituloNoticia));
         } catch (Exception e) {
             model.put("error", "Error al buscar noticia.");
             return new ModelAndView("error");
         }
-        return new ModelAndView("redirect:/noticiaBuscada");
+        return new ModelAndView("redirect:/noticiaBuscada", model);
     }
 
 
