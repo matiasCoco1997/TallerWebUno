@@ -34,15 +34,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         return noticias;
     }
 
-    /*
-    @Override
-    public Noticia buscarNoticiaPorTitulo(String tituloNoticia) {
-
-        List
-
-        return repositorioNoticia.buscarPorId(idNoticia);
-    }*/
-
     @Override
     public Noticia buscarNoticiaPorId(Long idNoticia) {
         return repositorioNoticia.buscarPorId(idNoticia);

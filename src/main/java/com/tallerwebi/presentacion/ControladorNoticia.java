@@ -31,11 +31,11 @@ public class ControladorNoticia {
             model.put("noticias", noticias);
 
         } catch (Exception e) {
-            model.put("error", "Error al crear la noticia");
-            return new ModelAndView("error");
+            model.put("error", "Error al listar las noticias.");
+            return new ModelAndView("error", model);
         }
 
-        return new ModelAndView("redirect:/home");
+        return new ModelAndView("redirect:/home", model);
     }
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
@@ -47,11 +47,11 @@ public class ControladorNoticia {
         try{
             servicioNoticia.crearNoticia(noticia);
         } catch (Exception e) {
-            model.put("error", "Error al crear la noticia");
-            return new ModelAndView("error");
+            model.put("error", "Error al crear la noticia.");
+            return new ModelAndView("error", model);
         }
 
-        return new ModelAndView("redirect:/home" );
+        return new ModelAndView("redirect:/home" , model);
     }
 
 
@@ -65,10 +65,10 @@ public class ControladorNoticia {
             servicioNoticia.borrarNoticiaPorId(idNoticia);
         } catch (Exception e) {
             model.put("error", "Error al borrar la noticia.");
-            return new ModelAndView("error");
+            return new ModelAndView("error", model);
         }
 
-        return new ModelAndView("redirect:/home");
+        return new ModelAndView("redirect:/home", model);
     }
 
     @RequestMapping(path = "/noticia/buscarNoticiaPorTitulo", method = RequestMethod.POST)
@@ -93,9 +93,8 @@ public class ControladorNoticia {
 
         try{
             servicioNoticia.buscarNoticiaPorCategoria(categoria);
-
         }  catch (Exception e) {
-            model.put("error", "Error al buscar noticia.");
+            model.put("error", "Error al buscar noticia por categoria.");
             return new ModelAndView("redirect:/error", model);
         }
         return new ModelAndView("redirect:/home", model);
