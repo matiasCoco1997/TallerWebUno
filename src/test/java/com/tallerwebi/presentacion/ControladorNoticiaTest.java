@@ -30,8 +30,6 @@ public class ControladorNoticiaTest {
 
     @BeforeEach
     public void init(){
-
-
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
@@ -46,7 +44,6 @@ public class ControladorNoticiaTest {
 
     @Test
     public void queAlListarLasNoticiasSeCargueElHome() {
-
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.listarNoticias();
 
@@ -92,8 +89,6 @@ public class ControladorNoticiaTest {
 
     @Test
     public void queCuandoSeBorreUnaNoticiaRedireccioneAlHome(){
-        // preparacion
-
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
 
@@ -136,7 +131,6 @@ public class ControladorNoticiaTest {
 
     @Test
     public void buscarNoticiasPorTituloYLasCargueEnElHome(){
-
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getTitulo());
 
@@ -155,5 +149,4 @@ public class ControladorNoticiaTest {
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al buscar noticia."));
     }
-
 }
