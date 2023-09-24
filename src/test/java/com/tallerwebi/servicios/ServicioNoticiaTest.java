@@ -25,18 +25,6 @@ public class ServicioNoticiaTest {
 
     @BeforeEach
     public void init(){
-        /*
-        noticiaMock = mock(Noticia.class);
-        when(noticiaMock.getIdNoticia()).thenReturn(1L);
-        when(noticiaMock.getTitulo()).thenReturn("titulo");
-        when(noticiaMock.getCategoria()).thenReturn("categoria");
-
-        requestMock = mock(HttpServletRequest.class);
-        sessionMock = mock(HttpSession.class);
-
-        servicioNoticiaMock = mock(ServicioNoticia.class);
-        controladorNoticia = new ControladorNoticia(servicioNoticiaMock);
-        */
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
@@ -49,8 +37,18 @@ public class ServicioNoticiaTest {
 
     @Test
     public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez(){
+        //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
+        servicioNoticiaMock.crearNoticia(noticiaMock);
+
+        //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
+        verify(repositorioNoticiaMock, times(1)).guardar(noticiaMock);
+    }
+
+    @Test
+    public void cuandoCreoDosNoticiasSeInvocaLaFuncionGuardarDelRepositorioDosVeces(){
 
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
+        servicioNoticiaMock.crearNoticia(noticiaMock);
         servicioNoticiaMock.crearNoticia(noticiaMock);
 
         //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)

@@ -28,7 +28,7 @@ public class ControladorNoticia {
 
         try{
             List<Noticia> noticias = servicioNoticia.listarNoticias();
-            model.put("noticias", noticias);
+            model.put("home", noticias);
 
         } catch (Exception e) {
             model.put("error", "Error al listar las noticias.");
