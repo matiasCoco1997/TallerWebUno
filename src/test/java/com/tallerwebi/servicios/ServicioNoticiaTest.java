@@ -3,15 +3,9 @@ package com.tallerwebi.servicios;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
-import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
-import com.tallerwebi.presentacion.ControladorNoticia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,22 +14,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
-import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 
 public class ServicioNoticiaTest {
-
-    private ControladorNoticia controladorNoticia;
-    private ServicioNoticia servicioNoticiaMock;
     private Noticia noticiaMock;
-    private RepositorioNoticia repositorioCategoriaMock;
-    private HttpServletRequest requestMock;
-    private HttpSession sessionMock;
-
-    private ServicioNoticia servicioNoticia;
-    private RepositorioNoticia repositorioNoticia;
+    private ServicioNoticia servicioNoticiaMock;
+    private RepositorioNoticia repositorioNoticiaMock;
 
     @BeforeEach
     public void init(){
@@ -53,11 +39,23 @@ public class ServicioNoticiaTest {
         */
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
+        when(noticiaMock.getTitulo()).thenReturn("titulo");
+        when(noticiaMock.getCategoria()).thenReturn("categoria");
 
-        this.repositorioNoticia = mock(RepositorioNoticia.class);
-        this.servicioNoticia = new ServicioNoticiaImpl(this.repositorioNoticia);
+        this.repositorioNoticiaMock = mock(RepositorioNoticia.class);
+        this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock);
     }
 
+
+    @Test
+    public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez(){
+
+        //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
+        servicioNoticiaMock.crearNoticia(noticiaMock);
+
+        //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
+        verify(repositorioNoticiaMock, times(2)).guardar(noticiaMock);
+    }
 
     @Test
     public void cuandoListoLasNoticiasObtengoTresNoticias(){
@@ -68,10 +66,10 @@ public class ServicioNoticiaTest {
         noticias.add(noticiaMock);
         noticias.add(noticiaMock);
 
-        when(this.repositorioNoticia.listarNoticias()).thenReturn(noticias);
+        when(this.repositorioNoticiaMock.listarNoticias()).thenReturn(noticias);
 
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
-        List<Noticia> noticiasObtenidas = servicioNoticia.listarNoticias();
+        List<Noticia> noticiasObtenidas = servicioNoticiaMock.listarNoticias();
 
         //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
         assertThat(noticiasObtenidas, not(empty()));
@@ -81,13 +79,30 @@ public class ServicioNoticiaTest {
     @Test
     public void cuandoObtengoUnaNoticiaPorSuIdObtengoLaNoticia(){
         //preparacion
-        when(this.repositorioNoticia.buscarPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
+        when(this.repositorioNoticiaMock.buscarPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
 
         //ejecucion
-        Noticia noticiaObtenida = this.servicioNoticia.buscarNoticiaPorId(noticiaMock.getIdNoticia());
+        Noticia noticiaObtenida = this.servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia());
 
         //verificacion
         assertThat(noticiaObtenida.getIdNoticia(), is(1L));
+    }
+
+    @Test
+    public void cuandoObtengoNoticiasPorUnTituloObtengoDosNoticias(){
+        //preparacion
+        List<Noticia> noticias = new ArrayList<>();
+        noticias.add(noticiaMock);
+        noticias.add(noticiaMock);
+
+        when(this.repositorioNoticiaMock.buscarPorTitulo(noticiaMock.getTitulo())).thenReturn(noticias);
+
+        //ejecucion
+        List<Noticia> noticiasObtenidas = this.servicioNoticiaMock.buscarNoticiaPorTitulo(noticiaMock.getTitulo());
+
+        //verificacion
+        assertThat(noticiasObtenidas, not(empty()));
+        assertThat(noticiasObtenidas.size(), is(2));
     }
 
 
