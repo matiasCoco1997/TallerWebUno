@@ -24,7 +24,6 @@ public class ControladorNoticiaTest {
     private ControladorNoticia controladorNoticia;
     private ServicioNoticia servicioNoticiaMock;
     private Noticia noticiaMock;
-    private RepositorioCategoria repositorioCategoriaMock;
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
 
