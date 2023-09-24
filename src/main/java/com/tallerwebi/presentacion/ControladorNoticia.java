@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Entidades.Noticia;
-import com.tallerwebi.dominio.Servicios.ServicioNoticia;
+import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;

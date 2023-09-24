@@ -1,6 +1,6 @@
-package com.tallerwebi.dominio.Servicios;
+package com.tallerwebi.dominio.servicios;
 
-import com.tallerwebi.dominio.Entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Noticia;
 
 import java.util.List;
 

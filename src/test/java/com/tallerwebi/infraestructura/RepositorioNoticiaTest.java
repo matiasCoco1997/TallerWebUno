@@ -5,7 +5,7 @@ import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 
-import com.tallerwebi.dominio.Entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Noticia;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

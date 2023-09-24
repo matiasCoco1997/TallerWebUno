@@ -1,6 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Noticia;
 
 import java.util.List;
 

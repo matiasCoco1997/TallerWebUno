@@ -1,8 +1,8 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.infraestructura.RepositorioCategoria;
-import com.tallerwebi.dominio.Entidades.Noticia;
-import com.tallerwebi.dominio.Servicios.ServicioNoticia;
+import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
