@@ -1,10 +1,14 @@
 package com.tallerwebi.dominio.Entidades;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.*;
+import java.time.LocalDateTime;
+
 @Entity
+@Getter
+@Setter
 public class Comentario {
 
     @Id
@@ -12,5 +16,12 @@ public class Comentario {
     private Long id;
     private Long idUsuario;
     private Long idNoticia;
+    @Column(nullable = false)
     private String descripcion;
+    private LocalDateTime fechaCreacion;// Fecha y hora
+
+    @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
+    protected void onCreate() {
+        fechaCreacion = LocalDateTime.now();
+    }
 }

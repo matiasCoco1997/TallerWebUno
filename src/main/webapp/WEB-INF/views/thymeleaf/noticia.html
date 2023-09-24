@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+            rel="stylesheet"
+            href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+
+    <title>Document</title>
+</head>
+<body class="bg-black">
+<header class="">
+    <div th:include="/fragment/nav">
+        <!-- Contenido de fragmento2.html aquí -->
+    </div>
+</header>
+<main>
+    <!-- Comentarios-->
+    <section class="bg-black py-8 lg:py-16 antialiased">
+        <div class="max-w-2xl mx-auto px-4">
+            <div th:include="/fragment/comentario" id="comentariosContainer"></div>
+            <div th:include="/fragment/form-comentario" ></div>
+        </div>
+    </section>
+</main>
+<div th:include="/fragment/footer"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script th:src="@{/js/guardarComentario.js}"></script>
+
+
+
+</body>
+</html>

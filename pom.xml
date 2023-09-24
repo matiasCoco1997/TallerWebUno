@@ -134,6 +134,16 @@
             <version>8.0.28</version> <!-- Puedes ajustar la versión según la que necesites -->
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.15.2</version>
+        </dependency>
+
+
+
+
+
     </dependencies>
 
     <build>
