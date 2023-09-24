@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Entidades.Noticia;
-import com.tallerwebi.dominio.Servicios.ServicioNoticia;
+import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -28,7 +28,7 @@ public class ControladorNoticia {
 
         try{
             List<Noticia> noticias = servicioNoticia.listarNoticias();
-            model.put("noticias", noticias);
+            model.put("home", noticias);
 
         } catch (Exception e) {
             model.put("error", "Error al listar las noticias.");

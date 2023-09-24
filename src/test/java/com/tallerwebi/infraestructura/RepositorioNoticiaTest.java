@@ -4,9 +4,14 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
-import com.tallerwebi.dominio.Entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Noticia;
 
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
+import com.tallerwebi.presentacion.ControladorNoticia;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -28,6 +35,15 @@ public class RepositorioNoticiaTest {
 
     @Autowired
     private RepositorioNoticia repositorioNoticia;
+    private Noticia noticiaMock;
+
+    @BeforeEach
+    public void init(){
+        noticiaMock = mock(Noticia.class);
+        when(noticiaMock.getIdNoticia()).thenReturn(1L);
+        when(noticiaMock.getTitulo()).thenReturn("Titulo de la noticia");
+        when(noticiaMock.getCategoria()).thenReturn("categoria");
+    }
 
     @Transactional
     @Rollback

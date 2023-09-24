@@ -1,8 +1,8 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.infraestructura.RepositorioCategoria;
-import com.tallerwebi.dominio.Entidades.Noticia;
-import com.tallerwebi.dominio.Servicios.ServicioNoticia;
+import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,14 +24,11 @@ public class ControladorNoticiaTest {
     private ControladorNoticia controladorNoticia;
     private ServicioNoticia servicioNoticiaMock;
     private Noticia noticiaMock;
-    private RepositorioCategoria repositorioCategoriaMock;
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
 
     @BeforeEach
     public void init(){
-
-
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
@@ -46,7 +43,6 @@ public class ControladorNoticiaTest {
 
     @Test
     public void queAlListarLasNoticiasSeCargueElHome() {
-
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.listarNoticias();
 
@@ -68,9 +64,6 @@ public class ControladorNoticiaTest {
 
     @Test
     public void queAlCrearUnaNoticiaRedireccioneAlHome() {
-
-        // preparacion
-
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock);
 
@@ -92,8 +85,6 @@ public class ControladorNoticiaTest {
 
     @Test
     public void queCuandoSeBorreUnaNoticiaRedireccioneAlHome(){
-        // preparacion
-
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
 
@@ -136,7 +127,6 @@ public class ControladorNoticiaTest {
 
     @Test
     public void buscarNoticiasPorTituloYLasCargueEnElHome(){
-
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getTitulo());
 
@@ -155,5 +145,4 @@ public class ControladorNoticiaTest {
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al buscar noticia."));
     }
-
 }

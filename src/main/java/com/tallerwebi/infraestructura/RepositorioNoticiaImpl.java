@@ -1,8 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Entidades.Noticia;
-import com.tallerwebi.infraestructura.RepositorioNoticia;
-import com.tallerwebi.dominio.Entidades.Usuario;
+import com.tallerwebi.dominio.entidades.Noticia;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
