@@ -1,11 +1,9 @@
-package com.tallerwebi.dominio.Servicios;
+package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.Comentario;
 import com.tallerwebi.dominio.excepcion.DescripcionComentarioException;
-import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
 import com.tallerwebi.dominio.servicios.ServicioComentarioImpl;
-import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioComentario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

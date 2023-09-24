@@ -51,7 +51,7 @@ public class ControladorNoticia {
             return new ModelAndView("error", model);
         }
 
-        return new ModelAndView("redirect:/home" , model);
+        return new ModelAndView("redirect:/cargar-noticia" , model);
     }
 
 

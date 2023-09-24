@@ -63,12 +63,12 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queAlCrearUnaNoticiaRedireccioneAlHome() {
+    public void queAlCrearUnaNoticiaRedireccioneACargarNoticia() {
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock);
 
         // validacion
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/cargar-noticia"));
     }
 
     @Test
