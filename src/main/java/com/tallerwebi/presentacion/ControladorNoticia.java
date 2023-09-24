@@ -38,8 +38,17 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home", model);
     }
 
+    @RequestMapping(path = "/crear-noticia", method = RequestMethod.GET)
+    public ModelAndView crearNoticia() {
+
+        ModelMap model = new ModelMap();
+
+        model.put("datosNoticia", new Noticia());
+
+        return new ModelAndView("cargar-noticia", model);
+    }
+
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
-    //@RequestParam("imagenArchivo") String multipartFile
     public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia ) {
 
         ModelMap model = new ModelMap();
@@ -53,6 +62,7 @@ public class ControladorNoticia {
 
         return new ModelAndView("redirect:/cargar-noticia" , model);
     }
+
 
 
     @RequestMapping(path = "/noticia/borrar", method = RequestMethod.POST)
