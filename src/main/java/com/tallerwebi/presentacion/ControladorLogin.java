@@ -63,7 +63,7 @@ public class ControladorLogin {
     public ModelAndView nuevoUsuario() {
         ModelMap model = new ModelMap();
         model.put("usuario", new Usuario());
-        return new ModelAndView("nuevo-usuario", model);
+        return new ModelAndView("registro", model);
     }
 
     @RequestMapping(path = "/home", method = RequestMethod.GET)

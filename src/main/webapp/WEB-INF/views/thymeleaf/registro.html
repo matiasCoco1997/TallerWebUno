@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <script src="https://cdn.tailwindcss.com"></script>
   <title>Document</title>
 </head>
@@ -55,7 +55,7 @@
         <div class="w-[80%] mx-auto">
           <label class="text-white text-2xl">Rol</label>
           <br>
-          <select th:field="*{rol}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+          <select  class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
             <option value="lector">Lector</option>
             <option value="periodista">Periodista</option>
           </select>

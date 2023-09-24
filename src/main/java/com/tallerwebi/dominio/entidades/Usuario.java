@@ -24,7 +24,7 @@ public class Usuario {
     private Date fechaDeNacimiento;
     private String email;
     private String password;
-    private String fotoPerfil;
+    private String fotoPerfil; //falta
     //private String rol;
     private Boolean activo = false;
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
