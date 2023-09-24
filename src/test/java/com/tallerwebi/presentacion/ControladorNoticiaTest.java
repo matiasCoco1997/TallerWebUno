@@ -65,9 +65,6 @@ public class ControladorNoticiaTest {
 
     @Test
     public void queAlCrearUnaNoticiaRedireccioneAlHome() {
-
-        // preparacion
-
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock);
 
