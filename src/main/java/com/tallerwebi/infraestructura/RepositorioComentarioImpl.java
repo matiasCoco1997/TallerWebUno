@@ -1,7 +1,7 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Entidades.Comentario;
-import com.tallerwebi.dominio.Entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Comentario;
+import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.excepcion.DescripcionComentarioException;
 import lombok.SneakyThrows;
 import org.hibernate.Session;

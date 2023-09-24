@@ -1,7 +1,7 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.Entidades.Comentario;
-import com.tallerwebi.dominio.Servicios.ServicioComentario;
+import com.tallerwebi.dominio.entidades.Comentario;
+import com.tallerwebi.dominio.servicios.ServicioComentario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

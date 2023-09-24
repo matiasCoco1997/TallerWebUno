@@ -1,6 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.Entidades.Comentario;
+import com.tallerwebi.dominio.entidades.Comentario;
 import com.tallerwebi.dominio.excepcion.DescripcionComentarioException;
 
 import java.util.List;
