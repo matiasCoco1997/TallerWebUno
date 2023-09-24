@@ -2,13 +2,11 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.Entidades.Comentario;
 import com.tallerwebi.dominio.Servicios.ServicioComentario;
-import com.tallerwebi.dominio.excepcion.DescripcionComentarioException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -27,17 +25,17 @@ public class ControladorComentario {
             servicioComentario.guardarComentario(comentario);
             return ResponseEntity.ok(comentario); // 200 OK
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el comentario" + e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al guardar el comentario mono");
         }
     }
 
 @GetMapping("/comentarios/publicacion/{idPublicacion}")
-    public List<Comentario> listarComentario(@PathVariable Long idPublicacion) {
+    public ResponseEntity<Object> listarComentario(@PathVariable Long idPublicacion) {
         try {
             List<Comentario> comentarios =servicioComentario.buscarComentarios(idPublicacion);
-            return comentarios; // 200 OK
+            return ResponseEntity.ok(comentarios); // 200 OK
         } catch (Exception e) {
-            return (List<Comentario>) ResponseEntity.notFound().build(); // Devuelve 404 ;
+            return ResponseEntity.notFound().build(); // Devuelve 404 ;
         }
     }
 
