@@ -40,7 +40,6 @@ public class ControladorNoticia {
 
     @RequestMapping(path = "/crear-noticia", method = RequestMethod.GET)
     public ModelAndView crearNoticia() {
-
         ModelMap model = new ModelMap();
 
         model.put("datosNoticia", new Noticia());
