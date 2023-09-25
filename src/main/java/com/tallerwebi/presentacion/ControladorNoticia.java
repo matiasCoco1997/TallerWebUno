@@ -19,8 +19,6 @@ public class ControladorNoticia {
         this.servicioNoticia = servicioNoticia;
     }
 
-
-
     @RequestMapping(path = "/noticia/listar", method = RequestMethod.GET)
     public ModelAndView listarNoticias() {
 
@@ -38,7 +36,7 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home", model);
     }
 
-    @RequestMapping(path = "/crear-noticia", method = RequestMethod.GET)
+    @RequestMapping(path = "/noticia/cargar", method = RequestMethod.GET)
     public ModelAndView crearNoticia() {
         ModelMap model = new ModelMap();
 
@@ -64,8 +62,7 @@ public class ControladorNoticia {
 
 
 
-    @RequestMapping(path = "/noticia/borrar", method = RequestMethod.POST)
-    //@RequestParam("imagenArchivo") String multipartFile
+    @RequestMapping(path = "/noticia/borrar", method = RequestMethod.DELETE)
     public ModelAndView borrarNoticiaPorId( @ModelAttribute("datosNoticia") Long idNoticia ) {
 
         ModelMap model = new ModelMap();
@@ -80,7 +77,7 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home", model);
     }
 
-    @RequestMapping(path = "/noticia/buscarNoticiaPorTitulo", method = RequestMethod.POST)
+    @RequestMapping(path = "/noticia/buscarNoticiaPorTitulo", method = { RequestMethod.GET, RequestMethod.POST })
     public ModelAndView buscarNoticiaPorTitulo( @ModelAttribute("datosNoticia") String tituloNoticia ) {
 
         ModelMap model = new ModelMap();
