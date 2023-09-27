@@ -35,14 +35,14 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     public List<Noticia> listarNoticias() {
 
         List<Noticia> noticias = repositorioNoticia.listarNoticias();
-
         List<Noticia> noticiasActivas = new ArrayList<>();
 
         for (Noticia noticia : noticias) {
-            if (noticia.getActiva() == true){
+            if (noticia.getActiva()){
                 noticiasActivas.add(noticia);
             }
         }
+
         return noticiasActivas;
     }
 
