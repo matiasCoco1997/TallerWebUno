@@ -2,9 +2,13 @@ package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
+import com.tallerwebi.presentacion.DatosLogin;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +48,14 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         }
 
         return noticiasActivas;
+    }
+
+    @RequestMapping("/noticia/login")
+    public ModelAndView cerrarSesion() {
+
+        ModelMap modelo = new ModelMap();
+        modelo.put("datosLogin", new DatosLogin());
+        return new ModelAndView("redirect:/login", modelo);
     }
 
     @Override

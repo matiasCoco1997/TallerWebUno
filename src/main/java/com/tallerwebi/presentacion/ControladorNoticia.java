@@ -19,7 +19,7 @@ public class ControladorNoticia {
         this.servicioNoticia = servicioNoticia;
     }
 
-    @RequestMapping(path = "/noticia/listar")
+    @RequestMapping(path = {"/noticia/listar", "/noticia","/noticia/"})
     public ModelAndView listarNoticias() {
 
         ModelMap modelo = new ModelMap();
@@ -106,4 +106,11 @@ public class ControladorNoticia {
         return new ModelAndView("home", model);
     }
 
+    @RequestMapping("/noticia/login")
+    public ModelAndView cerrarSesion() {
+
+        ModelMap modelo = new ModelMap();
+        modelo.put("datosLogin", new DatosLogin());
+        return new ModelAndView("redirect:/login", modelo);
+    }
 }
