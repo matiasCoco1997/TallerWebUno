@@ -29,6 +29,7 @@ public class ServicioNoticiaTest {
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
         when(noticiaMock.getCategoria()).thenReturn("categoria");
+        when(noticiaMock.getActiva()).thenReturn(true);
 
         this.repositorioNoticiaMock = mock(RepositorioNoticia.class);
         this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock);
