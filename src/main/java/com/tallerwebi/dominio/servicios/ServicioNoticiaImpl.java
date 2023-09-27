@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("servicioNoticia")
@@ -35,7 +36,14 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         List<Noticia> noticias = repositorioNoticia.listarNoticias();
 
-        return noticias;
+        List<Noticia> noticiasActivas = new ArrayList<>();
+
+        for (Noticia noticia : noticias) {
+            if (noticia.getActiva() == true){
+                noticiasActivas.add(noticia);
+            }
+        }
+        return noticiasActivas;
     }
 
     @Override
