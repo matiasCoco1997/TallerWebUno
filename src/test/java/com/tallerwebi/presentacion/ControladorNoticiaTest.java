@@ -1,6 +1,5 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 
@@ -12,7 +11,12 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.equalToObject;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 
 import static org.mockito.Mockito.*;
@@ -30,7 +34,7 @@ public class ControladorNoticiaTest {
     @BeforeEach
     public void init(){
         noticiaMock = mock(Noticia.class);
-        when(noticiaMock.getIdNoticia()).thenReturn(1L);
+        //when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
         when(noticiaMock.getCategoria()).thenReturn("categoria");
 
@@ -42,11 +46,21 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queAlListarLasNoticiasSeCargueElHome() {
+    public void queAlListarDosNoticiasSeCargueElHome() {
+
+        List<Noticia> noticias = new ArrayList<>();
+
+        noticias.add(noticiaMock);
+        noticias.add(noticiaMock);
+
+        when(servicioNoticiaMock.listarNoticias()).thenReturn(noticias);
+
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.listarNoticias();
+        List<Noticia> noticiasEnModelo = (List<Noticia>) modelAndView.getModel().get("noticias");
 
         // validacion
+        assertThat(noticiasEnModelo.size(), equalTo(2));
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
     }
 

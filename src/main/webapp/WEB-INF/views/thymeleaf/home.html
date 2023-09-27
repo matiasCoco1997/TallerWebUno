@@ -1,8 +1,9 @@
 <!DOCTYPE HTML>
-<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
 
   <title>Taller Web I</title>
 
@@ -24,9 +25,18 @@
   <div class = "container">
     <h1>Bienvenidos a Taller Web 1</h1>
 
-    <a href="login.html" class="btn btn-lg btn-primary btn-block">Volver</a>
+    <a href="login" class="btn btn-lg btn-primary btn-block">Volver</a>
   </div>
-  <img th:src="'data:image/jpeg;base64,' + ${imagenBase64}" alt="Imagen de la noticia">
+
+  <p>Listar</p>
+
+  <div th:each="noticia : ${noticias}">
+
+      <p th:text="${noticia.idNoticia}"></p>
+      <p th:text="${noticia.titulo}"></p>
+
+  </div>
+
 </main>
 <!-- /.container -->
 

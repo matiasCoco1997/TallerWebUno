@@ -19,45 +19,46 @@ public class ControladorNoticia {
         this.servicioNoticia = servicioNoticia;
     }
 
-    @RequestMapping(path = "/noticia/listar", method = RequestMethod.GET)
+    @RequestMapping(path = "/noticia/listar")
     public ModelAndView listarNoticias() {
 
-        ModelMap model = new ModelMap();
+        ModelMap modelo = new ModelMap();
 
         try{
             List<Noticia> noticias = servicioNoticia.listarNoticias();
-            model.put("home", noticias);
+            modelo.put("titulo", "titulo");
+            modelo.put("noticias", noticias);
 
         } catch (Exception e) {
-            model.put("error", "Error al listar las noticias.");
-            return new ModelAndView("error", model);
+            modelo.put("error", "Error al listar las noticias.");
+            return new ModelAndView("error", modelo);
         }
 
-        return new ModelAndView("redirect:/home", model);
+        return new ModelAndView("home", modelo);
     }
 
     @RequestMapping(path = "/noticia/cargar", method = RequestMethod.GET)
     public ModelAndView crearNoticia() {
-        ModelMap model = new ModelMap();
+        ModelMap modelo = new ModelMap();
 
-        model.put("datosNoticia", new Noticia());
+        modelo.put("datosNoticia", new Noticia());
 
-        return new ModelAndView("cargar-noticia", model);
+        return new ModelAndView("cargar-noticia", modelo);
     }
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
     public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia ) {
 
-        ModelMap model = new ModelMap();
+        ModelMap modelo = new ModelMap();
 
         try{
             servicioNoticia.crearNoticia(noticia);
         } catch (Exception e) {
-            model.put("error", "Error al crear la noticia.");
-            return new ModelAndView("error", model);
+            modelo.put("error", "Error al crear la noticia.");
+            return new ModelAndView("error", modelo);
         }
 
-        return new ModelAndView("redirect:/cargar-noticia" , model);
+        return new ModelAndView("cargar-noticia" , modelo);
     }
 
 
@@ -65,16 +66,16 @@ public class ControladorNoticia {
     @RequestMapping(path = "/noticia/borrar", method = RequestMethod.DELETE)
     public ModelAndView borrarNoticiaPorId( @ModelAttribute("datosNoticia") Long idNoticia ) {
 
-        ModelMap model = new ModelMap();
+        ModelMap modelo = new ModelMap();
 
         try{
             servicioNoticia.borrarNoticiaPorId(idNoticia);
         } catch (Exception e) {
-            model.put("error", "Error al borrar la noticia.");
-            return new ModelAndView("error", model);
+            modelo.put("error", "Error al borrar la noticia.");
+            return new ModelAndView("error", modelo);
         }
 
-        return new ModelAndView("redirect:/home", model);
+        return new ModelAndView("home", modelo);
     }
 
     @RequestMapping(path = "/noticia/buscarNoticiaPorTitulo", method = { RequestMethod.GET, RequestMethod.POST })
@@ -87,9 +88,9 @@ public class ControladorNoticia {
 
         }  catch (Exception e) {
             model.put("error", "Error al buscar noticia.");
-            return new ModelAndView("redirect:/error", model);
+            return new ModelAndView("error", model);
         }
-        return new ModelAndView("redirect:/home", model);
+        return new ModelAndView("home", model);
     }
 
     @RequestMapping(path = "/noticia/buscarNoticiaPorCategoria", method = RequestMethod.POST)
@@ -101,9 +102,9 @@ public class ControladorNoticia {
             servicioNoticia.buscarNoticiaPorCategoria(categoria);
         }  catch (Exception e) {
             model.put("error", "Error al buscar noticia por categoria.");
-            return new ModelAndView("redirect:/error", model);
+            return new ModelAndView("error", model);
         }
-        return new ModelAndView("redirect:/home", model);
+        return new ModelAndView("home", model);
     }
 
 }

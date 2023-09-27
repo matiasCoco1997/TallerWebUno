@@ -2,15 +2,19 @@ package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service("servicioNoticia")
+@Transactional
 public class ServicioNoticiaImpl implements ServicioNoticia {
 
     private final RepositorioNoticia repositorioNoticia;
 
+    @Autowired
     public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia) {
         this.repositorioNoticia = repositorioNoticia;
     }
