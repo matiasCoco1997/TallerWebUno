@@ -26,7 +26,6 @@ public class ControladorNoticia {
 
         try{
             List<Noticia> noticias = servicioNoticia.listarNoticias();
-            modelo.put("titulo", "titulo");
             modelo.put("noticias", noticias);
 
         } catch (Exception e) {
