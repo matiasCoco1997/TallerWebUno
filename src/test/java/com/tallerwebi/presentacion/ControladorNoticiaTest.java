@@ -34,7 +34,7 @@ public class ControladorNoticiaTest {
     @BeforeEach
     public void init(){
         noticiaMock = mock(Noticia.class);
-        //when(noticiaMock.getIdNoticia()).thenReturn(1L);
+        when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
         when(noticiaMock.getCategoria()).thenReturn("categoria");
 
