@@ -4,11 +4,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <script src="https://cdn.tailwindcss.com"></script>
-  <title>Document</title>
+  <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
+  <title>Sunn - Registrarse</title>
 </head>
 <body class="bg-black">
 <main class="h-[100vh]">
-  <img th:src="@{./WEB-INF/imgs/logo.jpg}" alt="logo" class="lg:w-[20%] w-[70%]">
+  <img th:src="@{/imagenes/logo-sunn.png}" alt="logo" class="lg:w-[20%] w-[70%]">
 
   <form th:action="@{/validar-registro}" method="POST" th:object="${usuario}" class="flex flex-col">
     <div class="mx-auto w-[80%] pt-8 pb-8 lg:flex ">
@@ -63,6 +64,7 @@
       </div>
     </div>
     <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto" value="Registrarme" name="registro">
+    <a href="login" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl">Ya tengo cuenta</a>
   </form>
 </main>
 </body>

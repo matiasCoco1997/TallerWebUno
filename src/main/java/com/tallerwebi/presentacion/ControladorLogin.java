@@ -66,6 +66,13 @@ public class ControladorLogin {
         return new ModelAndView("registro", model);
     }
 
+    @RequestMapping(path = "/registrarme", method = RequestMethod.GET)
+    public ModelAndView redirigirALaVistaRegistro() {
+        ModelMap model = new ModelMap();
+        model.put("usuario", new Usuario());
+        return new ModelAndView("redirect:/registrarse", model);
+    }
+
     @RequestMapping(path = "/home", method = RequestMethod.GET)
     public ModelAndView irAHome() {
         return new ModelAndView("home");
@@ -75,5 +82,6 @@ public class ControladorLogin {
     public ModelAndView inicio() {
         return new ModelAndView("redirect:/login");
     }
+
 }
 
