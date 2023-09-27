@@ -61,7 +61,7 @@ public class ControladorNoticiaTest {
 
         // validacion
         assertThat(noticiasEnModelo.size(), equalTo(2));
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("home"));
     }
 
     @Test
@@ -82,7 +82,7 @@ public class ControladorNoticiaTest {
         ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock);
 
         // validacion
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/cargar-noticia"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("cargar-noticia"));
     }
 
     @Test
@@ -103,7 +103,7 @@ public class ControladorNoticiaTest {
         ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
 
         // validacion
-        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/home"));
+        assertThat(modelAndView.getViewName() , equalToIgnoringCase("home"));
     }
 
     @Test
@@ -124,7 +124,7 @@ public class ControladorNoticiaTest {
         ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorCategoria(noticiaMock.getCategoria());
 
         // validacion
-        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/home"));
+        assertThat(modelAndView.getViewName() , equalToIgnoringCase("home"));
     }
 
     @Test
@@ -145,7 +145,7 @@ public class ControladorNoticiaTest {
         ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getTitulo());
 
         // validacion
-        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/home"));
+        assertThat(modelAndView.getViewName() , equalToIgnoringCase("home"));
     }
 
     @Test
