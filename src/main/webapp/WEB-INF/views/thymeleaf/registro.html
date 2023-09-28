@@ -13,54 +13,64 @@
 
   <form th:action="@{/validar-registro}" method="POST" th:object="${usuario}" class="flex flex-col">
     <div class="mx-auto w-[80%] pt-8 pb-8 lg:flex ">
+
       <div class="flex flex-col lg:w-[50%] gap-6">
+
         <div class="w-[80%] mx-auto">
           <label class="text-white text-2xl">Nombre
-            <input type="text" th:field="*{nombre}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black">
+            <input type="text" th:field="*{nombre}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black" required>
           </label>
         </div>
 
         <div class="w-[80%] mx-auto">
           <label class="text-white text-2xl">País
-            <input type="text" th:field="*{pais}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+            <input type="text" th:field="*{pais}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
           </label>
         </div>
+
         <div class="w-[80%] mx-auto">
           <label class="text-white text-2xl">Fecha de nacimiento
-            <input type="date" th:field="*{fechaDeNacimiento}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+            <input type="date" th:field="*{fechaDeNacimiento}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
           </label>
         </div>
+
         <div class="w-[80%] mx-auto">
           <label class="text-white text-2xl">Contraseña
-            <input type="password" th:field="*{password}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+            <input type="password" th:field="*{password}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
           </label>
         </div>
+
       </div>
+
       <div class="flex flex-col lg:w-[50%] lg:mt-0 mt-8 gap-6">
+
         <div class="w-[80%] mx-auto">
           <label class="text-white text-2xl">Apellido</label>
           <br>
-          <input type="text" th:field="*{apellido}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2  mx-auto border border-black border-b-[#444] bg-black">
+          <input type="text" th:field="*{apellido}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2  mx-auto border border-black border-b-[#444] bg-black" required>
         </div>
+
         <div class="w-[80%] mx-auto">
           <label class="text-white text-2xl">Ciudad</label>
           <br>
-          <input type="text" th:field="*{ciudad}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+          <input type="text" th:field="*{ciudad}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
         </div>
+
         <div class="w-[80%] mx-auto">
           <label class="text-white text-2xl">Email</label>
           <br>
-          <input type="email" th:field="*{email}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+          <input type="email" th:field="*{email}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
         </div>
 
         <div class="w-[80%] mx-auto">
           <label class="text-white text-2xl">Rol</label>
           <br>
-          <select  class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+          <select  class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
             <option value="lector">Lector</option>
             <option value="periodista">Periodista</option>
           </select>
         </div>
+
       </div>
     </div>
     <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto" value="Registrarme" name="registro" style="cursor: pointer">
