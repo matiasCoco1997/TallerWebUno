@@ -11,18 +11,25 @@
 <main class="h-[100vh] lg:flex">
     <div class="bg-black lg:w-[40%]">
         <img th:src="@{/imagenes/logo-sunn.png}" class="lg:w-[45%] w-[70%]">
+
         <div class="mt-16 pb-4">
+
             <h3 class="text-white text-4xl text-center">Iniciar Sesión</h3>
-            <form action="#" method="POST" class="flex flex-col mt-14 mb-14">
-                <input type="text" name="email"
-                       class="lg:w-[70%] w-[80%] h-[45px] mx-auto mb-8 pl-2 text-white text-xl bg-black border border-black border-b-[#444]" placeholder="Email">
-                <input type="password" name="password"
-                       class="lg:w-[70%] w-[80%] h-[45px] mx-auto mb-2 pl-2 text-white text-xl bg-black border border-black border-b-[#444]" placeholder="Contraseña">
+
+            <form action="#" th:action="@{/validar-login}" method="POST" th:object="${datosLogin}" class="flex flex-col mt-14 mb-14" accept-charset="UTF-8">
+
+                <input th:field="*{email}" type="text" name="email" class="lg:w-[70%] w-[80%] h-[45px] mx-auto mb-8 pl-2 text-white text-xl bg-black border border-black border-b-[#444]" placeholder="Email" required>
+                <input th:field="*{password}" type="password" name="password" class="lg:w-[70%] w-[80%] h-[45px] mx-auto mb-2 pl-2 text-white text-xl bg-black border border-black border-b-[#444]" placeholder="Contraseña" required>
+
                 <a href="#" class="text-s text-white text-right lg:mr-20 mr-8">Olvidé mi contraseña</a>
+
                 <input type="submit" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl" value="Iniciar Sesión" name="iniciarSesion">
             </form>
-            <a href="registrarme" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl">Registrarse</a>
+
+            <a href="redirigirAVistaRegistro" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl">Registrarse</a>
+
         </div>
+
     </div>
     <div class="bg-[#1A1A1A] lg:w-[60%] p-10">
         <p class="text-white text-2xl text-left lg:mt-48 mt-8"><strong class="text-3xl">Bienvenidos a SUNN</strong>, <br> la red social donde podrás informarte con las noticias más importantes del mundo.</p>

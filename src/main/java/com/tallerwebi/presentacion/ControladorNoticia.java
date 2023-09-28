@@ -60,8 +60,6 @@ public class ControladorNoticia {
         return new ModelAndView("cargar-noticia" , modelo);
     }
 
-
-
     @RequestMapping(path = "/noticia/borrar", method = RequestMethod.DELETE)
     public ModelAndView borrarNoticiaPorId( @ModelAttribute("datosNoticia") Long idNoticia ) {
 
