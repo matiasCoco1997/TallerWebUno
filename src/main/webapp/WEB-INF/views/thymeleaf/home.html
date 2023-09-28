@@ -35,6 +35,12 @@
 
   <p style="font-weight: bold">Lista de noticias:</p>
 
+  <div style="background-color: rgba(255,0,0,0.57); margin-bottom: 20px">
+    <h3>Mail del usuario:</h3>
+    <p th:text="${mailUsuarioLogueado}"></p>
+  </div>
+
+
   <div th:each="noticia : ${noticias}" style="background-color: rgba(255,0,0,0.57); margin-bottom: 20px">
 
     <h3>Id de Noticia:</h3>

@@ -8,6 +8,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -20,11 +21,12 @@ public class ControladorNoticia {
     }
 
     @RequestMapping(path = {"/noticia/listar", "/noticia","/noticia/", "/home", "/home/"})
-    public ModelAndView listarNoticias() {
-
+    public ModelAndView listarNoticias(HttpSession session) {
         ModelMap modelo = new ModelMap();
 
         try{
+            String mailUsuarioLogueado = (String) session.getAttribute("mailUsuarioLogueado");
+            modelo.put("mailUsuarioLogueado", mailUsuarioLogueado);
             List<Noticia> noticias = servicioNoticia.listarNoticias();
             modelo.put("noticias", noticias);
 

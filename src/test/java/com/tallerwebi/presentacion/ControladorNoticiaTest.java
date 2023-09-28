@@ -56,7 +56,7 @@ public class ControladorNoticiaTest {
         when(servicioNoticiaMock.listarNoticias()).thenReturn(noticias);
 
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.listarNoticias();
+        ModelAndView modelAndView = controladorNoticia.listarNoticias(sessionMock);
         List<Noticia> noticiasEnModelo = (List<Noticia>) modelAndView.getModel().get("noticias");
 
         // validacion
@@ -67,10 +67,10 @@ public class ControladorNoticiaTest {
     @Test
     public void queAlListarLasNoticiasEnElHomeRetorneUnaException() throws Exception {
         // preparacion
-        when(controladorNoticia.listarNoticias()).thenThrow(RuntimeException.class);
+        when(controladorNoticia.listarNoticias(sessionMock)).thenThrow(RuntimeException.class);
 
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.listarNoticias();
+        ModelAndView modelAndView = controladorNoticia.listarNoticias(sessionMock);
 
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al listar las noticias."));
