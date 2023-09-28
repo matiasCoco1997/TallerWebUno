@@ -30,27 +30,6 @@ public class ControladorLogin {
         return new ModelAndView("login", modelo);
     }
 
-
-    /*
-    @RequestMapping(path = "/form", method = RequestMethod.POST)
-    public ModelAndView form(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request) {
-        ModelMap modelo = new ModelMap();
-
-        Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
-
-        if (usuarioBuscado != null) {
-            return new ModelAndView("redirect:/home");
-        } else {
-            modelo.put("error", "Usuario o clave incorrecta");
-        }
-        return new ModelAndView("login", modelo);
-
-    }
-
-     */
-
-
-
     @RequestMapping(path = "/validar-login", method = RequestMethod.POST)
     public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request) {
         ModelMap model = new ModelMap();
