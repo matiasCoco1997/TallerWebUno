@@ -3,11 +3,10 @@ package com.tallerwebi.dominio.entidades;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -25,9 +24,12 @@ public class Usuario {
     private String email;
     private String password;
     private String fotoPerfil; //falta
-    //private String rol;
     private Boolean activo = false;
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
     private Integer cantidadSeguidores;
+    @Transient
+    private List<Usuario> seguidos; //revisar
+    @Transient
+    private List<Usuario> seguidores; //revisar
 
 }

@@ -37,7 +37,7 @@ public class ControladorNoticia {
 
         return new ModelAndView("home", modelo);
     }
-    /*
+
     @RequestMapping(path = "/noticia/cargar", method = RequestMethod.GET)
     public ModelAndView cargarNoticia() {
         ModelMap modelo = new ModelMap();
@@ -46,7 +46,7 @@ public class ControladorNoticia {
 
         return new ModelAndView("cargar-noticia", modelo);
     }
-   */
+
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
     public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia ) {
