@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.excepcion.DescripcionComentarioException;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
 import com.tallerwebi.dominio.servicios.ServicioComentarioImpl;
 import com.tallerwebi.infraestructura.RepositorioComentario;
+import com.tallerwebi.infraestructura.RepositorioComentarioTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

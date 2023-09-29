@@ -39,4 +39,12 @@ public class RepositorioComentarioImpl implements RepositorioComentario {
                 .add(Restrictions.eq("idNoticia", idPublicacion))
                 .list();
     }
+
+    @Override
+    public Comentario buscarPorId(Long idComentario) {
+        final Session session = sessionFactory.getCurrentSession();
+        return (Comentario) session.createCriteria(Comentario.class)
+                .add(Restrictions.eq("id", idComentario))
+                .uniqueResult();
+    }
 }

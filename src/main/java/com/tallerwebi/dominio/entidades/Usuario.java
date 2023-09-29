@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Date;
+import java.util.ArrayList;
 
 @Entity
 @Getter
@@ -29,5 +30,6 @@ public class Usuario {
     private Boolean activo = false;
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
     private Integer cantidadSeguidores;
+    private ArrayList<Usuario> seguidos;
 
 }
