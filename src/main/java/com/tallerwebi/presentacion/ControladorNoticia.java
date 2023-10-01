@@ -25,9 +25,12 @@ public class ControladorNoticia {
         ModelMap modelo = new ModelMap();
 
         try{
-            String mailUsuarioLogueado = (String) session.getAttribute("emailUsuarioLogueado");
-            modelo.put("emailUsuarioLogueado", mailUsuarioLogueado);
+            String mailUsuarioLogueado = (String) session.getAttribute("sessionEmailUsuarioLogueado");
+
+            modelo.put("sessionEmailUsuarioLogueado", mailUsuarioLogueado);
+
             List<Noticia> noticias = servicioNoticia.listarNoticias();
+
             modelo.put("noticias", noticias);
 
         } catch (Exception e) {

@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class ControladorLogin {
@@ -34,11 +38,17 @@ public class ControladorLogin {
 
     @RequestMapping(path = "/validar-login", method = RequestMethod.POST)
     public ModelAndView validarLogin(@ModelAttribute("datosLogin") DatosLogin datosLogin, HttpServletRequest request) {
+
         ModelMap model = new ModelMap();
 
         Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
+
         if (usuarioBuscado != null) {
-            request.setAttribute("emailUsuarioLogueado", datosLogin.getEmail());//guardo en la sesion el mail del usuario
+
+            HttpSession session =  request.getSession();
+
+            session.setAttribute("sessionEmailUsuarioLogueado", usuarioBuscado.getEmail());
+
             return new ModelAndView("redirect:/home");
         } else {
             model.put("error", "Usuario o clave incorrecta");

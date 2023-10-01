@@ -61,11 +61,9 @@ public class ControladorLoginTest {
 	@Test
 	public void loginConUsuarioYPasswordCorrectosDeberiaLLevarAHome(){
 		// preparacion
-		Usuario usuarioEncontradoMock = mock(Usuario.class);
-
 		when(requestMock.getSession()).thenReturn(sessionMock);
-		when(servicioLoginMock.consultarUsuario(anyString(), anyString())).thenReturn(usuarioEncontradoMock);
-		
+		when(servicioLoginMock.consultarUsuario(anyString(), anyString())).thenReturn(usuarioMock);
+
 		// ejecucion
 		ModelAndView modelAndView = controladorLogin.validarLogin(datosLoginMock, requestMock);
 		

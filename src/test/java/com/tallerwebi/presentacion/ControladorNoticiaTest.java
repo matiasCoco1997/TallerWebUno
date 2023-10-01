@@ -16,7 +16,6 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.equalToObject;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 
 import static org.mockito.Mockito.*;
