@@ -24,7 +24,7 @@ public class ControladorLogin {
         this.servicioLogin = servicioLogin;
     }
 
-    @RequestMapping( path = {"/", "/login"}, method = RequestMethod.GET)
+    @RequestMapping( path ="/login", method = RequestMethod.GET)
     public ModelAndView irALogin() {
         ModelMap modelo = new ModelMap();
         modelo.put("datosLogin", new DatosLogin());
@@ -82,6 +82,11 @@ public class ControladorLogin {
     @RequestMapping(path = "/redirigirAVistaRegistro", method = RequestMethod.GET)
     public ModelAndView redirigirALaVistaRegistro() {
         return new ModelAndView("redirect:/registrarse");
+    }
+
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public ModelAndView inicio() {
+        return new ModelAndView("redirect:/login");
     }
 
 }
