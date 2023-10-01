@@ -35,7 +35,7 @@ public class ControladorNoticia {
 
         } catch (Exception e) {
             modelo.put("error", "Error al listar las noticias.");
-            return new ModelAndView("error", modelo);
+            modelo.put("noticias", modelo);
         }
 
         return new ModelAndView("home", modelo);

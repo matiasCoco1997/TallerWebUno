@@ -9,12 +9,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -28,7 +24,7 @@ public class ControladorLogin {
         this.servicioLogin = servicioLogin;
     }
 
-    @RequestMapping("/login")
+    @RequestMapping( path = {"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView irALogin() {
         ModelMap modelo = new ModelMap();
         modelo.put("datosLogin", new DatosLogin());
@@ -43,16 +39,21 @@ public class ControladorLogin {
 
         Usuario usuarioBuscado = servicioLogin.consultarUsuario(datosLogin.getEmail(), datosLogin.getPassword());
 
-        if (usuarioBuscado != null) {
+        try {
+            if (usuarioBuscado != null) {
 
-            HttpSession session =  request.getSession();
+                HttpSession session =  request.getSession();
 
-            session.setAttribute("sessionEmailUsuarioLogueado", usuarioBuscado.getEmail());
+                session.setAttribute("sessionEmailUsuarioLogueado", usuarioBuscado.getEmail());
 
-            return new ModelAndView("redirect:/home");
-        } else {
-            model.put("error", "Usuario o clave incorrecta");
+                return new ModelAndView("redirect:/home");
+            } else {
+                model.put("error", "Usuario o clave incorrecta");
+            }
+        } catch (Exception e){
+            model.put("error", "Ocurrio un error al loguearse.");
         }
+
         return new ModelAndView("login", model);
     }
 
@@ -63,10 +64,10 @@ public class ControladorLogin {
             servicioLogin.registrar(usuario);
         } catch (UsuarioExistente e) {
             model.put("error", "El usuario ya existe");
-            return new ModelAndView("nuevo-usuario", model); //ver el registrarse para la vista
+            return new ModelAndView("registro", model);
         } catch (Exception e) {
             model.put("error", "Error al registrar el nuevo usuario");
-            return new ModelAndView("nuevo-usuario", model);
+            return new ModelAndView("registro", model);
         }
         return new ModelAndView("redirect:/login");
     }
@@ -82,12 +83,6 @@ public class ControladorLogin {
     public ModelAndView redirigirALaVistaRegistro() {
         return new ModelAndView("redirect:/registrarse");
     }
-
-    @RequestMapping(path = "/", method = RequestMethod.GET)
-    public ModelAndView inicio() {
-        return new ModelAndView("redirect:/login");
-    }
-
 
 }
 
