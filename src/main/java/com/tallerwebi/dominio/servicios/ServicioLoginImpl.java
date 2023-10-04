@@ -38,11 +38,13 @@ public class ServicioLoginImpl implements ServicioLogin {
                 usuario.getEmail().equals("") ||
                 usuario.getPassword().equals("") ||
                 usuario.getPais().equals("") ||
-                usuario.getCiudad().equals("") ||
-                usuario.getFechaDeNacimiento().equals("") ){
+                usuario.getCiudad().equals("")
+            ){
 
             throw new CampoVacio();
         }
+
+
 
 
         //servicioLoginDao.guardar(usuario);
