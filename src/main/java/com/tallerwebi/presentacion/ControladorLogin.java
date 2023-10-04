@@ -71,7 +71,7 @@ public class ControladorLogin {
             return new ModelAndView("registro", model);
         } catch (CampoVacio e) {
             model.put("error", "Debe completar todos los campos.");
-            return new ModelAndView("redirect:/registrarse", model);
+            return new ModelAndView("registro", model);
         } catch (Exception e) {
             model.put("error", "Error al registrar el nuevo usuario");
             return new ModelAndView("registro", model);

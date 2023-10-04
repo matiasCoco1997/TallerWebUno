@@ -15,7 +15,7 @@ public class Plan {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idPlan;
-    private String sescripcion;
+    private String descripcion;
     private Double precio;
     private Integer cantidadUsuarioDisponibles;
 }

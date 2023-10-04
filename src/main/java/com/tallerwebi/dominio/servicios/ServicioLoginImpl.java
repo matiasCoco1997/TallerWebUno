@@ -33,9 +33,17 @@ public class ServicioLoginImpl implements ServicioLogin {
             throw new UsuarioExistente();
         }
 
-        if(usuario.getNombre().equals("") ){
+        if(     usuario.getNombre().equals("") ||
+                usuario.getApellido().equals("") ||
+                usuario.getEmail().equals("") ||
+                usuario.getPassword().equals("") ||
+                usuario.getPais().equals("") ||
+                usuario.getCiudad().equals("") ||
+                usuario.getFechaDeNacimiento().equals("") ){
+
             throw new CampoVacio();
         }
+
 
         //servicioLoginDao.guardar(usuario);
     }

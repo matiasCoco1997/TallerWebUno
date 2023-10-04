@@ -60,17 +60,21 @@
                     <input type="date" th:field="*{fechaDeNacimiento}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
                 </div>
 
-
+                <!--
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl" for="imagenFile">Seleccione su foto de perfil</label>
                     <br>
                     <input type="file" id="imagenFile" th:field="*{fotoPerfil}" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black">
                 </div>
+                -->
 
 
             </div>
 
         </div>
+
+        <p th:if="${error}" th:text="${error}" style="color:red"></p>
+
         <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto"
                value="Registrarme" name="Registrarse" style="cursor: pointer">
         <a href="login" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl"
