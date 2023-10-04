@@ -59,8 +59,7 @@ public class ControladorLogin {
         return new ModelAndView("login", model);
     }
 
-    //@RequestMapping(path = "/registrarse", method = RequestMethod.POST)
-    @PostMapping("/validar-registro")
+    @RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
     public ModelAndView registrarme(@ModelAttribute("usuario") Usuario usuario) {
         ModelMap model = new ModelMap();
 
@@ -72,12 +71,13 @@ public class ControladorLogin {
             return new ModelAndView("registro", model);
         } catch (CampoVacio e) {
             model.put("error", "Debe completar todos los campos.");
-            return new ModelAndView("registro", model);
+            return new ModelAndView("redirect:/registrarse", model);
         } catch (Exception e) {
             model.put("error", "Error al registrar el nuevo usuario");
             return new ModelAndView("registro", model);
         }
-        return new ModelAndView("redirect:/login", model);
+
+        return new ModelAndView("redirect:/login");
     }
 
     @RequestMapping(path = "/registrarse", method = RequestMethod.GET)

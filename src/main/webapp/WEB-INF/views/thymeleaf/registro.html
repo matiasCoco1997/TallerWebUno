@@ -1,78 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
-  <title>Sunn - Registrarse</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
+    <title>Sunn - Registrarse</title>
 </head>
 <body class="bg-black">
 <main class="h-[100vh]">
-  <img th:src="@{/imagenes/logo-sunn.png}" alt="logo" class="lg:w-[20%] w-[70%]">
+    <img th:src="@{/imagenes/logo-sunn.png}" alt="logo" class="lg:w-[20%] w-[70%]">
 
-  <form th:action="@{/validar-registro}" method="POST" th:object="${usuario}" class="flex flex-col" accept-charset="UTF-8">
-    <div class="mx-auto w-[80%] pt-8 pb-8 lg:flex ">
+    <form th:action="@{/validar-registro}" method="POST" th:object="${usuario}" class="flex flex-col"
+          accept-charset="UTF-8">
+        <div class="mx-auto w-[80%] pt-8 pb-8 lg:flex ">
 
-      <div class="flex flex-col lg:w-[50%] gap-6">
+            <div class="flex flex-col lg:w-[50%] gap-6">
 
-        <div class="w-[80%] mx-auto">
-          <label class="text-white text-2xl">Nombre</label>
-            <input type="text" th:field="*{nombre}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black" >
+                <div class="w-[80%] mx-auto">
+                    <label class="text-white text-2xl">Nombre</label>
+                    <input type="text" th:field="*{nombre}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black">
+                </div>
+
+                <div class="w-[80%] mx-auto">
+                    <label class="text-white text-2xl">Apellido</label>
+                    <br>
+                    <input type="text" th:field="*{apellido}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2  mx-auto border border-black border-b-[#444] bg-black">
+                </div>
+
+                <div class="w-[80%] mx-auto">
+                    <label class="text-white text-2xl">Email</label>
+                    <br>
+                    <input type="email" th:field="*{email}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+                </div>
+
+                <div class="w-[80%] mx-auto">
+                    <label class="text-white text-2xl">Contraseña</label>
+                    <input type="password" th:field="*{password}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+                </div>
+
+            </div>
+
+            <div class="flex flex-col lg:w-[50%] lg:mt-0 mt-8 gap-6">
+
+                <div class="w-[80%] mx-auto">
+                    <label class="text-white text-2xl">País</label>
+                    <input type="text" th:field="*{pais}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+
+                </div>
+
+                <div class="w-[80%] mx-auto">
+                    <label class="text-white text-2xl">Ciudad</label>
+                    <br>
+                    <input type="text" th:field="*{ciudad}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+                </div>
+
+                <div class="w-[80%] mx-auto">
+                    <label class="text-white text-2xl">Fecha de nacimiento</label>
+                    <input type="date" th:field="*{fechaDeNacimiento}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+                </div>
+
+
+                <div class="w-[80%] mx-auto">
+                    <label class="text-white text-2xl" for="imagenFile">Seleccione su foto de perfil</label>
+                    <br>
+                    <input type="file" id="imagenFile" th:field="*{fotoPerfil}" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black">
+                </div>
+
+
+            </div>
+
         </div>
-
-        <div class="w-[80%] mx-auto">
-          <label class="text-white text-2xl">Apellido</label>
-          <br>
-          <input type="text" th:field="*{apellido}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2  mx-auto border border-black border-b-[#444] bg-black" >
-        </div>
-
-        <div class="w-[80%] mx-auto">
-          <label class="text-white text-2xl">Email</label>
-          <br>
-          <input type="email" th:field="*{email}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" >
-        </div>
-
-        <div class="w-[80%] mx-auto">
-          <label class="text-white text-2xl">Contraseña</label>
-            <input type="password" th:field="*{password}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" >
-        </div>
-
-      </div>
-
-      <div class="flex flex-col lg:w-[50%] lg:mt-0 mt-8 gap-6">
-
-        <div class="w-[80%] mx-auto">
-          <label class="text-white text-2xl">País</label>
-            <input type="text" th:field="*{pais}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" >
-
-        </div>
-
-        <div class="w-[80%] mx-auto">
-          <label class="text-white text-2xl">Ciudad</label>
-          <br>
-          <input type="text" th:field="*{ciudad}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" >
-        </div>
-
-        <div class="w-[80%] mx-auto">
-          <label class="text-white text-2xl">Fecha de nacimiento</label>
-            <input type="date" th:field="*{fechaDeNacimiento}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" >
-        </div>
-
-
-        <div class="w-[80%] mx-auto">
-          <label class="text-white text-2xl" for="imagenFile">Seleccione su foto de perfil</label>
-          <br>
-          <input type="file" id="imagenFile" th:field="*{fotoPerfil}" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black" >
-        </div>
-
-
-      </div>
-
-    </div>
-    <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto" value="Registrarme" name="Registrarse" style="cursor: pointer">
-    <a href="login" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl" style="text-align: center; padding: 5px">Ya tengo cuenta</a>
-  </form>
+        <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto"
+               value="Registrarme" name="Registrarse" style="cursor: pointer">
+        <a href="login" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl"
+           style="text-align: center; padding: 5px">Ya tengo cuenta</a>
+    </form>
 </main>
 </body>
 </html>

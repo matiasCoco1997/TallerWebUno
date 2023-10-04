@@ -2,10 +2,13 @@ package com.tallerwebi.dominio.entidades;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+
+import  org.springframework.format.annotation.DateTimeFormat.ISO;
 
 @Entity
 @Getter
@@ -19,6 +22,7 @@ public class Usuario {
     private String apellido;
     private String pais;
     private String ciudad;
+    @DateTimeFormat(iso = ISO.DATE)
     private Date fechaDeNacimiento;
     private String email;
     private String password;

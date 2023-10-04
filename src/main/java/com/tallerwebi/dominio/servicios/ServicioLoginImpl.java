@@ -33,7 +33,7 @@ public class ServicioLoginImpl implements ServicioLogin {
             throw new UsuarioExistente();
         }
 
-        if(usuario.getNombre() == null ){
+        if(usuario.getNombre().equals("") ){
             throw new CampoVacio();
         }
 
