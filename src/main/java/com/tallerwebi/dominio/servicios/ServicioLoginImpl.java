@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio.servicios;
 
+import com.tallerwebi.dominio.excepcion.CampoVacio;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
@@ -25,12 +26,18 @@ public class ServicioLoginImpl implements ServicioLogin {
     }
 
     @Override
-    public void registrar(Usuario usuario) throws UsuarioExistente {
+    public void registrar(Usuario usuario) throws UsuarioExistente, CampoVacio {
         Usuario usuarioEncontrado = servicioLoginDao.buscarUsuario(usuario.getEmail(), usuario.getPassword());
+
         if(usuarioEncontrado != null){
             throw new UsuarioExistente();
         }
-        servicioLoginDao.guardar(usuario);
+
+        if(usuario.getNombre() == null ){
+            throw new CampoVacio();
+        }
+
+        //servicioLoginDao.guardar(usuario);
     }
 
 }

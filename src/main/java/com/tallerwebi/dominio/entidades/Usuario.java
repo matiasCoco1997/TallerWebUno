@@ -22,10 +22,11 @@ public class Usuario {
     private Date fechaDeNacimiento;
     private String email;
     private String password;
-    private String fotoPerfil; //falta
+    private String fotoPerfil;
+    @Transient
     private Boolean activo = false;
+    @Transient
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
-    private Integer cantidadSeguidores;
     @Transient
     private List<Usuario> seguidos; //revisar
     @Transient
