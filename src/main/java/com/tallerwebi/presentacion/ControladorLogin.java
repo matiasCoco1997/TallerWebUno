@@ -44,11 +44,16 @@ public class ControladorLogin {
         try {
             if (usuarioBuscado != null) {
 
-                HttpSession session =  request.getSession();
+                if(usuarioBuscado.getActivo()){
+                    HttpSession session =  request.getSession();
 
-                session.setAttribute("sessionEmailUsuarioLogueado", usuarioBuscado.getEmail());
+                    session.setAttribute("sessionEmailUsuarioLogueado", usuarioBuscado.getEmail());
 
-                return new ModelAndView("redirect:/home");
+                    return new ModelAndView("redirect:/home");
+                } else {
+                    model.put("error", "Usuario bloqueado.");
+                }
+
             } else {
                 model.put("error", "Usuario o clave incorrecta");
             }
@@ -67,7 +72,7 @@ public class ControladorLogin {
         try {
             servicioLogin.registrar(usuario);
         } catch (UsuarioExistente e) {
-            model.put("error", "El usuario ya existe");
+            model.put("error", "El email ya esta en uso.");
             return new ModelAndView("registro", model);
         } catch (CampoVacio e) {
             model.put("error", "Debe completar todos los campos.");

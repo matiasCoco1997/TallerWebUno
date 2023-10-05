@@ -21,12 +21,11 @@
                 <input th:field="*{email}" type="text" name="email" class="lg:w-[70%] w-[80%] h-[45px] mx-auto mb-8 pl-2 text-white text-xl bg-black border border-black border-b-[#444]" placeholder="Email" required>
                 <input th:field="*{password}" type="password" name="password" class="lg:w-[70%] w-[80%] h-[45px] mx-auto mb-2 pl-2 text-white text-xl bg-black border border-black border-b-[#444]" placeholder="Contraseña" required>
 
-                <a href="#" class="text-s text-white text-right lg:mr-20 mr-8">Olvidé mi contraseña</a>
-
                 <input type="submit" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl" value="Iniciar Sesión" name="iniciarSesion" style="padding: 5px">
                 <a href="registrarse" class="mt-6 mx-auto lg:w-[40%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl" style="text-align: center; padding: 5px">Registrarse</a>
             </form>
 
+            <p th:if="${error}" th:text="${error}" style="color:red"></p>
         </div>
 
     </div>

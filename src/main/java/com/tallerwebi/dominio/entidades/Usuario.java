@@ -28,7 +28,7 @@ public class Usuario {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate fechaDeNacimiento;
     private String fotoPerfil;
-    private Boolean activo = false;
+    private Boolean activo = true;
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
     @Transient
     private List<Usuario> seguidos; //revisar
