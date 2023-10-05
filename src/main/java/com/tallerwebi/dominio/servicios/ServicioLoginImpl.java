@@ -13,41 +13,43 @@ import javax.transaction.Transactional;
 @Transactional
 public class ServicioLoginImpl implements ServicioLogin {
 
-    private RepositorioUsuario servicioLoginDao;
+    private RepositorioUsuario repositorioLogin;
 
     @Autowired
     public ServicioLoginImpl(RepositorioUsuario servicioLoginDao){
-        this.servicioLoginDao = servicioLoginDao;
+        this.repositorioLogin = servicioLoginDao;
     }
 
     @Override
     public Usuario consultarUsuario (String email, String password) {
-        return servicioLoginDao.buscarUsuario(email, password);
+        return repositorioLogin.buscarUsuario(email, password);
     }
 
     @Override
     public void registrar(Usuario usuario) throws UsuarioExistente, CampoVacio {
-        Usuario usuarioEncontrado = servicioLoginDao.buscarUsuario(usuario.getEmail(), usuario.getPassword());
 
-        if(usuarioEncontrado != null){
-            throw new UsuarioExistente();
-        }
-
+        /*
         if(     usuario.getNombre().equals("") ||
                 usuario.getApellido().equals("") ||
                 usuario.getEmail().equals("") ||
                 usuario.getPassword().equals("") ||
                 usuario.getPais().equals("") ||
-                usuario.getCiudad().equals("")
-            ){
+                usuario.getCiudad().equals("")||
+                usuario.getFechaDeNacimiento().equals("")
+        ){
 
             throw new CampoVacio();
         }
 
+         */
+        System.out.println(usuario.getFechaDeNacimiento());
+        Usuario usuarioEncontrado = repositorioLogin.consultarMailExistente(usuario.getEmail());
 
+        if(usuarioEncontrado != null){
+            throw new UsuarioExistente();
+        }
 
-
-        //servicioLoginDao.guardar(usuario);
+        repositorioLogin.guardar(usuario);
     }
 
 }

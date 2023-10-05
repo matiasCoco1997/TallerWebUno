@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.servlet.annotation.MultipartConfig;
+import javax.validation.constraints.NotBlank;
 import java.sql.Date;
 import java.util.List;
 
@@ -20,24 +21,40 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUsuario;
-    //@NotNull
+
+    @NotNull
+    //@NotBlank
     private String nombre;
-    //@NotNull
+
+    @NotNull
+    //@NotBlank
     private String apellido;
-    //@NotNull
+
+    @NotNull
+    //@NotBlank
     private String pais;
-    //@NotNull
+
+    @NotNull
+    //@NotBlank
     private String ciudad;
-    //@NotNull
-    @DateTimeFormat(iso = ISO.DATE)
+
+    @NotNull
+    //@NotBlank
     private Date fechaDeNacimiento;
-    //@NotNull
+
+    @NotNull
+    //@NotBlank
     private String email;
-    //@NotNull
+
+    @NotNull
+    //@NotBlank
     private String password;
+
     //@NotNull
     private String fotoPerfil;
+
     private Boolean activo = false;
+
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
     @Transient
     private List<Usuario> seguidos; //revisar

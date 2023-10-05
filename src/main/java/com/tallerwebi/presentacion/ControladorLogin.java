@@ -65,7 +65,6 @@ public class ControladorLogin {
 
         try {
             servicioLogin.registrar(usuario);
-            model.put("msg", "Usuario creado correctamente.");
         } catch (UsuarioExistente e) {
             model.put("error", "El usuario ya existe");
             return new ModelAndView("registro", model);
@@ -76,8 +75,7 @@ public class ControladorLogin {
             model.put("error", "Error al registrar el nuevo usuario");
             return new ModelAndView("registro", model);
         }
-
-        return new ModelAndView("redirect:/login");
+        return new ModelAndView("redirect:/login", model);
     }
 
     @RequestMapping(path = "/registrarse", method = RequestMethod.GET)
