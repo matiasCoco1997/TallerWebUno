@@ -35,6 +35,7 @@ public class ControladorLoginTest {
 		when(usuarioMock.getApellido()).thenReturn("apellido");
 		when(usuarioMock.getPais()).thenReturn("pais");
 		when(usuarioMock.getCiudad()).thenReturn("ciudad");
+		when(usuarioMock.getActivo()).thenReturn(true);
 		//when(usuarioMock.getFechaDeNacimiento()).thenReturn(new Date(2018,12,9));
 		when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
 		when(usuarioMock.getPassword()).thenReturn("password");
@@ -93,7 +94,7 @@ public class ControladorLoginTest {
 
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("registro"));
-		assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("El usuario ya existe"));
+		assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("El email ya esta en uso."));
 	}
 
 	@Test
