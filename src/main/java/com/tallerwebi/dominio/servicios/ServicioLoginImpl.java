@@ -28,21 +28,18 @@ public class ServicioLoginImpl implements ServicioLogin {
     @Override
     public void registrar(Usuario usuario) throws UsuarioExistente, CampoVacio {
 
-        /*
-        if(     usuario.getNombre().equals("") ||
-                usuario.getApellido().equals("") ||
-                usuario.getEmail().equals("") ||
-                usuario.getPassword().equals("") ||
-                usuario.getPais().equals("") ||
-                usuario.getCiudad().equals("")||
-                usuario.getFechaDeNacimiento().equals("")
+        if(     usuario.getNombre().isEmpty() ||
+                usuario.getApellido().isEmpty() ||
+                usuario.getEmail().isEmpty() ||
+                usuario.getPassword().isEmpty() ||
+                usuario.getPais().isEmpty() ||
+                usuario.getCiudad().isEmpty() ||
+                usuario.getFechaDeNacimiento() == null
         ){
 
             throw new CampoVacio();
         }
 
-         */
-        System.out.println(usuario.getFechaDeNacimiento());
         Usuario usuarioEncontrado = repositorioLogin.consultarMailExistente(usuario.getEmail());
 
         if(usuarioEncontrado != null){

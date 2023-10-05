@@ -61,6 +61,7 @@ public class ControladorLogin {
 
     @RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
     public ModelAndView registrarme(@ModelAttribute("usuario") Usuario usuario) {
+
         ModelMap model = new ModelMap();
 
         try {
@@ -75,6 +76,7 @@ public class ControladorLogin {
             model.put("error", "Error al registrar el nuevo usuario");
             return new ModelAndView("registro", model);
         }
+
         return new ModelAndView("redirect:/login", model);
     }
 

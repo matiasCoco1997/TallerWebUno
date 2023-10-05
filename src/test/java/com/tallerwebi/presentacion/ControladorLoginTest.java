@@ -35,7 +35,7 @@ public class ControladorLoginTest {
 		when(usuarioMock.getApellido()).thenReturn("apellido");
 		when(usuarioMock.getPais()).thenReturn("pais");
 		when(usuarioMock.getCiudad()).thenReturn("ciudad");
-		when(usuarioMock.getFechaDeNacimiento()).thenReturn(new Date(2018,12,9));
+		//when(usuarioMock.getFechaDeNacimiento()).thenReturn(new Date(2018,12,9));
 		when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
 		when(usuarioMock.getPassword()).thenReturn("password");
 		when(usuarioMock.getFotoPerfil()).thenReturn("fotoPerfil");
