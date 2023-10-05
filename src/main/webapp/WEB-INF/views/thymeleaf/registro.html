@@ -11,8 +11,8 @@
 <main class="h-[100vh]">
     <img th:src="@{/imagenes/logo-sunn.png}" alt="logo" class="lg:w-[20%] w-[70%]">
 
-    <form th:action="@{/validar-registro}" method="POST" th:object="${usuario}" class="flex flex-col"
-          accept-charset="UTF-8">
+    <form th:action="@{/validar-registro}" enctype="multipart/form-data" method="POST" th:object="${usuario}" class="flex flex-col">
+        <!--
         <div class="mx-auto w-[80%] pt-8 pb-8 lg:flex ">
 
             <div class="flex flex-col lg:w-[50%] gap-6">
@@ -40,9 +40,10 @@
                 </div>
 
             </div>
-
+            -->
             <div class="flex flex-col lg:w-[50%] lg:mt-0 mt-8 gap-6">
 
+                <!--
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl">País</label>
                     <input type="text" th:field="*{pais}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
@@ -59,14 +60,12 @@
                     <label  for="fechaDeNacimiento" class="text-white text-2xl">Fecha de nacimiento</label>
                     <input name="fechaDeNacimiento" id="fechaDeNacimiento" type="date" th:field="*{fechaDeNacimiento}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
                 </div>
-
-                <!--
+                -->
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl" for="imagenFile">Seleccione su foto de perfil</label>
                     <br>
                     <input type="file" id="imagenFile" th:field="*{fotoPerfil}" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black">
                 </div>
-                -->
 
 
             </div>

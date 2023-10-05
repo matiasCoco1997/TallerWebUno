@@ -7,10 +7,8 @@ import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +24,7 @@ public class ControladorLogin {
         this.servicioLogin = servicioLogin;
     }
 
-    @RequestMapping( path ="/login", method = RequestMethod.GET)
+    @RequestMapping(path = "/login", method = RequestMethod.GET)
     public ModelAndView irALogin() {
         ModelMap modelo = new ModelMap();
         modelo.put("datosLogin", new DatosLogin());
@@ -44,11 +42,9 @@ public class ControladorLogin {
         try {
             if (usuarioBuscado != null) {
 
-                if(usuarioBuscado.getActivo()){
-                    HttpSession session =  request.getSession();
-
+                if (usuarioBuscado.getActivo()) {
+                    HttpSession session = request.getSession();
                     session.setAttribute("sessionEmailUsuarioLogueado", usuarioBuscado.getEmail());
-
                     return new ModelAndView("redirect:/home");
                 } else {
                     model.put("error", "Usuario bloqueado.");
@@ -57,7 +53,8 @@ public class ControladorLogin {
             } else {
                 model.put("error", "Usuario o clave incorrecta");
             }
-        } catch (Exception e){
+
+        } catch (Exception e) {
             model.put("error", "Ocurrio un error al loguearse.");
         }
 
@@ -66,7 +63,7 @@ public class ControladorLogin {
 
     @RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
     public ModelAndView registrarme(@ModelAttribute("usuario") Usuario usuario) {
-
+    //, @RequestParam("imagenFile") MultipartFile imagen
         ModelMap model = new ModelMap();
 
         try {
@@ -95,7 +92,7 @@ public class ControladorLogin {
     @RequestMapping(path = "/", method = RequestMethod.GET)
     public ModelAndView inicio() {
         return new ModelAndView("redirect:/login");
-        
+
     }
 
 }
