@@ -62,8 +62,8 @@ public class ControladorLogin {
     }
 
     @RequestMapping(path = "/validar-registro", method = RequestMethod.POST)
-    public ModelAndView registrarme(@ModelAttribute("usuario") Usuario usuario) {
-    //, @RequestParam("imagenFile") MultipartFile imagen
+    public ModelAndView registrarme(@ModelAttribute("usuario") Usuario usuario, @RequestParam("imagenFile") MultipartFile imagen) {
+    //
         ModelMap model = new ModelMap();
 
         try {

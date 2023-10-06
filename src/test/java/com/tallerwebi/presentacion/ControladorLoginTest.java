@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +26,14 @@ public class ControladorLoginTest {
 	private HttpServletRequest requestMock;
 	private HttpSession sessionMock;
 	private ServicioLogin servicioLoginMock;
+	private MultipartFile imgMock;
 
 
 	@BeforeEach
 	public void init(){
 		datosLoginMock = new DatosLogin("dami@unlam.com", "123");
 		usuarioMock = mock(Usuario.class);
+		imgMock = mock(MultipartFile.class);
 		when(usuarioMock.getNombre()).thenReturn("nombre");
 		when(usuarioMock.getApellido()).thenReturn("apellido");
 		when(usuarioMock.getPais()).thenReturn("pais");
@@ -77,7 +80,7 @@ public class ControladorLoginTest {
 	public void registrameSiUsuarioNoExisteDeberiaCrearUsuarioYVolverAlLogin() throws UsuarioExistente, CampoVacio {
 
 		// ejecucion
-		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock);
+		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock, imgMock);
 
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
@@ -90,7 +93,7 @@ public class ControladorLoginTest {
 		doThrow(UsuarioExistente.class).when(servicioLoginMock).registrar(usuarioMock);
 
 		// ejecucion
-		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock);
+		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock, imgMock);
 
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("registro"));
@@ -103,7 +106,7 @@ public class ControladorLoginTest {
 		doThrow(RuntimeException.class).when(servicioLoginMock).registrar(usuarioMock);
 
 		// ejecucion
-		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock);
+		ModelAndView modelAndView = controladorLogin.registrarme(usuarioMock, imgMock);
 
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("registro"));
