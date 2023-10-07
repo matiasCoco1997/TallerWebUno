@@ -67,7 +67,7 @@ public class ControladorLogin {
         ModelMap model = new ModelMap();
 
         try {
-            servicioLogin.registrar(usuario);
+            servicioLogin.registrar(usuario, imagen);
         } catch (UsuarioExistente e) {
             model.put("error", "El email ya esta en uso.");
             return new ModelAndView("registro", model);

@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 
@@ -26,8 +27,13 @@ public class ServicioLoginImpl implements ServicioLogin {
     }
 
     @Override
-    public void registrar(Usuario usuario) throws UsuarioExistente, CampoVacio {
+    public void registrar(Usuario usuario, MultipartFile imagen) throws UsuarioExistente, CampoVacio {
 
+        if(imagen.isEmpty()){
+            throw new CampoVacio();
+        }
+
+        /*
         if(     usuario.getNombre().isEmpty() ||
                 usuario.getApellido().isEmpty() ||
                 usuario.getEmail().isEmpty() ||
@@ -40,6 +46,8 @@ public class ServicioLoginImpl implements ServicioLogin {
             throw new CampoVacio();
         }
 
+
+
         Usuario usuarioEncontrado = repositorioLogin.consultarMailExistente(usuario.getEmail());
 
         if(usuarioEncontrado != null){
@@ -47,6 +55,8 @@ public class ServicioLoginImpl implements ServicioLogin {
         }
 
         repositorioLogin.guardar(usuario);
+
+         */
     }
 
 }
