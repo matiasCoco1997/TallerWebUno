@@ -1,6 +1,8 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.excepcion.CampoVacio;
+import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
+import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
 import com.tallerwebi.dominio.servicios.ServicioLogin;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
@@ -73,6 +75,12 @@ public class ControladorLogin {
             return new ModelAndView("registro", model);
         } catch (CampoVacio e) {
             model.put("error", "Debe completar todos los campos.");
+            return new ModelAndView("registro", model);
+        } catch (TamanioDeArchivoSuperiorALoPermitido e) {
+            model.put("error", "La imagen ingresada demasiado pesada.");
+            return new ModelAndView("registro", model);
+        } catch (FormatoDeImagenIncorrecto e) {
+            model.put("error", "El tipo de archivo ingresado no esta permitido.");
             return new ModelAndView("registro", model);
         } catch (Exception e) {
             model.put("error", "Error al registrar el nuevo usuario");
