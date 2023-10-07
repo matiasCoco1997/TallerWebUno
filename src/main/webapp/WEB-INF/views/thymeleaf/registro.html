@@ -19,24 +19,24 @@
 
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl">Nombre</label>
-                    <input type="text" th:field="*{nombre}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black">
+                    <input type="text" th:field="*{nombre}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black" required>
                 </div>
 
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl">Apellido</label>
                     <br>
-                    <input type="text" th:field="*{apellido}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2  mx-auto border border-black border-b-[#444] bg-black">
+                    <input type="text" th:field="*{apellido}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2  mx-auto border border-black border-b-[#444] bg-black" required>
                 </div>
 
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl">Email</label>
                     <br>
-                    <input type="email" th:field="*{email}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+                    <input type="email" th:field="*{email}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
                 </div>
 
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl">Contraseña</label>
-                    <input type="password" th:field="*{password}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+                    <input type="password" th:field="*{password}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
                 </div>
 
             </div>
@@ -46,25 +46,25 @@
 
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl">País</label>
-                    <input type="text" th:field="*{pais}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+                    <input type="text" th:field="*{pais}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
 
                 </div>
 
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl">Ciudad</label>
                     <br>
-                    <input type="text" th:field="*{ciudad}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+                    <input type="text" th:field="*{ciudad}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
                 </div>
 
                 <div class="w-[80%] mx-auto">
                     <label  for="fechaDeNacimiento" class="text-white text-2xl">Fecha de nacimiento</label>
-                    <input name="fechaDeNacimiento" id="fechaDeNacimiento" type="date" th:field="*{fechaDeNacimiento}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black">
+                    <input name="fechaDeNacimiento" id="fechaDeNacimiento" type="date" th:field="*{fechaDeNacimiento}" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required>
                 </div>
 
                 <div class="w-[80%] mx-auto">
                     <label class="text-white text-2xl" for="imagenFile">Seleccione su foto de perfil</label>
                     <br>
-                    <input name="imagenFile" type="file" id="imagenFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black">
+                    <input name="imagenFile" type="file" id="imagenFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black" required>
                 </div>
 
 
