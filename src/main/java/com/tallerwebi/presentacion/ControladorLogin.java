@@ -44,7 +44,7 @@ public class ControladorLogin {
 
                 if (usuarioBuscado.getActivo()) {
                     HttpSession session = request.getSession();
-                    session.setAttribute("sessionEmailUsuarioLogueado", usuarioBuscado.getEmail());
+                    session.setAttribute("sessionUsuarioLogueado", usuarioBuscado);
                     return new ModelAndView("redirect:/home");
                 } else {
                     model.put("error", "Usuario bloqueado.");

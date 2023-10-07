@@ -1,6 +1,8 @@
 package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.excepcion.CampoVacio;
+import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
+import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
@@ -9,6 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
 
 @Service("servicioLogin")
 @Transactional
@@ -27,26 +35,20 @@ public class ServicioLoginImpl implements ServicioLogin {
     }
 
     @Override
-    public void registrar(Usuario usuario, MultipartFile imagen) throws UsuarioExistente, CampoVacio {
+    public void registrar(Usuario usuario, MultipartFile imagen) throws UsuarioExistente, CampoVacio, IOException, FormatoDeImagenIncorrecto, TamanioDeArchivoSuperiorALoPermitido {
 
-        if(imagen.isEmpty()){
-            throw new CampoVacio();
-        }
-
-        /*
         if(     usuario.getNombre().isEmpty() ||
                 usuario.getApellido().isEmpty() ||
                 usuario.getEmail().isEmpty() ||
                 usuario.getPassword().isEmpty() ||
                 usuario.getPais().isEmpty() ||
                 usuario.getCiudad().isEmpty() ||
+                imagen.isEmpty()||
                 usuario.getFechaDeNacimiento() == null
         ){
 
             throw new CampoVacio();
         }
-
-
 
         Usuario usuarioEncontrado = repositorioLogin.consultarMailExistente(usuario.getEmail());
 
@@ -54,9 +56,38 @@ public class ServicioLoginImpl implements ServicioLogin {
             throw new UsuarioExistente();
         }
 
+        String nombreDelArchivo = UUID.randomUUID().toString();
+        byte[] bytes = imagen.getBytes();
+        String nombreOriginalImagen = imagen.getOriginalFilename();
+
+        Long tamanioDeImagen = imagen.getSize();
+        long maxTamanioDeImagen = 5 * 1024 * 1024;
+
+        if(tamanioDeImagen > maxTamanioDeImagen){
+            throw new TamanioDeArchivoSuperiorALoPermitido();
+        }
+        if(! nombreOriginalImagen.endsWith(".jpg") && !nombreOriginalImagen.endsWith(".jpeg") && !nombreOriginalImagen.endsWith(".png")){
+            throw new FormatoDeImagenIncorrecto();
+        }
+
+        String extensionDelArchivoSubido = nombreOriginalImagen.substring(nombreOriginalImagen.lastIndexOf("."));
+        String nuevoNombreDelArchivo = nombreDelArchivo + extensionDelArchivoSubido;
+
+        File folder = new File("src/main/webapp/resources/core/imagenes/imgsPerfiles");
+
+        if(!folder.exists()){
+            folder.mkdirs();
+        }
+
+        Path path = Paths.get("src/main/webapp/resources/core/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
+
+        usuario.setFotoPerfil("/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
+
+        Files.write(path, bytes);
+
         repositorioLogin.guardar(usuario);
 
-         */
+
     }
 
 }

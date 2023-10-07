@@ -1,6 +1,7 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,9 +26,9 @@ public class ControladorNoticia {
         ModelMap modelo = new ModelMap();
 
         try{
-            String mailUsuarioLogueado = (String) session.getAttribute("sessionEmailUsuarioLogueado");
+            Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
-            modelo.put("sessionEmailUsuarioLogueado", mailUsuarioLogueado);
+            modelo.put("sessionUsuarioLogueado", UsuarioLogueado);
 
             List<Noticia> noticias = servicioNoticia.listarNoticias();
 
