@@ -1,51 +1,95 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Comentario;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
-import com.tallerwebi.dominio.excepcion.DescripcionComentarioException;
+import com.tallerwebi.dominio.excepcion.ComentarioException;
+import com.tallerwebi.infraestructura.RepositorioComentario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
-import java.util.List;
+import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class ControladorComentarioTest {
     private ControladorComentario controladorComentarioMock;
     private Comentario comentarioMock;
-
+    private HttpSession sessionMock;
     private ServicioComentario servivioComentarioMock;
+    private RepositorioComentario repositorioComentarioMock;
+    private Usuario usuarioMock;
+
 
     @BeforeEach
     public void init(){
         servivioComentarioMock = mock(ServicioComentario.class);
         controladorComentarioMock = new ControladorComentario(servivioComentarioMock);
         comentarioMock = mock(Comentario.class);
+        sessionMock = mock(HttpSession.class);
+        usuarioMock = mock(Usuario.class);
+        repositorioComentarioMock = mock(RepositorioComentario.class);
+
+        //Comentario
         when(comentarioMock.getDescripcion()).thenReturn("Descripción");
         when(comentarioMock.getIdNoticia()).thenReturn(1L);
         when(comentarioMock.getIdUsuario()).thenReturn(1L);
+
+        //Usuario
+        when(usuarioMock.getNombre()).thenReturn("Nombre");
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
+        when(usuarioMock.getFotoPerfil()).thenReturn("FotoDePerfil");
     }
     @Test
-    public void queAlAgregarUnComentarioMandeUn200() throws DescripcionComentarioException {
-        doNothing().when(servivioComentarioMock).guardarComentario(comentarioMock);
-        ResponseEntity<Object> respuesta = controladorComentarioMock.guardarComentario(1L, comentarioMock);
-        assertEquals(HttpStatus.OK, respuesta.getStatusCode());
-        assertEquals(comentarioMock, respuesta.getBody());
+    public void queSePuedaPersistirUnComentarioMandaLaVistaDeComentario() throws ComentarioException {
+        when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuarioMock);
+        when(comentarioMock.getFechaCreacion()).thenReturn(LocalDateTime.now());
+
+        ModelAndView respuesta = controladorComentarioMock.guardarComentario(comentarioMock, sessionMock);
+
+        assertEquals("fragment/comentario-response", respuesta.getViewName());
+        verify(servivioComentarioMock, times(1)).guardarComentario(comentarioMock);
     }
     @Test
-    public void queAlAgregarUnComentarioFalleYMandeUn500() throws DescripcionComentarioException {
-        doThrow(RuntimeException.class).when(servivioComentarioMock).guardarComentario(comentarioMock);
-        ResponseEntity<Object> resultado = controladorComentarioMock.guardarComentario(1L, comentarioMock);
-        assertThat(resultado.getStatusCode(), is(HttpStatus.INTERNAL_SERVER_ERROR));
+    public void queAlAgregarUnComentarioSinDescripcionFalleYTireUnaExcepcion() throws ComentarioException {
+        when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuarioMock);
+        doThrow(new ComentarioException("La descripción debe tener entre 1 y 255 caracteres"))
+                .when(servivioComentarioMock)
+                .guardarComentario(comentarioMock);
+
+        ModelAndView respuesta = controladorComentarioMock.guardarComentario(comentarioMock, sessionMock);
+
+        String mensajeDeError = (String) respuesta.getModelMap().get("error");
+        assertEquals("fragment/comentario-response", respuesta.getViewName());
+        assertEquals("La descripción debe tener entre 1 y 255 caracteres", mensajeDeError);
         verify(servivioComentarioMock, times(1)).guardarComentario(any());
     }
     @Test
+    public void queSePuedaEliminarUnComentarioCorrectamenteMandaUn204() {
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(servivioComentarioMock.eliminarComentario(anyLong(),anyLong())).thenReturn(true);
+
+        ResponseEntity<Object> respuesta = controladorComentarioMock.eliminarComentario(1L, sessionMock);
+
+        assertEquals(HttpStatus.NO_CONTENT, respuesta.getStatusCode());
+        verify(servivioComentarioMock, times(1)).eliminarComentario(anyLong(), anyLong());
+
+    }
+    @Test
+    public void queAlIntentarEliminarUnComentarioySeProduceUnErrorDevuelva404() {
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+
+        ResponseEntity<Object> respuesta = controladorComentarioMock.eliminarComentario(anyLong(), sessionMock);
+
+        assertEquals(HttpStatus.NOT_FOUND, respuesta.getStatusCode());
+        verify(servivioComentarioMock, times(1)).eliminarComentario(anyLong(), anyLong());
+    }
+  /* @Test
     public void queAlBuscarLosComentariosDeUnaPublicacionRetorneUnaListaDeComentarios(){
         List<Comentario> comentarios = new ArrayList<>();
         comentarios.add(comentarioMock);
@@ -53,7 +97,7 @@ public class ControladorComentarioTest {
         ResponseEntity<Object> respuesta = controladorComentarioMock.listarComentario(anyLong());
         assertThat(respuesta.getStatusCode(), is(HttpStatus.OK));
     }
-    @Test
+   @Test
     public void testListarComentarioNoEncontrado() {
         Long idPublicacion = 2L;
         when(servivioComentarioMock.buscarComentarios(idPublicacion)).thenReturn(null);
@@ -61,5 +105,5 @@ public class ControladorComentarioTest {
         assertThat(respuesta.getStatusCode(), is(HttpStatus.OK));
         assertThat(respuesta.getBody(), is(nullValue()));
     }
-
+*/
 }

@@ -1,11 +1,10 @@
 package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.Comentario;
-import com.tallerwebi.dominio.excepcion.DescripcionComentarioException;
+import com.tallerwebi.dominio.excepcion.ComentarioException;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
 import com.tallerwebi.dominio.servicios.ServicioComentarioImpl;
 import com.tallerwebi.infraestructura.RepositorioComentario;
-import com.tallerwebi.infraestructura.RepositorioComentarioTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -30,13 +29,13 @@ public class ServicioComentarioTest {
     }
 
     @Test
-    public void queSePuedaGuardeUnComentatioDeFormaExitosa() throws DescripcionComentarioException {
+    public void queSePuedaGuardeUnComentatioDeFormaExitosa() throws ComentarioException {
         servicioComentario.guardarComentario(comentarioMock);
         verify(repositorioComentarioMock, times(1)).guardar(comentarioMock);
     }
 
     @Test
-    public void queAlGuardarUnComentatioSinDescripcionLanzaUnaException() throws DescripcionComentarioException {
+    public void queAlGuardarUnComentatioSinDescripcionLanzaUnaException() throws ComentarioException {
 
     }
 }

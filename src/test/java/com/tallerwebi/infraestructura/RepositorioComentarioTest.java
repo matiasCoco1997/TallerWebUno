@@ -1,8 +1,7 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Comentario;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.excepcion.DescripcionComentarioException;
+import com.tallerwebi.dominio.excepcion.ComentarioException;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,6 +20,7 @@ import java.util.List;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @ExtendWith(SpringExtension.class)
@@ -48,7 +48,7 @@ public class RepositorioComentarioTest {
     @Transactional
     @Rollback
     @Test
-    public void guardarComentarioDeberiaPersistirla() throws DescripcionComentarioException {
+    public void guardarComentarioDeberiaPersistirla() throws ComentarioException {
         repositorioComentario.guardar(comentario);
 
         Long idComentarioGuardada = comentario.getId();
@@ -61,7 +61,7 @@ public class RepositorioComentarioTest {
     @Rollback
     @Test
     public void guardarComentarioSinDescripcionDeberiaLanzarExcepcion(){
-        assertThrows(DescripcionComentarioException.class, () -> {
+        assertThrows(ComentarioException.class, () -> {
             repositorioComentario.guardar(new Comentario());
         });
     }
@@ -69,7 +69,7 @@ public class RepositorioComentarioTest {
     @Transactional
     @Rollback
     @Test
-    public void queAlBuscarComentarioPorIdDeNoticiaDevuelvaUnaListaDeComentarios() throws DescripcionComentarioException {
+    public void queAlBuscarComentarioPorIdDeNoticiaDevuelvaUnaListaDeComentarios() throws ComentarioException {
         repositorioComentario.guardar(comentario);
         repositorioComentario.guardar(comentario2);
 
@@ -82,10 +82,49 @@ public class RepositorioComentarioTest {
     @Transactional
     @Rollback
     @Test
-    public void queAlBuscarComentarioPorIdDeNoticiaYNoEncontraloDevuelvaUnaListaVacia() throws DescripcionComentarioException {
+    public void queAlBuscarComentarioPorIdDeNoticiaYNoEncontraloDevuelvaUnaListaVacia() throws ComentarioException {
         List<Comentario> comentariosEncontrados = repositorioComentario.buscarComentariosPorIdNoticia(1L);
 
         assertThat(comentariosEncontrados, is(notNullValue()));
         assertThat(comentariosEncontrados.size(), is(0));
     }
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaEliminarUnComentario() throws ComentarioException {
+        repositorioComentario.guardar(comentario);
+        repositorioComentario.eliminarComentario(comentario);
+
+        List<Comentario> comentariosEncontrados = repositorioComentario.buscarComentariosPorIdNoticia(1L);
+
+        assertThat(comentariosEncontrados, is(notNullValue()));
+        assertThat(comentariosEncontrados.size(), is(0));
+    }
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaEliminarUnComentarioRetornaTrue() throws ComentarioException {
+        repositorioComentario.guardar(comentario);
+        Boolean isDeleted =  repositorioComentario.eliminarComentario(comentario);
+
+        List<Comentario> comentariosEncontrados = repositorioComentario.buscarComentariosPorIdNoticia(1L);
+
+        assertThat(true, is(isDeleted));
+        assertThat(comentariosEncontrados, is(notNullValue()));
+        assertThat(comentariosEncontrados.size(), is(0));
+    }
+    @Transactional
+    @Rollback
+    @Test
+    public void queNoSePuedaEliminarUnComentarioSiLePasanUnNullRetornaFasle() throws ComentarioException {
+        Boolean isDeleted =  repositorioComentario.eliminarComentario(null);
+
+        List<Comentario> comentariosEncontrados = repositorioComentario.buscarComentariosPorIdNoticia(1L);
+
+        assertThat(false, is(isDeleted));
+        assertThat(comentariosEncontrados, is(notNullValue()));
+        assertThat(comentariosEncontrados.size(), is(0));
+    }
+
 }
+
