@@ -81,7 +81,7 @@ public class ControladorNoticiaTest {
         ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock);
 
         // validacion
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("home"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
     }
 
     @Test
