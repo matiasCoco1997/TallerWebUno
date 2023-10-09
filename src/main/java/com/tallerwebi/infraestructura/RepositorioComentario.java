@@ -13,4 +13,6 @@ public interface RepositorioComentario {
     Comentario buscarPorId(Long idComentario);
 
     Boolean eliminarComentario(Comentario comentario);
+
+    void modificar(Comentario comentario);
 }

@@ -32,8 +32,6 @@
 
                     comentariosContainer.append(comentario);
                 }
-
-
         }
    }
   );

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @Transactional
@@ -35,8 +36,22 @@ public class ServicioComentarioImpl implements ServicioComentario{
     }
 
     @Override
-    public Boolean eliminarComentario(Long idComentario, Long idUsuario) {
+    public Boolean eliminarComentario(Long idComentario, Long idUsuario){
         Comentario comentario = this.buscarComentarioPorId(idComentario);
         return repositorioComentario.eliminarComentario(comentario);
     }
+
+    @Override
+    public void modificarComentario(Comentario comentario, Long idUsuario) throws ComentarioException {
+        comentario.validar();
+        validarIdUsuarioIguales(comentario, idUsuario);
+        repositorioComentario.modificar(comentario);
+    }
+
+    private void validarIdUsuarioIguales(Comentario comentario, Long idUsuario) throws ComentarioException {
+        if(!Objects.equals(comentario.getIdUsuario(), idUsuario)){
+            throw new ComentarioException("Error al editar comentario");
+        }
+    }
+
 }

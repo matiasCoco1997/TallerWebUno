@@ -47,7 +47,7 @@ public class ControladorComentarioTest {
     }
     @Test
     public void queSePuedaPersistirUnComentarioMandaLaVistaDeComentario() throws ComentarioException {
-        when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuarioMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
         when(comentarioMock.getFechaCreacion()).thenReturn(LocalDateTime.now());
 
         ModelAndView respuesta = controladorComentarioMock.guardarComentario(comentarioMock, sessionMock);
@@ -57,7 +57,7 @@ public class ControladorComentarioTest {
     }
     @Test
     public void queAlAgregarUnComentarioSinDescripcionFalleYTireUnaExcepcion() throws ComentarioException {
-        when(sessionMock.getAttribute("usuarioLogueado")).thenReturn(usuarioMock);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
         doThrow(new ComentarioException("La descripción debe tener entre 1 y 255 caracteres"))
                 .when(servivioComentarioMock)
                 .guardarComentario(comentarioMock);
@@ -88,6 +88,41 @@ public class ControladorComentarioTest {
 
         assertEquals(HttpStatus.NOT_FOUND, respuesta.getStatusCode());
         verify(servivioComentarioMock, times(1)).eliminarComentario(anyLong(), anyLong());
+    }
+    @Test
+    public void queAlEditarUnComentarioCorrectamenteMandeUn204() throws ComentarioException {
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+
+        ResponseEntity<Object> respuesta = controladorComentarioMock.modificarComentario(comentarioMock, sessionMock);
+
+        assertEquals(HttpStatus.NO_CONTENT, respuesta.getStatusCode());
+        verify(servivioComentarioMock, times(1)).modificarComentario(comentarioMock, usuarioMock.getIdUsuario());
+    }
+    @Test
+    public void queAlEditarUnComentarioIncorrectamentePorCantidadDeCaracteresMandeUnaExcepcionConMensaje() throws ComentarioException {
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        doThrow(new ComentarioException("La descripción debe tener entre 1 y 255 caracteres"))
+                .when(servivioComentarioMock)
+                .modificarComentario(any(), anyLong());
+
+        ResponseEntity<Object> respuesta = controladorComentarioMock.modificarComentario(comentarioMock, sessionMock);
+
+        assertEquals(HttpStatus.NOT_FOUND, respuesta.getStatusCode());
+        assertEquals("La descripción debe tener entre 1 y 255 caracteres", respuesta.getBody());
+        verify(servivioComentarioMock, times(1)).modificarComentario(comentarioMock, usuarioMock.getIdUsuario());
+    }
+    @Test
+    public void queAlEditarUnComentarioIncorrectamentePorQueNoLoPerteneceAlUsuaruiMandaUnaExcepcionConMensaje() throws ComentarioException {
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        doThrow(new ComentarioException("Error al editar comentario"))
+                .when(servivioComentarioMock)
+                .modificarComentario(any(), anyLong());
+
+        ResponseEntity<Object> respuesta = controladorComentarioMock.modificarComentario(comentarioMock, sessionMock);
+
+        assertEquals("Error al editar comentario", respuesta.getBody());
+        assertEquals(HttpStatus.NOT_FOUND, respuesta.getStatusCode());
+        verify(servivioComentarioMock, times(1)).modificarComentario(comentarioMock, usuarioMock.getIdUsuario());
     }
   /* @Test
     public void queAlBuscarLosComentariosDeUnaPublicacionRetorneUnaListaDeComentarios(){

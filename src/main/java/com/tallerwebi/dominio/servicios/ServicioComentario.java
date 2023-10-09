@@ -13,4 +13,6 @@ public interface ServicioComentario {
     Comentario buscarComentarioPorId(Long id);
 
     Boolean eliminarComentario(Long l, Long idUsuario);
+
+    void modificarComentario(Comentario comentarioMock, Long idUsuario) throws ComentarioException;
 }

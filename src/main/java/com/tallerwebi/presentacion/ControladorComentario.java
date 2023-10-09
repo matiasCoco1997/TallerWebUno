@@ -60,11 +60,22 @@ public class ControladorComentario {
         }
     }
 
-    @GetMapping("/comentario/{idComentario}")
+    @DeleteMapping("/comentario/{idComentario}")
     public ResponseEntity<Object> eliminarComentario(@PathVariable Long idComentario, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
         Boolean eliminado = servicioComentario.eliminarComentario(idComentario, usuarioLogueado.getIdUsuario());
+
         return eliminado ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND); // un "204 No Content" indica que la solicitud se ha procesado correctamente, pero no hay contenido para enviar en la respuesta.
+    }
+    @PatchMapping("/comentario/{idComentario}")//Patch se utiliza para actualizar parcialmente un recurso
+    public ResponseEntity<Object> modificarComentario(Comentario comentario, HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        try {
+            servicioComentario.modificarComentario(comentario, usuarioLogueado.getIdUsuario());
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (ComentarioException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

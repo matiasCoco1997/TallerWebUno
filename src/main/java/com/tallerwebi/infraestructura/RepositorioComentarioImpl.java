@@ -49,11 +49,18 @@ public class RepositorioComentarioImpl implements RepositorioComentario {
 
     @Override
     public Boolean eliminarComentario(Comentario comentario) {
-        try {
-            sessionFactory.getCurrentSession().delete(comentario);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
+            try {
+                sessionFactory.getCurrentSession().delete(comentario);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+
+
+    }
+
+    @Override
+    public void modificar(Comentario comentario) {
+        sessionFactory.getCurrentSession().update(comentario);
     }
 }

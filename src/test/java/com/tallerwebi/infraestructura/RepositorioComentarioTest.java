@@ -116,7 +116,7 @@ public class RepositorioComentarioTest {
     @Transactional
     @Rollback
     @Test
-    public void queNoSePuedaEliminarUnComentarioSiLePasanUnNullRetornaFasle() throws ComentarioException {
+    public void queNoSePuedaEliminarUnComentarioSiLePasanUnNull() {
         Boolean isDeleted =  repositorioComentario.eliminarComentario(null);
 
         List<Comentario> comentariosEncontrados = repositorioComentario.buscarComentariosPorIdNoticia(1L);
