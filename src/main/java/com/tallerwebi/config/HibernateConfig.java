@@ -43,7 +43,7 @@ public class HibernateConfig {
         properties.setProperty("hibernate.dialect", "org.hibernate.dialect.MySQL8Dialect"); // Dialecto de MySQL 8
         properties.setProperty("hibernate.show_sql", "true");
         properties.setProperty("hibernate.format_sql", "true");
-        properties.setProperty("hibernate.hbm2ddl.auto", "create"); // Puedes usar "update" para que Hibernate actualice automáticamente el esquema
+        properties.setProperty("hibernate.hbm2ddl.auto", "update"); // Puedes usar "update" para que Hibernate actualice automáticamente el esquema
         return properties;
     }
 }

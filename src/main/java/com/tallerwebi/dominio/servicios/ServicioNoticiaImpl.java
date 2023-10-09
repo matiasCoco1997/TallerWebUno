@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
 import com.tallerwebi.presentacion.DatosLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,8 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void crearNoticia(Noticia noticia) {
+    public void crearNoticia(Noticia noticia, Usuario usuarioLogueado){
+        noticia.setUsuario(usuarioLogueado);
         repositorioNoticia.guardar(noticia);
     }
 
@@ -42,7 +44,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         List<Noticia> noticiasActivas = new ArrayList<>();
 
         for (Noticia noticia : noticias) {
-            if (noticia.getActiva()){
+            if (noticia.getActiva()) {
                 noticiasActivas.add(noticia);
             }
         }

@@ -42,29 +42,29 @@ public class ControladorNoticia {
         return new ModelAndView("home", modelo);
     }
 
-    @RequestMapping(path = "/noticia/cargar", method = RequestMethod.GET)
+    @RequestMapping(path = "/noticia/crear", method = RequestMethod.GET)
     public ModelAndView cargarNoticia() {
         ModelMap modelo = new ModelMap();
 
         modelo.put("datosNoticia", new Noticia());
 
-        return new ModelAndView("cargar-noticia", modelo);
+        return new ModelAndView("crear_noticia", modelo);
     }
 
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
-    public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia ) {
-
+    public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia , HttpSession session){
         ModelMap modelo = new ModelMap();
-
         try{
-            servicioNoticia.crearNoticia(noticia);
+            Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+            modelo.put("sessionUsuarioLogueado", UsuarioLogueado);
+            servicioNoticia.crearNoticia(noticia, UsuarioLogueado);
         } catch (Exception e) {
             modelo.put("error", "Error al crear la noticia.");
-            return new ModelAndView("error", modelo);
+            return new ModelAndView("crear_noticia", modelo);
         }
 
-        return new ModelAndView("cargar-noticia" , modelo);
+        return new ModelAndView("home" , modelo);
     }
 
     @RequestMapping(path = "/noticia/borrar", method = RequestMethod.DELETE)

@@ -1,6 +1,7 @@
 package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
@@ -22,9 +23,13 @@ public class ServicioNoticiaTest {
     private Noticia noticiaMock;
     private ServicioNoticia servicioNoticiaMock;
     private RepositorioNoticia repositorioNoticiaMock;
+    private Usuario usuarioMock;
 
     @BeforeEach
     public void init(){
+
+        usuarioMock = mock(Usuario.class);
+
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
@@ -37,20 +42,20 @@ public class ServicioNoticiaTest {
 
 
     @Test
-    public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez(){
+    public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez() throws Exception {
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
-        servicioNoticiaMock.crearNoticia(noticiaMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock);
 
         //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(1)).guardar(noticiaMock);
     }
 
     @Test
-    public void cuandoCreoDosNoticiasSeInvocaLaFuncionGuardarDelRepositorioDosVeces(){
+    public void cuandoCreoDosNoticiasSeInvocaLaFuncionGuardarDelRepositorioDosVeces() throws Exception {
 
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
-        servicioNoticiaMock.crearNoticia(noticiaMock);
-        servicioNoticiaMock.crearNoticia(noticiaMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock);
 
         //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(2)).guardar(noticiaMock);
