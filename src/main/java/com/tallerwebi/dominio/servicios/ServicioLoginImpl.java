@@ -56,16 +56,18 @@ public class ServicioLoginImpl implements ServicioLogin {
             throw new UsuarioExistente();
         }
 
-        String nombreDelArchivo = UUID.randomUUID().toString();
-        byte[] bytes = imagen.getBytes();
-        String nombreOriginalImagen = imagen.getOriginalFilename();
-
         Long tamanioDeImagen = imagen.getSize();
         long maxTamanioDeImagen = 5 * 1024 * 1024;
 
         if(tamanioDeImagen > maxTamanioDeImagen){
             throw new TamanioDeArchivoSuperiorALoPermitido();
         }
+
+        String nombreDelArchivo = UUID.randomUUID().toString();
+        byte[] bytes = imagen.getBytes();
+        String nombreOriginalImagen = imagen.getOriginalFilename();
+        usuario.setAltFotoPerfil(nombreOriginalImagen);
+
         if(! nombreOriginalImagen.endsWith(".jpg") && !nombreOriginalImagen.endsWith(".jpeg") && !nombreOriginalImagen.endsWith(".png")){
             throw new FormatoDeImagenIncorrecto();
         }
