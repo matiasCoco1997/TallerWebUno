@@ -1,9 +1,8 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Comentario;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.excepcion.DescripcionComentarioException;
-import lombok.SneakyThrows;
+import com.tallerwebi.dominio.excepcion.ComentarioException;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -23,11 +22,11 @@ public class RepositorioComentarioImpl implements RepositorioComentario {
 
 
     @Override
-    public void guardar(Comentario comentario) throws DescripcionComentarioException {
+    public void guardar(Comentario comentario) throws ComentarioException {
         try {
             sessionFactory.getCurrentSession().save(comentario);
         } catch (Exception e) {
-            throw new DescripcionComentarioException("El Comentario no puede ser vacio" + e.getMessage());
+            throw new ComentarioException("El Comentario no puede ser nulo" + e.getMessage());
         }
 
     }
@@ -46,5 +45,22 @@ public class RepositorioComentarioImpl implements RepositorioComentario {
         return (Comentario) session.createCriteria(Comentario.class)
                 .add(Restrictions.eq("id", idComentario))
                 .uniqueResult();
+    }
+
+    @Override
+    public Boolean eliminarComentario(Comentario comentario) {
+            try {
+                sessionFactory.getCurrentSession().delete(comentario);
+                return true;
+            } catch (Exception e) {
+                return false;
+            }
+
+
+    }
+
+    @Override
+    public void modificar(Comentario comentario) {
+        sessionFactory.getCurrentSession().update(comentario);
     }
 }
