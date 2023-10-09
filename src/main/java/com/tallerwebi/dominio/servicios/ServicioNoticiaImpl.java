@@ -28,6 +28,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     @Override
     public void crearNoticia(Noticia noticia, Usuario usuarioLogueado){
         noticia.setUsuario(usuarioLogueado);
+        noticia.setActiva(true);
         repositorioNoticia.guardar(noticia);
     }
 

@@ -21,7 +21,7 @@ public class ControladorNoticia {
         this.servicioNoticia = servicioNoticia;
     }
 
-    @RequestMapping(path = {"/noticia/listar", "/noticia","/noticia/", "/home", "/home/"})
+    @RequestMapping(path = {"/noticia/listar", "/noticia","/noticia/", "/home", "/home/"}, method = RequestMethod.GET)
     public ModelAndView listarNoticias(HttpSession session) {
         ModelMap modelo = new ModelMap();
 
@@ -64,7 +64,7 @@ public class ControladorNoticia {
             return new ModelAndView("crear_noticia", modelo);
         }
 
-        return new ModelAndView("home" , modelo);
+        return new ModelAndView("redirect:/home" , modelo);
     }
 
     @RequestMapping(path = "/noticia/borrar", method = RequestMethod.DELETE)

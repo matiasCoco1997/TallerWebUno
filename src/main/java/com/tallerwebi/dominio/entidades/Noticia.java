@@ -30,4 +30,5 @@ public class Noticia {
     protected void onCreate() {
         fechaDePublicacion = LocalDateTime.now();
     }
+
 }
