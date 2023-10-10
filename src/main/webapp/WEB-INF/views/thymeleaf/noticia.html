@@ -128,7 +128,7 @@
                         <label class="sr-only">Your comment</label>
                         <textarea th:field="*{descripcion}" id="descripcion" rows="6"
                                   class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 bg-neutral-800"
-                                  placeholder="Write a comment..." ></textarea>
+                                  placeholder="Deja tu comentario..."></textarea>
                     </div>
                     <div class="mb-4" id="comentarioError"></div>
                     <button
@@ -266,17 +266,29 @@
 <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
 <script th:src="@{/js/guardarComentario.js}"></script>
 <script th:src="@{/js/eliminarComentario.js}"></script>
-
+<script th:src="@{/js/editarComentario.js}"></script>
 
 <script>
 //Esto despliega el menú de los comentarios (borrar/editar)
 $(document).ready(function () {
-    $(document).on("click", ".dropdown-comment-button", function () {
-        // Encuentra el menú que tiene que mostrar
-        var dropdownMenu = $(this).siblings(".dropdown-menu");
+    $(document).on("click", ".dropdown-comment-button", function (event) {
+        /** Cuando se llama a stopPropagation(), se detiene la propagación del evento, lo que significa que el evento
+        no se propagará más allá del elemento actual. Esto puede ser útil en situaciones donde tienes elementos anidados
+        y deseas evitar que un evento se propague a elementos superiores.
+        */
+        event.stopPropagation();
 
-        // Oculta todos los menús y despues muestra el menú específico
+        // Busc el menú que tiene que mostrar
+        var dropdownMenu = $(this).siblings(".dropdown-menu");
         dropdownMenu.toggleClass("hidden");
+    });
+
+    // Oculta el menú si se hace clic fuera
+    $(document).on("click", function (event) {
+        // Verifica que el clic no está dentro del menú
+        if (!$(event.target).closest(".dropdown-menu").length) {
+            $(".dropdown-menu").addClass("hidden");
+        }
     });
 });
 </script>

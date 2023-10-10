@@ -23,11 +23,9 @@ public class ControladorComentario {
     public ControladorComentario(ServicioComentario servicioComentario) {
         this.servicioComentario = servicioComentario;
     }
-
     @PostMapping("/comentario")
     public ModelAndView guardarComentario(@ModelAttribute("comentario") Comentario comentario,
                                           HttpSession session) {
-
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
         comentario.setIdUsuario(usuarioLogueado.getIdUsuario());
         ModelMap model = new ModelMap();
@@ -49,8 +47,7 @@ public class ControladorComentario {
             return new ModelAndView("fragment/comentario-response", model);
         }
     }
-
-    @GetMapping("/comentarios//publicacion/{idPublicacion}")
+    @GetMapping("/comentarios/publicacion/{idPublicacion}")
     public ResponseEntity<Object> listarComentario(@PathVariable Long idPublicacion, HttpSession session) {
         try {
             List<Comentario> comentarios =servicioComentario.buscarComentarios(idPublicacion);
@@ -68,11 +65,29 @@ public class ControladorComentario {
 
         return eliminado ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND); // un "204 No Content" indica que la solicitud se ha procesado correctamente, pero no hay contenido para enviar en la respuesta.
     }
-    @PatchMapping("/comentario/{idComentario}")//Patch se utiliza para actualizar parcialmente un recurso
-    public ResponseEntity<Object> modificarComentario(Comentario comentario, HttpSession session) {
+
+    @GetMapping("/comentario/{idComentario}")
+    public ModelAndView enviarFormModificarComentario(@PathVariable Long idComentario, HttpSession session) {
+        Comentario comentario = servicioComentario.buscarComentarioPorId(idComentario);
+        session.setAttribute("comentarioEnEdicion", comentario);
+
+        ModelMap model = new ModelMap();
+        model.put("edicion", true);
+        model.put("comentario", comentario);
+        return new ModelAndView("fragment/form-comentario", model);
+    }
+
+    //El PatchMapping no funciona
+    @PostMapping("/comentario/editar")//Patch se utiliza para actualizar parcialmente un recurso
+    public ResponseEntity<Object> modificarComentario(@ModelAttribute("comentario") Comentario comentario, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Comentario comentarioEnEdicion = (Comentario) session.getAttribute("comentarioEnEdicion");
+
+        comentarioEnEdicion.setDescripcion(comentario.getDescripcion());
+
         try {
-            servicioComentario.modificarComentario(comentario, usuarioLogueado.getIdUsuario());
+            System.out.println(comentario.getDescripcion());
+            servicioComentario.modificarComentario(comentarioEnEdicion, usuarioLogueado.getIdUsuario());
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (ComentarioException e) {
             return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);

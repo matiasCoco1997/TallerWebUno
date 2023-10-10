@@ -45,7 +45,7 @@ public class ServicioComentarioTest {
             servicioComentario.guardarComentario(comentario);
             fail("No lanzó ComentarioException");
         } catch (ComentarioException e) {
-            assertEquals("La descripción debe tener entre 1 y 5 caracteres", e.getMessage());
+            assertEquals("La descripción debe tener entre 1 y 256 caracteres", e.getMessage());
         }
 
         verify(repositorioComentarioMock, never()).guardar(comentarioMock);
@@ -60,7 +60,7 @@ public class ServicioComentarioTest {
             servicioComentario.guardarComentario(comentario);
             fail("No lanzó ComentarioException");
         } catch (ComentarioException e) {
-            assertEquals("La descripción debe tener entre 1 y 5 caracteres", e.getMessage());
+            assertEquals("La descripción debe tener entre 1 y 256 caracteres", e.getMessage());
         }
 
         verify(repositorioComentarioMock, never()).guardar(comentarioMock);
@@ -92,7 +92,7 @@ public class ServicioComentarioTest {
             fail("No lanzó ComentarioException");
         } catch (ComentarioException e) {
             // En este punto, la excepción fue lanzada y la prueba es exitosa
-            assertEquals("La descripción debe tener entre 1 y 5 caracteres", e.getMessage());
+            assertEquals("La descripción debe tener entre 1 y 256 caracteres", e.getMessage());
         }
         verify(repositorioComentarioMock, times(0)).modificar(comentarioMock);
     }
@@ -105,7 +105,7 @@ public class ServicioComentarioTest {
             fail("No lanzó ComentarioException");
         } catch (ComentarioException e) {
             // En este punto, la excepción fue lanzada y la prueba es exitosa
-            assertEquals("La descripción debe tener entre 1 y 5 caracteres", e.getMessage());
+            assertEquals("La descripción debe tener entre 1 y 256 caracteres", e.getMessage());
         }
         verify(repositorioComentarioMock, times(0)).modificar(comentarioMock);
     }

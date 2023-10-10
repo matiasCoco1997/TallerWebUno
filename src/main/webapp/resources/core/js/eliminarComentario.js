@@ -2,6 +2,7 @@ $(document).ready(function () {
         $(document).on("click", ".eliminar-comentario", function (event) {
             event.preventDefault();
             let idComentario = $(this).data("id-comentario");
+
             $.ajax({
                 type: 'DELETE',
                 url: "/sunn/comentario/"+idComentario,
