@@ -49,14 +49,20 @@
 
   <div th:each="noticia : ${noticias}" style="background-color: rgba(255,0,0,0.57); margin-bottom: 20px">
 
-    <h3>Id de Noticia:</h3>
-    <p th:text="${noticia.idNoticia}"></p>
-
     <h3>Titulo de Noticia:</h3>
     <p th:text="${noticia.titulo}"></p>
 
+    <h3>Categoria de Noticia:</h3>
+    <p th:text="${noticia.categoria}"></p>
+
+    <h3>Resumen de Noticia:</h3>
+    <p th:text="${noticia.resumen}"></p>
+
     <h3>Descripción de Noticia:</h3>
     <p th:text="${noticia.descripcion}"></p>
+
+    <p>Imagen de la Noticia:</p>
+    <img th:src="@{${noticia.rutaDeimagen}}"class="lg:w-[45%] w-[70%]" th:alt="${noticia.altDeImagen}">
 
   </div>
 

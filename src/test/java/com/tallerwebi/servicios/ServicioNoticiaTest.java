@@ -7,6 +7,7 @@ import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,6 +25,7 @@ public class ServicioNoticiaTest {
     private ServicioNoticia servicioNoticiaMock;
     private RepositorioNoticia repositorioNoticiaMock;
     private Usuario usuarioMock;
+    private MultipartFile imgMock;
 
     @BeforeEach
     public void init(){
@@ -33,9 +35,14 @@ public class ServicioNoticiaTest {
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
-        when(noticiaMock.getCategoria()).thenReturn("categoria");
+        when(noticiaMock.getCategoria()).thenReturn("1");
+        when(noticiaMock.getResumen()).thenReturn("resumen");
+        //when(noticiaMock.getRutaDeimagen()).thenReturn("rutaDeImagen");
+        //when(noticiaMock.getAltDeImagen()).thenReturn("altDeImagen");
         when(noticiaMock.getActiva()).thenReturn(true);
 
+        imgMock = mock(MultipartFile.class);
+        
         this.repositorioNoticiaMock = mock(RepositorioNoticia.class);
         this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock);
     }
@@ -44,7 +51,7 @@ public class ServicioNoticiaTest {
     @Test
     public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez() throws Exception {
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
-        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock);
 
         //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(1)).guardar(noticiaMock);
@@ -54,10 +61,10 @@ public class ServicioNoticiaTest {
     public void cuandoCreoDosNoticiasSeInvocaLaFuncionGuardarDelRepositorioDosVeces() throws Exception {
 
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
-        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock);
-        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock);
 
-        //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
+        //verificacion (evaluo si no esta vacio y si es 2 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(2)).guardar(noticiaMock);
     }
 

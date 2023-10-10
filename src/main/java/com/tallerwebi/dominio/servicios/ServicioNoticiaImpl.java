@@ -2,6 +2,10 @@ package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.CampoVacio;
+import com.tallerwebi.dominio.excepcion.CategoriaInexistente;
+import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
+import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
 import com.tallerwebi.presentacion.DatosLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,10 +13,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Service("servicioNoticia")
 @Transactional
@@ -26,9 +37,18 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void crearNoticia(Noticia noticia, Usuario usuarioLogueado){
+    public void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen) throws CampoVacio, CategoriaInexistente, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
+
+        verificacionCamposVacios(noticia, imagen);
+
+        setCategoriaSeleccionada(noticia);
+
+        verificacionDeLaImagenSeleccionada(noticia, imagen);
+
         noticia.setUsuario(usuarioLogueado);
+
         noticia.setActiva(true);
+
         repositorioNoticia.guardar(noticia);
     }
 
@@ -85,6 +105,94 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     @Override
     public void editarNoticia(Long idNoticia) {
 
+    }
+
+
+    private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen) throws CampoVacio {
+        if(noticia.getTitulo().isBlank()) {
+            throw new CampoVacio();
+        }
+
+        if(noticia.getCategoria().isBlank() || noticia.getCategoria() == "0") {
+            throw new CampoVacio();
+        }
+
+        if(noticia.getResumen().isBlank()) {
+            throw new CampoVacio();
+        }
+
+        if (imagen.isEmpty()) {
+            throw new CampoVacio();
+        }
+    }
+
+    private  void setCategoriaSeleccionada(Noticia noticia) throws CategoriaInexistente {
+        switch (noticia.getCategoria()){
+
+            case "1":
+                noticia.setCategoria("Deporte");
+                break;
+
+            case "2":
+                noticia.setCategoria("Espectáculo");
+                break;
+
+            case "3":
+                noticia.setCategoria("Política");
+                break;
+
+            case "4":
+                noticia.setCategoria("Tecnología");
+                break;
+
+            case "5":
+                noticia.setCategoria("Economía");
+                break;
+
+            case "6":
+                noticia.setCategoria("Sociedad");
+                break;
+
+            case "7":
+                noticia.setCategoria("Mundo");
+                break;
+
+            default:
+                throw new CategoriaInexistente();
+        }
+    }
+
+    private void verificacionDeLaImagenSeleccionada(Noticia noticia, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
+        Long tamanioDeImagen = imagen.getSize();
+        Long maxTamanioDeImagen = (long) (5 * 1024 * 1024);
+
+        if(tamanioDeImagen > maxTamanioDeImagen){
+            throw new TamanioDeArchivoSuperiorALoPermitido();
+        }
+
+        String nombreDelArchivo = UUID.randomUUID().toString();
+        byte[] bytes = imagen.getBytes();
+        String nombreOriginalImagen = imagen.getOriginalFilename();
+        noticia.setAltImagenNoticia(nombreOriginalImagen);
+
+        if(! nombreOriginalImagen.endsWith(".jpg") && !nombreOriginalImagen.endsWith(".jpeg") && !nombreOriginalImagen.endsWith(".png")){
+            throw new FormatoDeImagenIncorrecto();
+        }
+
+        String extensionDelArchivoSubido = nombreOriginalImagen.substring(nombreOriginalImagen.lastIndexOf("."));
+        String nuevoNombreDelArchivo = nombreDelArchivo + extensionDelArchivoSubido;
+
+        File folder = new File("src/main/webapp/resources/core/imagenes/imgsNoticias");
+
+        if(!folder.exists()){
+            folder.mkdirs();
+        }
+
+        Path path = Paths.get("src/main/webapp/resources/core/imagenes/imgsNoticias/" + nuevoNombreDelArchivo);
+
+        noticia.setRutaDeimagen("/imagenes/imgsNoticias/" + nuevoNombreDelArchivo);
+
+        Files.write(path, bytes);
     }
 
 

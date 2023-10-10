@@ -19,6 +19,7 @@ public class Noticia {
     private String categoria;
     private String resumen;
     private String rutaDeimagen;
+    private String altDeImagen;
     private LocalDateTime fechaDePublicacion;
     private String rutaDeAudioPodcast;
     private Boolean activa;
@@ -31,4 +32,7 @@ public class Noticia {
         fechaDePublicacion = LocalDateTime.now();
     }
 
+    public void setAltImagenNoticia(String nombreOriginalImagen) {
+        this.altDeImagen = nombreOriginalImagen;
+    }
 }

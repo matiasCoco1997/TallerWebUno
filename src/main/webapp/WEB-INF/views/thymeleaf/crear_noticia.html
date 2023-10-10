@@ -33,54 +33,49 @@
                         <label class="text-white text-2xl">Ingrese el titulo de la noticia</label>
                         <input type="text" th:field="*{titulo}"
                                class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
-                               required placeholder="Ingrese el título de la noticia">
-                        <p th:if="${errorTitulo}" th:text="${errorTitulo}" style="color:red"></p>
+                                placeholder="Ingrese el título de la noticia">
                     </div>
-                    <!--
+
                     <div class="w-[80%] mx-auto">
                         <label class="text-white text-2xl">Seleccione una categoria para su noticia</label>
                         <br>
                         <select class="mt-2 w-[100%] h-[35px] text-black text-xl pl-2 border border-black border-b-[#444] bg-white" type="text" id="categoriasSelect" th:field="*{categoria}"
-                                required>
+                                >
                             <option value="0">Selecciona una categoría para su noticia</option>
-                            <option value="Deporte">Deporte</option>
-                            <option value="Espectáculo">Espectáculo</option>
-                            <option value="Política">Política</option>
-                            <option value="Tecnología">Tecnología</option>
-                            <option value="Economía">Economía</option>
-                            <option value="Sociedad">Sociedad</option>
-                            <option value="Mundo">Mundo</option>
+                            <option value="1">Deporte</option>
+                            <option value="2">Espectáculo</option>
+                            <option value="3">Política</option>
+                            <option value="4">Tecnología</option>
+                            <option value="5">Economía</option>
+                            <option value="6">Sociedad</option>
+                            <option value="7">Mundo</option>
                         </select>
-                        <p th:if="${errorCategoria}" th:text="${errorCategoria}" style="color:red"></p>
                     </div>
+
 
                     <div class="w-[80%] mx-auto">
                         <label for="resumen" class="text-white text-2xl">Ingrese un resumen de la noticia</label>
                         <br>
-                        <textarea th:field="*{resumen}" name="resumen" rows="4" id="resumen" cols="50" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required placeholder="Ingrese su resumen">
+                        <textarea th:field="*{resumen}" name="resumen" rows="4" id="resumen" cols="50" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black"  placeholder="Ingrese su resumen">
                         </textarea>
-                        <p th:if="${errorResumen}" th:text="${errorResumen}" style="color:red"></p>
                     </div>
 
                     <div class="w-[80%] mx-auto">
                         <label for="descripcion" class="text-white text-2xl">Ingrese el texto para su noticia</label>
-                        <textarea th:field="*{descripcion}" name="descripcion" rows="4" id="descripcion" cols="50" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" required placeholder="Ingrese su resumen">
+                        <textarea th:field="*{descripcion}" name="descripcion" rows="4" id="descripcion" cols="50" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" placeholder="Ingrese su resumen">
                         </textarea>
-                        <p th:if="${errorDescripcion}" th:text="${errorDescripcion}" style="color:red"></p>
                     </div>
 
                     <div class="w-[80%] mx-auto">
                         <label class="text-white text-2xl" for="imagenFile">Seleccione una imagen para su noticia</label>
                         <br>
                         <input name="imagenFile" type="file" id="imagenFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black" required>
-                        <p th:if="${errorImagen}" th:text="${errorImagen}" style="color:red"></p>
                     </div>
-
+                    <!--
                     <div class="w-[80%] mx-auto">
                         <label class="text-white text-2xl" for="audioFile">Seleccione un audio para su noticia</label>
                         <br>
                         <input name="audioFile" type="file" id="audioFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black" required>
-                        <p th:if="${errorAudio}" th:text="${errorAudio}" style="color:red"></p>
                     </div>
 
                     <div class="w-[80%] mx-auto">
@@ -95,6 +90,7 @@
 
                 </div>
             </div>
+            <p th:if="${error}" th:text="${error}" style="color:red"></p>
         </form>
 
     </section>
