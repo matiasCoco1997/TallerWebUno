@@ -1,16 +1,48 @@
-<form id="formularioComentario" th:action="@{/comentario}" class="mb-6"  method="POST"  th:object="${comentario}">
-    <input type="number" name="idNoticia" value="1" hidden>
-    <div class="py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-neutral-800 dark:border-gray-700">
-        <label class="sr-only">Your comment</label>
-        <textarea th:field="*{descripcion}" id="descripcion" rows="6"
-                  class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 bg-neutral-800"
-                  placeholder="Write a comment..." required></textarea>
-    </div>
-    <button
-            type="submit"
-            class="inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] bg-zinc-600"
-            data-te-ripple-init
-            data-te-ripple-color="light">
-        Submit
-    </button>
+<html xmlns:th="http://www.thymeleaf.org">
+
+
+<form th:data-id-comentario="${comentario.id}" th:action="@{/comentario}" th:class="${edicion} ? 'formularioEdicionComentario' : 'formularioComentario'" class="mb-6" th:object="${comentario}"
+      th:id="'formularioEdicionComentario'+${comentario.id}">
+
+    <th:block th:if="${edicion}">
+        <input th:field="*{id}" type="number" name="idNoticia" th:value="${comentario.idNoticia}" hidden>
+        <input th:field="*{idNoticia}" type="number" name="idNoticia" th:value="${comentario.idNoticia}" hidden>
+        <div class="py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-neutral-800 dark:border-gray-700">
+            <label class="sr-only">Your comment</label>
+            <textarea th:field="*{descripcion}" name="descripcion" rows="6"
+                      class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 bg-neutral-800"
+                      placeholder="Write a comment..." required></textarea>
+        </div>
+        <button
+                type="submit"
+                class="inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] bg-zinc-600"
+                data-te-ripple-init
+                data-te-ripple-color="light">
+            Modificar
+        </button>
+        <a
+           class="editar-comentario inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] bg-zinc-600"
+           data-te-ripple-init
+           data-te-ripple-color="light">
+            Cancelar
+        </a>
+    </th:block>
+
+    <th:block th:unless="${edicion}">
+        <input type="number" name="idNoticia" value="1" hidden>
+        <div class="py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-neutral-800 dark:border-gray-700">
+            <label class="sr-only">Your comment</label>
+            <textarea th:field="*{descripcion}" id="descripcion" rows="6"
+                      class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 bg-neutral-800"
+                      placeholder="Write a comment..." required></textarea>
+        </div>
+        <button
+                type="submit"
+                class="inline-block rounded px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(59,113,202,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.2),0_4px_18px_0_rgba(59,113,202,0.1)] bg-zinc-600"
+                data-te-ripple-init
+                data-te-ripple-color="light">
+            Comentar
+        </button>
+    </th:block>
+
 </form>

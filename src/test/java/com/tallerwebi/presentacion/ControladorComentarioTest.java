@@ -39,6 +39,7 @@ public class ControladorComentarioTest {
         when(comentarioMock.getDescripcion()).thenReturn("Descripción");
         when(comentarioMock.getIdNoticia()).thenReturn(1L);
         when(comentarioMock.getIdUsuario()).thenReturn(1L);
+        when(comentarioMock.getId()).thenReturn(1L);
 
         //Usuario
         when(usuarioMock.getNombre()).thenReturn("Nombre");
@@ -92,6 +93,7 @@ public class ControladorComentarioTest {
     @Test
     public void queAlEditarUnComentarioCorrectamenteMandeUn204() throws ComentarioException {
         when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(sessionMock.getAttribute("comentarioEnEdicion")).thenReturn(comentarioMock);
 
         ResponseEntity<Object> respuesta = controladorComentarioMock.modificarComentario(comentarioMock, sessionMock);
 
@@ -101,6 +103,7 @@ public class ControladorComentarioTest {
     @Test
     public void queAlEditarUnComentarioIncorrectamentePorCantidadDeCaracteresMandeUnaExcepcionConMensaje() throws ComentarioException {
         when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(sessionMock.getAttribute("comentarioEnEdicion")).thenReturn(comentarioMock);
         doThrow(new ComentarioException("La descripción debe tener entre 1 y 255 caracteres"))
                 .when(servivioComentarioMock)
                 .modificarComentario(any(), anyLong());
@@ -113,7 +116,8 @@ public class ControladorComentarioTest {
     }
     @Test
     public void queAlEditarUnComentarioIncorrectamentePorQueNoLoPerteneceAlUsuaruiMandaUnaExcepcionConMensaje() throws ComentarioException {
-        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(sessionMock.getAttribute("comentarioEnEdicion")).thenReturn(comentarioMock);
         doThrow(new ComentarioException("Error al editar comentario"))
                 .when(servivioComentarioMock)
                 .modificarComentario(any(), anyLong());
@@ -123,6 +127,31 @@ public class ControladorComentarioTest {
         assertEquals("Error al editar comentario", respuesta.getBody());
         assertEquals(HttpStatus.NOT_FOUND, respuesta.getStatusCode());
         verify(servivioComentarioMock, times(1)).modificarComentario(comentarioMock, usuarioMock.getIdUsuario());
+    }
+    @Test
+    public void queAlEditarUnComentarioSeEnvieElFormCorrespondite() {
+        ModelAndView respuesta = controladorComentarioMock.enviarFormModificarComentario(anyLong(), sessionMock);
+
+        assertEquals("fragment/form-comentario", respuesta.getViewName());
+    }
+    @Test
+    public void queAlEditarUnComentarioSeEnvieElFormCorresponditeConModelConValorBooleanoParaFormatearElForm() {
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        ModelAndView respuesta = controladorComentarioMock.enviarFormModificarComentario(anyLong(), sessionMock);
+
+        assertEquals("fragment/form-comentario", respuesta.getViewName());
+        assertEquals(true, respuesta.getModelMap().get("edicion"));
+    }
+    @Test
+    public void queAlEditarUnComentarioSeEnvieElFormCorresponditeConModelConComentario() {
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(servivioComentarioMock.buscarComentarioPorId(anyLong())).thenReturn(comentarioMock);
+
+        ModelAndView respuesta = controladorComentarioMock.enviarFormModificarComentario(comentarioMock.getId(), sessionMock);
+        System.out.println(respuesta.getModel());
+
+        assertEquals("fragment/form-comentario", respuesta.getViewName());
+        assertEquals("Comentario", respuesta.getModelMap().get("comentario").getClass().getSimpleName());
     }
   /* @Test
     public void queAlBuscarLosComentariosDeUnaPublicacionRetorneUnaListaDeComentarios(){
