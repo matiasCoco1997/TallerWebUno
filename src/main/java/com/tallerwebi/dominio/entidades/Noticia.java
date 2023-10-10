@@ -21,4 +21,7 @@ public class Noticia {
     private String fechaDePublicacion;
     private String rutaDeAudioPodcast;
     private Boolean activa;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Usuario usuario;
+
 }

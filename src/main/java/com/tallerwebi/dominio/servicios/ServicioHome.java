@@ -12,7 +12,7 @@ public interface ServicioHome {
 
      List<Noticia> listarNoticias();
 
-    List<Usuario> listarUsuarios();
+    List<Usuario> listarUsuarios(Long idUsuario);
 
     List<Categoria> obtenerCategorias();
 

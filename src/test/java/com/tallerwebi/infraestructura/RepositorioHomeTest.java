@@ -67,7 +67,7 @@ public class RepositorioHomeTest {
         Usuario usuario2=new Usuario();
         repositorioUsuario.guardar(usuario);
         repositorioUsuario.guardar(usuario2);
-        Integer cantidadDeUsuarios=repositorioHome.listarUsuarios().size();
+        Integer cantidadDeUsuarios=repositorioHome.listarUsuarios(4L).size();
         assertThat(cantidadDeUsuarios,Is.is(2));
     }
     
@@ -89,9 +89,11 @@ public class RepositorioHomeTest {
     public void queSePuedanFiltrarLasNoticiasPorCategoria(){
         Noticia noticia=new Noticia();
         noticia.setTitulo("titulo");
+        noticia.setActiva(true);
         Noticia noticia2=new Noticia();
         noticia2.setTitulo("titulo");
         noticia2.setCategoria("deportes");
+        noticia2.setActiva(true);
         repositorioNoticia.guardar(noticia);
         repositorioNoticia.guardar(noticia2);
         Integer cantidadDeNoticias=repositorioHome.obtenerNoticiasPorCategoria("deportes").size();

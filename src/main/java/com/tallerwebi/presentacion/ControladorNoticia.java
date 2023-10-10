@@ -53,11 +53,12 @@ public class ControladorNoticia {
 
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
-    public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia ) {
+    public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia,HttpSession session ) {
 
         ModelMap modelo = new ModelMap();
 
         try{
+            noticia.setUsuario((Usuario) session.getAttribute("sessionUsuarioLogueado"));
             servicioNoticia.crearNoticia(noticia);
         } catch (Exception e) {
             modelo.put("error", "Error al crear la noticia.");
