@@ -21,7 +21,7 @@ public class ControladorNoticia {
         this.servicioNoticia = servicioNoticia;
     }
 
-    @RequestMapping(path = {"/noticia/listar", "/noticia","/noticia/", "/home", "/home/"})
+    @RequestMapping(path = {"/noticia/listar", "/noticia","/noticia/"})
     public ModelAndView listarNoticias(HttpSession session) {
         ModelMap modelo = new ModelMap();
 
