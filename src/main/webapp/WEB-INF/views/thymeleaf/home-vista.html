@@ -94,7 +94,7 @@
                    href="#" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
                    aria-expanded="false">
                     <!-- User avatar -->
-                    <img src="https://tecdn.b-cdn.net/img/new/avatars/2.jpg" class="rounded-full"
+                    <img th:src="@{${usuario.fotoPerfil}}" class="rounded-full"
                          style="height: 25px; width: 25px" alt="" loading="lazy" />
                 </a>
                 <!-- Second dropdown menu -->
@@ -119,15 +119,11 @@
     </div>
 </nav>
 <nav id="bar" class="flex justify-center">
-    <div class=" flex md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
-        <a href="#" class="mx-8 hover:text-white"> Docs</a>
-        <a href="#" class="mx-8 hover:text-white"> Docs</a>
-        <a href="#" class="mx-8 hover:text-white"> Docs</a>
-        <a href="#" class="mx-8 hover:text-white"> Docs</a>
-        <a href="#" class="mx-8 hover:text-white"> Docs</a>
-        <a href="#" class="mx-8 hover:text-white"> Docs</a>
-
-    </div>
+        <form  th:action="@{/categoria}" method="get">
+            <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
+                <input th:each="categoria : ${categorias}" name="categoria" type="submit" th:value="${categoria.descripcion}" class="mx-8 hover:text-white">
+            </div>
+        </form>
 </nav>
 <!-- Main navigation container -->
 
@@ -137,33 +133,15 @@
 <main class="p-2">
     <section class="card-noticias">
         <div class="max-w-4xl my-4 py-6 m-auto text-white flex">
-            <div class="w-1/2 h-[28rem] relative overflow-hidden">
-                <img src="https://static01.nyt.com/images/2023/09/28/world/28gambon-dimbledore/28gambon-dimbledore-square640.jpg?quality=75&auto=webp"
+
+
+            <div th:each="noticia : ${noticias}" class="w-1/2 h-[28rem] relative overflow-hidden">
+                <img th:src="@{${noticia.rutaDeimagen}}"
                      alt="Avatar" class="w-full " />
                 <div class="absolute w-full py-3 bottom-0 inset-x-0 text-center"
                      style="background: rgba(0, 0, 0, 0.6);">
-                    <h3 class="text-2xl font-bold text-white">Accessibility tools for designers and developers
+                    <h3 class="text-2xl font-bold text-white" th:text="${noticia.titulo}">
                     </h3>
-                </div>
-            </div>
-            <div class="w-1/2 h-[28rem] overflow-hidden">
-                <div class="h-1/2 relative">
-                    <img src="https://static01.nyt.com/images/2023/09/28/multimedia/28rotterdam-2-clmh/28rotterdam-2-clmh-threeByTwoMediumAt2X.jpg?format=pjpg&quality=75&auto=webp&disable=upscale"
-                         alt="Avatar" class="w-full" />
-                    <div class="absolute w-full py-3 bottom-0 inset-x-0 text-center"
-                         style="background: rgba(0, 0, 0, 0.6);">
-                        <h3 class="text-2xl font-bold text-white">Accessibility tools for designers and developers
-                        </h3>
-                    </div>
-                </div>
-                <div class="h-1/2 relative">
-                    <img src="https://static01.nyt.com/images/2023/09/28/multimedia/28Israel-Prayer-02-vfhc/28Israel-Prayer-02-vfhc-threeByTwoMediumAt2X.jpg?format=pjpg&quality=75&auto=webp&disable=upscale"
-                         alt="Avatar" class="w-full" />
-                    <div class="absolute w-full py-3 bottom-0 inset-x-0 text-center"
-                         style="background: rgba(0, 0, 0, 0.6);">
-                        <h3 class="text-2xl font-bold text-white">Accessibility tools for designers and developers
-                        </h3>
-                    </div>
                 </div>
             </div>
         </div>
@@ -172,52 +150,12 @@
     <!--Usuarios recomendados-->
     <section class="max-w-4xl m-auto">
         <div class="publicadores text-white">
-            <div class="m-2">
+            <div th:each="usuario : ${usuarios}" class="m-2">
                 <div class="text-center overflow-hidden rounded-full w-20 h-20 m-auto">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg"
+                    <img th:src="@{${usuario.fotoPerfil}}"
                          class="shadow w-full h-full object-cover border-none" alt="" />
                 </div>
-                <h3 class="text-center mt-2">New York Time</h3>
-                <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
-                    Seguir
-                </div>
-            </div>
-            <div class="m-2">
-                <div class="text-center overflow-hidden rounded-full w-20 h-20 m-auto">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg"
-                         class="shadow w-full h-full object-cover border-none" alt="" />
-                </div>
-                <h3 class="text-center mt-2">New York Time</h3>
-                <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
-                    Seguir
-                </div>
-            </div>
-            <div class="m-2">
-                <div class="text-center overflow-hidden rounded-full w-20 h-20 m-auto">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg"
-                         class="shadow w-full h-full object-cover border-none" alt="" />
-                </div>
-                <h3 class="text-center mt-2">New York Time</h3>
-                <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
-                    Seguir
-                </div>
-            </div>
-            <div class="m-2">
-                <div class="text-center overflow-hidden rounded-full w-20 h-20 m-auto">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg"
-                         class="shadow w-full h-full object-cover border-none" alt="" />
-                </div>
-                <h3 class="text-center mt-2">New York Time</h3>
-                <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
-                    Seguir
-                </div>
-            </div>
-            <div class="m-2">
-                <div class="text-center overflow-hidden rounded-full w-20 h-20 m-auto">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/4/40/New_York_Times_logo_variation.jpg"
-                         class="shadow w-full h-full object-cover border-none" alt="" />
-                </div>
-                <h3 class="text-center mt-2">New York Time</h3>
+                <h3 class="text-center mt-2" th:text="${usuario.nombre}"></h3>
                 <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
                     Seguir
                 </div>
