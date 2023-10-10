@@ -7,8 +7,12 @@ import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +32,7 @@ public class ServicioNoticiaTest {
     private MultipartFile imgMock;
 
     @BeforeEach
-    public void init(){
+    public void init() throws IOException {
 
         usuarioMock = mock(Usuario.class);
 
@@ -37,11 +41,14 @@ public class ServicioNoticiaTest {
         when(noticiaMock.getTitulo()).thenReturn("titulo");
         when(noticiaMock.getCategoria()).thenReturn("1");
         when(noticiaMock.getResumen()).thenReturn("resumen");
-        //when(noticiaMock.getRutaDeimagen()).thenReturn("rutaDeImagen");
-        //when(noticiaMock.getAltDeImagen()).thenReturn("altDeImagen");
+        when(noticiaMock.getRutaDeimagen()).thenReturn("rutaDeImagen");
+        when(noticiaMock.getAltDeImagen()).thenReturn("altDeImagen");
         when(noticiaMock.getActiva()).thenReturn(true);
 
-        imgMock = mock(MultipartFile.class);
+        Path path = Path.of("src/test/resources/mock_image.png");
+        byte[] content = Files.readAllBytes(path);
+        imgMock = new MockMultipartFile("mock_image.png", "mock_image.png", "image/png", content);
+
         
         this.repositorioNoticiaMock = mock(RepositorioNoticia.class);
         this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock);
