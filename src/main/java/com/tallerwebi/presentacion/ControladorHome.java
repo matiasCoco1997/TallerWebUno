@@ -32,6 +32,7 @@ public class ControladorHome {
         List<Categoria> categorias=servicioHome.obtenerCategorias();
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Usuario> usuarios= servicioHome.listarUsuarios(6L); //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
+
         model.put("noticias", noticias);
         model.put("usuarios",usuarios);
         model.put("categorias",categorias);
@@ -42,9 +43,11 @@ public class ControladorHome {
     @RequestMapping(value = "/categoria")
     public ModelAndView validarCategoria(@RequestParam("categoria")String categoria, HttpSession session){
         ModelMap model=new ModelMap();
+
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Categoria> categorias=servicioHome.obtenerCategorias();
         List<Noticia> noticiasCategorias = servicioHome.obtenerNoticiasPorCategoria(categoria);
+
         model.put("categorias",categorias);
         model.put("usuario",usuario);
         model.put("noticias",noticiasCategorias);
