@@ -57,12 +57,12 @@ public class ControladorNoticia {
 
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
-    public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia , HttpSession session, @RequestParam("imagenFile") MultipartFile imagen){
+    public ModelAndView crearNuevaNoticia( @ModelAttribute("datosNoticia") Noticia noticia , HttpSession session, @RequestParam("imagenFile") MultipartFile imagen, @RequestParam("audioFile") MultipartFile audio){
         ModelMap modelo = new ModelMap();
         try{
             Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
             modelo.put("sessionUsuarioLogueado", UsuarioLogueado);
-            servicioNoticia.crearNoticia(noticia, UsuarioLogueado, imagen);
+            servicioNoticia.crearNoticia(noticia, UsuarioLogueado, imagen, audio);
         }catch (CampoVacio e) {
             modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
             return new ModelAndView("crear_noticia", modelo);

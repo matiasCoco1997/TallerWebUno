@@ -37,17 +37,19 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen) throws CampoVacio, CategoriaInexistente, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
+    public void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, CategoriaInexistente, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
 
-        verificacionCamposVacios(noticia, imagen);
+        verificacionCamposVacios(noticia, imagen, audio);
 
         setCategoriaSeleccionada(noticia);
 
         verificacionDeLaImagenSeleccionada(noticia, imagen);
 
+        verificacionDelAudioSeleccionado(noticia, audio);
+
         noticia.setUsuario(usuarioLogueado);
 
-        verificacionNoticiaActiva(noticia);
+        verificacionDeActivacionDeNoticia(noticia);
 
         repositorioNoticia.guardar(noticia);
     }
@@ -108,7 +110,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
 
-    private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen) throws CampoVacio {
+    private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
         if(noticia.getTitulo().isBlank()) {
             throw new CampoVacio();
         }
@@ -122,6 +124,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         }
 
         if (imagen.isEmpty()) {
+            throw new CampoVacio();
+        }
+
+        if (audio.isEmpty()) {
             throw new CampoVacio();
         }
     }
@@ -195,7 +201,39 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         Files.write(path, bytes);
     }
 
-    private  void verificacionNoticiaActiva(Noticia noticia) {
+    private void verificacionDelAudioSeleccionado(Noticia noticia, MultipartFile audio) throws TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
+        Long tamanioDeImagen = audio.getSize();
+        Long maxTamanioDeImagen = (long) (10 * 1024 * 1024);
+
+        if(tamanioDeImagen > maxTamanioDeImagen){
+            throw new TamanioDeArchivoSuperiorALoPermitido();
+        }
+
+        String nombreDelArchivo = UUID.randomUUID().toString();
+        byte[] bytes = audio.getBytes();
+        String nombreOriginalAudio = audio.getOriginalFilename();
+
+        if(! nombreOriginalAudio.endsWith(".mp3")){
+            throw new FormatoDeImagenIncorrecto();
+        }
+
+        String extensionDelArchivoSubido = nombreOriginalAudio.substring(nombreOriginalAudio.lastIndexOf("."));
+        String nuevoNombreDelArchivo = nombreDelArchivo + extensionDelArchivoSubido;
+
+        File folder = new File("src/main/webapp/resources/core/audios_noticias");
+
+        if(!folder.exists()){
+            folder.mkdirs();
+        }
+
+        Path path = Paths.get("src/main/webapp/resources/core/audios_noticias/" + nuevoNombreDelArchivo);
+
+        noticia.setRutaDeAudioPodcast("/audios_noticias/" + nuevoNombreDelArchivo);
+
+        Files.write(path, bytes);
+    }
+
+    private  void verificacionDeActivacionDeNoticia(Noticia noticia) {
         if(!noticia.getActiva()){
             noticia.setActiva(false);
         }

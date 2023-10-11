@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ServicioNoticia {
-    void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen) throws CampoVacio, CategoriaInexistente, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto;
+    void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, CategoriaInexistente, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto;
 
     void borrarNoticiaPorId(Long idNoticia);
 

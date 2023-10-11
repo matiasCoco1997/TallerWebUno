@@ -30,6 +30,7 @@ public class ServicioNoticiaTest {
     private RepositorioNoticia repositorioNoticiaMock;
     private Usuario usuarioMock;
     private MultipartFile imgMock;
+    private MockMultipartFile audioMock;
 
     @BeforeEach
     public void init() throws IOException {
@@ -45,9 +46,13 @@ public class ServicioNoticiaTest {
         when(noticiaMock.getAltDeImagen()).thenReturn("altDeImagen");
         when(noticiaMock.getActiva()).thenReturn(true);
 
-        Path path = Path.of("src/test/resources/mock_image.png");
-        byte[] content = Files.readAllBytes(path);
-        imgMock = new MockMultipartFile("mock_image.png", "mock_image.png", "image/png", content);
+        Path pathImg = Path.of("src/test/resources/mock_image.png");
+        byte[] contentImg = Files.readAllBytes(pathImg);
+        imgMock = new MockMultipartFile("mock_image.png", "mock_image.png", "image/png", contentImg);
+
+        Path pathAudio = Path.of("src/test/resources/mock_audio.mp3");
+        byte[] contentAudio = Files.readAllBytes(pathAudio);
+        audioMock = new MockMultipartFile("mock_audio.mp3", "mock_audio.mp3", "audio/mpeg", contentAudio);
 
         
         this.repositorioNoticiaMock = mock(RepositorioNoticia.class);
@@ -58,7 +63,7 @@ public class ServicioNoticiaTest {
     @Test
     public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez() throws Exception {
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
-        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
         //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(1)).guardar(noticiaMock);
@@ -68,8 +73,8 @@ public class ServicioNoticiaTest {
     public void cuandoCreoDosNoticiasSeInvocaLaFuncionGuardarDelRepositorioDosVeces() throws Exception {
 
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
-        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock);
-        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
         //verificacion (evaluo si no esta vacio y si es 2 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(2)).guardar(noticiaMock);

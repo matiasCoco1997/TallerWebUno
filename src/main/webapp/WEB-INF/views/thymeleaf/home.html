@@ -67,6 +67,10 @@
     <h3>Estado de Noticia:</h3>
     <p th:text="${noticia.activa}"></p>
 
+    <h3>Audio de Noticia:</h3>
+    <audio id="miAudio" th:src="@{${noticia.rutaDeAudioPodcast}}"></audio>
+    <button onclick="togglePlayPause()">Play</button>
+
   </div>
 
 </main>
@@ -74,4 +78,18 @@
 
 
 </body>
+
+<script>
+  var miAudio = document.getElementById('miAudio');
+
+  function togglePlayPause() {
+    if (miAudio.paused) {
+      miAudio.play();
+      document.querySelector('button').innerText = 'Pause';
+    } else {
+      miAudio.pause();
+      document.querySelector('button').innerText = 'Play';
+    }
+  }
+</script>
 </html>

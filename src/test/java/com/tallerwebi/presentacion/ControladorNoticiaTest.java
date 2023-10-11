@@ -32,6 +32,7 @@ public class ControladorNoticiaTest {
     private HttpSession sessionMock;
 
     private MultipartFile imgMock;
+    private MultipartFile audioMock;
 
     @BeforeEach
     public void init(){
@@ -44,6 +45,8 @@ public class ControladorNoticiaTest {
         imgMock = mock(MultipartFile.class);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
+
+        audioMock = mock(MultipartFile.class);
 
         servicioNoticiaMock = mock(ServicioNoticia.class);
         controladorNoticia = new ControladorNoticia(servicioNoticiaMock);
@@ -82,7 +85,7 @@ public class ControladorNoticiaTest {
     @Test
     public void queAlCrearUnaNoticiaRedireccioneAlHome() {
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock);
+        ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock);
 
         // validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
@@ -91,10 +94,10 @@ public class ControladorNoticiaTest {
     @Test
     public void queAlCrearUnaNoticiaRetorneUnaException() throws Exception {
         // preparacion
-        when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock)).thenThrow(RuntimeException.class);
+        when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(RuntimeException.class);
 
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock);
+        ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock);
 
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al crear la noticia."));
