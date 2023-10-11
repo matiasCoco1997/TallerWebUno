@@ -26,4 +26,9 @@ public class RepositorioListaRepImpl implements RepositorioListaRep{
         return sessionFactory.getCurrentSession().
                 createQuery("FROM ListaReproduccion WHERE usuario.id= :idUsuario").setParameter("idUsuario",idUsuario).list();
     }
+
+    @Override
+    public ListaReproduccion buscarListaPorID(Long id) {
+        return (ListaReproduccion) sessionFactory.getCurrentSession().createQuery("FROM ListaReproduccion  where id = :id").setParameter("id",id).uniqueResult();
+    }
 }

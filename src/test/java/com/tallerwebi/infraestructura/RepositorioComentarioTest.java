@@ -26,7 +26,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 @ExtendWith(SpringExtension.class)
 @WebAppConfiguration
 @ContextConfiguration(classes = { SpringWebTestConfig.class, HibernateTestConfig.class })
-public class RepositorioComentarioTest {
+public class    RepositorioComentarioTest {
     @Autowired
     private RepositorioComentario repositorioComentario;
     private Comentario comentario;

@@ -8,4 +8,5 @@ public interface RepositorioListaRep {
     void agregarNoticiaALista(ListaReproduccion lista);
 
     List<ListaReproduccion> obtenerListaReproduccionDelUsuarioLogueado(Long idUsuario);
+    ListaReproduccion buscarListaPorID(Long id);
 }
