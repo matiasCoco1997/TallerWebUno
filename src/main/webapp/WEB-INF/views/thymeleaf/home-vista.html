@@ -136,8 +136,8 @@
 
 
             <div th:each="noticia : ${noticias}" class="w-1/2 h-[28rem] relative overflow-hidden">
-                <img th:src="@{${noticia.rutaDeimagen}}"
-                     alt="Avatar" class="w-full " />
+                <img th:src="@{${noticia.rutaDeimagen}}" th:alt="${noticia.altDeImagen}"
+                      class="w-full " />
                 <div class="absolute w-full py-3 bottom-0 inset-x-0 text-center"
                      style="background: rgba(0, 0, 0, 0.6);">
                     <h3 class="text-2xl font-bold text-white" th:text="${noticia.titulo}">
@@ -153,7 +153,7 @@
             <div th:each="usuario : ${usuarios}" class="m-2">
                 <div class="text-center overflow-hidden rounded-full w-20 h-20 m-auto">
                     <img th:src="@{${usuario.fotoPerfil}}"
-                         class="shadow w-full h-full object-cover border-none" alt="" />
+                         class="shadow w-full h-full object-cover border-none" th:alt="${usuario.altFotoPerfil}" />
                 </div>
                 <h3 class="text-center mt-2" th:text="${usuario.nombre}"></h3>
                 <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
@@ -171,7 +171,7 @@
                         <img class="mr-3 w-10 h-10 object-cover rounded-full"
                              src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80"
                              alt="avatar">
-                        <h3 class="font-bold">Khatab wedaa</h3>
+                        <h3 class="font-bold" th:text="${usuario.nombre}"></h3>
                     </a>
                 </div>
 
