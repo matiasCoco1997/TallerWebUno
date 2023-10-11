@@ -21,6 +21,8 @@ public class Noticia {
     private String fechaDePublicacion;
     private String rutaDeAudioPodcast;
     private Boolean activa;
+    @Column(name = "likes", columnDefinition = "INT DEFAULT 0")
+    private Integer likes;
     @ManyToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
 

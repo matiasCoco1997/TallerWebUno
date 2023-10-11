@@ -83,6 +83,11 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     public void editarNoticia(Long idNoticia) {
 
     }
+    @Override
+    public void darMeGusta(Noticia noticia) {
+        noticia.setLikes(noticia.getLikes() + 1);
+        repositorioNoticia.modificar(noticia);
+    }
 
 
 }

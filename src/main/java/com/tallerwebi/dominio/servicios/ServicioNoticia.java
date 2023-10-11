@@ -18,4 +18,7 @@ public interface ServicioNoticia {
     List<Noticia> listarNoticias();
 
     List<Noticia> buscarNoticiaPorCategoria(String categoria);
+
+    void darMeGusta(Noticia noticia);
+
 }
