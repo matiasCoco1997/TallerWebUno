@@ -48,15 +48,19 @@ public class ControladorComentario {
         }
     }
     @GetMapping("/comentarios/publicacion/{idPublicacion}")
-    public ResponseEntity<Object> listarComentario(@PathVariable Long idPublicacion, HttpSession session) {
+    public ModelAndView listarComentario(@PathVariable Long idPublicacion, HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
         try {
             List<Comentario> comentarios =servicioComentario.buscarComentarios(idPublicacion);
-            return ResponseEntity.ok(comentarios); // 200 OK
+            ModelMap model = new ModelMap();
+            model.put("comentarios", comentarios);
+            model.put("usuarioLogueado", usuario.getIdUsuario());
+            return new ModelAndView("fragment/comentario-response", model);
         } catch (Exception e) {
-            return ResponseEntity.notFound().build(); // Devuelve 404 ;
+            return null;
         }
     }
-
     @DeleteMapping("/comentario/{idComentario}")
     public ResponseEntity<Object> eliminarComentario(@PathVariable Long idComentario, HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
@@ -65,7 +69,6 @@ public class ControladorComentario {
 
         return eliminado ? new ResponseEntity<>(HttpStatus.NO_CONTENT) : new ResponseEntity<>(HttpStatus.NOT_FOUND); // un "204 No Content" indica que la solicitud se ha procesado correctamente, pero no hay contenido para enviar en la respuesta.
     }
-
     @GetMapping("/comentario/{idComentario}")
     public ModelAndView enviarFormModificarComentario(@PathVariable Long idComentario, HttpSession session) {
         Comentario comentario = servicioComentario.buscarComentarioPorId(idComentario);
