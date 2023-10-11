@@ -89,5 +89,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         repositorioNoticia.modificar(noticia);
     }
 
+    @Override
+    public boolean verificarQueNoEsNull(Noticia noticia) {
+        return noticia==null;
+    }
+
 
 }

@@ -123,9 +123,9 @@ public class ControladorNoticia {
     @RequestMapping(value = "/darLike",method = RequestMethod.POST)
     public ModelAndView darLike(@RequestParam("noticiaLike") Long noticiaLike,HttpSession session) throws Exception {
         ModelMap modelo = new ModelMap();
-        modelo.put("usuario",session.getAttribute("sessionUsuarioLogueado"));
         Noticia noticia=servicioNoticia.buscarNoticiaPorId(noticiaLike);
-        if (noticia == null) {
+
+        if (servicioNoticia.verificarQueNoEsNull(noticia)) {
             throw new Exception("La noticia fue eliminada");
         }
         try{

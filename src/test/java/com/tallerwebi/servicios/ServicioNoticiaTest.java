@@ -104,5 +104,47 @@ public class ServicioNoticiaTest {
         assertThat(noticiasObtenidas.size(), is(2));
     }
 
+    @Test
+    public void cuandoDanMeGustaLaCantidadDeMegustaIncrementa() {
+        //preparación
+        Noticia noticia = new Noticia();
+        noticia.setTitulo("Título de la noticia");
+        noticia.setDescripcion("Descripción de la noticia");
+        noticia.setCategoria("Categoría de la noticia");
+        noticia.setResumen("Contenido de la noticia");
+        noticia.setRutaDeimagen("URL de la imagen");
+        noticia.setFechaDePublicacion("Fecha de publicación");
+        noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
+        noticia.setActiva(true);
+        //ejecución
+        repositorioNoticiaMock.guardar(noticia);
+        servicioNoticiaMock.darMeGusta(noticia);
+        //validación
+        assertThat(noticia.getLikes(), is(1));
+    }
+
+    @Test
+    public void cuandoDanMeGusta4VecesLaCantidadDeMegustaIncrementa4Veces() {
+        //preparación
+        Noticia noticia = new Noticia();
+        noticia.setTitulo("Título de la noticia");
+        noticia.setDescripcion("Descripción de la noticia");
+        noticia.setCategoria("Categoría de la noticia");
+        noticia.setResumen("Contenido de la noticia");
+        noticia.setRutaDeimagen("URL de la imagen");
+        noticia.setFechaDePublicacion("Fecha de publicación");
+        noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
+        noticia.setActiva(true);
+        //ejecución
+        repositorioNoticiaMock.guardar(noticia);
+        servicioNoticiaMock.darMeGusta(noticia);
+        servicioNoticiaMock.darMeGusta(noticia);
+        servicioNoticiaMock.darMeGusta(noticia);
+        servicioNoticiaMock.darMeGusta(noticia);
+
+        //validación
+        assertThat(noticia.getLikes(), is(4));
+    }
+
 
 }

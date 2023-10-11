@@ -32,7 +32,6 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     }
 
     @Override
-    @Transactional
     public Boolean modificar(Noticia noticia) {
         try {
             final Session session = sessionFactory.getCurrentSession();

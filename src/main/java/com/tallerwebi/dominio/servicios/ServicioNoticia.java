@@ -21,4 +21,5 @@ public interface ServicioNoticia {
 
     void darMeGusta(Noticia noticia);
 
+    boolean verificarQueNoEsNull(Noticia noticia);
 }

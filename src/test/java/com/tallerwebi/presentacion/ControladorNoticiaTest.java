@@ -16,6 +16,7 @@ import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 
 import static org.mockito.Mockito.*;
@@ -157,5 +158,35 @@ public class ControladorNoticiaTest {
 
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al buscar noticia."));
+    }
+
+    @Test
+    public void queAlDarMeGustaRedireccioneAlHome(){
+        //preparacion
+        when(noticiaMock.getLikes()).thenReturn(1);
+        when(servicioNoticiaMock.verificarQueNoEsNull(noticiaMock)).thenReturn(false);
+        ModelAndView model=new ModelAndView();
+        //ejecucion
+        try {
+             model = controladorNoticia.darLike(1L,sessionMock);
+        }catch (Exception e){
+
+        }
+        //validacion
+        assertThat(model.getViewName(), equalToIgnoringCase("redirect:/home"));
+    }
+
+    @Test
+    public void queAlDarMegustaTireUnaExcepcionPorqueLaNoticiaFueEliminada(){
+
+        Noticia n1 = new Noticia();
+        controladorNoticia.crearNuevaNoticia(n1,sessionMock);
+        controladorNoticia.borrarNoticiaPorId(n1.getIdNoticia());
+
+        try {
+            ModelAndView modelo = controladorNoticia.darLike(1L,sessionMock);
+        }catch (Exception e){
+            assertThat(e.getMessage(),is("La noticia fue eliminada"));
+        }
     }
 }

@@ -151,4 +151,18 @@ public class RepositorioNoticiaTest {
 
         assertFalse(resultado);
     }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void cuandoSeCreaUnaNoticiaNuevaTieneCeroMeGusta() {
+        //preparación
+        Noticia noticia = new Noticia();
+        noticia.setTitulo("Título de la noticia");
+        //ejecución
+        repositorioNoticia.guardar(noticia);
+        Noticia noticiaObtenida=repositorioNoticia.buscarPorId(noticia.getIdNoticia());
+        //validación
+        assertThat(noticiaObtenida.getLikes(), is(0));
+    }
 }
