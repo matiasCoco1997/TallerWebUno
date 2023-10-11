@@ -71,18 +71,19 @@
                         <br>
                         <input name="imagenFile" type="file" id="imagenFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black" required>
                     </div>
+
                     <!--
                     <div class="w-[80%] mx-auto">
                         <label class="text-white text-2xl" for="audioFile">Seleccione un audio para su noticia</label>
                         <br>
                         <input name="audioFile" type="file" id="audioFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black" required>
                     </div>
-
-                    <div class="w-[80%] mx-auto">
-                        <label for="checkboxBorrador" class="text-white text-2xl w-[80%]">Seleccione el checkbox para guardar su nota como borrador.</label>
-                        <input type="checkbox" name="checkboxBorrador" id="checkboxBorrador" th:field="*{activa}" class="mt-2 w-[5%] h-[20px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black" required>
-                    </div>
                     -->
+                    <div class="w-[80%] mx-auto">
+                        <label for="checkboxNoticia" class="text-white text-2xl w-[80%]">Seleccione el checkbox para que su nota aparezca en el sitio.</label>
+                        <input type="checkbox" name="checkboxNoticia" id="checkboxNoticia" th:field="*{activa}" class="mt-2 w-[5%] h-[20px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black" required >
+                    </div>
+
                     <div class="w-[80%] mx-auto">
                         <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto text-white"
                                value="Crear Noticia" name="crearNoticia" style="cursor: pointer">

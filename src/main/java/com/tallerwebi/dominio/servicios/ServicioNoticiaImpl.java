@@ -47,7 +47,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         noticia.setUsuario(usuarioLogueado);
 
-        noticia.setActiva(true);
+        verificacionNoticiaActiva(noticia);
 
         repositorioNoticia.guardar(noticia);
     }
@@ -195,5 +195,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         Files.write(path, bytes);
     }
 
+    private  void verificacionNoticiaActiva(Noticia noticia) {
+        if(!noticia.getActiva()){
+            noticia.setActiva(false);
+        }
+    }
 
 }

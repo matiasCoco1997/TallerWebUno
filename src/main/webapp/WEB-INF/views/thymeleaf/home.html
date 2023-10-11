@@ -64,6 +64,9 @@
     <p>Imagen de la Noticia:</p>
     <img th:src="@{${noticia.rutaDeimagen}}"class="lg:w-[45%] w-[70%]" th:alt="${noticia.altDeImagen}">
 
+    <h3>Estado de Noticia:</h3>
+    <p th:text="${noticia.activa}"></p>
+
   </div>
 
 </main>
