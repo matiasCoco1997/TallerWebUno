@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.util.ArrayList;
 
 @Repository("repositorioCategoria")
-//@Transactional
 public class RepositorioCategoriaImpl implements RepositorioCategoria {
     private SessionFactory sessionFactory;
     @Autowired
@@ -26,7 +25,7 @@ public class RepositorioCategoriaImpl implements RepositorioCategoria {
 
     @Override
     public void guardar(Categoria categoria) {
-
+        sessionFactory.getCurrentSession().save(categoria);
     }
 
     @Override
