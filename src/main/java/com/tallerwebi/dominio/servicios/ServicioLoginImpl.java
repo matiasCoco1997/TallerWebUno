@@ -37,18 +37,7 @@ public class ServicioLoginImpl implements ServicioLogin {
     @Override
     public void registrar(Usuario usuario, MultipartFile imagen) throws UsuarioExistente, CampoVacio, IOException, FormatoDeImagenIncorrecto, TamanioDeArchivoSuperiorALoPermitido {
 
-        if(     usuario.getNombre().isEmpty() ||
-                usuario.getApellido().isEmpty() ||
-                usuario.getEmail().isEmpty() ||
-                usuario.getPassword().isEmpty() ||
-                usuario.getPais().isEmpty() ||
-                usuario.getCiudad().isEmpty() ||
-                imagen.isEmpty()||
-                usuario.getFechaDeNacimiento() == null
-        ){
-
-            throw new CampoVacio();
-        }
+        verificacionCamposVacios(usuario, imagen);
 
         Usuario usuarioEncontrado = repositorioLogin.consultarMailExistente(usuario.getEmail());
 
@@ -89,7 +78,21 @@ public class ServicioLoginImpl implements ServicioLogin {
 
         repositorioLogin.guardar(usuario);
 
+    }
 
+    private void verificacionCamposVacios(Usuario usuario, MultipartFile imagen) throws CampoVacio {
+        if(     usuario.getNombre().isBlank() ||
+                usuario.getApellido().isBlank() ||
+                usuario.getEmail().isBlank() ||
+                usuario.getPassword().isBlank() ||
+                usuario.getPais().isBlank()||
+                usuario.getCiudad().isBlank() ||
+                imagen.isEmpty()||
+                usuario.getFechaDeNacimiento() == null
+        ){
+
+            throw new CampoVacio();
+        }
     }
 
 }

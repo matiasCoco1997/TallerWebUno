@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,15 +31,22 @@ public class ControladorNoticiaTest {
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
 
+    private MultipartFile imgMock;
+    private MultipartFile audioMock;
+
     @BeforeEach
     public void init(){
         noticiaMock = mock(Noticia.class);
+        noticiaMock.setCategoria("1");
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
-        when(noticiaMock.getCategoria()).thenReturn("categoria");
+        when(noticiaMock.getCategoria()).thenReturn("1");
 
+        imgMock = mock(MultipartFile.class);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
+
+        audioMock = mock(MultipartFile.class);
 
         servicioNoticiaMock = mock(ServicioNoticia.class);
         controladorNoticia = new ControladorNoticia(servicioNoticiaMock);
@@ -51,7 +59,6 @@ public class ControladorNoticiaTest {
 
         noticias.add(noticiaMock);
         noticias.add(noticiaMock);
-
         when(servicioNoticiaMock.listarNoticias()).thenReturn(noticias);
 
         // ejecucion
@@ -76,21 +83,21 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queAlCrearUnaNoticiaRedireccioneACargarNoticia() {
+    public void queAlCrearUnaNoticiaRedireccioneAlHome() {
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock,sessionMock);
+        ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock);
 
         // validacion
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("cargar-noticia"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
     }
 
     @Test
     public void queAlCrearUnaNoticiaRetorneUnaException() throws Exception {
         // preparacion
-        when(controladorNoticia.crearNuevaNoticia(noticiaMock,sessionMock)).thenThrow(RuntimeException.class);
+        when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(RuntimeException.class);
 
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock,sessionMock);
+        ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock);
 
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al crear la noticia."));
