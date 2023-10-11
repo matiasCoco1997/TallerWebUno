@@ -115,6 +115,21 @@
 
 </header>
 <main>
+
+
+
+    <!--Descripción-->
+    <section class="m-auto text-white px-4 lg:px-0 mt-12 text-lg leading-relaxed w-full lg:w-3/4">
+        <p id="noticia-texto">
+            Estamos presenciando en directo un auge sin precedentes de la inteligencia artificial (IA). Aquí, las Big Tech batallan por tener un papel protagónico en una industria emergente que promete ser clave para el futuro de la humanidad y que, por consecuencia, tiene el potencial de producir enormes beneficios económicos si consiguen llegar a tiempo.         </p>
+
+        <button id="btnConvertir">
+            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/></svg>
+        </button>
+    </section>
+
+
+
     <!-- Comentarios-->
     <section class="bg-black py-8 lg:py-16 antialiased">
         <div class="max-w-2xl mx-auto px-4">
@@ -264,33 +279,27 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+<script th:src="@{/js/comentarioMenu.js}"></script>
 <script th:src="@{/js/guardarComentario.js}"></script>
 <script th:src="@{/js/eliminarComentario.js}"></script>
 <script th:src="@{/js/editarComentario.js}"></script>
 
 <script>
-//Esto despliega el menú de los comentarios (borrar/editar)
-$(document).ready(function () {
-    $(document).on("click", ".dropdown-comment-button", function (event) {
-        /** Cuando se llama a stopPropagation(), se detiene la propagación del evento, lo que significa que el evento
-        no se propagará más allá del elemento actual. Esto puede ser útil en situaciones donde tienes elementos anidados
-        y deseas evitar que un evento se propague a elementos superiores.
-        */
-        event.stopPropagation();
+    //Convertir texto en audio
+    $(document).ready(function () {
+            $('#btnConvertir').on('click', function () {
+                convertirTexto();
+            });
+        });
 
-        // Busc el menú que tiene que mostrar
-        var dropdownMenu = $(this).siblings(".dropdown-menu");
-        dropdownMenu.toggleClass("hidden");
-    });
+        function convertirTexto() {
+            var texto = $('#noticia-texto').text();
 
-    // Oculta el menú si se hace clic fuera
-    $(document).on("click", function (event) {
-        // Verifica que el clic no está dentro del menú
-        if (!$(event.target).closest(".dropdown-menu").length) {
-            $(".dropdown-menu").addClass("hidden");
+            let utterance = new SpeechSynthesisUtterance(texto);
+             utterance.rate = 0.8; // Velocidad del gallego jeje
+            speechSynthesis.speak(utterance);
         }
-    });
-});
+
 </script>
 
 </body>

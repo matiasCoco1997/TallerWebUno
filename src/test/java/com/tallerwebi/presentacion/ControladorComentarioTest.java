@@ -13,6 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -153,21 +155,23 @@ public class ControladorComentarioTest {
         assertEquals("fragment/form-comentario", respuesta.getViewName());
         assertEquals("Comentario", respuesta.getModelMap().get("comentario").getClass().getSimpleName());
     }
-  /* @Test
+    @Test
+    public void queAlBuscarLosComentariosDeUnaPublicacionRetorneALaPlantillaDeComentario(){
+        List<Comentario> comentarios = new ArrayList<>();
+        comentarios.add(comentarioMock);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(servivioComentarioMock.buscarComentarios(anyLong())).thenReturn(comentarios);
+        ModelAndView respuesta = controladorComentarioMock.listarComentario(anyLong(), sessionMock);
+        assertEquals("fragment/comentario-response",respuesta.getViewName());
+    }
+   @Test
     public void queAlBuscarLosComentariosDeUnaPublicacionRetorneUnaListaDeComentarios(){
         List<Comentario> comentarios = new ArrayList<>();
         comentarios.add(comentarioMock);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         when(servivioComentarioMock.buscarComentarios(anyLong())).thenReturn(comentarios);
-        ResponseEntity<Object> respuesta = controladorComentarioMock.listarComentario(anyLong());
-        assertThat(respuesta.getStatusCode(), is(HttpStatus.OK));
+        ModelAndView respuesta = controladorComentarioMock.listarComentario(anyLong(), sessionMock);
+        comentarios = (List<Comentario>) respuesta.getModelMap().get("comentarios");
+        assertEquals(1, comentarios.size());
     }
-   @Test
-    public void testListarComentarioNoEncontrado() {
-        Long idPublicacion = 2L;
-        when(servivioComentarioMock.buscarComentarios(idPublicacion)).thenReturn(null);
-        ResponseEntity<Object> respuesta = controladorComentarioMock.listarComentario(idPublicacion);
-        assertThat(respuesta.getStatusCode(), is(HttpStatus.OK));
-        assertThat(respuesta.getBody(), is(nullValue()));
-    }
-*/
 }
