@@ -29,6 +29,7 @@ public class SpringWebConfig implements WebMvcConfigurer {
         registry.addResourceHandler("/css/**").addResourceLocations("/resources/core/css/");
         registry.addResourceHandler("/js/**").addResourceLocations("/resources/core/js/");
         registry.addResourceHandler("/imagenes/**").addResourceLocations("/resources/core/imagenes/");
+        registry.addResourceHandler("/audios_noticias/**").addResourceLocations("/resources/core/audios_noticias/");
         registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
     }
 

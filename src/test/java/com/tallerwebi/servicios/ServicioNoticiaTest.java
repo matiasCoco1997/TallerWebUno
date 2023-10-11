@@ -1,12 +1,18 @@
 package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,37 +28,55 @@ public class ServicioNoticiaTest {
     private Noticia noticiaMock;
     private ServicioNoticia servicioNoticiaMock;
     private RepositorioNoticia repositorioNoticiaMock;
+    private Usuario usuarioMock;
+    private MultipartFile imgMock;
+    private MockMultipartFile audioMock;
 
     @BeforeEach
-    public void init(){
+    public void init() throws IOException {
+
+        usuarioMock = mock(Usuario.class);
+
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
-        when(noticiaMock.getCategoria()).thenReturn("categoria");
+        when(noticiaMock.getCategoria()).thenReturn("1");
+        when(noticiaMock.getResumen()).thenReturn("resumen");
+        when(noticiaMock.getRutaDeimagen()).thenReturn("rutaDeImagen");
+        when(noticiaMock.getAltDeImagen()).thenReturn("altDeImagen");
         when(noticiaMock.getActiva()).thenReturn(true);
 
+        Path pathImg = Path.of("src/test/resources/mock_image.png");
+        byte[] contentImg = Files.readAllBytes(pathImg);
+        imgMock = new MockMultipartFile("mock_image.png", "mock_image.png", "image/png", contentImg);
+
+        Path pathAudio = Path.of("src/test/resources/mock_audio.mp3");
+        byte[] contentAudio = Files.readAllBytes(pathAudio);
+        audioMock = new MockMultipartFile("mock_audio.mp3", "mock_audio.mp3", "audio/mpeg", contentAudio);
+
+        
         this.repositorioNoticiaMock = mock(RepositorioNoticia.class);
         this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock);
     }
 
 
     @Test
-    public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez(){
+    public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez() throws Exception {
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
-        servicioNoticiaMock.crearNoticia(noticiaMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
         //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(1)).guardar(noticiaMock);
     }
 
     @Test
-    public void cuandoCreoDosNoticiasSeInvocaLaFuncionGuardarDelRepositorioDosVeces(){
+    public void cuandoCreoDosNoticiasSeInvocaLaFuncionGuardarDelRepositorioDosVeces() throws Exception {
 
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
-        servicioNoticiaMock.crearNoticia(noticiaMock);
-        servicioNoticiaMock.crearNoticia(noticiaMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
-        //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
+        //verificacion (evaluo si no esta vacio y si es 2 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(2)).guardar(noticiaMock);
     }
 

@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
@@ -26,6 +27,7 @@ import com.tallerwebi.integracion.config.SpringWebTestConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -42,7 +44,7 @@ public class RepositorioNoticiaTest {
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("Titulo de la noticia");
-        when(noticiaMock.getCategoria()).thenReturn("categoria");
+        when(noticiaMock.getCategoria()).thenReturn("Categoria");
     }
 
     @Transactional
@@ -102,7 +104,7 @@ public class RepositorioNoticiaTest {
         noticia.setCategoria("Categoría de la noticia");
         noticia.setResumen("Contenido de la noticia");
         noticia.setRutaDeimagen("URL de la imagen");
-        noticia.setFechaDePublicacion("Fecha de publicación");
+        noticia.setFechaDePublicacion(LocalDateTime.now());
         noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
         noticia.setActiva(true);
 

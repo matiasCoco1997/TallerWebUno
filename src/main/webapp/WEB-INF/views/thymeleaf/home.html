@@ -45,16 +45,31 @@
     <img th:src="@{${sessionUsuarioLogueado.fotoPerfil}}"class="lg:w-[45%] w-[70%]" th:alt="${sessionUsuarioLogueado.altFotoPerfil}">
   </div>
 
-  <div th:each="noticia : ${noticias}" style="background-color: rgba(255,0,0,0.57); margin-bottom: 20px">
+  <a href="/sunn/noticia/crear">Crear Noticia</a>
 
-    <h3>Id de Noticia:</h3>
-    <p th:text="${noticia.idNoticia}"></p>
+  <div th:each="noticia : ${noticias}" style="background-color: rgba(255,0,0,0.57); margin-bottom: 20px">
 
     <h3>Titulo de Noticia:</h3>
     <p th:text="${noticia.titulo}"></p>
 
+    <h3>Categoria de Noticia:</h3>
+    <p th:text="${noticia.categoria}"></p>
+
+    <h3>Resumen de Noticia:</h3>
+    <p th:text="${noticia.resumen}"></p>
+
     <h3>Descripción de Noticia:</h3>
     <p th:text="${noticia.descripcion}"></p>
+
+    <p>Imagen de la Noticia:</p>
+    <img th:src="@{${noticia.rutaDeimagen}}"class="lg:w-[45%] w-[70%]" th:alt="${noticia.altDeImagen}">
+
+    <h3>Estado de Noticia:</h3>
+    <p th:text="${noticia.activa}"></p>
+
+    <h3>Audio de Noticia:</h3>
+    <audio id="miAudio" th:src="@{${noticia.rutaDeAudioPodcast}}"></audio>
+    <button onclick="togglePlayPause()">Play</button>
 
   </div>
 
@@ -63,4 +78,18 @@
 
 
 </body>
+
+<script>
+  var miAudio = document.getElementById('miAudio');
+
+  function togglePlayPause() {
+    if (miAudio.paused) {
+      miAudio.play();
+      document.querySelector('button').innerText = 'Pause';
+    } else {
+      miAudio.pause();
+      document.querySelector('button').innerText = 'Play';
+    }
+  }
+</script>
 </html>
