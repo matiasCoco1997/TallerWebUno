@@ -23,8 +23,8 @@
   <div class="flex w-full flex-wrap items-center justify-between px-3">
     <!-- Logo -->
     <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-       href="#">
-      <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
+       href="/home">
+      <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 30px"
            alt="TE Logo" loading="lazy" />
     </a>
     <!--Search-->
@@ -153,14 +153,14 @@
       <div class="flex items-center">
         <div class="mr-2">
           <a class="flex items-center" href="#">
-            <img class="mr-3 w-10 h-10 object-cover rounded-full"
-                 src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80"
-                 alt="avatar">
+            <img class="mr-3 w-10 h-10 object-cover rounded-full" th:src="@{${noticia.getUsuario().fotoPerfil}}" th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
             <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
           </a>
         </div>
 
-        <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
+        <p style="padding-left: 20px">
+          Fecha de publicación: <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
+        </p>
 
       </div>
       <div class="mt-2 flex">
@@ -177,20 +177,22 @@
         </div>
       </div>
       <div class="flex justify-between max-w-xs items-center text-white">
+        <!--aca estaba el boton por las dudas-->
         <div
-                class="flex items-center border-2 border-white rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-gray-200">
+                class="flex items-center border-2 border-white rounded-lgs px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-gray-200">
           <div class="mr-2">
-            <svg xmlns="http://www.w3.org/2000/svg" height="1.5em"
-                 viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-              <style>
-                svg {
+            <audio th:id="${noticia.idNoticia}" th:src="@{${noticia.rutaDeAudioPodcast}}"></audio>
+            <button class = "playButton" th:name="${noticia.idNoticia}">
+              <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <style> svg {
                   fill: #ffffff
-                }
-              </style>
-              <path
-                      d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z" />
-            </svg>
-          </div>48 min
+                } </style>
+                <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
+              </svg>
+            </button>
+          </div>
+          48 min
         </div>
         <!--Comentarios-->
         <div class="comentario">
@@ -251,6 +253,23 @@
       autoplay: true,
       autoplaySpeed: 4000,
       // Otras opciones...
+    });
+  });
+</script>
+
+<script>
+  $(document).ready(function() {
+
+    $('.playButton').on('click', function() {
+      var idAudio = "#" + $(this).attr("name");
+      var elementoAudio = $(idAudio)[0];
+
+      if (elementoAudio.paused) {
+        elementoAudio.play();
+      } else {
+        elementoAudio.pause();
+      }
+
     });
   });
 </script>
