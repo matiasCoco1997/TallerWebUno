@@ -65,9 +65,9 @@ public class ServicioHomeTest {
         usuarios.add(usuarioMock);
         usuarios.add(usuarioMock);
 
-        when(this.repositorioHomeMock.listarUsuarios()).thenReturn(usuarios);
+        when(this.repositorioHomeMock.listarUsuarios(1L)).thenReturn(usuarios);
 
-        List<Usuario> usuariosObtenidos = servicioHomeMock.listarUsuarios();
+        List<Usuario> usuariosObtenidos = servicioHomeMock.listarUsuarios(1L);
 
         assertThat(usuariosObtenidos, not(empty()));
         assertThat(usuariosObtenidos.size(), is(3));

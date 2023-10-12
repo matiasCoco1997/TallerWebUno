@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+
 public interface ServicioHome {
 
      List<Noticia> listarNoticias();
 
-    List<Usuario> listarUsuarios();
+    List<Usuario> listarUsuarios(Long idUsuario);
 
     List<Categoria> obtenerCategorias();
 

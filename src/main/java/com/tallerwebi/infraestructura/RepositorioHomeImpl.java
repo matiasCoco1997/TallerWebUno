@@ -23,13 +23,7 @@ public class RepositorioHomeImpl implements RepositorioHome{
     @Override
     public List<Noticia> listarNoticias() {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Noticia where activa=true").list();
-    }
-
-    @Override
-    public List<Usuario> listarUsuarios() {
-        final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Usuario").list();
+        return session.createQuery("FROM Noticia WHERE activa=true").list();
     }
 
     @Override
@@ -39,9 +33,16 @@ public class RepositorioHomeImpl implements RepositorioHome{
     }
 
     @Override
+    public List<Usuario> listarUsuarios(Long idUsuario) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Usuario WHERE id != :id")
+                .setParameter("id",idUsuario).list();
+    }
+
+    @Override
     public List<Noticia> obtenerNoticiasPorCategoria(String descripcion) {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Noticia WHERE categoria = :descripcion")
+        return session.createQuery("FROM Noticia WHERE activa=true and categoria = :descripcion")
                 .setParameter("descripcion", descripcion)
                 .list();
     }

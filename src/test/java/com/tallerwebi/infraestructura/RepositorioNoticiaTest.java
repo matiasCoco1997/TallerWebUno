@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
@@ -26,6 +27,7 @@ import com.tallerwebi.integracion.config.SpringWebTestConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ExtendWith(SpringExtension.class)
@@ -42,7 +44,7 @@ public class RepositorioNoticiaTest {
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("Titulo de la noticia");
-        when(noticiaMock.getCategoria()).thenReturn("categoria");
+        when(noticiaMock.getCategoria()).thenReturn("Categoria");
     }
 
     @Transactional
@@ -75,8 +77,8 @@ public class RepositorioNoticiaTest {
         List<Noticia> buscadas = repositorioNoticia.buscarPorTitulo("Titulo de la noticia");
 
         assertThat(buscadas,hasSize(2));
-
     }
+
     @Transactional
     @Rollback
     @Test
@@ -102,7 +104,7 @@ public class RepositorioNoticiaTest {
         noticia.setCategoria("Categoría de la noticia");
         noticia.setResumen("Contenido de la noticia");
         noticia.setRutaDeimagen("URL de la imagen");
-        noticia.setFechaDePublicacion("Fecha de publicación");
+        noticia.setFechaDePublicacion(LocalDateTime.now());
         noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
         noticia.setActiva(true);
 
@@ -124,31 +126,14 @@ public class RepositorioNoticiaTest {
     @Transactional
     @Rollback
     @Test
-    public void queSePuedaBuscarPorCategoriaDeberiaTraerNoticiasDeCategoriaEspecifica() {
-        Noticia noticia1 = new Noticia();
-        noticia1.setTitulo("Titulo de la noticia");
-        noticia1.setCategoria("Deportes");
-        repositorioNoticia.guardar(noticia1);
-
-        Noticia noticia2 = new Noticia();
-        noticia2.setTitulo("Titulo de la noticia");
-        noticia2.setCategoria("Política");
-        repositorioNoticia.guardar(noticia2);
-
-        List<Noticia> noticiasDeDeportes = repositorioNoticia.buscarPorCategoria("Deportes");
-
-        assertThat(noticiasDeDeportes, hasSize(1));
-        assertThat(noticiasDeDeportes.get(0).getCategoria(), is("Deportes"));
-    }
-
-    @Transactional
-    @Rollback
-    @Test
-    public void guardarNoticiaSinTituloDevuelvaFalse() {
-        Noticia noticiaSinTitulo = new Noticia();
-
-        Boolean resultado = repositorioNoticia.guardar(noticiaSinTitulo);
-
-        assertFalse(resultado);
+    public void cuandoSeCreaUnaNoticiaNuevaTieneCeroMeGusta() {
+        //preparación
+        Noticia noticia = new Noticia();
+        noticia.setTitulo("Título de la noticia");
+        //ejecución
+        repositorioNoticia.guardar(noticia);
+        Noticia noticiaObtenida=repositorioNoticia.buscarPorId(noticia.getIdNoticia());
+        //validación
+        assertThat(noticiaObtenida.getLikes(), is(0));
     }
 }

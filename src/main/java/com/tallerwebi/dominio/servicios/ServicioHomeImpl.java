@@ -26,8 +26,8 @@ public class ServicioHomeImpl implements ServicioHome {
     }
 
     @Override
-    public List<Usuario> listarUsuarios() {
-        return repositorioHome.listarUsuarios();
+    public List<Usuario> listarUsuarios(Long idUsuario) {
+        return repositorioHome.listarUsuarios(idUsuario);
     }
 
     @Override

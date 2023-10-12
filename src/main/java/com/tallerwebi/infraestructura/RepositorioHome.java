@@ -9,7 +9,7 @@ import java.util.List;
 public interface RepositorioHome {
     List<Noticia> listarNoticias();
 
-    List<Usuario> listarUsuarios();
+    List<Usuario> listarUsuarios(Long idUsuario);
 
     List<Categoria> listarCategorias();
 

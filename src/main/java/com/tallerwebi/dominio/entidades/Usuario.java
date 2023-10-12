@@ -31,8 +31,10 @@ public class Usuario {
     private String altFotoPerfil;
     private Boolean activo = true;
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
+
     @Transient
     private List<Usuario> seguidos; //revisar
+
     @Transient
     private List<Usuario> seguidores; //revisar
 

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Repository("repositorioCategoria")
 public class RepositorioCategoriaImpl implements RepositorioCategoria {
@@ -34,6 +35,11 @@ public class RepositorioCategoriaImpl implements RepositorioCategoria {
         return (Categoria) session.createCriteria(Categoria.class)
                 .add(Restrictions.eq("descripcion", descripcion))
                 .uniqueResult();
+    }
+
+    @Override
+    public List<Categoria> obtenerCategorias() {
+        return sessionFactory.getCurrentSession().createQuery("FROM Categoria ").list();
     }
 
     @Override

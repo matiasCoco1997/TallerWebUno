@@ -229,7 +229,7 @@ public class ControladorLoginTest {
             usuarios.add(usuarioMock);
             usuarios.add(usuarioMock);
 
-            when(servicioHomeMock.listarUsuarios()).thenReturn(usuarios);
+            when(servicioHomeMock.listarUsuarios(1L)).thenReturn(usuarios);
 
             ModelAndView modelAndView= controladorHome.home(sessionMock);
             List<Usuario> usuariosEnModelo= (List<Usuario>) modelAndView.getModel().get("usuarios");

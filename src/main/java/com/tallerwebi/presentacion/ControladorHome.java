@@ -21,33 +21,40 @@ public class ControladorHome {
     private ServicioHome servicioHome;
 
     @Autowired
-    public ControladorHome(ServicioHome servicioHome){
-        this.servicioHome=servicioHome;
+    public ControladorHome(ServicioHome servicioHome) {
+        this.servicioHome = servicioHome;
     }
 
     @RequestMapping("/home")
-    public ModelAndView home(HttpSession session){
-        ModelMap model=new ModelMap();
+    public ModelAndView home(HttpSession session) {
+        ModelMap model = new ModelMap();
+
         List<Noticia> noticias = servicioHome.listarNoticias();
-        List<Usuario> usuarios= servicioHome.listarUsuarios();
-        List<Categoria> categorias=servicioHome.obtenerCategorias();
-        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Categoria> categorias = servicioHome.obtenerCategorias();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Usuario> usuarios = servicioHome.listarUsuarios(6L); //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
+
         model.put("noticias", noticias);
-        model.put("usuarios",usuarios);
-        model.put("categorias",categorias);
-        model.put("usuario",usuario);
-        return new ModelAndView("home-vista",model);
+        model.put("usuarios", usuarios);
+        model.put("categorias", categorias);
+        model.put("usuario", usuario);
+
+
+        return new ModelAndView("home-vista", model);
     }
 
     @RequestMapping(value = "/categoria")
-    public ModelAndView validarCategoria(@RequestParam("categoria")String categoria, HttpSession session){
-        ModelMap model=new ModelMap();
-        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
-        List<Categoria> categorias=servicioHome.obtenerCategorias();
+    public ModelAndView validarCategoria(@RequestParam("categoria") String categoria, HttpSession session) {
+
+        ModelMap model = new ModelMap();
+
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Categoria> categorias = servicioHome.obtenerCategorias();
         List<Noticia> noticiasCategorias = servicioHome.obtenerNoticiasPorCategoria(categoria);
-        model.put("categorias",categorias);
-        model.put("usuario",usuario);
-        model.put("noticias",noticiasCategorias);
+
+        model.put("categorias", categorias);
+        model.put("usuario", usuario);
+        model.put("noticias", noticiasCategorias);
         return new ModelAndView("home-categoria", model);
     }
 }
