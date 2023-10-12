@@ -45,7 +45,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         verificacionCamposVacios(noticia, imagen, audio);
 
-
         verificacionDeLaImagenSeleccionada(noticia, imagen);
 
         verificacionDelAudioSeleccionado(noticia, audio);
@@ -74,7 +73,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
                 noticiasActivas.add(noticia);
             }
         }
-
         return noticiasActivas;
     }
 

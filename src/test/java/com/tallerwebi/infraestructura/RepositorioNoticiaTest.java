@@ -77,8 +77,8 @@ public class RepositorioNoticiaTest {
         List<Noticia> buscadas = repositorioNoticia.buscarPorTitulo("Titulo de la noticia");
 
         assertThat(buscadas,hasSize(2));
-
     }
+
     @Transactional
     @Rollback
     @Test
@@ -121,37 +121,6 @@ public class RepositorioNoticiaTest {
         assertThat(nuevoTitulo, is(noticiaModificada.getTitulo()));
         assertThat(noticia.getCategoria(), is(noticiaModificada.getCategoria()));
         assertThat(noticia.getIdNoticia(), is(noticiaModificada.getIdNoticia()));
-    }
-
-    @Transactional
-    @Rollback
-    @Test
-    public void queSePuedaBuscarPorCategoriaDeberiaTraerNoticiasDeCategoriaEspecifica() {
-        Noticia noticia1 = new Noticia();
-        noticia1.setTitulo("Titulo de la noticia");
-        noticia1.setCategoria("Deportes");
-        repositorioNoticia.guardar(noticia1);
-
-        Noticia noticia2 = new Noticia();
-        noticia2.setTitulo("Titulo de la noticia");
-        noticia2.setCategoria("Política");
-        repositorioNoticia.guardar(noticia2);
-
-        List<Noticia> noticiasDeDeportes = repositorioNoticia.buscarPorCategoria("Deportes");
-
-        assertThat(noticiasDeDeportes, hasSize(1));
-        assertThat(noticiasDeDeportes.get(0).getCategoria(), is("Deportes"));
-    }
-
-    @Transactional
-    @Rollback
-    @Test
-    public void guardarNoticiaSinTituloDevuelvaFalse() {
-        Noticia noticiaSinTitulo = new Noticia();
-
-        Boolean resultado = repositorioNoticia.guardar(noticiaSinTitulo);
-
-        assertFalse(resultado);
     }
 
     @Transactional

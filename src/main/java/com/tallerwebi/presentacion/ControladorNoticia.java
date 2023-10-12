@@ -25,6 +25,7 @@ public class ControladorNoticia {
         this.servicioNoticia = servicioNoticia;
     }
 
+    /*
     @RequestMapping(path = {"/noticia/listar", "/noticia","/noticia/"})
     public ModelAndView listarNoticias(HttpSession session) {
         ModelMap modelo = new ModelMap();
@@ -46,7 +47,9 @@ public class ControladorNoticia {
         return new ModelAndView("home", modelo);
     }
 
-    @RequestMapping(path = "/noticia/cargar", method = RequestMethod.GET)
+     */
+
+    @RequestMapping(path = "/noticia/crear", method = RequestMethod.GET)
     public ModelAndView cargarNoticia() {
         ModelMap modelo = new ModelMap();
 
@@ -112,6 +115,7 @@ public class ControladorNoticia {
         return new ModelAndView("home", model);
     }
 
+    /*
     @RequestMapping(path = "/noticia/buscarNoticiaPorCategoria", method = RequestMethod.POST)
     public ModelAndView buscarNoticiaPorCategoria( @ModelAttribute("datosNoticia") String categoria ) {
 
@@ -126,6 +130,8 @@ public class ControladorNoticia {
         return new ModelAndView("home", model);
     }
 
+     */
+    /*
     @RequestMapping("/noticia/login")
     public ModelAndView cerrarSesion() {
 
@@ -133,6 +139,8 @@ public class ControladorNoticia {
         modelo.put("datosLogin", new DatosLogin());
         return new ModelAndView("redirect:/login", modelo);
     }
+    
+     */
 
     @RequestMapping(value = "/darLike",method = RequestMethod.POST)
     public ModelAndView darLike(@RequestParam("noticiaLike") Long noticiaLike,HttpSession session) throws Exception {
