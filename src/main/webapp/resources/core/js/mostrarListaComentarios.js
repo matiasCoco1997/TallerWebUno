@@ -5,7 +5,9 @@ $(document).ready(function () {
 
         let cajaComentarios = $("#lista-comentarios" + idNoticia);
 
-
+        if (cajaComentarios.children().length > 0) {
+            cajaComentarios.empty();
+        } else {
             $.ajax({
                 type: 'get',
                 url: "/sunn/comentarios/publicacion/" + idNoticia,
@@ -16,6 +18,6 @@ $(document).ready(function () {
                     console.error('Error al editar el comentario', error);
                 }
             });
-
+}
     });
 });

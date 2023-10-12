@@ -4,7 +4,7 @@
 </th:block>
 
 <th:block  th:unless="${error}">
-    <th:block th:if="${#lists.size(comentarios) > 0}">
+    <th:block th:if="${comentarios}">
         <th:block th:each="comentario : ${comentarios}">
             <article  th:id="'comentario'+${comentario.id}" class="editar-comentario-form p-6 text-base border-t border-gray-200 dark:border-gray-700 bg-black">
                 <footer class="flex justify-between items-center mb-2">

@@ -24,13 +24,13 @@ $(document).ready(function () {
     $(document).on("submit", ".formularioEdicionComentario", function (event) {
         event.preventDefault();
         let form = $(this);
-
+        let idComentario = $(this).data("id-comentario");
         $.ajax({
             type: 'post',
             url: "/sunn/comentario/editar",
             data: form.serialize(),
             success: function (response) {
-                $('#comment-text-1').text( form.find('textarea[name="descripcion"]').val());
+                $('#comment-text-'+idComentario).text( form.find('textarea[name="descripcion"]').val());
                 form.remove();
             },
             error: function (error) {
