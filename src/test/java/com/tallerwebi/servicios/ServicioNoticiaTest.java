@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
+import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -31,6 +32,7 @@ public class ServicioNoticiaTest {
     private Usuario usuarioMock;
     private MultipartFile imgMock;
     private MockMultipartFile audioMock;
+    private RepositorioCategoria repositorioCategoriaMock;
 
     @BeforeEach
     public void init() throws IOException {
@@ -56,7 +58,8 @@ public class ServicioNoticiaTest {
 
         
         this.repositorioNoticiaMock = mock(RepositorioNoticia.class);
-        this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock);
+        this.repositorioCategoriaMock = mock(RepositorioCategoria.class);
+        this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock, repositorioCategoriaMock);
     }
 
 
@@ -133,16 +136,12 @@ public class ServicioNoticiaTest {
         //preparación
         Noticia noticia = new Noticia();
         noticia.setTitulo("Título de la noticia");
-        noticia.setDescripcion("Descripción de la noticia");
-        noticia.setCategoria("Categoría de la noticia");
-        noticia.setResumen("Contenido de la noticia");
-        noticia.setRutaDeimagen("URL de la imagen");
-        noticia.setFechaDePublicacion("Fecha de publicación");
-        noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
-        noticia.setActiva(true);
+        noticia.setLikes(0);
+
         //ejecución
         repositorioNoticiaMock.guardar(noticia);
         servicioNoticiaMock.darMeGusta(noticia);
+
         //validación
         assertThat(noticia.getLikes(), is(1));
     }
@@ -152,20 +151,13 @@ public class ServicioNoticiaTest {
         //preparación
         Noticia noticia = new Noticia();
         noticia.setTitulo("Título de la noticia");
-        noticia.setDescripcion("Descripción de la noticia");
-        noticia.setCategoria("Categoría de la noticia");
-        noticia.setResumen("Contenido de la noticia");
-        noticia.setRutaDeimagen("URL de la imagen");
-        noticia.setFechaDePublicacion("Fecha de publicación");
-        noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
-        noticia.setActiva(true);
+        noticia.setLikes(0);
         //ejecución
         repositorioNoticiaMock.guardar(noticia);
         servicioNoticiaMock.darMeGusta(noticia);
         servicioNoticiaMock.darMeGusta(noticia);
         servicioNoticiaMock.darMeGusta(noticia);
         servicioNoticiaMock.darMeGusta(noticia);
-
         //validación
         assertThat(noticia.getLikes(), is(4));
     }

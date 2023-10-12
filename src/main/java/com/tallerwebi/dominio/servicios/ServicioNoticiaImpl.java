@@ -1,11 +1,13 @@
 package com.tallerwebi.dominio.servicios;
 
+import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.CampoVacio;
 import com.tallerwebi.dominio.excepcion.CategoriaInexistente;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
 import com.tallerwebi.presentacion.DatosLogin;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,18 +32,19 @@ import java.util.UUID;
 public class ServicioNoticiaImpl implements ServicioNoticia {
 
     private final RepositorioNoticia repositorioNoticia;
+    private final RepositorioCategoria repositorioCategoria;
 
     @Autowired
-    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia) {
+    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria) {
         this.repositorioNoticia = repositorioNoticia;
+        this.repositorioCategoria = repositorioCategoria;
     }
 
     @Override
-    public void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, CategoriaInexistente, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
+    public void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
 
         verificacionCamposVacios(noticia, imagen, audio);
 
-        setCategoriaSeleccionada(noticia);
 
         verificacionDeLaImagenSeleccionada(noticia, imagen);
 
@@ -119,6 +122,11 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         return noticia==null;
     }
 
+    @Override
+    public List<Categoria> listarCategorias() {
+        return repositorioCategoria.obtenerCategorias();
+    }
+
 
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
         if(noticia.getTitulo().isBlank()) {
@@ -142,41 +150,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         }
     }
 
-    private  void setCategoriaSeleccionada(Noticia noticia) throws CategoriaInexistente {
-        switch (noticia.getCategoria()){
 
-            case "1":
-                noticia.setCategoria("Deporte");
-                break;
-
-            case "2":
-                noticia.setCategoria("Espectáculo");
-                break;
-
-            case "3":
-                noticia.setCategoria("Política");
-                break;
-
-            case "4":
-                noticia.setCategoria("Tecnología");
-                break;
-
-            case "5":
-                noticia.setCategoria("Economía");
-                break;
-
-            case "6":
-                noticia.setCategoria("Sociedad");
-                break;
-
-            case "7":
-                noticia.setCategoria("Mundo");
-                break;
-
-            default:
-                throw new CategoriaInexistente();
-        }
-    }
 
     private void verificacionDeLaImagenSeleccionada(Noticia noticia, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
         Long tamanioDeImagen = imagen.getSize();

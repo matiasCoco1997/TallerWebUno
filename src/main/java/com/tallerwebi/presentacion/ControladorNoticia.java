@@ -20,7 +20,6 @@ import java.util.List;
 @Controller
 public class ControladorNoticia {
     private ServicioNoticia servicioNoticia;
-
     @Autowired
     public ControladorNoticia(ServicioNoticia servicioNoticia) {
         this.servicioNoticia = servicioNoticia;
@@ -52,6 +51,7 @@ public class ControladorNoticia {
         ModelMap modelo = new ModelMap();
 
         modelo.put("datosNoticia", new Noticia());
+        modelo.put("categorias", servicioNoticia.listarCategorias());
 
         return new ModelAndView("crear_noticia", modelo);
     }
@@ -66,9 +66,6 @@ public class ControladorNoticia {
             servicioNoticia.crearNoticia(noticia, UsuarioLogueado, imagen, audio);
         }catch (CampoVacio e) {
             modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
-            return new ModelAndView("crear_noticia", modelo);
-        }catch (CategoriaInexistente e) {
-            modelo.put("error", "Error, la categoria seleccionada no existe.");
             return new ModelAndView("crear_noticia", modelo);
         }catch (TamanioDeArchivoSuperiorALoPermitido e) {
             modelo.put("error", "Error, la imagen seleccionada pesa demasiado.");
@@ -141,7 +138,6 @@ public class ControladorNoticia {
     public ModelAndView darLike(@RequestParam("noticiaLike") Long noticiaLike,HttpSession session) throws Exception {
         ModelMap modelo = new ModelMap();
         Noticia noticia=servicioNoticia.buscarNoticiaPorId(noticiaLike);
-
         if (servicioNoticia.verificarQueNoEsNull(noticia)) {
             throw new Exception("La noticia fue eliminada");
         }
@@ -152,7 +148,6 @@ public class ControladorNoticia {
             modelo.put("error", "No se puede dar me gusta a la noticia");
             return new ModelAndView("redirect:/home", modelo);
         }
-
         return new ModelAndView("redirect:/home", modelo);
     }
 }

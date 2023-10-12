@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio.servicios;
 
+import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.CampoVacio;
@@ -12,7 +13,7 @@ import java.io.IOException;
 import java.util.List;
 
 public interface ServicioNoticia {
-    void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, CategoriaInexistente, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto;
+    void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto;
 
     void borrarNoticiaPorId(Long idNoticia);
 
@@ -29,4 +30,6 @@ public interface ServicioNoticia {
     void darMeGusta(Noticia noticia);
 
     boolean verificarQueNoEsNull(Noticia noticia);
+
+    List<Categoria> listarCategorias();
 }

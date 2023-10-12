@@ -39,16 +39,8 @@
                     <div class="w-[80%] mx-auto">
                         <label class="text-white text-2xl">Seleccione una categoria para su noticia</label>
                         <br>
-                        <select class="mt-2 w-[100%] h-[35px] text-black text-xl pl-2 border border-black border-b-[#444] bg-white" type="text" id="categoriasSelect" th:field="*{categoria}"
-                                >
-                            <option value="0">Selecciona una categoría para su noticia</option>
-                            <option value="1">Deporte</option>
-                            <option value="2">Espectáculo</option>
-                            <option value="3">Política</option>
-                            <option value="4">Tecnología</option>
-                            <option value="5">Economía</option>
-                            <option value="6">Sociedad</option>
-                            <option value="7">Mundo</option>
+                        <select class="mt-2 w-[100%] h-[35px] text-black text-xl pl-2 border border-black border-b-[#444] bg-white" type="text" id="categoriasSelect" th:field="*{categoria}">
+                            <option th:each="categoria : ${categorias}" th:value="${categoria.descripcion}" th:text="${categoria.descripcion}"></option>
                         </select>
                     </div>
 

@@ -23,6 +23,7 @@ public class Noticia {
     private LocalDateTime fechaDePublicacion;
     private String rutaDeAudioPodcast;
     private Boolean activa;
+    private Integer likes;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
@@ -30,6 +31,7 @@ public class Noticia {
     @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
     protected void onCreate() {
         fechaDePublicacion = LocalDateTime.now();
+        likes=0;
     }
 
     public void setAltImagenNoticia(String nombreOriginalImagen) {

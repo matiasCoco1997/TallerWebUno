@@ -187,7 +187,7 @@ public class ControladorNoticiaTest {
     public void queAlDarMegustaTireUnaExcepcionPorqueLaNoticiaFueEliminada(){
 
         Noticia n1 = new Noticia();
-        controladorNoticia.crearNuevaNoticia(n1,sessionMock);
+        controladorNoticia.crearNuevaNoticia(n1,sessionMock,imgMock,audioMock);
         controladorNoticia.borrarNoticiaPorId(n1.getIdNoticia());
 
         try {
