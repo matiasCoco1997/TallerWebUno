@@ -35,8 +35,11 @@ public class ServicioHomeTest {
         noticiaMockArte = mock(Noticia.class);
         noticiaMockDeportes = mock(Noticia.class);
         when(noticiaMock.getCategoria()).thenReturn("categoria");
+        when(noticiaMock.getTitulo()).thenReturn("categoria");
         when(noticiaMockArte.getCategoria()).thenReturn("arte");
+        when(noticiaMockArte.getTitulo()).thenReturn("depor");
         when(noticiaMockDeportes.getCategoria()).thenReturn("deportes");
+        when(noticiaMockDeportes.getTitulo()).thenReturn("deportes");
         usuarioMock=mock(Usuario.class);
         categoriaMock=mock(Categoria.class);
         this.repositorioHomeMock = mock(RepositorioHome.class);
@@ -95,7 +98,7 @@ public class ServicioHomeTest {
         noticias.add(noticiaMockArte);
         noticias.add(noticiaMockDeportes);
 
-        List<Noticia> noticiasFiltradas=filtrar(noticias,"deportes");
+        List<Noticia> noticiasFiltradas= filtrarPorCategorias(noticias,"deportes");
         when(this.repositorioHomeMock.obtenerNoticiasPorCategoria("deportes")).thenReturn(noticiasFiltradas);
 
         List<Noticia> noticiasObtenidas= servicioHomeMock.obtenerNoticiasPorCategoria("deportes");
@@ -103,10 +106,34 @@ public class ServicioHomeTest {
         assertThat(noticiasObtenidas.size(), is(1));
     }
 
-    private List<Noticia> filtrar(List<Noticia> noticias, String categoria){
+    @Test
+    public void quePuedaFiltrarLasNoticiasPorTitulo(){
+        List<Noticia> noticias= new ArrayList<>();
+        noticias.add(noticiaMock);
+        noticias.add(noticiaMockArte);
+        noticias.add(noticiaMockDeportes);
+
+        List<Noticia> noticiasFiltradas= filtrarPorTitulo(noticias,"depor");
+        when(this.repositorioHomeMock.obtenerNoticiasPorTitulo("depor")).thenReturn(noticiasFiltradas);
+
+        List<Noticia> noticiasObtenidas= servicioHomeMock.obtenerNoticiasPorTitulo("depor");
+        assertThat(noticiasObtenidas, not(empty()));
+        assertThat(noticiasObtenidas.size(), is(2));
+    }
+
+    private List<Noticia> filtrarPorCategorias(List<Noticia> noticias, String categoria){
         List<Noticia> noticiasFiltradas=new ArrayList<>();
         for (Noticia noticia: noticias) {
             if(noticia.getCategoria().equals(categoria)){
+                noticiasFiltradas.add(noticia);
+            }
+        }
+        return noticiasFiltradas;
+    }
+    private List<Noticia> filtrarPorTitulo(List<Noticia> noticias, String titulo){
+        List<Noticia> noticiasFiltradas=new ArrayList<>();
+        for (Noticia noticia: noticias) {
+            if(noticia.getTitulo().contains(titulo)){
                 noticiasFiltradas.add(noticia);
             }
         }

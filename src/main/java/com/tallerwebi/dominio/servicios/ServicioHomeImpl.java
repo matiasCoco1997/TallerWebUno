@@ -44,4 +44,9 @@ public class ServicioHomeImpl implements ServicioHome {
     public List<Noticia> obtenerNoticiasPorTitulo(String titulo) {
         return repositorioHome.obtenerNoticiasPorTitulo(titulo);
     }
+
+    @Override
+    public boolean validarQueHayNoticias(List<Noticia> noticias) {
+        return noticias.size()==0;
+    }
 }

@@ -101,4 +101,33 @@ public class ControladorHomeTest {
         Usuario usuarioEnModelo= (Usuario) modelAndView.getModel().get("usuario");
         assertThat(usuarioEnModelo,notNullValue());
     }
+
+    @Test
+    public void queAlListarDosCategoriasPorTituloSeCarguenEnElHome(){
+        List<Noticia> noticias= new ArrayList<>();
+        noticias.add(noticiaMock);
+        noticias.add(noticiaMock);
+        String titulo="titulo";
+
+        when(servicioHomeMock.obtenerNoticiasPorTitulo(titulo)).thenReturn(noticias);
+        when(servicioHomeMock.validarQueHayNoticias(noticias)).thenReturn(false);
+
+        ModelAndView modelAndView= controladorHome.filtrarPorTitulo(titulo,sessionMock);
+        List<Noticia> noticiasEnModelo= (List<Noticia>) modelAndView.getModel().get("noticias");
+
+        assertThat(noticiasEnModelo.size(),equalTo(2));
+    }
+
+    @Test
+    public void siNoHayNoticiasDebeEnviarteUnMensajeDeError(){
+        List<Noticia> noticias= new ArrayList<>();
+        String titulo="titulo";
+
+        when(servicioHomeMock.validarQueHayNoticias(noticias)).thenReturn(true);
+
+        ModelAndView modelAndView= controladorHome.filtrarPorTitulo(titulo,sessionMock);
+        String mensajeError= (String) modelAndView.getModel().get("error");
+
+        assertThat(mensajeError,is("No se encontraron noticias con este título: "+titulo));
+    }
 }

@@ -100,4 +100,21 @@ public class RepositorioHomeTest {
         assertThat(cantidadDeNoticias,Is.is(1));
     }
 
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedanFiltrarLasNoticiasPorTitulo(){
+        Noticia noticia=new Noticia();
+        noticia.setTitulo("titulo");
+        noticia.setActiva(true);
+        Noticia noticia2=new Noticia();
+        noticia2.setTitulo("titulo");
+        noticia2.setCategoria("deportes");
+        noticia2.setActiva(true);
+        repositorioNoticia.guardar(noticia);
+        repositorioNoticia.guardar(noticia2);
+        Integer cantidadDeNoticias=repositorioHome.obtenerNoticiasPorTitulo("tit").size();
+        assertThat(cantidadDeNoticias,Is.is(2));
+    }
+
 }

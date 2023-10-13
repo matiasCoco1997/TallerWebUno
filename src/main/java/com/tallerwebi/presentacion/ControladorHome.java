@@ -56,10 +56,14 @@ public class ControladorHome {
     @RequestMapping("/titulo")
     public ModelAndView filtrarPorTitulo(@RequestParam("titulo")String titulo,HttpSession session){
         ModelMap model=new ModelMap();
+
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Categoria> categorias=servicioHome.obtenerCategorias();
         model.put("usuario",usuario);
+        model.put("categorias",categorias);
+
         List<Noticia> noticias=servicioHome.obtenerNoticiasPorTitulo(titulo);
-        if(noticias.size()==0){
+        if(servicioHome.validarQueHayNoticias(noticias)){
             String error="No se encontraron noticias con este título: "+titulo;
             model.put("error",error);
         }else{

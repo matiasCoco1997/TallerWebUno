@@ -19,4 +19,6 @@ public interface ServicioHome {
     List<Noticia> obtenerNoticiasPorCategoria(String descripcion);
 
     List<Noticia> obtenerNoticiasPorTitulo(String titulo);
+
+    boolean validarQueHayNoticias(List<Noticia> noticias);
 }
