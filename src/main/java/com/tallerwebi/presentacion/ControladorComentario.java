@@ -27,7 +27,7 @@ public class ControladorComentario {
     public ModelAndView guardarComentario(@ModelAttribute("comentario") Comentario comentario,
                                           HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-        comentario.setIdUsuario(usuarioLogueado.getIdUsuario());
+        comentario.setUsuario(usuarioLogueado);
         ModelMap model = new ModelMap();
 
         try {

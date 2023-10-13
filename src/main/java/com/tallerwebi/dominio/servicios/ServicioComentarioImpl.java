@@ -49,7 +49,7 @@ public class ServicioComentarioImpl implements ServicioComentario{
     }
 
     private void validarIdUsuarioIguales(Comentario comentario, Long idUsuario) throws ComentarioException {
-        if(!Objects.equals(comentario.getIdUsuario(), idUsuario)){
+        if(!Objects.equals(comentario.getUsuario().getIdUsuario(), idUsuario)){
             throw new ComentarioException("Error al editar comentario");
         }
     }
