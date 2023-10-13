@@ -39,4 +39,9 @@ public class ServicioHomeImpl implements ServicioHome {
     public List<Noticia> obtenerNoticiasPorCategoria(String descripcion) {
         return repositorioHome.obtenerNoticiasPorCategoria(descripcion);
     }
+
+    @Override
+    public List<Noticia> obtenerNoticiasPorTitulo(String titulo) {
+        return repositorioHome.obtenerNoticiasPorTitulo(titulo);
+    }
 }

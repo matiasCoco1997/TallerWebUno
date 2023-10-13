@@ -14,4 +14,6 @@ public interface RepositorioHome {
     List<Categoria> listarCategorias();
 
     List<Noticia> obtenerNoticiasPorCategoria(String descripcion);
+
+    List<Noticia> obtenerNoticiasPorTitulo(String titulo);
 }

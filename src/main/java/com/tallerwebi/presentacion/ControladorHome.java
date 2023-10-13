@@ -7,7 +7,6 @@ import com.tallerwebi.dominio.servicios.ServicioHome;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -18,7 +17,7 @@ import java.util.List;
 @Controller
 public class ControladorHome {
 
-    private ServicioHome servicioHome;
+    private final ServicioHome servicioHome;
 
     @Autowired
     public ControladorHome(ServicioHome servicioHome){
@@ -41,7 +40,7 @@ public class ControladorHome {
     }
 
     @RequestMapping(value = "/categoria")
-    public ModelAndView validarCategoria(@RequestParam("categoria")String categoria, HttpSession session){
+    public ModelAndView filtrarPorCategoria(@RequestParam("categoria")String categoria, HttpSession session){
         ModelMap model=new ModelMap();
 
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
@@ -52,5 +51,20 @@ public class ControladorHome {
         model.put("usuario",usuario);
         model.put("noticias",noticiasCategorias);
         return new ModelAndView("home-categoria", model);
+    }
+
+    @RequestMapping("/titulo")
+    public ModelAndView filtrarPorTitulo(@RequestParam("titulo")String titulo,HttpSession session){
+        ModelMap model=new ModelMap();
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        model.put("usuario",usuario);
+        List<Noticia> noticias=servicioHome.obtenerNoticiasPorTitulo(titulo);
+        if(noticias.size()==0){
+            String error="No se encontraron noticias con este título: "+titulo;
+            model.put("error",error);
+        }else{
+            model.put("noticias",noticias);
+        }
+        return new ModelAndView("home-titulo",model);
     }
 }

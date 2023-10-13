@@ -17,4 +17,6 @@ public interface ServicioHome {
     List<Categoria> obtenerCategorias();
 
     List<Noticia> obtenerNoticiasPorCategoria(String descripcion);
+
+    List<Noticia> obtenerNoticiasPorTitulo(String titulo);
 }
