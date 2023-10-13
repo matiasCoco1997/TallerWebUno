@@ -89,7 +89,6 @@ public class ControladorComentario {
         comentarioEnEdicion.setDescripcion(comentario.getDescripcion());
 
         try {
-            System.out.println(comentario.getDescripcion());
             servicioComentario.modificarComentario(comentarioEnEdicion, usuarioLogueado.getIdUsuario());
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         } catch (ComentarioException e) {

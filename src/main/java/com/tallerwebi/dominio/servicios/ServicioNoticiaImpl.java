@@ -3,10 +3,7 @@ package com.tallerwebi.dominio.servicios;
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.dominio.excepcion.CampoVacio;
-import com.tallerwebi.dominio.excepcion.CategoriaInexistente;
-import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
-import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
 import com.tallerwebi.presentacion.DatosLogin;
@@ -41,10 +38,9 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
+    public void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto, FormatoDeAudioIncorrecto {
 
         verificacionCamposVacios(noticia, imagen, audio);
-
 
         verificacionDeLaImagenSeleccionada(noticia, imagen);
 
@@ -74,16 +70,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
                 noticiasActivas.add(noticia);
             }
         }
-
         return noticiasActivas;
-    }
-
-    @RequestMapping("/noticia/login")
-    public ModelAndView cerrarSesion() {
-
-        ModelMap modelo = new ModelMap();
-        modelo.put("datosLogin", new DatosLogin());
-        return new ModelAndView("redirect:/login", modelo);
     }
 
     @Override
@@ -185,7 +172,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         Files.write(path, bytes);
     }
 
-    private void verificacionDelAudioSeleccionado(Noticia noticia, MultipartFile audio) throws TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
+    private void verificacionDelAudioSeleccionado(Noticia noticia, MultipartFile audio) throws TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeAudioIncorrecto {
         Long tamanioDeImagen = audio.getSize();
         Long maxTamanioDeImagen = (long) (10 * 1024 * 1024);
 
@@ -198,7 +185,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         String nombreOriginalAudio = audio.getOriginalFilename();
 
         if(! nombreOriginalAudio.endsWith(".mp3")){
-            throw new FormatoDeImagenIncorrecto();
+            throw new FormatoDeAudioIncorrecto();
         }
 
         String extensionDelArchivoSubido = nombreOriginalAudio.substring(nombreOriginalAudio.lastIndexOf("."));
