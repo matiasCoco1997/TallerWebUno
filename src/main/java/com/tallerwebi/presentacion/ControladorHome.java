@@ -24,7 +24,7 @@ public class ControladorHome {
         this.servicioHome=servicioHome;
     }
 
-    @RequestMapping("/home")
+    @RequestMapping({"/home", "/"})
     public ModelAndView home(HttpSession session){
         ModelMap model=new ModelMap();
         List<Noticia> noticias = servicioHome.listarNoticias();
