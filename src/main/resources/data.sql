@@ -1,9 +1,11 @@
-INSERT INTO Usuario(email, password, activo, fotoPerfil, nombre)
+/*INSERT INTO Usuario(email, password, activo, fotoPerfil, nombre)
 VALUES( 'paoloaleman86@gmail.com', '123', true, '/imagenes/imgsPerfiles/ce91094e-78e5-4789-a99b-6ee9973b299d.jpg', 'Paolo');
-INSERT INTO Categoria(descripcion)
+
+sINSERT INTO Categoria(descripcion)
 VALUES('Deportes'),('Politica'),('Programacion'),('Arte'),('Futbol'),('Juegos');
 INSERT INTO `noticia` VALUES (1,_binary '','img noticia 1.png','Deportes','toda la nota entera de la noticia 1','2023-10-12 18:23:27.521152',0,'En la previa al encuentro de Eliminatorias entre la Selección y Paraguay, se observó una bandera gigante en la tribuna Sívori alta del estadio de River Plate','/audios_noticias/4dfa3194-35fa-4383-9666-64c214113d18.mp3','/imagenes/imgsNoticias/1528741a-a25b-44df-a4d1-b25f00293ede.png','El impactante telón de Argentina en homenaje a Messi y Maradona que se desplegará en el Monumental',1),
                              (2,_binary '','img noticia 2.png','Deportes','toda la nota de la noticia 2','2023-10-12 18:27:34.436020',0,'La Policía dialogó con Sandro Tonali y Nicolò Zaniolo en el marco de una investigación que también tiene implicado a Nicolò Fagioli','/audios_noticias/7d7ee7d3-005d-4a04-958c-9c39e0a20d17.mp3','/imagenes/imgsNoticias/4cadf98d-440a-4b3f-b128-3f0a72cf804e.png','Escándalo en la selección de Italia: dos figuras de la Azzurra abandonaron la concentración tras ser interrogados en una causa por apuestas ilegales',1),
                              (3,_binary '','img noticia 3.png','Deportes','texto de la noticia','2023-10-12 18:39:02.241076',0,'Real Madrid renovó los contratos de Valverde y Camavinga: la impagable cláusula de rescisión que les fijó a ambos','/audios_noticias/60d348ae-23f1-44ef-99cc-aaf8231b1cb0.mp3','/imagenes/imgsNoticias/f4b11616-eec3-486c-a863-ba8f2734c984.png','Real Madrid renovó los contratos de Valverde y Camavinga: la impagable cláusula de rescisión que les fijó a ambos',1),
                              (4,_binary '','img.png','Politica','texto de la noticia','2023-10-12 18:54:52.688821',0,'Según informó el Indec, en el acumulado de los primeros nueve meses del año la suba de precios escaló a 103,2 por ciento. En agosto había sido de 12,4 por ciento','/audios_noticias/ee1655d3-dae1-45ce-9b5b-c5f8d9113b2a.mp3','/imagenes/imgsNoticias/57e07eaa-ae1a-4f4f-86ec-bb86ade273e5.png','La inflación de septiembre fue de 12,7% y acumuló 138% en los últimos doce meses',1);
 
+*/
