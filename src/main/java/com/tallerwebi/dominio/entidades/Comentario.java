@@ -15,15 +15,17 @@ public class Comentario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long idUsuario;
-    private Long idNoticia;
+    @ManyToOne
+    @JoinColumn(name = "idUsuario")
+    private Usuario usuario;
+    @ManyToOne
+    @JoinColumn(name = "idNoticia")
+    private Noticia noticia;
     @Column(nullable = false)
     private String descripcion;
     private LocalDateTime fechaCreacion;// Fecha y hora
 
-   /* public Comentario() {
-        this.date = new Date();
-    }*/
+
     @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
     protected void onCreate() {
         fechaCreacion = LocalDateTime.now();

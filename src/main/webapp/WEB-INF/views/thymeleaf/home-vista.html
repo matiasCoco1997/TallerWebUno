@@ -153,7 +153,13 @@
                     <img th:src="@{${usuario.fotoPerfil}}"
                          class="shadow w-full h-full object-cover border-none" alt=""/>
                 </div>
-                <h3 class="text-center mt-2" th:text="${usuario.nombre}"></h3>
+
+                <div class="flex justify-center">
+                    <form th:action="@{/perfil}" method="POST">
+                        <button class="mt-2" th:value="${usuario.getIdUsuario()}" name="idUsuario" th:text="${usuario.getNombre()}"></button>
+                    </form>
+                </div>
+
                 <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
                     Seguir
                 </div>
@@ -170,10 +176,12 @@
         <div th:each="noticia : ${noticias}" class="max-w-4xl my-4 py-6 m-auto text-white">
             <div class="flex items-center">
                 <div class="mr-2">
-                    <a class="flex items-center" href="#">
-                        <img class="mr-3 w-10 h-10 object-cover rounded-full" th:src="@{${noticia.getUsuario().fotoPerfil}}" th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
-                        <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
-                    </a>
+                    <form th:action="@{/perfil}" method="POST">
+                        <button class="flex items-center" th:value="${noticia.usuario.getIdUsuario()}" name="idUsuario">
+                            <img class="mr-3 w-10 h-10 object-cover rounded-full" th:src="@{${noticia.getUsuario().fotoPerfil}}" th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
+                            <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
+                        </button>
+                    </form>
                 </div>
 
                 <p style="padding-left: 20px">

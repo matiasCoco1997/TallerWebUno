@@ -1,6 +1,7 @@
 package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.Comentario;
+import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.ComentarioException;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
@@ -18,15 +19,21 @@ public class    ServicioComentarioTest {
     private RepositorioComentario repositorioComentarioMock;
     private ServicioComentario servicioComentario;
     private Comentario comentarioMock;
+    private Noticia noticiaMock;
+    private Usuario usuarioMock;
     private Long idUsuarioDistinto = 3L;
 
     @BeforeEach
     public void init(){
         comentarioMock = mock(Comentario.class);
+        usuarioMock = mock(Usuario.class);
+        noticiaMock = mock(Noticia.class);
         repositorioComentarioMock = mock(RepositorioComentario.class); // Corrected
         when(comentarioMock.getDescripcion()).thenReturn("Descripcion");
-        when(comentarioMock.getIdNoticia()).thenReturn(1L);
-        when(comentarioMock.getIdUsuario()).thenReturn(2L);
+        when(comentarioMock.getNoticia()).thenReturn(noticiaMock);
+        when(comentarioMock.getNoticia().getIdNoticia()).thenReturn(1L);
+        when(comentarioMock.getUsuario()).thenReturn(usuarioMock);
+        when(comentarioMock.getUsuario().getIdUsuario()).thenReturn(2L);
         servicioComentario = new ServicioComentarioImpl(repositorioComentarioMock);
     }
 
@@ -68,7 +75,7 @@ public class    ServicioComentarioTest {
     }
     @Test
     public void queSePuedaModificarUnComentatioDeFormaExitosa() throws ComentarioException {
-        servicioComentario.modificarComentario(comentarioMock, comentarioMock.getIdUsuario());
+        servicioComentario.modificarComentario(comentarioMock, comentarioMock.getUsuario().getIdUsuario());
         verify(repositorioComentarioMock, times(1)).modificar(comentarioMock);
     }
     @Test
@@ -88,7 +95,7 @@ public class    ServicioComentarioTest {
         Comentario comentario = new Comentario();
         comentario.setDescripcion("");
         try {
-            servicioComentario.modificarComentario(comentario, comentarioMock.getIdUsuario());
+            servicioComentario.modificarComentario(comentario, comentarioMock.getUsuario().getIdUsuario());
             fail("No lanzó ComentarioException");
         } catch (ComentarioException e) {
             // En este punto, la excepción fue lanzada y la prueba es exitosa
@@ -101,7 +108,7 @@ public class    ServicioComentarioTest {
         Comentario comentario = new Comentario();
         comentario.setDescripcion(null);
         try {
-            servicioComentario.modificarComentario(comentario, comentarioMock.getIdUsuario());
+            servicioComentario.modificarComentario(comentario, comentarioMock.getUsuario().getIdUsuario());
             fail("No lanzó ComentarioException");
         } catch (ComentarioException e) {
             // En este punto, la excepción fue lanzada y la prueba es exitosa

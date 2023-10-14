@@ -53,9 +53,8 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public Noticia buscarPorId(long idNoticia) {
         final Session session = sessionFactory.getCurrentSession();
-        return (Noticia) session.createCriteria(Noticia.class)
-                .add(Restrictions.eq("idNoticia", idNoticia))
-                .uniqueResult();
+        return (Noticia) session.createQuery("FROM Noticia WHERE idNoticia =:idNoticia").
+                setParameter("idNoticia",idNoticia).uniqueResult();
     }
 
     @Override

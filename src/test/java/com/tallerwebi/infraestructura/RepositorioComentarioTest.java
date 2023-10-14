@@ -1,6 +1,8 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Comentario;
+import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.ComentarioException;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
@@ -14,11 +16,11 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.net.UnknownServiceException;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -29,21 +31,33 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 public class    RepositorioComentarioTest {
     @Autowired
     private RepositorioComentario repositorioComentario;
+    @Autowired
+    private RepositorioNoticia repositorioNoticia;
+    @Autowired
+    private RepositorioUsuario repositorioUsuario;
     private Comentario comentario;
     private Comentario comentario2;
+    private Usuario usuario;
+    private Noticia noticia;
     @BeforeEach
     public void init(){
+        Noticia noticia = new Noticia();
+        noticia.setTitulo("Titulo");
+        repositorioNoticia.guardar(noticia);
+
+        Usuario usuario = new Usuario();
+        repositorioUsuario.guardar(usuario);
         comentario = new Comentario();
         comentario.setDescripcion("Descripcion");
         comentario.setFechaCreacion(LocalDateTime.now());
-        comentario.setIdUsuario(1L);
-        comentario.setIdNoticia(2L);
+        comentario.setUsuario(usuario);
+        comentario.setNoticia(noticia);
 
         comentario2 = new Comentario();
         comentario2.setDescripcion("Descripcion");
         comentario2.setFechaCreacion(LocalDateTime.now());
-        comentario2.setIdUsuario(1L);
-        comentario2.setIdNoticia(2L);
+        comentario2.setUsuario(usuario);
+        comentario2.setNoticia(noticia);
     }
     @Transactional
     @Rollback
@@ -73,7 +87,7 @@ public class    RepositorioComentarioTest {
         repositorioComentario.guardar(comentario);
         repositorioComentario.guardar(comentario2);
 
-        Long idNoticia = comentario.getIdNoticia();
+        Long idNoticia = comentario.getNoticia().getIdNoticia();
         List<Comentario> comentariosEncontrados = repositorioComentario.buscarComentariosPorIdNoticia(idNoticia);
 
         assertThat(comentariosEncontrados, is(notNullValue()));
