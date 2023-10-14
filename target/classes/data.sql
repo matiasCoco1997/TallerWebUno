@@ -1,5 +1,5 @@
 INSERT INTO Usuario(email, password, activo, fotoPerfil, nombre)
-VALUES( 'paoloaleman86@gmail.com', '123', true, '/imagenes/imgsPerfiles/ce91094e-78e5-4789-a99b-6ee9973b299d.jpg', 'Paolo');
+VALUES( 'paoloaleman86@gmail.com', '123', true, '/imagenes/imgsPerfiles/davo.jpg', 'Paolo');
 INSERT INTO Categoria(descripcion)
 VALUES('Deportes'),('Politica'),('Programacion'),('Arte'),('Futbol'),('Juegos');
 INSERT INTO `noticia` VALUES (1,_binary '','img noticia 1.png','Deportes','toda la nota entera de la noticia 1','2023-10-12 18:23:27.521152',0,'En la previa al encuentro de Eliminatorias entre la Selección y Paraguay, se observó una bandera gigante en la tribuna Sívori alta del estadio de River Plate','/audios_noticias/4dfa3194-35fa-4383-9666-64c214113d18.mp3','/imagenes/imgsNoticias/1528741a-a25b-44df-a4d1-b25f00293ede.png','El impactante telón de Argentina en homenaje a Messi y Maradona que se desplegará en el Monumental',1),

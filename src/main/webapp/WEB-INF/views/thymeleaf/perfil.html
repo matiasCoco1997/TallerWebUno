@@ -132,16 +132,18 @@
 <!--Sección de Noticias-->
 <main class="p-2">
 
+
     <div class="flex justify-between mt-10">
         <div class="w-[20%]">
-            <img src="https://i.pinimg.com/550x/19/42/dc/1942dc8c355f4d024b8a7c61a10308cd.jpg" class="w-[100%] rounded-3xl border border-white ">
+            <img th:src="@{${usuario.fotoPerfil}}" class="w-[100%] rounded-3xl border border-white ">
         </div>
         <div class="w-[78%] flex flex-col gap-10">
             <div class="flex items-center justify-between">
-                <h1 class="font-bold text-4xl text-white">El Outsider</h1>
+                <h1 class="font-bold text-4xl text-white" th:text="${usuario.nombre}"></h1>
                 <a href="" class="mr-10 text-2xl bg-blue-600 text-white p-4 rounded-2xl">Editar perfil</a>
             </div>
-            <p class="text-white text-2xl">A recycling plant fire near the Indiana/Ohio border prompted an evacuation of more than 2,000 residents on Tuesday (April 11th).According…</p>
+            <p class="text-white text-2xl" th:if="${usuario.descripcion==null}" th:text="${descripcionError}"></p>
+            <p class="text-white text-2xl" th:unless="${usuario.descripcion==null}" th:text="${usuario.descripcion}"></p>
             <div class="flex justify-around mt-10">
                 <a href="" class="text-white text-xl">999 seguidores</a>
                 <a href="" class="text-white text-xl">999 seguidos</a>
@@ -150,15 +152,10 @@
     </div>
 
     <div class="flex justify-around mt-20 border-b border-white py-4">
-        <h4 class="text-3xl text-white">Mis noticias</h4>
+        <h4 class="text-3xl text-white font-bold">Mis noticias</h4>
         <h4 class="text-3xl text-white">Me gusta</h4>
     </div>
 
-
-
-
-
-    <p th:if="${#lists.isEmpty(noticias)}" th:text="${error}" class="text-white"></p>
 
     <section class="lista-noticia">
         <div th:unless="${#lists.isEmpty(noticias)}" th:each="noticia : ${noticias}" class="max-w-4xl my-4 py-6 m-auto text-white">
