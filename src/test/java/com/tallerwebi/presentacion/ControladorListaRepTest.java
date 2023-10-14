@@ -21,6 +21,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -43,20 +44,31 @@ public class ControladorListaRepTest {
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
         when(noticiaMock.getCategoria()).thenReturn("categoria");
+
         categoriaMock=mock(Categoria.class);
         when(categoriaMock.getIdCategoria()).thenReturn(1);
         when(categoriaMock.getDescripcion()).thenReturn("Deportes");
+
         usuarioMock=mock(Usuario.class);
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
+
         listaMock=mock(ListaReproduccion.class);
+
         requestMock = mock(HttpServletRequest.class);
+
         sessionMock = mock(HttpSession.class);
+
         servicioListaRepMock = mock(ServicioListaRep.class);
         servicioNoticiaMock = mock(ServicioNoticia.class);
+
         controladorListaRep = new ControladorListaRep(servicioListaRepMock,servicioNoticiaMock);
     }
 
     @Test
     public void queRetorneLaVistaDeListasDeReproduccion(){
+        List<ListaReproduccion> listaReproduccion = new ArrayList<>();
+        when(servicioListaRepMock.obtenerListaReproduccionDelUsuarioLogueado(usuarioMock.getIdUsuario())).thenReturn(listaReproduccion);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         String modelAndView= controladorListaRep.obtenerListas(sessionMock).getViewName();
         assertThat(modelAndView,is("listasReproduccion"));
     }
@@ -65,13 +77,16 @@ public class ControladorListaRepTest {
         List<ListaReproduccion> listas= new ArrayList<>();
         listas.add(listaMock);
         listas.add(listaMock);
-        when(servicioListaRepMock.obtenerListaReproduccionDelUsuarioLogueado(1L)).thenReturn(listas);
+
+        when(servicioListaRepMock.obtenerListaReproduccionDelUsuarioLogueado(usuarioMock.getIdUsuario())).thenReturn(listas);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
         List<ListaReproduccion> listasObtenidas= (List<ListaReproduccion>) controladorListaRep.obtenerListas(sessionMock).getModel().get("listaReproduccion");
         assertThat(listasObtenidas.size(),equalTo(2));
     }
     @Test
     public void siSeCargaCorrectamenteUnaNoticiaDebeRedirigirmeAMiListasDeReproduccion(){
-        String viewName=controladorListaRep.agregarNoticiaALista(1L,sessionMock).getViewName();
+        String viewName = controladorListaRep.agregarNoticiaALista(usuarioMock.getIdUsuario(),sessionMock).getViewName();
         assertThat(viewName,is("redirect:/listaReproduccion"));
     }
 }
