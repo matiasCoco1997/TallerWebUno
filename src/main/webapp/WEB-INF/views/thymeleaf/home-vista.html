@@ -22,7 +22,7 @@
     <div class="flex w-full flex-wrap items-center justify-between px-3">
         <!-- Logo -->
         <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-           href="redirect:/home">
+           href="home">
             <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 30px"
                  alt="TE Logo" loading="lazy"/>
         </a>
@@ -179,6 +179,17 @@
                 <p style="padding-left: 20px">
                     Fecha de publicación: <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
                 </p>
+
+                <div th:if="${ usuario.getIdUsuario() == noticia.getUsuario().getIdUsuario() }">
+                    <a th:href="@{/noticia/editar/} + ${noticia.getIdNoticia()}" style="padding: 10px; background-color: blue; ">
+                        Editar
+                    </a>
+
+                    <a th:href="@{/noticia/borrar/} + ${noticia.getIdNoticia()}" style="padding: 10px; background-color: red; ">
+                        Borrar
+                    </a>
+                </div>
+
 
             </div>
             <div class="mt-2 flex">

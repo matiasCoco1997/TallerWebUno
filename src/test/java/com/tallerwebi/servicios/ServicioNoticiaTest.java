@@ -65,6 +65,8 @@ public class ServicioNoticiaTest {
 
     @Test
     public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez() throws Exception {
+
+
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
         servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
@@ -86,10 +88,10 @@ public class ServicioNoticiaTest {
     @Test
     public void cuandoObtengoUnaNoticiaPorSuIdObtengoLaNoticia(){
         //preparacion
-        when(this.repositorioNoticiaMock.buscarPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
+        when(repositorioNoticiaMock.buscarPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
 
         //ejecucion
-        Noticia noticiaObtenida = this.servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia());
+        Noticia noticiaObtenida = servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia());
 
         //verificacion
         assertThat(noticiaObtenida.getIdNoticia(), is(1L));

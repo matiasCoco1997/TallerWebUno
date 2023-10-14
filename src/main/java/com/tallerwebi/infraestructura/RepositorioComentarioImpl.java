@@ -35,7 +35,7 @@ public class RepositorioComentarioImpl implements RepositorioComentario {
     public List<Comentario> buscarComentariosPorIdNoticia(Long idPublicacion) {
         final Session session = sessionFactory.getCurrentSession();
         return session.createCriteria(Comentario.class)
-                .add(Restrictions.eq("idNoticia", idPublicacion))
+                .add(Restrictions.eq("noticia.idNoticia", idPublicacion))
                 .list();
     }
 
