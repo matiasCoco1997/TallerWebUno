@@ -52,40 +52,7 @@ public class ControladorNoticiaTest {
         servicioNoticiaMock = mock(ServicioNoticia.class);
         controladorNoticia = new ControladorNoticia(servicioNoticiaMock);
     }
-/*
-    @Test
-    public void queAlListarDosNoticiasSeCargueElHome() {
 
-        List<Noticia> noticias = new ArrayList<>();
-
-        noticias.add(noticiaMock);
-        noticias.add(noticiaMock);
-        when(servicioNoticiaMock.listarNoticias()).thenReturn(noticias);
-
-        // ejecucion
-        ModelAndView modelAndView = controladorNoticia.listarNoticias(sessionMock);
-        List<Noticia> noticiasEnModelo = (List<Noticia>) modelAndView.getModel().get("noticias");
-
-        // validacion
-        assertThat(noticiasEnModelo.size(), equalTo(2));
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("home"));
-    }
-
-
-
-    @Test
-    public void queAlListarLasNoticiasEnElHomeRetorneUnaException() throws Exception {
-        // preparacion
-        when(controladorNoticia.listarNoticias(sessionMock)).thenThrow(RuntimeException.class);
-
-        // ejecucion
-        ModelAndView modelAndView = controladorNoticia.listarNoticias(sessionMock);
-
-        // validacion
-        assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al listar las noticias."));
-    }
-
- */
 
     @Test
     public void queAlCrearUnaNoticiaRedireccioneAlHome() {

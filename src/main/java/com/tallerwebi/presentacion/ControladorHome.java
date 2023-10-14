@@ -27,15 +27,20 @@ public class ControladorHome {
     @RequestMapping("/home")
     public ModelAndView home(HttpSession session){
         ModelMap model=new ModelMap();
+
         List<Noticia> noticias = servicioHome.listarNoticias();
+
         List<Categoria> categorias=servicioHome.obtenerCategorias();
+
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
-        List<Usuario> usuarios= servicioHome.listarUsuarios(6L); //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
+
+        List<Usuario> usuarios= servicioHome.listarUsuarios(usuario.getIdUsuario()); //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
 
         model.put("noticias", noticias);
         model.put("usuarios",usuarios);
         model.put("categorias",categorias);
         model.put("usuario",usuario);
+
         return new ModelAndView("home-vista",model);
     }
 
