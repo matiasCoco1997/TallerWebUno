@@ -175,16 +175,18 @@
 
     <!--Descripción-->
     <section class="m-auto text-white px-4 lg:px-0 mt-12 text-lg leading-relaxed w-full lg:w-3/4">
+
         <p id="noticia-texto" th:text="${noticia.descripcion}">
         </p>
 
-        <button id="btnConvertir">
+        <button id="btnConvertir" onclick="convertirTextoAAudio()">
             <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                 <style>svg{fill:#ffffff}</style>
                 <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
             </svg>
         </button>
+        <audio id="reproductor" controls></audio>
     </section>
 
 
@@ -344,6 +346,7 @@
 <script th:src="@{/js/editarComentario.js}"></script>
 
 
+
 <script src="https://unpkg.com/wavesurfer.js@7"></script>
 <script>
 $(document).ready(function () {
@@ -381,6 +384,36 @@ $(document).ready(function () {
         $(".btnReproducirPausa").first().show();
         $(".btnReproducirPausa").last().hide();
         });
+        function reproducirAudio(audioData) {
+    var blob = new Blob([audioData], { type: "audio/wav" });
+    var audioUrl = URL.createObjectURL(blob);
+    $("#reproductor").attr("src", audioUrl);
+    $("#reproductor")[0].load();
+    $("#reproductor")[0].play();
+}
+
+
+function convertirTextoAAudio() {
+    var texto = $("#noticia-texto").text();
+
+    fetch("/sunn/texto-a-audio", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(texto),
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error(`Error en la solicitud: ${response.status}`);
+        }
+        return response.arrayBuffer();
+    })
+    .then(audioData => reproducirAudio(audioData))
+    .catch(error => console.error("Error al convertir texto a audio", error));
+}
+
+
 
 </script>
 
