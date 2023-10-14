@@ -22,13 +22,13 @@
     <div class="flex w-full flex-wrap items-center justify-between px-3">
         <!-- Logo -->
         <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-           href="redirect:/home">
+           href="home">
             <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 30px"
                  alt="TE Logo" loading="lazy"/>
         </a>
         <!--Search-->
 
-        <form class="flex items-center w-6/12">
+        <form th:action="@{/titulo}" method="GET" class="flex items-center w-6/12">
             <label for="simple-search" class="sr-only">Search</label>
             <div class="relative w-full">
                 <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
@@ -38,7 +38,7 @@
                               clip-rule="evenodd"/>
                     </svg>
                 </div>
-                <input type="text" id="simple-search"
+                <input type="text" id="simple-search" name="titulo"
                        class="bg-black-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-grey-500 focus:border-grey-500 block w-full pl-10 p-2.5  dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-grey-800 dark:focus:border-grey-800"
                        placeholder="Search branch name..." required>
             </div>

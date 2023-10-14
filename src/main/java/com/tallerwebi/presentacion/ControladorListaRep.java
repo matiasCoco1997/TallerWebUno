@@ -32,9 +32,9 @@ public class ControladorListaRep {
 
     @RequestMapping("/listaReproduccion")
     public ModelAndView obtenerListas(HttpSession session){
-        ModelMap model=new ModelMap();
-        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
-        List<ListaReproduccion> listaReproduccion=servicioListaRep.obtenerListaReproduccionDelUsuarioLogueado(1L);
+        ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<ListaReproduccion> listaReproduccion = servicioListaRep.obtenerListaReproduccionDelUsuarioLogueado(usuario.getIdUsuario());
         model.put("listaReproduccion",listaReproduccion);
         return new ModelAndView("listasReproduccion",model);
     }

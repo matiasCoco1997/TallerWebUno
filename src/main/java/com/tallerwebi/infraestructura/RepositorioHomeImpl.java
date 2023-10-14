@@ -47,4 +47,12 @@ public class RepositorioHomeImpl implements RepositorioHome{
                 .list();
     }
 
+    @Override
+    public List<Noticia> obtenerNoticiasPorTitulo(String titulo) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Noticia WHERE activa=true and titulo like :titulo")
+                .setParameter("titulo", "%"+titulo+"%")
+                .list();
+    }
+
 }
