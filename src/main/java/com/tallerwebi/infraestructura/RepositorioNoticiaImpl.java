@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.entidades.ListaReproduccion;
 import com.tallerwebi.dominio.entidades.Noticia;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -77,6 +78,16 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     public List<Noticia> listarNoticias() {
         final Session session = sessionFactory.getCurrentSession();
         return session.createQuery("FROM Noticia").list();
+    }
+
+    @Override
+    public void editarNoticia(Noticia noticia) {
+        try {
+            final Session session = sessionFactory.getCurrentSession();
+            session.update(noticia);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
 }

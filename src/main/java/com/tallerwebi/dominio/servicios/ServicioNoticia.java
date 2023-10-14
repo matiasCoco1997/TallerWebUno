@@ -18,7 +18,7 @@ public interface ServicioNoticia {
 
     List<Noticia> buscarNoticiaPorTitulo(String tituloNoticia);
 
-    void editarNoticia(Long idNoticia);
+    void editarNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto, FormatoDeAudioIncorrecto;
 
     List<Noticia> listarNoticias();
 

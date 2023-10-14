@@ -72,7 +72,33 @@ public class ControladorNoticia {
             }
         }
 
-        return new ModelAndView("crear_noticia", modelo);
+        return new ModelAndView("editar_noticia", modelo);
+    }
+
+    @RequestMapping(path = "/noticia/editar", method = RequestMethod.POST)
+    public ModelAndView editarNoticia(@ModelAttribute("datosNoticia") Noticia noticia , HttpSession session, @RequestParam("imagenFile") MultipartFile imagen, @RequestParam("audioFile") MultipartFile audio){
+        ModelMap modelo = new ModelMap();
+        try{
+            Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+            servicioNoticia.editarNoticia(noticia, usuarioLogueado, imagen, audio);
+        }catch (CampoVacio e) {
+            modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
+            return new ModelAndView("editar_noticia", modelo);
+        }catch (TamanioDeArchivoSuperiorALoPermitido e) {
+            modelo.put("error", "Error, El archivo seleccionado es demasiado pesado.");
+            return new ModelAndView("editar_noticia", modelo);
+        }catch (FormatoDeImagenIncorrecto e) {
+            modelo.put("error", "Error, el formato de la imagen no esta permitido.");
+            return new ModelAndView("editar_noticia", modelo);
+        }catch (FormatoDeAudioIncorrecto e) {
+            modelo.put("error", "Error, el formato del audio no esta permitido, solo es posible un tipo de audio ' .mp3 '");
+            return new ModelAndView("editar_noticia", modelo);
+        }catch (Exception e) {
+            modelo.put("error", "Error al editar la noticia.");
+            return new ModelAndView("editar_noticia", modelo);
+        }
+
+        return new ModelAndView("redirect:/home" , modelo);
     }
 
 
