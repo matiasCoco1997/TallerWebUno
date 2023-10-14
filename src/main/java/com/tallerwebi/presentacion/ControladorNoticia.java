@@ -22,30 +22,6 @@ public class ControladorNoticia {
         this.servicioNoticia = servicioNoticia;
     }
 
-    /*
-    @RequestMapping(path = {"/noticia/listar", "/noticia","/noticia/"})
-    public ModelAndView listarNoticias(HttpSession session) {
-        ModelMap modelo = new ModelMap();
-
-        try{
-            Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-
-            modelo.put("sessionUsuarioLogueado", UsuarioLogueado);
-
-            List<Noticia> noticias = servicioNoticia.listarNoticias();
-
-            modelo.put("noticias", noticias);
-
-        } catch (Exception e) {
-            modelo.put("error", "Error al listar las noticias.");
-            modelo.put("noticias", modelo);
-        }
-
-        return new ModelAndView("home", modelo);
-    }
-
-     */
-
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.GET)
     public ModelAndView cargarNoticia() {
         ModelMap modelo = new ModelMap();
@@ -158,33 +134,6 @@ public class ControladorNoticia {
         }
         return new ModelAndView("home", model);
     }
-
-    /*
-    @RequestMapping(path = "/noticia/buscarNoticiaPorCategoria", method = RequestMethod.POST)
-    public ModelAndView buscarNoticiaPorCategoria( @ModelAttribute("datosNoticia") String categoria ) {
-
-        ModelMap model = new ModelMap();
-
-        try{
-            servicioNoticia.buscarNoticiaPorCategoria(categoria);
-        }  catch (Exception e) {
-            model.put("error", "Error al buscar noticia por categoria.");
-            return new ModelAndView("error", model);
-        }
-        return new ModelAndView("home", model);
-    }
-
-     */
-    /*
-    @RequestMapping("/noticia/login")
-    public ModelAndView cerrarSesion() {
-
-        ModelMap modelo = new ModelMap();
-        modelo.put("datosLogin", new DatosLogin());
-        return new ModelAndView("redirect:/login", modelo);
-    }
-    
-     */
 
     @RequestMapping(value = "/darLike",method = RequestMethod.POST)
     public ModelAndView darLike(@RequestParam("noticiaLike") Long noticiaLike,HttpSession session) throws Exception {
