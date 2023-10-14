@@ -11,4 +11,8 @@ public interface ServicioUsuario {
     List<Categoria> obtenerCategorias();
 
     Usuario obtenerUsuarioPorId(Long id) throws Exception;
+
+    boolean verificarSiLaDescripcionEsNull(String descripcion);
+
+    boolean verificarSiElIDEsNull(Long id);
 }

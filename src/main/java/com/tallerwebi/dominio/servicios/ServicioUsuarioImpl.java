@@ -37,4 +37,14 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     public Usuario obtenerUsuarioPorId(Long id) throws Exception {
         return repositorioUsuario.obtenerUsuarioPorId(id);
     }
+
+    @Override
+    public boolean verificarSiLaDescripcionEsNull(String descripcion) {
+        return descripcion==null;
+    }
+
+    @Override
+    public boolean verificarSiElIDEsNull(Long id) {
+        return id==null;
+    }
 }

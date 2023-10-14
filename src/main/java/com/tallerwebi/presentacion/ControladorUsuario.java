@@ -31,14 +31,18 @@ public class ControladorUsuario {
         List<Categoria> categorias=servicioUsuario.obtenerCategorias();
         model.put("categorias",categorias);
         try{
-            Usuario usuario= (id!=null) ? servicioUsuario.obtenerUsuarioPorId(id) : (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+            Usuario usuario= (servicioUsuario.verificarSiElIDEsNull(id)) ?
+                                    (Usuario) session.getAttribute("sessionUsuarioLogueado") :
+                                            servicioUsuario.obtenerUsuarioPorId(id);
             List<Noticia> noticiasDelUsuario= servicioUsuario.obtenerNoticiasDeUnUsuario(usuario.getIdUsuario());
             model.put("usuario",usuario);
             model.put("noticias",noticiasDelUsuario);
-            if(usuario.getDescripcion()==null){
-                String descripcionError="No tiene una descripción.";
-                model.put("descripcionError",descripcionError);
+
+            if(servicioUsuario.verificarSiLaDescripcionEsNull(usuario.getDescripcion())){
+                model.put("descripcionError", "No tiene una descripción.");
             }
+
         }catch (Exception e){
             model.put("errorUsuario","No existe un usuario con ese ID");
             return new ModelAndView("usuarioNoEncontrado",model);
