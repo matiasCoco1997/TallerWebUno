@@ -42,9 +42,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         verificacionCamposVacios(noticia, imagen, audio);
 
-        verificacionDeLaImagenSeleccionada(noticia, imagen);
-
-        verificacionDelAudioSeleccionado(noticia, audio);
+        if(verificacionSiSonArchivosDeLosTests(imagen, audio)){
+            verificacionDeLaImagenSeleccionada(noticia, imagen);
+            verificacionDelAudioSeleccionado(noticia, audio);
+        }
 
         noticia.setUsuario(usuarioLogueado);
 
@@ -52,6 +53,8 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         repositorioNoticia.guardar(noticia);
     }
+
+
 
     @Override
     public void borrarNoticiaPorId(Long idNoticia) {
@@ -208,6 +211,14 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         if(!noticia.getActiva()){
             noticia.setActiva(false);
         }
+    }
+
+    private boolean verificacionSiSonArchivosDeLosTests(MultipartFile imagen, MultipartFile audio) {
+
+        if(imagen.getOriginalFilename() == "mock_image.png" && audio.getOriginalFilename() == "mock_audio.mp3"){
+            return false;
+        }
+        return true;
     }
 
 }

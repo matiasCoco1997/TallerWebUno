@@ -56,6 +56,25 @@ public class ControladorNoticia {
         return new ModelAndView("crear_noticia", modelo);
     }
 
+    @RequestMapping(path = "/noticia/editar/{id}", method = RequestMethod.GET)
+    public ModelAndView editarNoticia(@PathVariable(value = "id") Long idNoticia, HttpSession session) {
+        ModelMap modelo = new ModelMap();
+
+        Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        if (idNoticia > 0 && UsuarioLogueado != null){
+
+            Noticia noticiaEncontrada = servicioNoticia.buscarNoticiaPorId(idNoticia);
+
+            if(noticiaEncontrada.getUsuario().getIdUsuario() == UsuarioLogueado.getIdUsuario()){
+                modelo.put("datosNoticia", noticiaEncontrada);
+                modelo.put("categorias", servicioNoticia.listarCategorias());
+            }
+        }
+
+        return new ModelAndView("crear_noticia", modelo);
+    }
+
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
     public ModelAndView crearNuevaNoticia(@ModelAttribute("datosNoticia") Noticia noticia , HttpSession session, @RequestParam("imagenFile") MultipartFile imagen, @RequestParam("audioFile") MultipartFile audio){
