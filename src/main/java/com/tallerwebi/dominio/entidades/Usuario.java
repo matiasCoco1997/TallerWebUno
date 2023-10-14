@@ -20,7 +20,6 @@ public class Usuario {
     private Long idUsuario;
     private String nombre;
     private String apellido;
-    private String descripcion;
     private String email;
     private String password;
     private String pais;
