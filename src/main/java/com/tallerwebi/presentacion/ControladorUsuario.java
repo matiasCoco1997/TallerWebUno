@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -25,7 +26,7 @@ public class ControladorUsuario {
         this.servicioUsuario=servicioUsuario;
     }
 
-    @RequestMapping("/perfil")
+    @RequestMapping(value = "/perfil",method = {RequestMethod.GET,RequestMethod.POST})
     public ModelAndView perfil(@RequestParam(value = "idUsuario",required = false)Long id, HttpSession session){
         ModelMap model=new ModelMap();
         List<Categoria> categorias=servicioUsuario.obtenerCategorias();

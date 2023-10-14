@@ -152,8 +152,8 @@
     </div>
 
     <div class="flex justify-around mt-20 border-b border-white py-4">
-        <h4 class="text-3xl text-white font-bold">Mis noticias</h4>
-        <h4 class="text-3xl text-white">Me gusta</h4>
+        <a class="text-3xl text-white font-bold" href="/sunn/perfil">Mis noticias</a>
+        <a class="text-3xl text-white" href="/sunn/misLikes">Me gusta</a>
     </div>
 
 
@@ -161,12 +161,12 @@
         <div th:unless="${#lists.isEmpty(noticias)}" th:each="noticia : ${noticias}" class="max-w-4xl my-4 py-6 m-auto text-white">
             <div class="flex items-center">
                 <div class="mr-2">
-                    <a class="flex items-center" href="#">
-                        <img class="mr-3 w-10 h-10 object-cover rounded-full"
-                             src="https://images.unsplash.com/photo-1502980426475-b83966705988?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=373&q=80"
-                             alt="avatar">
-                        <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
-                    </a>
+                    <form th:action="@{/perfil}" method="POST">
+                        <button class="flex items-center" th:value="${noticia.usuario.getIdUsuario()}" name="idUsuario">
+                            <img class="mr-3 w-10 h-10 object-cover rounded-full" th:src="@{${noticia.getUsuario().fotoPerfil}}" th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
+                            <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
+                        </button>
+                    </form>
                 </div>
 
                 <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
