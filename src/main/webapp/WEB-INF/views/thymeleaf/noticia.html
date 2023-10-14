@@ -116,15 +116,74 @@
 </header>
 <main>
 
+    <!--Noticia-->
+    <div th:style="'background-image: url(/sunn/' + ${noticia.rutaDeimagen} + ');'"
+         class="relative overflow-hidden bg-cover bg-no-repeat bg-[50%] h-[600px]">
+        <div
+                class="absolute top-0 right-0 bottom-0 left-0 h-full w-full overflow-hidden bg-fixed bg-[hsla(0,0%,0%,0.75)]">
+            <div class="flex h-full items-center justify-center">
+                <div class="px-6 text-center text-white md:px-12 w-3/6">
+                    <div class="mt-18">
+                        <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+                           href="#" role="button" data-te-dropdown-toggle-ref aria-expanded="false">
+                            <!-- User avatar -->
+                            <img class="mr-3 w-10 h-10 object-cover rounded-full"
+                                 th:src="'/sunn'+${noticia.usuario.fotoPerfil}" alt="foto de messi.jpeg">
+                            <span class="font-bold" th:text="${noticia.usuario.nombre}"></span>
+                            <span th:text="${fechaPublicacion}" class="ml-4"></span>
+                        </a>
+                    </div>
 
+                    <h1 th:text="${noticia.titulo}" class="mt-6 mb-10 text-6xl font-bold text-left">
+                    </h1>
+
+                    <p th:text="${noticia.resumen}" class="mt-3 mb-16 text-xl text-left">
+                    </p>
+
+                </div>
+                <div class="px-6 text-center text-white md:px-12 w-2/5 flex flex-col">
+                    <div class="m-auto">
+                        <button class="btnReproducirPausa" onclick="wavesurfer.playPause()">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="10em" viewBox="0 0 512 512">
+                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <style>svg{fill:#ffffff}</style>
+                                <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
+                            </svg>
+                        </button>
+                        <button class="btnReproducirPausa" onclick="wavesurfer.playPause()" hidden>
+                            <svg xmlns="http://www.w3.org/2000/svg" height="10em" viewBox="0 0 320 512">
+                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <style>svg{fill:#ffffff}</style>
+                                <path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <button onclick="wavesurfer.stop()" class="ml-auto mr-10" hidden>
+                        <svg xmlns="http://www.w3.org/2000/svg" height="4em" viewBox="0 0 512 512">
+                            <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                            <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm192-96H320c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32z"/>
+                        </svg>
+                    </button>
+                    <audio id="audio" th:src="'/sunn'+${noticia.rutaDeAudioPodcast}" hidden></audio>
+                    <div id="waveform" class="w-full h-24">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!--Descripción-->
     <section class="m-auto text-white px-4 lg:px-0 mt-12 text-lg leading-relaxed w-full lg:w-3/4">
-        <p id="noticia-texto">
-            Estamos presenciando en directo un auge sin precedentes de la inteligencia artificial (IA). Aquí, las Big Tech batallan por tener un papel protagónico en una industria emergente que promete ser clave para el futuro de la humanidad y que, por consecuencia, tiene el potencial de producir enormes beneficios económicos si consiguen llegar a tiempo.         </p>
+        <p id="noticia-texto" th:text="${noticia.descripcion}">
+        </p>
 
         <button id="btnConvertir">
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:#ffffff}</style><path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/></svg>
+            <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 512 512">
+                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                <style>svg{fill:#ffffff}</style>
+                <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
+            </svg>
         </button>
     </section>
 
@@ -284,21 +343,44 @@
 <script th:src="@{/js/eliminarComentario.js}"></script>
 <script th:src="@{/js/editarComentario.js}"></script>
 
+
+<script src="https://unpkg.com/wavesurfer.js@7"></script>
 <script>
-    //Convertir texto en audio
-    $(document).ready(function () {
-            $('#btnConvertir').on('click', function () {
-                convertirTexto();
-            });
+$(document).ready(function () {
+    $(document).on("click", ".btnReproducirPausa", function () {
+        // Encuentra el botón que se hizo clic
+        var clickedButton = $(this);
+
+        // Oculta el botón clicado
+        clickedButton.hide();
+
+        // Muestra el siguiente botón con la misma clase o el primero si no hay uno siguiente
+        var nextButton = clickedButton.next(".btnReproducirPausa");
+        if (nextButton.length === 0) {
+            nextButton = clickedButton.siblings(".btnReproducirPausa:first");
+        }
+        nextButton.show();
+    });
+});
+
+
+
+ // Inicializa Wavesurfer
+        const wavesurfer = WaveSurfer.create({
+            container: '#waveform',
+            waveColor: 'Gray',
+            progressColor: 'white',
+            cursorColor: 'white',
         });
 
-        function convertirTexto() {
-            var texto = $('#noticia-texto').text();
+        // Carga un archivo de audio
+        wavesurfer.load($("#audio").attr("src"));
 
-            let utterance = new SpeechSynthesisUtterance(texto);
-             utterance.rate = 0.8; // Velocidad del gallego jeje
-            speechSynthesis.speak(utterance);
-        }
+        wavesurfer.on('finish', function () {
+        // Muestra el primer botón y oculta el sunguno
+        $(".btnReproducirPausa").first().show();
+        $(".btnReproducirPausa").last().hide();
+        });
 
 </script>
 

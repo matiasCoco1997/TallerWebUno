@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.entidades.Comentario;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.*;
@@ -12,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Controller
@@ -156,5 +158,16 @@ public class ControladorNoticia {
             return new ModelAndView("redirect:/home", modelo);
         }
         return new ModelAndView("redirect:/home", modelo);
+    }
+    @GetMapping("/publicacion/{idNoticia}")
+    public ModelAndView irApublicacion(@PathVariable Long idNoticia){
+        ModelMap model = new ModelMap();
+        Noticia noticia =  servicioNoticia.buscarNoticiaPorId(idNoticia);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+        String fechaFormateada = noticia.getFechaDePublicacion().format(formatter);
+        model.put("fechaPublicacion", fechaFormateada);
+        model.put("noticia", noticia);
+        model.put("comentario", new Comentario());
+        return new ModelAndView("noticia", model);
     }
 }
