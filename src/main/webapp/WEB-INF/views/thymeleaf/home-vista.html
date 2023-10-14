@@ -180,6 +180,17 @@
                     Fecha de publicación: <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
                 </p>
 
+                <div th:if="${ usuario.getIdUsuario() == noticia.getUsuario().getIdUsuario() }">
+                    <a th:href="@{/noticia/editar/} + ${noticia.getIdNoticia()}" style="padding: 40px; background-color: blue; ">
+                        Editar
+                    </a>
+
+                    <a th:href="@{/noticia/borrar/} + ${noticia.getIdNoticia()}" style="padding: 40px; background-color: red; ">
+                        Borrar
+                    </a>
+                </div>
+
+
             </div>
             <div class="mt-2 flex">
                 <div class="mr-2">
