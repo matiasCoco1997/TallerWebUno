@@ -35,7 +35,15 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
     @Override
     public Usuario obtenerUsuarioPorId(Long id) throws Exception {
-        return repositorioUsuario.obtenerUsuarioPorId(id);
+        Usuario usuario= repositorioUsuario.obtenerUsuarioPorId(id);
+        if(verificarSiElUsuarioEsNull(usuario)){
+            throw new Exception();
+        }
+        return usuario;
+    }
+
+    public boolean verificarSiElUsuarioEsNull(Usuario usuario) {
+        return usuario == null;
     }
 
     @Override

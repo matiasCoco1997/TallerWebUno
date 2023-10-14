@@ -15,4 +15,5 @@ public interface ServicioUsuario {
     boolean verificarSiLaDescripcionEsNull(String descripcion);
 
     boolean verificarSiElIDEsNull(Long id);
+    boolean verificarSiElUsuarioEsNull(Usuario usuario);
 }
