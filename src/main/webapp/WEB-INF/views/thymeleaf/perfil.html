@@ -140,7 +140,7 @@
         <div class="w-[78%] flex flex-col gap-10">
             <div class="flex items-center justify-between">
                 <h1 class="font-bold text-4xl text-white" th:text="${usuario.nombre}"></h1>
-                <a href="" class="mr-10 text-2xl bg-blue-600 text-white p-4 rounded-2xl">Editar perfil</a>
+                <a href="" th:if="${usuario.getIdUsuario()==usuario2.getIdUsuario()}" class="mr-10 text-2xl bg-blue-600 text-white p-4 rounded-2xl">Editar perfil</a>
             </div>
             <p class="text-white text-2xl" th:if="${usuario.descripcion==null}" th:text="${descripcionError}"></p>
             <p class="text-white text-2xl" th:unless="${usuario.descripcion==null}" th:text="${usuario.descripcion}"></p>

@@ -36,8 +36,10 @@ public class ControladorUsuario {
             Usuario usuario= (servicioUsuario.verificarSiElIDEsNull(id)) ?
                                     (Usuario) session.getAttribute("sessionUsuarioLogueado") :
                                             servicioUsuario.obtenerUsuarioPorId(id);
+            Usuario usuario2=(Usuario) session.getAttribute("sessionUsuarioLogueado");
             List<Noticia> noticiasDelUsuario= servicioUsuario.obtenerNoticiasDeUnUsuario(usuario.getIdUsuario());
             model.put("usuario",usuario);
+            model.put("usuario2",usuario2);
             model.put("noticias",noticiasDelUsuario);
 
             if(servicioUsuario.verificarSiLaDescripcionEsNull(usuario.getDescripcion())){
