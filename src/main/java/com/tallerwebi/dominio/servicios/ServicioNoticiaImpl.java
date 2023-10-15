@@ -154,16 +154,13 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
     @Override
     public void generarNotificacion(Long idUsuario, String nombre, String titulo) {
-        List<Seguidos> seguidores=obtenerListaDeSeguidores(idUsuario);
+        List<Seguidos> seguidores=repositorioUsuario.obtenerListaDeSeguidores(idUsuario);
         for (Seguidos seguidor: seguidores) {
             Notificacion notificacion=new Notificacion(seguidor.getIdUsuarioSeguidor(),nombre,titulo);
             repositorioNotificacion.generarNotificacion(notificacion);
         }
     }
 
-    public List<Seguidos> obtenerListaDeSeguidores(Long usuario){
-        return repositorioUsuario.obtenerListaDeSeguidores(usuario);
-    }
 
 
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {

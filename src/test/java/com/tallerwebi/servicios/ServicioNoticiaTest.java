@@ -1,6 +1,8 @@
 package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
+import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
@@ -16,6 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -30,6 +35,9 @@ public class ServicioNoticiaTest {
     private RepositorioNoticia repositorioNoticiaMock;
     private RepositorioUsuario repositorioUsuarioMock;
     private Usuario usuarioMock;
+    private Notificacion notificacionMock;
+
+    private Seguidos seguidorMock;
     private MultipartFile imgMock;
     private MockMultipartFile audioMock;
     private RepositorioCategoria repositorioCategoriaMock;
@@ -37,9 +45,9 @@ public class ServicioNoticiaTest {
 
     @BeforeEach
     public void init() throws IOException {
-
+        seguidorMock=mock(Seguidos.class);
         usuarioMock = mock(Usuario.class);
-
+        notificacionMock=mock(Notificacion.class);
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
@@ -68,8 +76,6 @@ public class ServicioNoticiaTest {
 
     @Test
     public void cuandoCreoUnaNoticiaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez() throws Exception {
-
-
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
         servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
@@ -130,5 +136,17 @@ public class ServicioNoticiaTest {
         //validación
         assertThat(noticia.getLikes(), is(4));
     }
+
+
+        @Test
+        public void generarNotificacionDeberiaNotificarSeguidores() {
+            when(repositorioUsuarioMock.obtenerListaDeSeguidores(anyLong()))
+                    .thenReturn(Arrays.asList(new Seguidos(), new Seguidos()));
+
+            servicioNoticiaMock.generarNotificacion(1L, "UsuarioEjemplo", "Título de Noticia");
+
+            verify(repositorioNotificacionMock, times(2)).generarNotificacion(any(Notificacion.class));
+        }
+
 
 }
