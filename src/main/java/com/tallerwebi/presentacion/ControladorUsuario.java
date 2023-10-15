@@ -33,14 +33,14 @@ public class ControladorUsuario {
         model.put("categorias",categorias);
         try{
 
-            Usuario usuario = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
+            Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-            List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuario(usuario.getIdUsuario());
-            model.put("usuario",usuario);
+            List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuario(usuarioBuscado.getIdUsuario());
+            model.put("usuarioBuscado",usuarioBuscado);
             model.put("usuarioLogueado",usuarioLogueado);
             model.put("noticias",noticiasDelUsuario);
 
-            if(servicioUsuario.verificarSiLaDescripcionEsNull(usuario.getDescripcion())){
+            if(servicioUsuario.verificarSiLaDescripcionEsNull(usuarioBuscado.getDescripcion())){
                 model.put("descripcionError", "No tiene una descripción.");
             }
 
@@ -58,14 +58,14 @@ public class ControladorUsuario {
         model.put("categorias",categorias);
         try{
 
-            Usuario usuario = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
+            Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
             Usuario usuarioLogueado =(Usuario) session.getAttribute("sessionUsuarioLogueado");
-            List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuario(usuario.getIdUsuario());
-            model.put("usuario",usuario);
+            List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuario(usuarioBuscado.getIdUsuario());
+            model.put("usuarioBuscado",usuarioBuscado);
             model.put("usuarioLogueado",usuarioLogueado);
             model.put("noticias",noticiasDelUsuario);
 
-            if(servicioUsuario.verificarSiLaDescripcionEsNull(usuario.getDescripcion())){
+            if(servicioUsuario.verificarSiLaDescripcionEsNull(usuarioBuscado.getDescripcion())){
                 model.put("descripcionError", "No tiene una descripción.");
             }
 
