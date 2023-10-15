@@ -2,6 +2,7 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.ListaReproduccion;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 
 import java.util.List;
 
@@ -22,4 +23,6 @@ public interface RepositorioNoticia {
     List<Noticia> listarNoticias();
 
     void editarNoticia(Noticia noticia);
+
+    void generarNotificacion(Notificacion notificacion);
 }

@@ -1,6 +1,7 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Usuario;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -67,4 +68,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 createQuery("FROM Usuario WHERE idUsuario = :id").
                 setParameter("id",id).uniqueResult();
     }
+
+    @Override
+    public List<Seguidos> obtenerListaDeSeguidores(Long idUsuario) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Seguidos WHERE idUsuarioPropio_idUsuario = :idUsuarioPropio")
+                .setParameter("idUsuarioPropio", idUsuario)
+                .list();
+    }
+
 }
