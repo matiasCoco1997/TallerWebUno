@@ -105,4 +105,5 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 setParameter("idUsuario",idUsuario).list();
     }
 
+
 }
