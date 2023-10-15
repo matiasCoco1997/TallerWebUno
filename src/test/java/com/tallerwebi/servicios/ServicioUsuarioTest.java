@@ -2,6 +2,7 @@ package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioHomeImpl;
@@ -20,8 +21,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ServicioUsuarioTest {
 
@@ -33,6 +33,7 @@ public class ServicioUsuarioTest {
     private RepositorioCategoria repositorioCategoriaMock;
     private Usuario usuarioMock;
     private Categoria categoriaMock;
+    private Notificacion notificacionMock;
 
     @BeforeEach
     public void init(){
@@ -47,6 +48,7 @@ public class ServicioUsuarioTest {
         when(noticiaMockDeportes.getTitulo()).thenReturn("deportes");
         usuarioMock=mock(Usuario.class);
         when(usuarioMock.getIdUsuario()).thenReturn(1L);
+        notificacionMock=mock(Notificacion.class);
         categoriaMock=mock(Categoria.class);
         this.repositorioUsuarioMock = mock(RepositorioUsuario.class);
         this.repositorioCategoriaMock = mock(RepositorioCategoria.class);
@@ -78,7 +80,22 @@ public class ServicioUsuarioTest {
         });
     }
 
+    @Test
+    public void quePuedaObtenerMisNotificaciones(){
+        List<Notificacion> notificaciones=new ArrayList<>();
+        notificaciones.add(notificacionMock);
+        notificaciones.add(notificacionMock);
+        when(repositorioUsuarioMock.obtenerMisNotificaciones(usuarioMock.getIdUsuario())).thenReturn(notificaciones);
 
+        List<Notificacion> notificacionesObtenidas= servicioUsuarioMock.obtenerMisNotificaciones(usuarioMock.getIdUsuario());
+        assertThat(notificacionesObtenidas.size(),is(2));
+    }
+
+    @Test
+    public void queLasNotificacionesSeMarquenComoLeidas(){
+        servicioUsuarioMock.marcarNotificacionesComoLeidas(usuarioMock.getIdUsuario());
+        verify(repositorioUsuarioMock,times(1)).marcarNotificacionesComoLeidas(usuarioMock.getIdUsuario());
+    }
 
 
 }

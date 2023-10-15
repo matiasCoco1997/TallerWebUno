@@ -1,6 +1,7 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
@@ -28,6 +29,8 @@ public class RepositorioUsuarioTest {
     private RepositorioNoticia repositorioNoticia;
     @Autowired
     private RepositorioUsuario repositorioUsuario;
+    @Autowired
+    private RepositorioNotificacion repositorioNotificacion;
     private Noticia noticia;
     private Noticia noticia2;
     private Usuario usuario;
@@ -68,5 +71,56 @@ public class RepositorioUsuarioTest {
         repositorioUsuario.guardar(usuario);
         Usuario usuarioObtenido=repositorioUsuario.obtenerUsuarioPorId(usuario.getIdUsuario());
         assertThat(usuarioObtenido,is(notNullValue()));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void quePuedaObtenerMisNotificacionesSinLeer(){
+        repositorioUsuario.guardar(usuario);
+        Notificacion notificacion=new Notificacion();
+        notificacion.setVista(true);
+        notificacion.setUsuarioNotificado(usuario);
+        Notificacion notificacion2=new Notificacion();
+        notificacion.setUsuarioNotificado(usuario);
+        repositorioNotificacion.generarNotificacion(notificacion);
+        repositorioNotificacion.generarNotificacion(notificacion2);
+        List<Notificacion> notificaciones=repositorioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
+        assertThat(notificaciones.size(),is(1));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void quePuedaObtenerMisNotificaciones(){
+        repositorioUsuario.guardar(usuario);
+        repositorioUsuario.guardar(usuario2);
+        Notificacion notificacion=new Notificacion();
+        notificacion.setUsuarioNotificado(usuario);
+        Notificacion notificacion2=new Notificacion();
+        notificacion2.setUsuarioNotificado(usuario2);
+        repositorioNotificacion.generarNotificacion(notificacion);
+        repositorioNotificacion.generarNotificacion(notificacion2);
+        List<Notificacion> notificaciones=repositorioUsuario.obtenerMisNotificaciones(usuario.getIdUsuario());
+        assertThat(notificaciones.size(),is(1));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void queLasNotificacionesSePuedanMarcarComoLeidas(){
+        repositorioUsuario.guardar(usuario);
+        Notificacion notificacion=new Notificacion();
+        notificacion.setUsuarioNotificado(usuario);
+        Notificacion notificacion2=new Notificacion();
+        notificacion2.setUsuarioNotificado(usuario);
+        repositorioNotificacion.generarNotificacion(notificacion);
+        repositorioNotificacion.generarNotificacion(notificacion2);
+
+        repositorioUsuario.marcarNotificacionesComoLeidas(usuario.getIdUsuario());
+
+        List<Notificacion> notificaciones=repositorioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
+
+        assertThat(notificaciones.size(),is(0));
     }
 }

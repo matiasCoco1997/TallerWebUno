@@ -56,7 +56,7 @@ public class ControladorHomeTest {
         noticias.add(noticiaMock);
 
         when(servicioHomeMock.listarNoticias()).thenReturn(noticias);
-        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+            when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         // ejecucion
         ModelAndView modelAndView = controladorHome.home(sessionMock);
