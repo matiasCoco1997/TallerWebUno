@@ -134,7 +134,7 @@
                         </a>
                     </div>
 
-                    <h1 th:text="${noticia.titulo}" class="mt-6 mb-10 text-6xl font-bold text-left">
+                    <h1 th:text="${noticia.titulo}" class="mt-6 mb-10 text-3xl lg:text-5xl xl:text-6xl font-bold text-left">
                     </h1>
 
                     <p th:text="${noticia.resumen}" class="mt-3 mb-16 text-xl text-left">
@@ -186,20 +186,81 @@
                 <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
             </svg>
         </button>
-        <audio id="reproductor" controls></audio>
+        <audio id="reproductor" hidden></audio>
+
     </section>
 
 
 
-    <!-- Comentarios-->
-    <section class="bg-black py-8 lg:py-16 antialiased">
-        <div class="max-w-2xl mx-auto px-4">
-            <div id="comentariosContainer">
+    <!--Comentario-->
+    <!--Lista de Comentarios>-->
+    <section>
+        <!--Lista de comentarios-->
+        <div class="bg-black py-8 lg:py-16 antialiased">
+            <div class="max-w-2xl mx-auto px-4">
+                <div id="lista-comentarios">
+                    <th:block th:if="${comentarios}">
+                        <th:block th:each="comentario : ${comentarios}">
+                            <article  th:id="'comentario'+${comentario.id}" class="editar-comentario-form p-6 text-base border-t border-gray-200 dark:border-gray-700 bg-black">
+                                <footer class="flex justify-between items-center mb-2">
+                                    <div class="flex items-center">
+                                        <img
+                                                class="mr-2 w-6 h-6 rounded-full"
+                                                th:src="'/sunn/'+${comentario.usuario.fotoPerfil}">
+                                        <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold" th:text="${usuarioNombre}"></p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400"><time th:text="${fecha}"></time></p>
+                                    </div>
+                                    <th:block  th:if="${comentario.usuario.idUsuario} eq ${usuarioLogueado}" >
+                                        <div class="relative">
 
+                                            <button class="dropdown-comment-button inline-flex items-center p-2 text-sm font-medium text-center text-gray-500 dark:text-gray-40 bg-white rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-50 dark:bg-gray-900 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                                                    type="button" data-target-menu="dropdown-comment-menu">
+                                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 16 3">
+                                                    <path d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"/>
+                                                </svg>
+                                            </button>
+
+                                            <!-- Menú de comentario -->
+                                            <div  class="dropdown-menu hidden bg-white rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600 max-w-max"
+                                                  style="position: absolute; top: 2.5rem; left: -1.5rem;">
+                                                <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownMenuIconHorizontalButton">
+                                                    <li>
+                                                        <a th:data-id-comentario="${comentario.id}" href="#" class="editar-comentario block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Editar</a>
+                                                    </li>
+                                                    <li>
+                                                        <a th:data-id-comentario="${comentario.id}" href="#" class="eliminar-comentario block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Eliminar</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </th:block>
+                                </footer>
+                                <!--Comentario-->
+                                <p th:id="'comment-text-'+${comentario.id}" class="text-gray-500 dark:text-gray-400 mb-2" th:text="${comentario.descripcion}"></p>
+
+                                <div class="flex items-center mt-4 space-x-4">
+                                    <button type="button"
+                                            class="flex items-center text-sm text-gray-500 hover:underline dark:text-gray-400 font-medium">
+                                        <svg class="mr-1.5 w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 18">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5h5M5 8h2m6-3h2m-5 3h6m2-7H2a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1h3v5l5-5h8a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1Z"/>
+                                        </svg>
+                                        Reply
+                                    </button>
+                                </div>
+                            </article>
+                        </th:block>
+                    </th:block>
+
+                </div>
             </div>
+        </div>
+    </section>
+    <!--Form Crear Comentario-->
+    <section class="bg-black pb-8 lg:py-16 antialiased">
+        <div class="max-w-2xl mx-auto px-4">
             <div>
-                <form id="formularioComentario" th:action="@{/comentario}" class="mb-6"  method="POST"  th:object="${comentario}">
-                    <input type="number" name="idNoticia" value="1" hidden>
+                <form id="formularioComentario" th:action="@{/comentario}" class="mb-6"  method="POST"  th:object="${comentarioForm}">
+                    <input th:field="*{noticia.idNoticia}" type="number"  th:value="*{noticia.idNoticia}" hidden>
                     <div class="py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-neutral-800 dark:border-gray-700">
                         <label class="sr-only">Your comment</label>
                         <textarea th:field="*{descripcion}" id="descripcion" rows="6"
@@ -368,7 +429,7 @@ $(document).ready(function () {
 
 
 
- // Inicializa Wavesurfer
+ // Inicializa Wavesurfer Podcast
         const wavesurfer = WaveSurfer.create({
             container: '#waveform',
             waveColor: 'Gray',
@@ -384,13 +445,14 @@ $(document).ready(function () {
         $(".btnReproducirPausa").first().show();
         $(".btnReproducirPausa").last().hide();
         });
+
         function reproducirAudio(audioData) {
-    var blob = new Blob([audioData], { type: "audio/wav" });
-    var audioUrl = URL.createObjectURL(blob);
-    $("#reproductor").attr("src", audioUrl);
-    $("#reproductor")[0].load();
-    $("#reproductor")[0].play();
-}
+        var blob = new Blob([audioData], { type: "audio/wav" });
+        var audioUrl = URL.createObjectURL(blob);
+        $("#reproductor").attr("src", audioUrl);
+        $("#reproductor")[0].load();
+        $("#reproductor")[0].play();
+        }
 
 
 function convertirTextoAAudio() {

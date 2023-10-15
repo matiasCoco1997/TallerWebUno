@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.entidades.Comentario;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.ComentarioException;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +20,18 @@ import java.util.List;
 @Controller
 public class ControladorComentario {
     private ServicioComentario servicioComentario;
+    private ServicioNoticia servicioNoticia;
     @Autowired
-    public ControladorComentario(ServicioComentario servicioComentario) {
+    public ControladorComentario(ServicioComentario servicioComentario, ServicioNoticia servicioNoticia) {
         this.servicioComentario = servicioComentario;
+        this.servicioNoticia = servicioNoticia;
     }
     @PostMapping("/comentario")
     public ModelAndView guardarComentario(@ModelAttribute("comentario") Comentario comentario,
                                           HttpSession session) {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
         comentario.setUsuario(usuarioLogueado);
+        comentario.setNoticia(servicioNoticia.buscarNoticiaPorId(comentario.getNoticia().getIdNoticia()));
         ModelMap model = new ModelMap();
 
         try {

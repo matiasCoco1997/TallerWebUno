@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
 import com.tallerwebi.dominio.excepcion.ComentarioException;
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.infraestructura.RepositorioComentario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,7 @@ public class ControladorComentarioTest {
     private Comentario comentarioMock;
     private HttpSession sessionMock;
     private ServicioComentario servicioComentarioMock;
+    private ServicioNoticia servicioNoticiaMock;
     private RepositorioComentario repositorioComentarioMock;
     private Usuario usuarioMock;
     private Noticia noticiaMock;
@@ -32,8 +34,9 @@ public class ControladorComentarioTest {
     @BeforeEach
     public void init(){
         servicioComentarioMock = mock(ServicioComentario.class);
+        servicioNoticiaMock = mock(ServicioNoticia.class);
         noticiaMock = mock(Noticia.class);
-        controladorComentarioMock = new ControladorComentario(servicioComentarioMock);
+        controladorComentarioMock = new ControladorComentario(servicioComentarioMock, servicioNoticiaMock);
         comentarioMock = mock(Comentario.class);
         sessionMock = mock(HttpSession.class);
         usuarioMock = mock(Usuario.class);

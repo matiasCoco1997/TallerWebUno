@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.entidades.Comentario;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.*;
+import com.tallerwebi.dominio.servicios.ServicioComentario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,9 +20,11 @@ import java.util.List;
 @Controller
 public class ControladorNoticia {
     private ServicioNoticia servicioNoticia;
+    private ServicioComentario servicioComentario;
     @Autowired
-    public ControladorNoticia(ServicioNoticia servicioNoticia) {
+    public ControladorNoticia(ServicioNoticia servicioNoticia, ServicioComentario servicioComentario) {
         this.servicioNoticia = servicioNoticia;
+        this.servicioComentario = servicioComentario;
     }
 
     /*
@@ -160,14 +163,24 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home", modelo);
     }
     @GetMapping("/publicacion/{idNoticia}")
-    public ModelAndView irApublicacion(@PathVariable Long idNoticia){
+    public ModelAndView irApublicacion(@PathVariable Long idNoticia, HttpSession session){
         ModelMap model = new ModelMap();
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
         Noticia noticia =  servicioNoticia.buscarNoticiaPorId(idNoticia);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
         String fechaFormateada = noticia.getFechaDePublicacion().format(formatter);
+        List<Comentario> comentarios = servicioComentario.buscarComentarios(idNoticia);
+        Comentario comentarioForm = new Comentario();
+
+
+        comentarioForm.setNoticia(noticia);
+        if(usuarioLogueado!=null)
+            model.put("usuarioLogueado", usuarioLogueado.getIdUsuario());
+        model.put("comentarios", comentarios);
         model.put("fechaPublicacion", fechaFormateada);
         model.put("noticia", noticia);
-        model.put("comentario", new Comentario());
+        model.put("comentarioForm", comentarioForm);
+
         return new ModelAndView("noticia", model);
     }
 }

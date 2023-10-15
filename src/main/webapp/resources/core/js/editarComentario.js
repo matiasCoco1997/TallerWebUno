@@ -2,7 +2,6 @@ $(document).ready(function () {
     $(document).on("click", ".editar-comentario", function (event) {
         event.preventDefault();
         let idComentario = $(this).data("id-comentario");
-
         let formulario = $("#formularioEdicionComentario" + idComentario);
 
         if (formulario.length > 0) {
@@ -34,6 +33,9 @@ $(document).ready(function () {
                 form.remove();
             },
             error: function (error) {
+            let comentarioError = $('#comentarioError');
+                                comentarioError.empty();
+                                comentarioError.append(error.responseText );
                 console.error('Error al editar el comentario', error);
             }
         });

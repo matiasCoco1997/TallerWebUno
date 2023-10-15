@@ -38,7 +38,7 @@ public class Comentario {
     }
 
     private void validarDescripcion() throws ComentarioException {
-        if(this.descripcion == null || !(this.descripcion.length() > 0 && this.descripcion.length()<256)){
+        if(this.descripcion == null || !(this.descripcion.trim().length() > 0 && this.descripcion.trim().length()<256)){
             throw new ComentarioException("La descripción debe tener entre 1 y 256 caracteres");
         }
     }
