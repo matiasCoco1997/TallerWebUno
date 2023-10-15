@@ -1,7 +1,11 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+
 import com.tallerwebi.dominio.servicios.ServicioComentario;
+
+import com.tallerwebi.dominio.entidades.Usuario;
+
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -31,6 +35,7 @@ public class ControladorNoticiaTest {
     private ServicioNoticia servicioNoticiaMock;
     private ServicioComentario servicioComentarioMock;
     private Noticia noticiaMock;
+    private Usuario usuarioMock;
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
 
@@ -45,6 +50,8 @@ public class ControladorNoticiaTest {
         when(noticiaMock.getTitulo()).thenReturn("titulo");
         when(noticiaMock.getCategoria()).thenReturn("1");
 
+        usuarioMock=mock(Usuario.class);
+
         imgMock = mock(MultipartFile.class);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
@@ -55,43 +62,11 @@ public class ControladorNoticiaTest {
         servicioComentarioMock = mock(ServicioComentario.class);
         controladorNoticia = new ControladorNoticia(servicioNoticiaMock, servicioComentarioMock);
     }
-/*
-    @Test
-    public void queAlListarDosNoticiasSeCargueElHome() {
 
-        List<Noticia> noticias = new ArrayList<>();
-
-        noticias.add(noticiaMock);
-        noticias.add(noticiaMock);
-        when(servicioNoticiaMock.listarNoticias()).thenReturn(noticias);
-
-        // ejecucion
-        ModelAndView modelAndView = controladorNoticia.listarNoticias(sessionMock);
-        List<Noticia> noticiasEnModelo = (List<Noticia>) modelAndView.getModel().get("noticias");
-
-        // validacion
-        assertThat(noticiasEnModelo.size(), equalTo(2));
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("home"));
-    }
-
-
-
-    @Test
-    public void queAlListarLasNoticiasEnElHomeRetorneUnaException() throws Exception {
-        // preparacion
-        when(controladorNoticia.listarNoticias(sessionMock)).thenThrow(RuntimeException.class);
-
-        // ejecucion
-        ModelAndView modelAndView = controladorNoticia.listarNoticias(sessionMock);
-
-        // validacion
-        assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al listar las noticias."));
-    }
-
- */
 
     @Test
     public void queAlCrearUnaNoticiaRedireccioneAlHome() {
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock);
 
@@ -205,5 +180,13 @@ public class ControladorNoticiaTest {
         }catch (Exception e){
             assertThat(e.getMessage(),is("La noticia fue eliminada"));
         }
+    }
+
+    @Test
+    public void queAlGenerarUnaNotificacionSeRedirijaAlHome(){
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock);
+        // validacion
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
     }
 }

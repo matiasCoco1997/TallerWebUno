@@ -1,12 +1,12 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -52,9 +52,8 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public Noticia buscarPorId(long idNoticia) {
         final Session session = sessionFactory.getCurrentSession();
-        return (Noticia) session.createCriteria(Noticia.class)
-                .add(Restrictions.eq("idNoticia", idNoticia))
-                .uniqueResult();
+        return (Noticia) session.createQuery("FROM Noticia WHERE idNoticia =:idNoticia").
+                setParameter("idNoticia",idNoticia).uniqueResult();
     }
 
     @Override
@@ -77,6 +76,21 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     public List<Noticia> listarNoticias() {
         final Session session = sessionFactory.getCurrentSession();
         return session.createQuery("FROM Noticia").list();
+    }
+
+    @Override
+    public void editarNoticia(Noticia noticia) {
+        try {
+            final Session session = sessionFactory.getCurrentSession();
+            session.update(noticia);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void generarNotificacion(Notificacion notificacion) {
+        sessionFactory.getCurrentSession().save(notificacion);
     }
 
 }

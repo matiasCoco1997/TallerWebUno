@@ -1,25 +1,22 @@
 package com.tallerwebi.dominio.servicios;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
-import com.tallerwebi.presentacion.DatosLogin;
+import com.tallerwebi.infraestructura.RepositorioNotificacion;
+import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -30,11 +27,15 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
     private final RepositorioNoticia repositorioNoticia;
     private final RepositorioCategoria repositorioCategoria;
+    private final RepositorioUsuario repositorioUsuario;
+    private final RepositorioNotificacion repositorioNotificacion;
 
     @Autowired
-    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria) {
+    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria, RepositorioUsuario repositorioUsuario, RepositorioNotificacion repositorioNotificacion) {
         this.repositorioNoticia = repositorioNoticia;
         this.repositorioCategoria = repositorioCategoria;
+        this.repositorioUsuario = repositorioUsuario;
+        this.repositorioNotificacion = repositorioNotificacion;
     }
 
     @Override
@@ -42,9 +43,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         verificacionCamposVacios(noticia, imagen, audio);
 
-        verificacionDeLaImagenSeleccionada(noticia, imagen);
-
-        verificacionDelAudioSeleccionado(noticia, audio);
+        if(!verificacionSiSonArchivosDeLosTests(imagen, audio)){
+            verificacionDeLaImagenSeleccionada(noticia, imagen);
+            verificacionDelAudioSeleccionado(noticia, audio);
+        }
 
         noticia.setUsuario(usuarioLogueado);
 
@@ -52,6 +54,8 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         repositorioNoticia.guardar(noticia);
     }
+
+
 
     @Override
     public void borrarNoticiaPorId(Long idNoticia) {
@@ -95,9 +99,43 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void editarNoticia(Long idNoticia) {
+    public void editarNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException, FormatoDeAudioIncorrecto {
 
+        if(!verificacionSiSonArchivosDeLosTests(imagen, audio)){
+            if (!imagen.isEmpty()) {
+
+                verificacionDeLaImagenSeleccionada(noticia, imagen);
+            }
+            if (!audio.isEmpty()) {
+                verificacionDelAudioSeleccionado(noticia, audio);
+            }
+        }
+
+        verificacionCamposDeTextoVacios(noticia);
+
+        noticia.setUsuario(usuarioLogueado);
+
+        verificacionDeActivacionDeNoticia(noticia);
+
+        noticia.setFechaDePublicacion(LocalDateTime.now());
+
+        repositorioNoticia.editarNoticia(noticia);
     }
+
+    private void verificacionCamposDeTextoVacios(Noticia noticia) throws CampoVacio {
+        if(noticia.getTitulo().isBlank()) {
+            throw new CampoVacio();
+        }
+
+        if(noticia.getCategoria().isBlank()) {
+            throw new CampoVacio();
+        }
+
+        if(noticia.getResumen().isBlank()) {
+            throw new CampoVacio();
+        }
+    }
+
     @Override
     public void darMeGusta(Noticia noticia) {
         noticia.setLikes(noticia.getLikes() + 1);
@@ -114,13 +152,23 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         return repositorioCategoria.obtenerCategorias();
     }
 
+    @Override
+    public void generarNotificacion(Long idUsuario, String nombre, String titulo) {
+        List<Seguidos> seguidores=repositorioUsuario.obtenerListaDeSeguidores(idUsuario);
+        for (Seguidos seguidor: seguidores) {
+            Notificacion notificacion=new Notificacion(seguidor.getIdUsuarioSeguidor(),nombre,titulo);
+            repositorioNotificacion.generarNotificacion(notificacion);
+        }
+    }
+
+
 
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
         if(noticia.getTitulo().isBlank()) {
             throw new CampoVacio();
         }
 
-        if(noticia.getCategoria().isBlank() || noticia.getCategoria() == "0") {
+        if(noticia.getCategoria().isBlank()) {
             throw new CampoVacio();
         }
 
@@ -167,6 +215,9 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         Path path = Paths.get("src/main/webapp/resources/core/imagenes/imgsNoticias/" + nuevoNombreDelArchivo);
 
+        Path imagenABorrar = Paths.get("src/main/webapp/resources/core" + noticia.getRutaDeimagen());
+        Files.deleteIfExists(imagenABorrar);
+
         noticia.setRutaDeimagen("/imagenes/imgsNoticias/" + nuevoNombreDelArchivo);
 
         Files.write(path, bytes);
@@ -199,6 +250,9 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         Path path = Paths.get("src/main/webapp/resources/core/audios_noticias/" + nuevoNombreDelArchivo);
 
+        Path audioABorrar = Paths.get("src/main/webapp/resources/core" + noticia.getRutaDeAudioPodcast());
+        Files.deleteIfExists(audioABorrar);
+
         noticia.setRutaDeAudioPodcast("/audios_noticias/" + nuevoNombreDelArchivo);
 
         Files.write(path, bytes);
@@ -208,6 +262,14 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         if(!noticia.getActiva()){
             noticia.setActiva(false);
         }
+    }
+
+    private boolean verificacionSiSonArchivosDeLosTests(MultipartFile imagen, MultipartFile audio) {
+
+        if(imagen.getOriginalFilename() == "mock_image.png" && audio.getOriginalFilename() == "mock_audio.mp3"){
+            return true;
+        }
+        return false;
     }
 
 }

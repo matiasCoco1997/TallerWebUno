@@ -56,6 +56,7 @@ public class ControladorHomeTest {
         noticias.add(noticiaMock);
 
         when(servicioHomeMock.listarNoticias()).thenReturn(noticias);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         // ejecucion
         ModelAndView modelAndView = controladorHome.home(sessionMock);
@@ -73,9 +74,10 @@ public class ControladorHomeTest {
         categorias.add(categoriaMock);
 
         when(servicioHomeMock.obtenerCategorias()).thenReturn(categorias);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         ModelAndView modelAndView= controladorHome.home(sessionMock);
-        List<Categoria> categoriasEnModelo= (List<Categoria>) modelAndView.getModel().get("categorias");
+        List<Categoria> categoriasEnModelo = (List<Categoria>) modelAndView.getModel().get("categorias");
 
         assertThat(categoriasEnModelo.size(),equalTo(2));
     }
@@ -86,9 +88,11 @@ public class ControladorHomeTest {
         usuarios.add(usuarioMock);
         usuarios.add(usuarioMock);
 
-        when(servicioHomeMock.listarUsuarios(6L)).thenReturn(usuarios);
+        when(servicioHomeMock.listarUsuarios(usuarioMock.getIdUsuario())).thenReturn(usuarios);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
-        ModelAndView modelAndView= controladorHome.home(sessionMock);
+        ModelAndView modelAndView = controladorHome.home(sessionMock);
+
         List<Usuario> usuariosEnModelo= (List<Usuario>) modelAndView.getModel().get("usuarios");
 
         assertThat(usuariosEnModelo.size(),equalTo(2));

@@ -11,7 +11,7 @@
     <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
     <link rel="icon" th:href="@{/imagenes/icono-sunn.png}" type="image/x-icon">
-    <title>Crear Noticia</title>
+    <title>Editar Noticia</title>
 </head>
 
 <body class="bg-black">
@@ -19,15 +19,20 @@
 <main class=" container m-auto">
 
     <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">
-        Nueva Noticia</h1>
+        Editar Noticia</h1>
 
     <section class="mt-10">
 
-        <form th:action="@{/noticia/crear}" method="POST" th:object="${datosNoticia}" enctype="multipart/form-data">
+        <form th:action="@{/noticia/editar}" method="POST" th:object="${datosNoticia}" enctype="multipart/form-data">
 
             <div class="mx-auto w-[100%] pt-8 pb-8 lg:flex ">
 
                 <div class="flex flex-col lg:w-[80%] gap-6">
+
+                    <input type="hidden" th:field="*{idNoticia}">
+                    <input type="hidden" th:field="*{rutaDeimagen}">
+                    <input type="hidden" th:field="*{altDeImagen}">
+                    <input type="hidden" th:field="*{likes}">
 
                     <div class="w-[80%] mx-auto">
                         <label class="text-white text-2xl">Ingrese el titulo de la noticia</label>
@@ -36,7 +41,7 @@
                                 placeholder="Ingrese el título de la noticia">
                     </div>
 
-                    <div class="w-[80%] mx-auto">
+                    <div class="w-[80%] mx-auto mt-4">
                         <label class="text-white text-2xl">Seleccione una categoria para su noticia</label>
                         <br>
                         <select class="mt-2 w-[100%] h-[35px] text-black text-xl pl-2 border border-black border-b-[#444] bg-white" type="text" id="categoriasSelect" th:field="*{categoria}">
@@ -45,40 +50,55 @@
                     </div>
 
 
-                    <div class="w-[80%] mx-auto">
+                    <div class="w-[80%] mx-auto mt-4">
                         <label for="resumen" class="text-white text-2xl">Ingrese un resumen de la noticia</label>
                         <br>
                         <textarea th:field="*{resumen}" name="resumen" rows="4" id="resumen" cols="50" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black"  placeholder="Ingrese un resumen de su noticia">
                         </textarea>
                     </div>
 
-                    <div class="w-[80%] mx-auto">
+                    <div class="w-[80%] mx-auto mt-4">
                         <label for="descripcion" class="text-white text-2xl">Ingrese el texto para su noticia</label>
                         <textarea th:field="*{descripcion}" name="descripcion" rows="4" id="descripcion" cols="50" class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black border-b-[#444] bg-black" placeholder="Ingrese el texto de su noticia">
                         </textarea>
                     </div>
 
-                    <div class="w-[80%] mx-auto">
-                        <label class="text-white text-2xl" for="imagenFile">Seleccione una imagen para su noticia</label>
+                    <div class="w-[80%] mx-auto mt-4">
+
+                        <div class="w-[60%] mb-4">
+                            <p class="text-white text-2xl">Imagen cargada en la noticia</p>
+                            <img class="mt-4 border border-white border-1" th:src="@{*{rutaDeimagen}}" th:alt="*{altDeImagen}">
+                        </div>
+
+                        <label class="text-white text-2xl" for="imagenFile">¿Desea cambiar la imagen de su noticia?</label>
                         <br>
-                        <input name="imagenFile" type="file" id="imagenFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black" required>
+                        <input name="imagenFile" type="file" id="imagenFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black">
                     </div>
 
 
-                    <div class="w-[80%] mx-auto">
-                        <label class="text-white text-2xl" for="audioFile">Seleccione un audio para su noticia</label>
+                    <div class="w-[80%] mx-auto mt-4">
+
+                        <div class="w-[60%] mb-4">
+                            <input type="hidden" th:field="*{rutaDeAudioPodcast}">
+                            <p class="text-white text-2xl">Audio cargado en la noticia</p>
+                            <audio controls class="mt-4">
+                                <source th:src="@{*{rutaDeAudioPodcast}}" type="audio/mp3">
+                            </audio>
+                        </div>
+
+                        <label class="text-white text-2xl mt-2" for="audioFile">¿Desea cambiar el audio de su noticia?</label>
                         <br>
-                        <input name="audioFile" type="file" id="audioFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black" required>
+                        <input name="audioFile" type="file" id="audioFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black">
                     </div>
 
-                    <div class="w-[80%] mx-auto">
+                    <div class="w-[80%] mx-auto mt-4">
                         <label for="checkboxNoticia" class="text-white text-2xl w-[80%]">Seleccione el checkbox para que su nota aparezca en el sitio.</label>
                         <input type="checkbox" name="checkboxNoticia" id="checkboxNoticia" th:field="*{activa}" class="mt-2 w-[5%] h-[20px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black" >
                     </div>
 
                     <div class="w-[80%] mx-auto">
                         <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto text-white"
-                               value="Crear Noticia" name="crearNoticia" style="cursor: pointer">
+                               value="Editar Noticia" name="crearNoticia" style="cursor: pointer">
                         <a th:href="@{/home}" type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto text-white align-content-center"
                              style="cursor: pointer; text-align-all: center">Volver</a>
                     </div>

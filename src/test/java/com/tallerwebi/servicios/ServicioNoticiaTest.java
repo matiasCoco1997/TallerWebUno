@@ -1,11 +1,15 @@
 package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
+import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
+import com.tallerwebi.infraestructura.RepositorioNotificacion;
+import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.mock.web.MockMultipartFile;
@@ -15,10 +19,10 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
 import static org.mockito.Mockito.*;
@@ -29,16 +33,21 @@ public class ServicioNoticiaTest {
     private Noticia noticiaMock;
     private ServicioNoticia servicioNoticiaMock;
     private RepositorioNoticia repositorioNoticiaMock;
+    private RepositorioUsuario repositorioUsuarioMock;
     private Usuario usuarioMock;
+    private Notificacion notificacionMock;
+
+    private Seguidos seguidorMock;
     private MultipartFile imgMock;
     private MockMultipartFile audioMock;
     private RepositorioCategoria repositorioCategoriaMock;
+    private RepositorioNotificacion repositorioNotificacionMock;
 
     @BeforeEach
     public void init() throws IOException {
-
+        seguidorMock=mock(Seguidos.class);
         usuarioMock = mock(Usuario.class);
-
+        notificacionMock=mock(Notificacion.class);
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
@@ -59,7 +68,9 @@ public class ServicioNoticiaTest {
         
         this.repositorioNoticiaMock = mock(RepositorioNoticia.class);
         this.repositorioCategoriaMock = mock(RepositorioCategoria.class);
-        this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock, repositorioCategoriaMock);
+        repositorioUsuarioMock=mock(RepositorioUsuario.class);
+        repositorioNotificacionMock=mock(RepositorioNotificacion.class);
+        this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock, repositorioCategoriaMock, repositorioUsuarioMock, repositorioNotificacionMock);
     }
 
 
@@ -86,10 +97,10 @@ public class ServicioNoticiaTest {
     @Test
     public void cuandoObtengoUnaNoticiaPorSuIdObtengoLaNoticia(){
         //preparacion
-        when(this.repositorioNoticiaMock.buscarPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
+        when(repositorioNoticiaMock.buscarPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
 
         //ejecucion
-        Noticia noticiaObtenida = this.servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia());
+        Noticia noticiaObtenida = servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia());
 
         //verificacion
         assertThat(noticiaObtenida.getIdNoticia(), is(1L));
@@ -125,5 +136,17 @@ public class ServicioNoticiaTest {
         //validación
         assertThat(noticia.getLikes(), is(4));
     }
+
+
+        @Test
+        public void generarNotificacionDeberiaNotificarSeguidores() {
+            when(repositorioUsuarioMock.obtenerListaDeSeguidores(anyLong()))
+                    .thenReturn(Arrays.asList(new Seguidos(), new Seguidos()));
+
+            servicioNoticiaMock.generarNotificacion(1L, "UsuarioEjemplo", "Título de Noticia");
+
+            verify(repositorioNotificacionMock, times(2)).generarNotificacion(any(Notificacion.class));
+        }
+
 
 }
