@@ -47,6 +47,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     }
 
     @Override
+    public List<Noticia> obtenerNoticiasDeUnUsuarioEnEstadoBorrador(Long idUsuario) {
+        return repositorioUsuario.obtenerMisNoticiasEnEstadoBorrador(idUsuario);
+    }
+
+    @Override
     public boolean verificarSiLaDescripcionEsNull(String descripcion) {
         return descripcion==null;
     }

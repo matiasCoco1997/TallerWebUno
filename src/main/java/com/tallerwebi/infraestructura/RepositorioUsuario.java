@@ -19,5 +19,8 @@ public interface RepositorioUsuario {
     Usuario obtenerUsuarioPorId(Long id);
 
     List<Seguidos> obtenerListaDeSeguidores(Long idUsuario);
+
+    List<Noticia> obtenerMisNoticiasEnEstadoBorrador (Long idUsuario);
+
 }
 

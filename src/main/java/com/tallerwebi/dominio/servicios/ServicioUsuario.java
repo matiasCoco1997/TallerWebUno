@@ -16,4 +16,7 @@ public interface ServicioUsuario {
 
     boolean verificarSiElIDEsNull(Long id);
     boolean verificarSiElUsuarioEsNull(Usuario usuario);
+
+    List<Noticia> obtenerNoticiasDeUnUsuarioEnEstadoBorrador(Long idUsuario);
+
 }

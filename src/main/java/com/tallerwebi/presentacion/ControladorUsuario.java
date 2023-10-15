@@ -53,14 +53,14 @@ public class ControladorUsuario {
 
     @RequestMapping(value = "/perfil/borradores",method = RequestMethod.GET)
     public ModelAndView verNoticiasEnEstadoBorrador(@RequestParam(value = "idUsuario",required = false)Long id, HttpSession session){
-        ModelMap model = new ModelMap();
+        ModelMap model=new ModelMap();
         List<Categoria> categorias = servicioUsuario.obtenerCategorias();
         model.put("categorias",categorias);
         try{
 
             Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
-            Usuario usuarioLogueado =(Usuario) session.getAttribute("sessionUsuarioLogueado");
-            List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuario(usuarioBuscado.getIdUsuario());
+            Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+            List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioBuscado.getIdUsuario());
             model.put("usuarioBuscado",usuarioBuscado);
             model.put("usuarioLogueado",usuarioLogueado);
             model.put("noticias",noticiasDelUsuario);
