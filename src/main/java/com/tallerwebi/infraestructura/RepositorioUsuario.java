@@ -1,6 +1,7 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Usuario;
 
 import java.util.List;
@@ -16,5 +17,7 @@ public interface RepositorioUsuario {
     List<Noticia> obtenerMisNoticias(Long idUsuario);
 
     Usuario obtenerUsuarioPorId(Long id);
+
+    List<Seguidos> obtenerListaDeSeguidores(Long idUsuario);
 }
 

@@ -1,19 +1,15 @@
 package com.tallerwebi.dominio.servicios;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioNoticia;
-import com.tallerwebi.presentacion.DatosLogin;
+import com.tallerwebi.infraestructura.RepositorioNotificacion;
+import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,11 +27,15 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
     private final RepositorioNoticia repositorioNoticia;
     private final RepositorioCategoria repositorioCategoria;
+    private final RepositorioUsuario repositorioUsuario;
+    private final RepositorioNotificacion repositorioNotificacion;
 
     @Autowired
-    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria) {
+    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria, RepositorioUsuario repositorioUsuario, RepositorioNotificacion repositorioNotificacion) {
         this.repositorioNoticia = repositorioNoticia;
         this.repositorioCategoria = repositorioCategoria;
+        this.repositorioUsuario = repositorioUsuario;
+        this.repositorioNotificacion = repositorioNotificacion;
     }
 
     @Override
@@ -151,6 +151,16 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     public List<Categoria> listarCategorias() {
         return repositorioCategoria.obtenerCategorias();
     }
+
+    @Override
+    public void generarNotificacion(Long idUsuario, String nombre, String titulo) {
+        List<Seguidos> seguidores=repositorioUsuario.obtenerListaDeSeguidores(idUsuario);
+        for (Seguidos seguidor: seguidores) {
+            Notificacion notificacion=new Notificacion(seguidor.getIdUsuarioSeguidor(),nombre,titulo);
+            repositorioNotificacion.generarNotificacion(notificacion);
+        }
+    }
+
 
 
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {

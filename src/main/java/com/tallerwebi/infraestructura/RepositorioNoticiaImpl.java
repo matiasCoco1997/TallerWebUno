@@ -1,13 +1,12 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.ListaReproduccion;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -87,6 +86,11 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void generarNotificacion(Notificacion notificacion) {
+        sessionFactory.getCurrentSession().save(notificacion);
     }
 
 }

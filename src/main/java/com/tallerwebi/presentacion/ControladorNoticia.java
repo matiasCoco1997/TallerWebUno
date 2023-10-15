@@ -84,6 +84,8 @@ public class ControladorNoticia {
         try{
             Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
             modelo.put("sessionUsuarioLogueado", UsuarioLogueado);
+            servicioNoticia.generarNotificacion(UsuarioLogueado.getIdUsuario(),UsuarioLogueado.getNombre(),noticia.getTitulo());
+
             servicioNoticia.crearNoticia(noticia, UsuarioLogueado, imagen, audio);
         }catch (CampoVacio e) {
             modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
@@ -138,17 +140,19 @@ public class ControladorNoticia {
     @RequestMapping(value = "/darLike",method = RequestMethod.POST)
     public ModelAndView darLike(@RequestParam("noticiaLike") Long noticiaLike,HttpSession session) throws Exception {
         ModelMap modelo = new ModelMap();
-        Noticia noticia=servicioNoticia.buscarNoticiaPorId(noticiaLike);
+        Noticia noticia = servicioNoticia.buscarNoticiaPorId(noticiaLike);
         if (servicioNoticia.verificarQueNoEsNull(noticia)) {
             throw new Exception("La noticia fue eliminada");
         }
-        try{
+        try {
             servicioNoticia.darMeGusta(noticia);
             modelo.addAttribute("meGusta", noticia.getLikes());
-        }catch (Exception e){
+        } catch (Exception e) {
             modelo.put("error", "No se puede dar me gusta a la noticia");
             return new ModelAndView("redirect:/home", modelo);
         }
         return new ModelAndView("redirect:/home", modelo);
     }
 }
+
+

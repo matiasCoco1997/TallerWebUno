@@ -29,4 +29,7 @@ public interface ServicioNoticia {
     boolean verificarQueNoEsNull(Noticia noticia);
 
     List<Categoria> listarCategorias();
+
+
+    void generarNotificacion(Long idUsuario, String nombre, String titulo);
 }
