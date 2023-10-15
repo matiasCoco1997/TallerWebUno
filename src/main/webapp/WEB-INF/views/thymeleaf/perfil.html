@@ -12,7 +12,8 @@
     <link rel="stylesheet" type="text/css"
           href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
-    <title>Home</title>
+    <title>Perfil</title>
+    <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
 </head>
 
 <body class="bg-black">
@@ -22,10 +23,11 @@
         class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
     <div class="flex w-full flex-wrap items-center justify-between px-3">
         <!-- Logo -->
+        <!-- Logo -->
         <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-           href="#">
-            <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
-                 alt="TE Logo" loading="lazy" />
+           href="home">
+            <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 30px"
+                 alt="TE Logo" loading="lazy"/>
         </a>
         <!--Search-->
 
@@ -94,8 +96,8 @@
                    href="#" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
                    aria-expanded="false">
                     <!-- User avatar -->
-                    <img th:src="@{${usuario.fotoPerfil}}" class="rounded-full"
-                         style="height: 25px; width: 25px" alt="" loading="lazy" />
+                    <img th:src="@{${usuarioLogueado.fotoPerfil}}" class="rounded-full"
+                         style="height: 25px; width: 25px" th:alt="@{${usuarioLogueado.altFotoPerfil}}" loading="lazy" />
                 </a>
                 <!-- Second dropdown menu -->
                 <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
@@ -135,25 +137,26 @@
 
     <div class="flex justify-between mt-10">
         <div class="w-[20%]">
-            <img th:src="@{${usuario.fotoPerfil}}" class="w-[100%] rounded-3xl border border-white ">
+            <img th:src="@{${usuarioBuscado.fotoPerfil}}" class="w-[100%] rounded-3xl border border-white ">
         </div>
         <div class="w-[78%] flex flex-col gap-10">
             <div class="flex items-center justify-between">
-                <h1 class="font-bold text-4xl text-white" th:text="${usuario.nombre}"></h1>
-                <a href="" th:if="${usuario.getIdUsuario()==usuario2.getIdUsuario()}" class="mr-10 text-2xl bg-blue-600 text-white p-4 rounded-2xl">Editar perfil</a>
+                <h1 class="font-bold text-4xl text-white" th:text="${usuarioBuscado.nombre}"></h1>
+                <a href="" th:if="${usuarioBuscado.getIdUsuario()==usuarioLogueado.getIdUsuario()}" class="mr-10 text-2xl bg-blue-600 text-white p-4 rounded-2xl">Editar perfil</a>
             </div>
-            <p class="text-white text-2xl" th:if="${usuario.descripcion==null}" th:text="${descripcionError}"></p>
-            <p class="text-white text-2xl" th:unless="${usuario.descripcion==null}" th:text="${usuario.descripcion}"></p>
+            <p class="text-white text-2xl" th:if="${usuarioBuscado.descripcion==null}" th:text="${descripcionError}"></p>
+            <p class="text-white text-2xl" th:unless="${usuarioBuscado.descripcion==null}" th:text="${usuarioBuscado.descripcion}"></p>
             <div class="flex justify-around mt-10">
-                <a href="" class="text-white text-xl">999 seguidores</a>
-                <a href="" class="text-white text-xl">999 seguidos</a>
+                <p  class="text-white text-xl">999 seguidores</p>
+                <p  class="text-white text-xl">999 seguidos</p>
             </div>
         </div>
     </div>
 
     <div class="flex justify-around mt-20 border-b border-white py-4">
-        <a class="text-3xl text-white font-bold" href="/sunn/perfil">Mis noticias</a>
-        <a class="text-3xl text-white" href="/sunn/misLikes">Me gusta</a>
+        <a class="text-3xl text-white font-bold" th:href="@{/perfil}">Mis noticias</a>
+        <a class="text-3xl text-white font-bold" th:href="@{/perfil/borradores}">Mis borradores</a>
+        <a class="text-3xl text-white" th:href="@{/misLikes}">Me gusta</a>
     </div>
 
 
@@ -169,9 +172,22 @@
                     </form>
                 </div>
 
-                <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
+                <p style="padding-left: 20px">
+                    Fecha de publicación: <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
+                </p>
+
+                <div th:if="${ usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario() }">
+                    <a th:href="@{/noticia/editar/} + ${noticia.getIdNoticia()}" style="padding: 10px; background-color: blue; ">
+                        Editar
+                    </a>
+
+                    <a th:href="@{/noticia/borrar/} + ${noticia.getIdNoticia()}" style="padding: 10px; background-color: red; ">
+                        Borrar
+                    </a>
+                </div>
 
             </div>
+
             <div class="mt-2 flex">
                 <div class="mr-2">
                     <a class="text-2xl font-bold hover:text-gray-300" href="#" th:text="${noticia.titulo}"></a>

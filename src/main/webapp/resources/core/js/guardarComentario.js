@@ -2,8 +2,8 @@
         $('#formularioComentario').submit(function(e) {
             $('#comentarioError').empty();
             e.preventDefault();
-            var form = $(this);
-            var actionUrl = form.attr('action')
+            let form = $(this);
+            let actionUrl = form.attr('action')
 
             $.ajax({
                 type: 'POST',
@@ -28,7 +28,7 @@
                     comentarioError.empty();
                     comentarioError.append(comentario);
                 }else{
-                    let comentariosContainer = $('#comentariosContainer');
+                    let comentariosContainer = $('#lista-comentarios');
 
                     comentariosContainer.append(comentario);
                 }

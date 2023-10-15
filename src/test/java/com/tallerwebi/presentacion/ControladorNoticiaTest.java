@@ -1,7 +1,11 @@
 package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+
+import com.tallerwebi.dominio.servicios.ServicioComentario;
+
 import com.tallerwebi.dominio.entidades.Usuario;
+
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -29,6 +33,7 @@ public class ControladorNoticiaTest {
 
     private ControladorNoticia controladorNoticia;
     private ServicioNoticia servicioNoticiaMock;
+    private ServicioComentario servicioComentarioMock;
     private Noticia noticiaMock;
     private Usuario usuarioMock;
     private HttpServletRequest requestMock;
@@ -54,7 +59,8 @@ public class ControladorNoticiaTest {
         audioMock = mock(MultipartFile.class);
 
         servicioNoticiaMock = mock(ServicioNoticia.class);
-        controladorNoticia = new ControladorNoticia(servicioNoticiaMock);
+        servicioComentarioMock = mock(ServicioComentario.class);
+        controladorNoticia = new ControladorNoticia(servicioNoticiaMock, servicioComentarioMock);
     }
 
 

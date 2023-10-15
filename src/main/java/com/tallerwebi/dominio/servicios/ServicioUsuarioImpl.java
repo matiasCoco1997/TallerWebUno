@@ -2,7 +2,6 @@ package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
@@ -45,6 +44,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
     public boolean verificarSiElUsuarioEsNull(Usuario usuario) {
         return usuario == null;
+    }
+
+    @Override
+    public List<Noticia> obtenerNoticiasDeUnUsuarioEnEstadoBorrador(Long idUsuario) {
+        return repositorioUsuario.obtenerMisNoticiasEnEstadoBorrador(idUsuario);
     }
 
     @Override

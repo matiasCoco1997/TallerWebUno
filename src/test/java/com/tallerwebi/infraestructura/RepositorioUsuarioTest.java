@@ -46,10 +46,12 @@ public class RepositorioUsuarioTest {
         noticia=new Noticia();
         noticia.setTitulo("titulo");
         noticia.setUsuario(usuario);
+        noticia.setActiva(true);
 
         noticia2=new Noticia();
         noticia2.setTitulo("titulo");
         noticia2.setUsuario(usuario2);
+        noticia.setActiva(true);
     }
 
     @Test

@@ -58,7 +58,7 @@ public class ControladorUsuarioTest {
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         ModelAndView modelAndView=controladorUsuario.perfil(usuarioMock.getIdUsuario(),sessionMock);
-        Usuario usuario=(Usuario) modelAndView.getModel().get("usuario");
+        Usuario usuario = (Usuario) modelAndView.getModel().get("usuarioLogueado");
 
         assertThat(usuario, is(notNullValue()));
     }
@@ -68,8 +68,8 @@ public class ControladorUsuarioTest {
         when(servicioUsuarioMock.verificarSiElIDEsNull(usuarioMock.getIdUsuario())).thenReturn(false);
         when(servicioUsuarioMock.obtenerUsuarioPorId(usuarioMock.getIdUsuario())).thenReturn(usuarioMock);
 
-        ModelAndView modelAndView=controladorUsuario.perfil(usuarioMock.getIdUsuario(),sessionMock);
-        Usuario usuario=(Usuario) modelAndView.getModel().get("usuario");
+        ModelAndView modelAndView = controladorUsuario.perfil(usuarioMock.getIdUsuario(),sessionMock);
+        Usuario usuario=(Usuario) modelAndView.getModel().get("usuarioBuscado");
         assertThat(usuario, is(notNullValue()));
     }
 

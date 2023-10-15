@@ -5,13 +5,13 @@
       th:id="'formularioEdicionComentario'+${comentario.id}">
 
     <th:block th:if="${edicion}">
-        <input th:field="*{id}" type="number" name="idNoticia" th:value="${comentario.idNoticia}" hidden>
-        <input th:field="*{idNoticia}" type="number" name="idNoticia" th:value="${comentario.idNoticia}" hidden>
+        <input th:field="*{id}" type="number" name="idNoticia" th:value="${comentario.noticia.idNoticia}" hidden>
+        <input th:field="*{noticia.idNoticia}" type="number" name="idNoticia" th:value="${comentario.noticia.idNoticia}" hidden>
         <div class="py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-neutral-800 dark:border-gray-700">
             <label class="sr-only">Your comment</label>
             <textarea th:field="*{descripcion}" name="descripcion" rows="6"
                       class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 bg-neutral-800"
-                      placeholder="Write a comment..." required></textarea>
+                      placeholder="Write a comment..." ></textarea>
         </div>
         <button
                 type="submit"
@@ -26,11 +26,12 @@
            data-te-ripple-color="light">
             Cancelar
         </a>
+        <p class="text-red-600" id="comentarioError"></p>
     </th:block>
 
     <th:block th:unless="${edicion}">
         <input type="number" name="idNoticia" value="1" hidden>
-        <div class="py-2 px-4 mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-neutral-800 dark:border-gray-700">
+        <div class="py-2 pb-4 mb-4 rounded-lg rounded-t-lg border border-gray-200 bg-neutral-800 dark:border-gray-700">
             <label class="sr-only">Your comment</label>
             <textarea th:field="*{descripcion}" id="descripcion" rows="6"
                       class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 bg-neutral-800"

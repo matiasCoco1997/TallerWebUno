@@ -1,6 +1,7 @@
 package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.Categoria;
+import com.tallerwebi.dominio.entidades.Comentario;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.*;
@@ -30,6 +31,6 @@ public interface ServicioNoticia {
 
     List<Categoria> listarCategorias();
 
+    void generarNotificacion(Long idUsuario, String nombre, String titulo);
 
-    void generarNotificacion(Long idUsuario, String nombre, String titulo, Noticia noticia);
 }

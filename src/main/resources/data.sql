@@ -1,4 +1,4 @@
-INSERT INTO Usuario(email, password, activo, fotoPerfil, nombre)
+/*INSERT INTO Usuario(email, password, activo, fotoPerfil, nombre)
 VALUES( 'paoloaleman86@gmail.com', '123', true, '/imagenes/imgsPerfiles/davo.jpg', 'Paolo');
 INSERT INTO Usuario(email, password, activo, fotoPerfil, nombre)
 VALUES( 'paoloaleman6@gmail.com', '123', true, '/imagenes/imgsPerfiles/davo.jpg', 'Davoo');
@@ -10,3 +10,4 @@ INSERT INTO `noticia` VALUES (1,_binary '','img noticia 1.png','Deportes','toda
                              (4,_binary '','img.png','Politica','texto de la noticia','2023-10-12 18:54:52.688821',0,'Según informó el Indec, en el acumulado de los primeros nueve meses del año la suba de precios escaló a 103,2 por ciento. En agosto había sido de 12,4 por ciento','/audios_noticias/ee1655d3-dae1-45ce-9b5b-c5f8d9113b2a.mp3','/imagenes/imgsNoticias/57e07eaa-ae1a-4f4f-86ec-bb86ade273e5.png','La inflación de septiembre fue de 12,7% y acumuló 138% en los últimos doce meses',1);
 INSERT INTO `Seguidos`(idUsuarioPropio_idUsuario,idUsuarioSeguidor_idUsuario) VALUES (1,2),(1,1),(2,1);
 
+*/
