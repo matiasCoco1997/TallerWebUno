@@ -151,7 +151,7 @@
             <div th:each="usuario : ${usuarios}" class="m-2">
                 <div class="text-center overflow-hidden rounded-full w-20 h-20 m-auto">
                     <img th:src="@{${usuario.fotoPerfil}}"
-                         class="shadow w-full h-full object-cover border-none" alt=""/>
+                         class="shadow w-full h-full object-cover border-none" th:alt="@{${usuario.altFotoPerfil}}"/>
                 </div>
 
                 <div class="flex justify-center">
