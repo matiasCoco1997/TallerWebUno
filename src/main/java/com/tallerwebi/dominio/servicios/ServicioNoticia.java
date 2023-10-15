@@ -31,5 +31,5 @@ public interface ServicioNoticia {
     List<Categoria> listarCategorias();
 
 
-    void generarNotificacion(Long idUsuario, String nombre, String titulo);
+    void generarNotificacion(Long idUsuario, String nombre, String titulo, Noticia noticia);
 }

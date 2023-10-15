@@ -1,6 +1,7 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Usuario;
 import org.hibernate.Session;
@@ -75,6 +76,26 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .createQuery("FROM Seguidos WHERE idUsuarioPropio_idUsuario = :idUsuarioPropio")
                 .setParameter("idUsuarioPropio", idUsuario)
                 .list();
+    }
+    @Override
+    public List<Notificacion> obtenerMisNotificaciones(Long idUsuario) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Notificacion WHERE usuarioNotificado_idUsuario = :idUsuario").
+                setParameter("idUsuario",idUsuario).list();
+    }
+
+    @Override
+    public List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Notificacion WHERE vista=false and  usuarioNotificado_idUsuario = :idUsuario").
+                setParameter("idUsuario",idUsuario).list();
+    }
+
+    @Override
+    public void marcarNotificacionesComoLeidas(Long idUsuario) {
+        final Session session = sessionFactory.getCurrentSession();
+        session.createQuery("UPDATE Notificacion SET vista=true WHERE usuarioNotificado_idUsuario = :idUsuario").
+                setParameter("idUsuario",idUsuario).executeUpdate();
     }
 
 }

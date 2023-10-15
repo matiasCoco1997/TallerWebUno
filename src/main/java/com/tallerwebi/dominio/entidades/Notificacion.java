@@ -17,15 +17,13 @@ public class Notificacion {
     private Long idNotificacion;
     @ManyToOne
     private Usuario usuarioNotificado;
+    @ManyToOne
+    private Noticia noticiaNotificada;
 
     private String nombreUsuarioSeguido;
 
-    private String tituloNoticia;
-
     private String descripcion;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate fechaDeCreacion;
+    private Boolean vista;
 
     public Notificacion() {
 
@@ -33,13 +31,13 @@ public class Notificacion {
 
     @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
     protected void onCreate() {
-        fechaDeCreacion = LocalDate.now();
+        vista = false;
     }
 
-    public Notificacion(Usuario usuarioNotificado, String nombreUsuarioSeguido, String tituloNoticia) {
+    public Notificacion(Usuario usuarioNotificado, String nombreUsuarioSeguido, Noticia noticia) {
         this.usuarioNotificado = usuarioNotificado;
+        this.noticiaNotificada=noticia;
         this.nombreUsuarioSeguido = nombreUsuarioSeguido;
-        this.tituloNoticia = tituloNoticia;
-        this.descripcion=nombreUsuarioSeguido+ " subió una noticia: "+ tituloNoticia;
+        this.descripcion=nombreUsuarioSeguido+ " subió una noticia: "+ noticia.getTitulo();
     }
 }

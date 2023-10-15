@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,16 @@ public class ControladorHome {
 
         List<Noticia> noticias = servicioHome.listarNoticias();
 
+
         List<Categoria> categorias=servicioHome.obtenerCategorias();
 
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
         List<Usuario> usuarios= servicioHome.listarUsuarios(usuario.getIdUsuario()); //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
 
         model.put("noticias", noticias);
+        model.put("notificaciones", notificaciones.size());
         model.put("usuarios",usuarios);
         model.put("categorias",categorias);
         model.put("usuario",usuario);

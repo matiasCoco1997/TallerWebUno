@@ -2,8 +2,10 @@ package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioHome;
+import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,10 +16,12 @@ import java.util.List;
 public class ServicioHomeImpl implements ServicioHome {
 
     private final RepositorioHome repositorioHome;
+    private final RepositorioUsuario repositorioUsuario;
 
     @Autowired
-    public ServicioHomeImpl(RepositorioHome repositorioHome) {
+    public ServicioHomeImpl(RepositorioHome repositorioHome, RepositorioUsuario repositorioUsuario) {
         this.repositorioHome = repositorioHome;
+        this.repositorioUsuario = repositorioUsuario;
     }
 
     @Override
@@ -48,5 +52,15 @@ public class ServicioHomeImpl implements ServicioHome {
     @Override
     public boolean validarQueHayNoticias(List<Noticia> noticias) {
         return noticias.size()==0;
+    }
+
+    @Override
+    public List<Notificacion> obtenerMisNotificaciones(Long idUsuario) {
+        return repositorioUsuario.obtenerMisNotificaciones(idUsuario);
+    }
+
+    @Override
+    public List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario) {
+        return repositorioUsuario.obtenerMisNotificacionesSinLeer(idUsuario);
     }
 }

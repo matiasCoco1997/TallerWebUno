@@ -18,9 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -143,7 +141,7 @@ public class ServicioNoticiaTest {
             when(repositorioUsuarioMock.obtenerListaDeSeguidores(anyLong()))
                     .thenReturn(Arrays.asList(new Seguidos(), new Seguidos()));
 
-            servicioNoticiaMock.generarNotificacion(1L, "UsuarioEjemplo", "Título de Noticia");
+            servicioNoticiaMock.generarNotificacion(1L, "UsuarioEjemplo", "Título de Noticia", noticiaMock);
 
             verify(repositorioNotificacionMock, times(2)).generarNotificacion(any(Notificacion.class));
         }

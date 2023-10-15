@@ -153,10 +153,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void generarNotificacion(Long idUsuario, String nombre, String titulo) {
+    public void generarNotificacion(Long idUsuario, String nombre, String titulo, Noticia noticia) {
         List<Seguidos> seguidores=repositorioUsuario.obtenerListaDeSeguidores(idUsuario);
         for (Seguidos seguidor: seguidores) {
-            Notificacion notificacion=new Notificacion(seguidor.getIdUsuarioSeguidor(),nombre,titulo);
+            Notificacion notificacion=new Notificacion(seguidor.getIdUsuarioSeguidor(),nombre,noticia);
             repositorioNotificacion.generarNotificacion(notificacion);
         }
     }

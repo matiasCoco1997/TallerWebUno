@@ -84,9 +84,9 @@ public class ControladorNoticia {
         try{
             Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
             modelo.put("sessionUsuarioLogueado", UsuarioLogueado);
-            servicioNoticia.generarNotificacion(UsuarioLogueado.getIdUsuario(),UsuarioLogueado.getNombre(),noticia.getTitulo());
 
             servicioNoticia.crearNoticia(noticia, UsuarioLogueado, imagen, audio);
+            servicioNoticia.generarNotificacion(UsuarioLogueado.getIdUsuario(),UsuarioLogueado.getNombre(),noticia.getTitulo(),noticia);
         }catch (CampoVacio e) {
             modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
             return new ModelAndView("crear_noticia", modelo);
