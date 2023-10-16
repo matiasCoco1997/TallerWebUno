@@ -101,5 +101,11 @@ public class ControladorUsuario {
         return new ModelAndView("notificaciones", model);
     }
 
+    @RequestMapping(path = "/usuario/borrar", method = RequestMethod.DELETE)
+    public ModelAndView borrarUsuario(HttpSession session) {
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        servicioUsuario.borrarUsuario(usuario.getIdUsuario());
+        return new ModelAndView("redirect:/login");
+    }
 
 }

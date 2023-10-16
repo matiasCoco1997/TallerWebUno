@@ -32,5 +32,8 @@ public interface RepositorioUsuario {
     void crearSeguidos(Seguidos seguidos);
 
     List<Seguidos> obtenerListaDeSeguidos(Long idUsuario);
+
+    void borrarUsuario(Long idUsuario);
+
 }
 

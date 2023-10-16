@@ -21,6 +21,7 @@ import static org.hamcrest.Matchers.notNullValue;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
+import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 
 public class ControladorUsuarioTest {
 
@@ -58,11 +59,12 @@ public class ControladorUsuarioTest {
 
         usuarioMock=mock(Usuario.class);
         when(usuarioMock.getIdUsuario()).thenReturn(1L);
-        
-        
+
+        sessionMock = mock(HttpSession.class);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
         notificacionMock=mock(Notificacion.class);
         requestMock = mock(HttpServletRequest.class);
-        sessionMock = mock(HttpSession.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
         controladorUsuario = new ControladorUsuario(servicioUsuarioMock);
     }
@@ -175,6 +177,15 @@ public class ControladorUsuarioTest {
         ModelAndView modelAndView = controladorUsuario.verNoticiasEnEstadoBorrador(usuarioMock.getIdUsuario(),sessionMock);
         List<Noticia> noticiasObtenidas= (List<Noticia>) modelAndView.getModel().get("noticias");
         assertThat(noticiasObtenidas.size(), is(2));
+    }
+
+    @Test
+    public void cuandoBorroMiUsuarioMeRedireccionaAlLogin() {
+        //preparación
+        //ejecución
+        ModelAndView modelAndView = this.controladorUsuario.borrarUsuario(sessionMock);
+        //verificación
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
     }
 
 }

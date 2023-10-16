@@ -93,4 +93,10 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     public boolean verificarSiElIDEsNull(Long id) {
         return id==null;
     }
+
+    @Override
+    public void borrarUsuario(Long idUsuario) {
+        this.repositorioUsuario.borrarUsuario(idUsuario);
+    }
+
 }

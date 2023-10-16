@@ -119,6 +119,11 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .list();
     }
 
-
+    @Override
+    public void borrarUsuario(Long idUsuario) {
+        final Session session = sessionFactory.getCurrentSession();
+        Usuario usuario = this.obtenerUsuarioPorId(idUsuario);
+        session.delete(usuario);
+    }
 
 }

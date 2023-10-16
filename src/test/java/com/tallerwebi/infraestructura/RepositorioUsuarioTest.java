@@ -188,4 +188,19 @@ public class RepositorioUsuarioTest {
 
         assertThat(notificaciones.size(),is(0));
     }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void cuandoEliminoUnUsuarioDejaDeExistirEnLaBaseDeDatos() {
+        //preparación
+        String correo = "unmainunicoeirremplazable@wlove.ar";
+        this.usuario.setEmail(correo);
+        repositorioUsuario.guardar(usuario);
+        //ejecución
+        repositorioUsuario.borrarUsuario(usuario.getIdUsuario());
+        //verificación
+        assertThat(repositorioUsuario.buscar(correo), nullValue());
+    }
+
 }
