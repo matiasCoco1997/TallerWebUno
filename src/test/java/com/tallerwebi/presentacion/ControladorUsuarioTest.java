@@ -67,6 +67,7 @@ public class ControladorUsuarioTest {
     public void siElIDNoEsNullDebeTraermeElUsuarioQueTieneEseID() throws Exception {
         when(servicioUsuarioMock.verificarSiElIDEsNull(usuarioMock.getIdUsuario())).thenReturn(false);
         when(servicioUsuarioMock.obtenerUsuarioPorId(usuarioMock.getIdUsuario())).thenReturn(usuarioMock);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         ModelAndView modelAndView = controladorUsuario.perfil(usuarioMock.getIdUsuario(),sessionMock);
         Usuario usuario=(Usuario) modelAndView.getModel().get("usuarioBuscado");

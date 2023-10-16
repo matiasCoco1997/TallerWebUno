@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service("servicioUsuario")
 @Transactional
@@ -73,6 +75,14 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     public void marcarNotificacionesComoLeidas(Long idUsuario) {
         repositorioUsuario.marcarNotificacionesComoLeidas(idUsuario);
     }
+    @Override
+    public Map<String,Integer> obtenerMisSeguidoresYSeguidos(Long idUsuario) {
+        Map<String,Integer> seguidosSeguidores= new HashMap<>();
+        seguidosSeguidores.put("seguidores",repositorioUsuario.obtenerListaDeSeguidores(idUsuario).size());
+        seguidosSeguidores.put("seguidos",repositorioUsuario.obtenerListaDeSeguidos(idUsuario).size());
+        return seguidosSeguidores;
+    }
+
 
     @Override
     public boolean verificarSiLaDescripcionEsNull(String descripcion) {

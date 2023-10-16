@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ServicioUsuario {
     List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario);
@@ -25,5 +26,6 @@ public interface ServicioUsuario {
     List<Notificacion> obtenerMisNotificaciones(Long idUsuario);
 
     void marcarNotificacionesComoLeidas(Long idUsuario);
+    Map<String,Integer> obtenerMisSeguidoresYSeguidos(Long idUsuario);
 
 }
