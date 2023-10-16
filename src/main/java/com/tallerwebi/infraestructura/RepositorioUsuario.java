@@ -1,6 +1,7 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Usuario;
 
@@ -19,6 +20,12 @@ public interface RepositorioUsuario {
     Usuario obtenerUsuarioPorId(Long id);
 
     List<Seguidos> obtenerListaDeSeguidores(Long idUsuario);
+
+    List<Notificacion> obtenerMisNotificaciones(Long idUsuario);
+
+    List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario);
+
+    void marcarNotificacionesComoLeidas(Long idUsuario);
 
     List<Noticia> obtenerMisNoticiasEnEstadoBorrador (Long idUsuario);
 

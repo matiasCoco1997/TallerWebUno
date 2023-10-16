@@ -1,6 +1,15 @@
 package com.tallerwebi.servicios;
 
+
 import com.tallerwebi.dominio.entidades.*;
+
+import com.tallerwebi.dominio.entidades.Categoria;
+import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
+import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.servicios.ServicioHome;
+import com.tallerwebi.dominio.servicios.ServicioHomeImpl;
+
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import com.tallerwebi.dominio.servicios.ServicioUsuarioImpl;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
@@ -31,6 +40,8 @@ public class ServicioUsuarioTest {
     private Seguidos seguidosMock;
     private Usuario seguidorMock;
     private Usuario seguidoMock;
+    private Notificacion notificacionMock;
+
 
     @BeforeEach
     public void init(){
@@ -46,6 +57,7 @@ public class ServicioUsuarioTest {
         when(noticiaMockDeportes.getTitulo()).thenReturn("deportes");
         usuarioMock=mock(Usuario.class);
         when(usuarioMock.getIdUsuario()).thenReturn(1L);
+
         seguidoMock=mock(Usuario.class);
         when(seguidoMock.getIdUsuario()).thenReturn(1L);
         seguidorMock=mock(Usuario.class);
@@ -53,6 +65,8 @@ public class ServicioUsuarioTest {
         seguidosMock = mock(Seguidos.class);
         when(seguidosMock.getIdUsuarioPropio()).thenReturn(seguidoMock);
         when(seguidosMock.getIdUsuarioSeguidor()).thenReturn(seguidorMock);
+
+        notificacionMock=mock(Notificacion.class);
 
         categoriaMock=mock(Categoria.class);
         this.repositorioUsuarioMock = mock(RepositorioUsuario.class);
@@ -103,5 +117,23 @@ public class ServicioUsuarioTest {
         verify(repositorioUsuarioMock, times(0)).crearSeguidos(any(Seguidos.class));
 
     }
+
+    public void quePuedaObtenerMisNotificaciones(){
+        List<Notificacion> notificaciones=new ArrayList<>();
+        notificaciones.add(notificacionMock);
+        notificaciones.add(notificacionMock);
+        when(repositorioUsuarioMock.obtenerMisNotificaciones(usuarioMock.getIdUsuario())).thenReturn(notificaciones);
+
+        List<Notificacion> notificacionesObtenidas= servicioUsuarioMock.obtenerMisNotificaciones(usuarioMock.getIdUsuario());
+        assertThat(notificacionesObtenidas.size(),is(2));
+    }
+
+    @Test
+    public void queLasNotificacionesSeMarquenComoLeidas(){
+        servicioUsuarioMock.marcarNotificacionesComoLeidas(usuarioMock.getIdUsuario());
+        verify(repositorioUsuarioMock,times(1)).marcarNotificacionesComoLeidas(usuarioMock.getIdUsuario());
+    }
+
+
 
 }

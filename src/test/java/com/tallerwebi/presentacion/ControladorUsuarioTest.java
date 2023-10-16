@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,6 +31,7 @@ public class ControladorUsuarioTest {
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
     private Usuario usuarioMock;
+    private Notificacion notificacionMock;
 
     @BeforeEach
     public void init(){
@@ -43,6 +45,7 @@ public class ControladorUsuarioTest {
         when(noticiaMock2.getUsuario()).thenReturn(null);
         usuarioMock=mock(Usuario.class);
         when(usuarioMock.getIdUsuario()).thenReturn(1L);
+        notificacionMock=mock(Notificacion.class);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
@@ -102,4 +105,19 @@ public class ControladorUsuarioTest {
         String mensajeError=(String) modelAndView.getModel().get("errorUsuario");
         assertThat(mensajeError,is("No existe un usuario con ese ID"));
     }
+
+    @Test
+    public void queAlListarDosNotificacionesSeCargueEnLaVista(){
+        List<Notificacion> notificaciones=new ArrayList<>();
+        notificaciones.add(notificacionMock);
+        notificaciones.add(notificacionMock);
+
+        when(servicioUsuarioMock.obtenerMisNotificaciones(usuarioMock.getIdUsuario())).thenReturn(notificaciones);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
+        List<Notificacion> notificacionesObtenidas= (List<Notificacion>) controladorUsuario.notificaciones(sessionMock).getModel().get("notificaciones");
+
+        assertThat(notificacionesObtenidas.size(),is(2));
+    }
+
 }

@@ -9,5 +9,4 @@ INSERT INTO `noticia` VALUES (1,_binary '','img noticia 1.png','Deportes','toda
                              (3,_binary '','img noticia 3.png','Deportes','texto de la noticia','2023-10-12 18:39:02.241076',0,'Real Madrid renovó los contratos de Valverde y Camavinga: la impagable cláusula de rescisión que les fijó a ambos','/audios_noticias/60d348ae-23f1-44ef-99cc-aaf8231b1cb0.mp3','/imagenes/imgsNoticias/f4b11616-eec3-486c-a863-ba8f2734c984.png','Real Madrid renovó los contratos de Valverde y Camavinga: la impagable cláusula de rescisión que les fijó a ambos',1),
                              (4,_binary '','img.png','Politica','texto de la noticia','2023-10-12 18:54:52.688821',0,'Según informó el Indec, en el acumulado de los primeros nueve meses del año la suba de precios escaló a 103,2 por ciento. En agosto había sido de 12,4 por ciento','/audios_noticias/ee1655d3-dae1-45ce-9b5b-c5f8d9113b2a.mp3','/imagenes/imgsNoticias/57e07eaa-ae1a-4f4f-86ec-bb86ade273e5.png','La inflación de septiembre fue de 12,7% y acumuló 138% en los últimos doce meses',1);
 INSERT INTO `Seguidos`(idUsuarioPropio_idUsuario,idUsuarioSeguidor_idUsuario) VALUES (1,2),(1,1),(2,1);
-
 */

@@ -3,6 +3,7 @@ package com.tallerwebi.dominio.servicios;
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Seguidos;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
@@ -53,15 +54,24 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     }
 
     @Override
+
     public void agregarSeguido(Usuario usuarioLogueado, Usuario usuarioSeguir) {
         Seguidos seguidos = new Seguidos();
         seguidos.setIdUsuarioSeguidor(usuarioLogueado);
         seguidos.setIdUsuarioPropio(usuarioSeguir);
-        if(!repositorioUsuario.obtenerListaDeSeguidos(usuarioLogueado.getIdUsuario())
+        if (!repositorioUsuario.obtenerListaDeSeguidos(usuarioLogueado.getIdUsuario())
                 .stream()
-                .anyMatch(seguido -> seguido.getIdUsuarioPropio().getIdUsuario().equals(usuarioSeguir.getIdUsuario()))){
+                .anyMatch(seguido -> seguido.getIdUsuarioPropio().getIdUsuario().equals(usuarioSeguir.getIdUsuario()))) {
             repositorioUsuario.crearSeguidos(seguidos);
         }
+    }
+    public List<Notificacion> obtenerMisNotificaciones(Long idUsuario) {
+        return repositorioUsuario.obtenerMisNotificaciones(idUsuario);
+    }
+
+    @Override
+    public void marcarNotificacionesComoLeidas(Long idUsuario) {
+        repositorioUsuario.marcarNotificacionesComoLeidas(idUsuario);
     }
 
     @Override

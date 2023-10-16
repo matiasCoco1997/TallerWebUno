@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
@@ -74,6 +75,17 @@ public class ControladorUsuario {
             return new ModelAndView("usuarioNoEncontrado",model);
         }
         return new ModelAndView("perfil",model);
+    }
+
+    @RequestMapping("/notificaciones")
+    public ModelAndView notificaciones(HttpSession session){
+        ModelMap model=new ModelMap();
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificaciones(usuario.getIdUsuario());
+        servicioUsuario.marcarNotificacionesComoLeidas(usuario.getIdUsuario());
+        model.put("notificaciones",notificaciones);
+        model.put("usuario",usuario);
+        return new ModelAndView("notificaciones", model);
     }
 
 
