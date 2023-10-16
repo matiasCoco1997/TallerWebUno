@@ -1,21 +1,31 @@
 <!DOCTYPE html>
-      <html lang="en" xmlns:th="http://www.thymeleaf.org">
-      <head>
-      <meta charset="UTF-8">
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <script src="https://cdn.tailwindcss.com"></script>
-      <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
-      <title>Sunn - Login</title>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <!--Slick-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
+    <title>Home</title>
 </head>
+
 <body class="bg-black">
+
+<!-- Main navigation container -->
 <nav
         class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
     <div class="flex w-full flex-wrap items-center justify-between px-3">
         <!-- Logo -->
         <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
            href="home">
-            <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 30px"
-                 alt="TE Logo" loading="lazy"/>
+            <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
+                 alt="TE Logo" loading="lazy" />
         </a>
         <!--Search-->
 
@@ -60,7 +70,7 @@
                    aria-expanded="false">
                     <!-- User avatar -->
                     <img th:src="@{${usuario.fotoPerfil}}" class="rounded-full"
-                         style="height: 25px; width: 25px" alt="" loading="lazy"/>
+                         style="height: 25px; width: 25px" alt="" loading="lazy" />
                 </a>
                 <!-- Second dropdown menu -->
                 <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
@@ -84,13 +94,13 @@
     </div>
 </nav>
 <nav id="bar" class="flex justify-center">
-    <form th:action="@{/categoria}" method="get">
+    <form  th:action="@{/categoria}" method="get">
         <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
-            <input th:each="categoria : ${categorias}" name="categoria" type="submit"
-                   th:value="${categoria.descripcion}" class="mx-8 hover:text-white">
+            <input th:each="categoria : ${categorias}" type="submit" name="categoria" th:value="${categoria.descripcion}" class="mx-8 hover:text-white">
         </div>
     </form>
 </nav>
+<!-- Main navigation container -->
 
 <hr class="h-px max-w-4xl m-auto my-2 border-0 bg-white">
 
