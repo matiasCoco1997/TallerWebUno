@@ -7,6 +7,8 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
+import org.springframework.mock.web.MockHttpSession;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.fail;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -180,12 +181,45 @@ public class ControladorUsuarioTest {
     }
 
     @Test
+
     public void cuandoBorroMiUsuarioMeRedireccionaAlLogin() {
         //preparación
         //ejecución
         ModelAndView modelAndView = this.controladorUsuario.borrarUsuario(sessionMock);
         //verificación
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
+    }
+
+    @Test
+    public void queSeMuestreElFormularioParModificarLosDatosDelUsuario(){
+        //preparacion
+        MockHttpSession session = new MockHttpSession();
+        Usuario usuario = new Usuario();
+        session.setAttribute("sessionUsuarioLogueado", usuario);
+
+        // ejecucion
+        ModelAndView modelAndView = controladorUsuario.mostrarFormularioModificar(session);
+
+        //validacion
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("/modificar"));
+
+    }
+
+    @Test
+    public void queAlModificarLosDatosDelUsuarioRedirijaALaVistaDePerfil() {
+        //preparacion
+        Long userId = 1L;
+        Usuario usuario = new Usuario();
+        MockHttpSession session = new MockHttpSession();
+        usuario.setIdUsuario(userId);
+
+        //ejecucion
+        Mockito.doNothing().when(servicioUsuarioMock).modificarDatosUsuario(Mockito.any(Usuario.class));
+        session.setAttribute("UsuarioAEditar", usuario);
+        ModelAndView modelAndView = controladorUsuario.modificarUsuario(usuario, session);
+
+        //validacion
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil/" + userId));
     }
 
 }

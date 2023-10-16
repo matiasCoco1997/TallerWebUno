@@ -102,16 +102,6 @@
         </div>
     </div>
 </nav>
-<nav id="bar" class="flex justify-center">
-    <form  th:action="@{/categoria}" method="get">
-        <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
-            <input th:each="categoria : ${categorias}" type="submit" name="categoria" th:value="${categoria.descripcion}" class="mx-8 hover:text-white">
-        </div>
-    </form>
-</nav>
-<!-- Main navigation container -->
-
-<hr class="h-px max-w-4xl m-auto my-2 border-0 bg-white">
 
 <!--Sección de Noticias-->
 <main class="p-2">

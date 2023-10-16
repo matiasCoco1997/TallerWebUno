@@ -99,4 +99,8 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
         this.repositorioUsuario.borrarUsuario(idUsuario);
     }
 
+    @Override
+    public void modificarDatosUsuario(Usuario usuario) {
+        repositorioUsuario.modificar(usuario);
+    }
 }
