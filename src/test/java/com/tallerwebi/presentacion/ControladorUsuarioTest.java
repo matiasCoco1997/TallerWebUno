@@ -32,19 +32,34 @@ public class ControladorUsuarioTest {
     private HttpSession sessionMock;
     private Usuario usuarioMock;
     private Notificacion notificacionMock;
+    private Noticia noticiaBorradorMock;
 
     @BeforeEach
     public void init(){
         noticiaMock = mock(Noticia.class);
         noticiaMock2 = mock(Noticia.class);
+        noticiaBorradorMock = mock(Noticia.class);
+
+        when(noticiaBorradorMock.getIdNoticia()).thenReturn(3L);
+        when(noticiaBorradorMock.getTitulo()).thenReturn("borrador");
+        when(noticiaBorradorMock.getActiva()).thenReturn(false);
+        when(noticiaBorradorMock.getUsuario()).thenReturn(usuarioMock);
+
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
-        when(noticiaMock2.getIdNoticia()).thenReturn(2L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
-        when(noticiaMock2.getTitulo()).thenReturn("titulo");
+        when(noticiaMock.getActiva()).thenReturn(true);
         when(noticiaMock.getUsuario()).thenReturn(usuarioMock);
+
+
+        when(noticiaMock2.getIdNoticia()).thenReturn(2L);
+        when(noticiaMock2.getTitulo()).thenReturn("titulo");
         when(noticiaMock2.getUsuario()).thenReturn(null);
+        when(noticiaMock2.getActiva()).thenReturn(true);
+
         usuarioMock=mock(Usuario.class);
         when(usuarioMock.getIdUsuario()).thenReturn(1L);
+        
+        
         notificacionMock=mock(Notificacion.class);
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
@@ -119,6 +134,37 @@ public class ControladorUsuarioTest {
         List<Notificacion> notificacionesObtenidas= (List<Notificacion>) controladorUsuario.notificaciones(sessionMock).getModel().get("notificaciones");
 
         assertThat(notificacionesObtenidas.size(),is(2));
+    }
+
+    /*
+    @Test
+    public void cuandoVeoMisBorradoresMeTraeLasNoticiasEnEstadoBorrador(){
+        when(servicioUsuarioMock.verificarSiElIDEsNull(usuarioMock.getIdUsuario())).thenReturn(true);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
+        ModelAndView modelAndView=controladorUsuario.verNoticiasEnEstadoBorrador(usuarioMock.getIdUsuario(),sessionMock);
+        Usuario usuario = (Usuario) modelAndView.getModel().get("usuarioLogueado");
+
+        assertThat(usuario, is(notNullValue()));
+    }
+
+     */
+
+    @Test
+    public void cuandoVeoMisBorradoresMeTraeDosNoticiasEnEstadoBorrador(){
+
+        when(servicioUsuarioMock.verificarSiElIDEsNull(usuarioMock.getIdUsuario())).thenReturn(true);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
+        List<Noticia> noticiasEnEstadoBorrador = new ArrayList<>();
+        noticiasEnEstadoBorrador.add(noticiaBorradorMock);
+        noticiasEnEstadoBorrador.add(noticiaBorradorMock);
+
+        when(servicioUsuarioMock.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioMock.getIdUsuario())).thenReturn(noticiasEnEstadoBorrador);
+
+        ModelAndView modelAndView = controladorUsuario.verNoticiasEnEstadoBorrador(usuarioMock.getIdUsuario(),sessionMock);
+        List<Noticia> noticiasObtenidas= (List<Noticia>) modelAndView.getModel().get("noticias");
+        assertThat(noticiasObtenidas.size(), is(2));
     }
 
 }
