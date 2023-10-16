@@ -66,9 +66,15 @@ public class ControladorUsuario {
             Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
             List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioBuscado.getIdUsuario());
+            Map<String,Integer> datosSeguidos= servicioUsuario.obtenerMisSeguidoresYSeguidos(usuarioBuscado.getIdUsuario());
+            List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificaciones(usuarioLogueado.getIdUsuario());
             model.put("usuarioBuscado",usuarioBuscado);
             model.put("usuarioLogueado",usuarioLogueado);
             model.put("noticias",noticiasDelUsuario);
+            model.put("datosSeguidos",datosSeguidos);
+            model.put("cantidadNotificaciones",notificaciones.size());
+
+
 
             if(servicioUsuario.verificarSiLaDescripcionEsNull(usuarioBuscado.getDescripcion())){
                 model.put("descripcionError", "No tiene una descripción.");

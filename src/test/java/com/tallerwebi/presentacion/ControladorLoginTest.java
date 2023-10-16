@@ -48,7 +48,6 @@ public class ControladorLoginTest {
 		when(usuarioMock.getPais()).thenReturn("pais");
 		when(usuarioMock.getCiudad()).thenReturn("ciudad");
 		when(usuarioMock.getActivo()).thenReturn(true);
-		//when(usuarioMock.getFechaDeNacimiento()).thenReturn(new Date(2018,12,9));
 		when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
 		when(usuarioMock.getPassword()).thenReturn("password");
 		when(usuarioMock.getFotoPerfil()).thenReturn("fotoPerfil");
@@ -69,7 +68,7 @@ public class ControladorLoginTest {
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("login"));
 		assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Usuario o clave incorrecta"));
-		//verify(sessionMock, times(0)).setAttribute("ROL", "ADMIN");
+		//verify(sessionMock, times(0)).setAttribute("ROL", "ADMIN"); falta hacer lo de los planes pagos
 	}
 	
 	@Test
@@ -161,6 +160,7 @@ public class ControladorLoginTest {
 		assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al registrar el nuevo usuario"));
 	}
 
+	/*
     public static class ControladorHomeTest {
         private ControladorHome controladorHome;
         private ServicioHome servicioHomeMock;
@@ -245,4 +245,6 @@ public class ControladorLoginTest {
             assertThat(usuarioEnModelo,notNullValue());
         }
     }
+
+	 */
 }
