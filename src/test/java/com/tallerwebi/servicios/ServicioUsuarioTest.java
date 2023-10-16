@@ -1,14 +1,9 @@
 package com.tallerwebi.servicios;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.dominio.servicios.ServicioHome;
-import com.tallerwebi.dominio.servicios.ServicioHomeImpl;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import com.tallerwebi.dominio.servicios.ServicioUsuarioImpl;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
-import com.tallerwebi.infraestructura.RepositorioHome;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,9 +14,9 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class ServicioUsuarioTest {
 
@@ -33,9 +28,13 @@ public class ServicioUsuarioTest {
     private RepositorioCategoria repositorioCategoriaMock;
     private Usuario usuarioMock;
     private Categoria categoriaMock;
+    private Seguidos seguidosMock;
+    private Usuario seguidorMock;
+    private Usuario seguidoMock;
 
     @BeforeEach
     public void init(){
+        seguidosMock = mock(Seguidos.class);
         noticiaMock = mock(Noticia.class);
         noticiaMockArte = mock(Noticia.class);
         noticiaMockDeportes = mock(Noticia.class);
@@ -47,6 +46,14 @@ public class ServicioUsuarioTest {
         when(noticiaMockDeportes.getTitulo()).thenReturn("deportes");
         usuarioMock=mock(Usuario.class);
         when(usuarioMock.getIdUsuario()).thenReturn(1L);
+        seguidoMock=mock(Usuario.class);
+        when(seguidoMock.getIdUsuario()).thenReturn(1L);
+        seguidorMock=mock(Usuario.class);
+        when(seguidorMock.getIdUsuario()).thenReturn(2L);
+        seguidosMock = mock(Seguidos.class);
+        when(seguidosMock.getIdUsuarioPropio()).thenReturn(seguidoMock);
+        when(seguidosMock.getIdUsuarioSeguidor()).thenReturn(seguidorMock);
+
         categoriaMock=mock(Categoria.class);
         this.repositorioUsuarioMock = mock(RepositorioUsuario.class);
         this.repositorioCategoriaMock = mock(RepositorioCategoria.class);
@@ -78,7 +85,23 @@ public class ServicioUsuarioTest {
         });
     }
 
+    @Test
+    public void crearUnUsuarioDebeUlizarRepositorioUsuarioParaGuardarSeguidos(){
+        servicioUsuarioMock.agregarSeguido(usuarioMock, usuarioMock);
+        verify(repositorioUsuarioMock, times(1)).crearSeguidos(any(Seguidos.class));
+    }
+    @Test
+    public void queNoSePuedaGuardarUnQueSeQuieraSeguirSiYaLoSigue(){
+        List<Seguidos> listaSeguidos = new ArrayList<>();
+        listaSeguidos.add(seguidosMock);
 
+        when(repositorioUsuarioMock.obtenerListaDeSeguidos(anyLong())).thenReturn(listaSeguidos);
 
+        servicioUsuarioMock.agregarSeguido(seguidorMock, seguidoMock);
+
+        verify(repositorioUsuarioMock, times(1)).obtenerListaDeSeguidos(anyLong());
+        verify(repositorioUsuarioMock, times(0)).crearSeguidos(any(Seguidos.class));
+
+    }
 
 }

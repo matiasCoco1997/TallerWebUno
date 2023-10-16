@@ -19,4 +19,5 @@ public interface ServicioUsuario {
 
     List<Noticia> obtenerNoticiasDeUnUsuarioEnEstadoBorrador(Long idUsuario);
 
+    void agregarSeguido(Usuario usuarioLogueado, Usuario usuarioSeguir);
 }

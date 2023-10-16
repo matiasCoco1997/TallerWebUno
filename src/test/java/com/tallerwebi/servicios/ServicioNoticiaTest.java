@@ -147,6 +147,4 @@ public class ServicioNoticiaTest {
 
             verify(repositorioNotificacionMock, times(2)).generarNotificacion(any(Notificacion.class));
         }
-
-
 }

@@ -159,10 +159,12 @@
                         <button class="mt-2" th:value="${usuario.getIdUsuario()}" name="idUsuario" th:text="${usuario.getNombre()}"></button>
                     </form>
                 </div>
+                <a href="#" th:data-id-seguir="${usuario.idUsuario}" class="seguir">
+                    <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
+                        Seguir
+                    </div>
+                </a>
 
-                <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
-                    Seguir
-                </div>
             </div>
         </div>
     </section>
@@ -294,6 +296,29 @@
 <!-- Slick -->
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script>
+//SEGUIR
+$(document).ready(function () {
+    $(document).on("click", ".seguir", function (event) {
+        event.preventDefault();
+        let idSeguir = $(this).data("id-seguir");
+        $.ajax({
+            type: 'post',
+            url: "/sunn/seguir",
+            data: { id: idSeguir },  // Corrección aquí: "data" en lugar de "date"
+            success: function (response) {
+                console.log('Éxito', response);
+            },
+            error: function (error) {
+                console.error('Error al seguir', error);
+            }
+        });
+    });
+});
+
+
+</script>
 
 <script>
     $(document).ready(function () {

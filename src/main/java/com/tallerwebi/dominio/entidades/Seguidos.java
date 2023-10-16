@@ -14,7 +14,7 @@ public class Seguidos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @ManyToOne
-    private Usuario idUsuarioPropio;
+    private Usuario idUsuarioPropio; //seguido
     @ManyToOne
     private Usuario idUsuarioSeguidor;
 }

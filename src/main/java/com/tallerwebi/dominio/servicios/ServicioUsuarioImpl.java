@@ -2,6 +2,7 @@ package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
@@ -49,6 +50,18 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     @Override
     public List<Noticia> obtenerNoticiasDeUnUsuarioEnEstadoBorrador(Long idUsuario) {
         return repositorioUsuario.obtenerMisNoticiasEnEstadoBorrador(idUsuario);
+    }
+
+    @Override
+    public void agregarSeguido(Usuario usuarioLogueado, Usuario usuarioSeguir) {
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(usuarioLogueado);
+        seguidos.setIdUsuarioPropio(usuarioSeguir);
+        if(!repositorioUsuario.obtenerListaDeSeguidos(usuarioLogueado.getIdUsuario())
+                .stream()
+                .anyMatch(seguido -> seguido.getIdUsuarioPropio().getIdUsuario().equals(usuarioSeguir.getIdUsuario()))){
+            repositorioUsuario.crearSeguidos(seguidos);
+        }
     }
 
     @Override

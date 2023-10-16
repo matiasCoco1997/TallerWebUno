@@ -102,5 +102,4 @@ public class ControladorUsuarioTest {
         String mensajeError=(String) modelAndView.getModel().get("errorUsuario");
         assertThat(mensajeError,is("No existe un usuario con ese ID"));
     }
-
 }

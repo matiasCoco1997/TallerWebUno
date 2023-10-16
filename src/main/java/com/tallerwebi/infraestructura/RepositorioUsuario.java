@@ -22,5 +22,8 @@ public interface RepositorioUsuario {
 
     List<Noticia> obtenerMisNoticiasEnEstadoBorrador (Long idUsuario);
 
+    void crearSeguidos(Seguidos seguidos);
+
+    List<Seguidos> obtenerListaDeSeguidos(Long idUsuario);
 }
 

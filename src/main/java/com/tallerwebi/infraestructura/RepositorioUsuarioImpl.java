@@ -72,7 +72,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public List<Seguidos> obtenerListaDeSeguidores(Long idUsuario) {
         return sessionFactory.getCurrentSession()
-                .createQuery("FROM Seguidos WHERE idUsuarioPropio_idUsuario = :idUsuarioPropio")
+                .createQuery("FROM Seguidos WHERE idUsuarioPropio.idUsuario = :idUsuarioPropio")
                 .setParameter("idUsuarioPropio", idUsuario)
                 .list();
     }
@@ -83,5 +83,19 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = false").
                 setParameter("idUsuario",idUsuario).list();
     }
+
+    @Override
+    public void crearSeguidos(Seguidos seguidos) {
+        sessionFactory.getCurrentSession().save(seguidos);
+    }
+
+    @Override
+    public List<Seguidos> obtenerListaDeSeguidos(Long idUsuarioSeguidor) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("FROM Seguidos WHERE idUsuarioSeguidor.idUsuario = :idUsuarioSeguidor")
+                .setParameter("idUsuarioSeguidor", idUsuarioSeguidor)
+                .list();
+    }
+
 
 }
