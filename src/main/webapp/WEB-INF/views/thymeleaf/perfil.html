@@ -137,8 +137,8 @@
 
     <div class="flex justify-around mt-20 border-b border-white py-4">
         <a class="text-3xl text-white font-bold" th:href="@{/perfil}">Mis noticias</a>
-        <a class="text-3xl text-white font-bold" th:href="@{/perfil/borradores}">Mis borradores</a>
-        <a class="text-3xl text-white" th:href="@{/misLikes}">Me gusta</a>
+        <a th:if="${usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()}" class="text-3xl text-white font-bold" th:href="@{/perfil/borradores}">Mis borradores</a>
+        <a th:if="${usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()}" class="text-3xl text-white" th:href="@{/misLikes}">Me gusta</a>
     </div>
 
 

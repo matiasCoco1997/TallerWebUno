@@ -217,7 +217,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queAlCrearUnaNoticiaRetorneUnaException() throws Exception {
+    public void queAlCrearUnaNoticiaRetorneUnaException() {
         // preparacion
         when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(RuntimeException.class);
 
@@ -239,7 +239,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws Exception {
+    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() {
         // preparacion
         when(controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia())).thenThrow(RuntimeException.class);
 
@@ -260,7 +260,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void buscarNoticiasPorTituloYRetorneUnaException() throws Exception {
+    public void buscarNoticiasPorTituloYRetorneUnaException() {
         // preparacion
         when(servicioNoticiaMock.buscarNoticiaPorTitulo(noticiaMock.getTitulo())).thenThrow(RuntimeException.class);
 

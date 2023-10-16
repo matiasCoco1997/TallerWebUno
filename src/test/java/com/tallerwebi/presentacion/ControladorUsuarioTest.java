@@ -136,19 +136,29 @@ public class ControladorUsuarioTest {
         assertThat(notificacionesObtenidas.size(),is(2));
     }
 
-    /*
+
     @Test
     public void cuandoVeoMisBorradoresMeTraeLasNoticiasEnEstadoBorrador(){
-        when(servicioUsuarioMock.verificarSiElIDEsNull(usuarioMock.getIdUsuario())).thenReturn(true);
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(noticiaMock.getActiva()).thenReturn(false);
+        when(servicioUsuarioMock.verificarSiElIDEsNull(usuarioMock.getIdUsuario())).thenReturn(true);
 
-        ModelAndView modelAndView=controladorUsuario.verNoticiasEnEstadoBorrador(usuarioMock.getIdUsuario(),sessionMock);
+        List<Noticia> listaDeNoticias = new ArrayList<>();
+        listaDeNoticias.add(noticiaMock);
+        listaDeNoticias.add(noticiaMock);
+
+        when(servicioUsuarioMock.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioMock.getIdUsuario())).thenReturn(listaDeNoticias);
+
+        ModelAndView modelAndView = controladorUsuario.verNoticiasEnEstadoBorrador(usuarioMock.getIdUsuario(),sessionMock);
+
         Usuario usuario = (Usuario) modelAndView.getModel().get("usuarioLogueado");
+        List<Noticia> borradores = (List<Noticia>) modelAndView.getModel().get("noticias");
 
         assertThat(usuario, is(notNullValue()));
+        assertThat(borradores.size(), is(2));
+        assertThat(noticiaMock.getActiva(), is(false));
     }
 
-     */
 
     @Test
     public void cuandoVeoMisBorradoresMeTraeDosNoticiasEnEstadoBorrador(){

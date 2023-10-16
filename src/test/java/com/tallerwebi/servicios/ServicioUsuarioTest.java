@@ -86,6 +86,18 @@ public class ServicioUsuarioTest {
     }
 
     @Test
+    public void queSePuedanObtenerLosBorradoresDeUnUsuarioEnEspecifico(){
+        List<Noticia> noticias=new ArrayList<>();
+        when(noticiaMock.getActiva()).thenReturn(false);
+        noticias.add(noticiaMock);
+        noticias.add(noticiaMock);
+        when(repositorioUsuarioMock.obtenerMisNoticiasEnEstadoBorrador(usuarioMock.getIdUsuario())).thenReturn(noticias);
+
+        List<Noticia> noticiasObtenidas = servicioUsuarioMock.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioMock.getIdUsuario());
+        assertThat(noticiasObtenidas.size(),is(2));
+    }
+
+    @Test
     public void queSePuedaObtenerUnUsuarioPorSuID() throws Exception {
         when(repositorioUsuarioMock.obtenerUsuarioPorId(usuarioMock.getIdUsuario())).thenReturn(usuarioMock);
         Usuario usuarioObtenido=servicioUsuarioMock.obtenerUsuarioPorId(usuarioMock.getIdUsuario());
@@ -118,6 +130,7 @@ public class ServicioUsuarioTest {
 
     }
 
+    @Test
     public void quePuedaObtenerMisNotificaciones(){
         List<Notificacion> notificaciones=new ArrayList<>();
         notificaciones.add(notificacionMock);
@@ -133,7 +146,5 @@ public class ServicioUsuarioTest {
         servicioUsuarioMock.marcarNotificacionesComoLeidas(usuarioMock.getIdUsuario());
         verify(repositorioUsuarioMock,times(1)).marcarNotificacionesComoLeidas(usuarioMock.getIdUsuario());
     }
-
-
 
 }

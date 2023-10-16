@@ -19,8 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -82,6 +81,24 @@ public class RepositorioUsuarioTest {
         repositorioNoticia.guardar(noticia);
         repositorioNoticia.guardar(noticia2);
         List<Noticia> noticiasObtenidas=repositorioUsuario.obtenerMisNoticias(usuario.getIdUsuario());
+        assertThat(noticiasObtenidas.size(),is(1));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void quePuedaTraerLasNoticiasEnEstadoBorradorPorElIdDelUsuario(){
+
+        repositorioUsuario.guardar(usuario);
+        repositorioUsuario.guardar(usuario2);
+
+        noticia.setActiva(false);
+        noticia2.setActiva(false);
+
+        repositorioNoticia.guardar(noticia);
+        repositorioNoticia.guardar(noticia2);
+
+        List<Noticia> noticiasObtenidas = repositorioUsuario.obtenerMisNoticiasEnEstadoBorrador(usuario.getIdUsuario());
         assertThat(noticiasObtenidas.size(),is(1));
     }
 
