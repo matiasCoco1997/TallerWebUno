@@ -27,5 +27,6 @@ public interface ServicioUsuario {
 
     void marcarNotificacionesComoLeidas(Long idUsuario);
     Map<String,Integer> obtenerMisSeguidoresYSeguidos(Long idUsuario);
+    void modificarDatosUsuario(Usuario usuario);
 
 }

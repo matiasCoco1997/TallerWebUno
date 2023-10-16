@@ -147,4 +147,16 @@ public class ServicioUsuarioTest {
         verify(repositorioUsuarioMock,times(1)).marcarNotificacionesComoLeidas(usuarioMock.getIdUsuario());
     }
 
+    @Test
+    public void queSePuedaModificarCorrectamenteDatosDeUnUsuario(){
+        Usuario u = new Usuario();
+        u.setIdUsuario(1L);
+        u.setCiudad("Haedo");
+        repositorioUsuarioMock.guardar(u);
+        u.setCiudad("Moron");
+        servicioUsuarioMock.modificarDatosUsuario(u);
+
+        assertThat(u.getCiudad(), is("Moron"));
+    }
+
 }

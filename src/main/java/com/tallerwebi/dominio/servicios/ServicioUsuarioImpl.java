@@ -93,4 +93,9 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     public boolean verificarSiElIDEsNull(Long id) {
         return id==null;
     }
+
+    @Override
+    public void modificarDatosUsuario(Usuario usuario) {
+        repositorioUsuario.modificar(usuario);
+    }
 }

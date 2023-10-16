@@ -9,9 +9,7 @@ import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -101,5 +99,28 @@ public class ControladorUsuario {
         return new ModelAndView("notificaciones", model);
     }
 
+    @GetMapping(value = "/perfil")
+    public ModelAndView mostrarFormularioModificar( HttpSession session) {
+        ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        model.put("edicion", true);
+        model.put("usuario", usuario);
+
+        return new ModelAndView("/modificar", model); //formulario con los datos del usuario para editar
+    }
+
+    @RequestMapping(value = "/perfil/modificar", method = RequestMethod.POST)
+    public ModelAndView modificarUsuario(@ModelAttribute("usuario") Usuario usuario, HttpSession session) {
+        Usuario usuarioEditar = (Usuario) session.getAttribute("UsuarioAEditar");
+
+        try{
+            servicioUsuario.modificarDatosUsuario(usuario);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ModelAndView("redirect:/perfil/" + usuarioEditar.getIdUsuario());
+    }
 
 }
