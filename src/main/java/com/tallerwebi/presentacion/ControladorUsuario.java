@@ -93,8 +93,8 @@ public class ControladorUsuario {
         ModelMap model=new ModelMap();
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificaciones(usuario.getIdUsuario());
-        List<Notificacion> notificacionesSinLeer=servicioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
         servicioUsuario.marcarNotificacionesComoLeidas(usuario.getIdUsuario());
+        List<Notificacion> notificacionesSinLeer=servicioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
         model.put("notificaciones",notificaciones);
         model.put("cantidadNotificaciones",notificacionesSinLeer.size());
         model.put("usuario",usuario);
