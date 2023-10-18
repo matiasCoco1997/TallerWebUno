@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 
 import java.util.List;
 
@@ -32,5 +33,8 @@ public interface RepositorioUsuario {
     void crearSeguidos(Seguidos seguidos);
 
     List<Seguidos> obtenerListaDeSeguidos(Long idUsuario);
+
+
+    void dejarDeSeguir(Long idSeguido, Long isSeguidor) throws RelacionNoEncontradaException;
 }
 

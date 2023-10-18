@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
 import org.junit.jupiter.api.BeforeEach;
@@ -67,6 +68,8 @@ public class RepositorioUsuarioTest {
 
         seguido=new Usuario();
         seguido.setNombre("seguido");
+
+        seguidor = new Usuario();
         seguidor.setNombre("seguidor");
 
         seguido2=new Usuario();
@@ -170,5 +173,51 @@ public class RepositorioUsuarioTest {
         List<Notificacion> notificaciones=repositorioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
         assertThat(notificaciones.size(),is(0));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void queSePuedaDejarDeSeguirUnUsuario() throws RelacionNoEncontradaException {
+        repositorioUsuario.guardar(seguido);
+        repositorioUsuario.guardar(seguido2);
+        repositorioUsuario.guardar(seguidor);
+
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(seguidor);
+        seguidos.setIdUsuarioPropio(seguido);
+
+        Seguidos seguidos2 = new Seguidos();
+        seguidos2.setIdUsuarioSeguidor(seguidor);
+        seguidos2.setIdUsuarioPropio(seguido2);
+
+        repositorioUsuario.crearSeguidos(seguidos);
+        repositorioUsuario.crearSeguidos(seguidos2);
+
+
+        repositorioUsuario.dejarDeSeguir(seguido.getIdUsuario(), seguidor.getIdUsuario());
+        List<Seguidos> seguidosList = repositorioUsuario.obtenerListaDeSeguidos(seguidor.getIdUsuario());
+
+        assertNotNull(seguidosList);
+        assertEquals(1, seguidosList.size());
+    }
+    @Test
+    @Transactional
+    @Rollback
+    public void queLanceExcepcionAlDejarDeSeguirUnUsuarioDeFormaIncorrecta() throws RelacionNoEncontradaException {
+        repositorioUsuario.guardar(seguido);
+        repositorioUsuario.guardar(seguidor);
+
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(seguidor);
+        seguidos.setIdUsuarioPropio(seguido);
+
+        repositorioUsuario.crearSeguidos(seguidos);
+
+        try {
+            repositorioUsuario.dejarDeSeguir(7L, seguidor.getIdUsuario());
+        } catch (RuntimeException e) {
+            assertEquals("RuntimeException", e.getClass().getSimpleName());
+        }
     }
 }

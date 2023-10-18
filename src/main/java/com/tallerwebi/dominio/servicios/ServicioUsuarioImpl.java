@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,6 +73,11 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     @Override
     public void marcarNotificacionesComoLeidas(Long idUsuario) {
         repositorioUsuario.marcarNotificacionesComoLeidas(idUsuario);
+    }
+
+    @Override
+    public void dejarDeSeguirUsuario(Long idSeguido, Long idSeguidor) throws RelacionNoEncontradaException {
+        repositorioUsuario.dejarDeSeguir(idSeguido,idSeguidor);
     }
 
     @Override

@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 
 import java.util.List;
 
@@ -26,4 +27,5 @@ public interface ServicioUsuario {
 
     void marcarNotificacionesComoLeidas(Long idUsuario);
 
+    void dejarDeSeguirUsuario(Long idSeguido, Long idSeguidor) throws RelacionNoEncontradaException;
 }

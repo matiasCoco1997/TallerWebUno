@@ -7,6 +7,8 @@ import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.ComentarioException;
+import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioHomeImpl;
 
@@ -16,6 +18,7 @@ import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +26,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 public class ServicioUsuarioTest {
@@ -117,7 +119,7 @@ public class ServicioUsuarioTest {
         verify(repositorioUsuarioMock, times(0)).crearSeguidos(any(Seguidos.class));
 
     }
-
+    @Test
     public void quePuedaObtenerMisNotificaciones(){
         List<Notificacion> notificaciones=new ArrayList<>();
         notificaciones.add(notificacionMock);
@@ -132,6 +134,22 @@ public class ServicioUsuarioTest {
     public void queLasNotificacionesSeMarquenComoLeidas(){
         servicioUsuarioMock.marcarNotificacionesComoLeidas(usuarioMock.getIdUsuario());
         verify(repositorioUsuarioMock,times(1)).marcarNotificacionesComoLeidas(usuarioMock.getIdUsuario());
+    }
+
+    @Test
+    public void queUnaRelacionEntreSeguidoYSeguidorSePuedaEliminar() throws RelacionNoEncontradaException {
+        servicioUsuarioMock.dejarDeSeguirUsuario(1L, 2L);
+        verify(repositorioUsuarioMock, times(1)).dejarDeSeguir(anyLong(), anyLong());
+    }
+    @Test
+    public void queUnaRelacionEntreSeguidoYSeguidorSePuedaEliminarLanzaExcepcionPorNoExistirLaRelacion() throws RelacionNoEncontradaException {
+        doThrow(RelacionNoEncontradaException.class).when(repositorioUsuarioMock).dejarDeSeguir(anyLong(), anyLong());
+        try {
+            servicioUsuarioMock.dejarDeSeguirUsuario(1L, 2L);
+            fail("No lanzó RelacionNoEncontradaException");
+        } catch (RelacionNoEncontradaException e) {
+            assertEquals("RelacionNoEncontradaException",e.getClass().getSimpleName());
+        }
     }
 
 

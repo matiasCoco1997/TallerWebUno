@@ -41,4 +41,23 @@ public class ControladorSeguir {
             return ResponseEntity.notFound().build();
         }
     }
+    @PostMapping("/dejar-de-seguir")
+    public ResponseEntity<Void> dejarDeSeguir(@RequestParam("id")Long idUsuarioSeguiendo, HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        if(usuarioLogueado == null){
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+        if(idUsuarioSeguiendo == null || idUsuarioSeguiendo <= 0){
+            return ResponseEntity.badRequest().build();
+        }
+        try {
+            Usuario usuarioSeguido = servicioUsuario.obtenerUsuarioPorId(idUsuarioSeguiendo);
+            servicioUsuario.dejarDeSeguirUsuario(usuarioSeguido.getIdUsuario(), usuarioLogueado.getIdUsuario());
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().build();
+        }
+
+
+    }
 }

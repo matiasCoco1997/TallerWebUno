@@ -32,10 +32,4 @@ public class Usuario {
     private Boolean activo = true;
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
 
-    @OneToMany()
-    private List<Seguidos> seguidos; //revisar
-
-    @OneToMany()
-    private List<Usuario> seguidores; //revisar
-
 }

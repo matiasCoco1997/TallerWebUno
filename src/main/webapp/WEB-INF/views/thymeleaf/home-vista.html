@@ -298,10 +298,12 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
-//SEGUIR
+
 $(document).ready(function () {
+//SEGUIR
     $(document).on("click", ".seguir", function (event) {
         event.preventDefault();
+        let btnSeguir = $(this);
         let idSeguir = $(this).data("id-seguir");
         $.ajax({
             type: 'post',
@@ -309,18 +311,49 @@ $(document).ready(function () {
             data: { id: idSeguir },
             success: function (response) {
                 console.log('Éxito', response);
+                btnSeguir.find('div').text('Siguiendo');
+                btnSeguir.find('div').addClass('bg-gray-800');
+                btnSeguir.removeClass();
+                btnSeguir.addClass('siguiendo');
             },
             error: function (xhr, error) {
                 if (xhr.status === 401) {
                     // Redirigir al usuario a login si no esta logueado
-                    window.location.href = "/login";
+                    window.location.href = "/sunn/login";
                 } else {
                     console.error('Error al seguir', error);
                 }
             }
         });
     });
+//SIGUIENDO
+    $(document).on("click", ".siguiendo", function (event) {
+        event.preventDefault();
+        let btnSiguiendo = $(this);
+        let idSiguiendo = $(this).data("id-seguir");
+        $.ajax({
+            type: 'post',
+            url: "/sunn/dejar-de-seguir",
+            data: { id: idSiguiendo },
+            success: function (response) {
+                console.log('Éxito', response);
+                btnSiguiendo.find('div').text('Seguir');
+                btnSiguiendo.find('div').removeClass('bg-gray-800');
+                btnSiguiendo.removeClass();
+                btnSiguiendo.addClass('seguir');
+            },
+            error: function (xhr, error) {
+                if (xhr.status === 401) {
+                    // Redirigir al usuario a login si no esta logueado
+                    window.location.href = "/sunn/login";
+                } else {
+                    console.error('Error al seguir', xhr.status);
+                }
+            }
+        });
+    });
 });
+
 
 
 </script>

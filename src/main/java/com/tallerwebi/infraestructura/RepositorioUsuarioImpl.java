@@ -4,9 +4,11 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -119,6 +121,25 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .list();
     }
 
+    @Override
+    public void dejarDeSeguir(Long idSeguido, Long idSeguidor){
+        Session session = sessionFactory.openSession();
+        try {
+            Query query = sessionFactory.getCurrentSession().createQuery(
+                    "FROM Seguidos s WHERE s.idUsuarioPropio.idUsuario = :idSeguido AND s.idUsuarioSeguidor.idUsuario = :idSeguidor");
+            query.setParameter("idSeguido", idSeguido);
+            query.setParameter("idSeguidor", idSeguidor);
 
+            Seguidos seguidos = (Seguidos) query.uniqueResult();
 
+            if (seguidos != null) {
+                sessionFactory.getCurrentSession().delete(seguidos);
+            } else {
+                throw new RelacionNoEncontradaException("No se encontró la relación Seguidos entre el usuario " + idSeguido + " y el seguidor " + idSeguidor);
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException("Error al dejar de seguir", e);
+        }
+    }
 }
