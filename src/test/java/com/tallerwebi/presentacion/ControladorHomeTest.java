@@ -107,14 +107,16 @@ public class ControladorHomeTest {
     }
 
     @Test
-    public void queAlListarDosCategoriasPorTituloSeCarguenEnElHome(){
+    public void queAlListarDosNoticiasPorTituloSeCarguenEnElHome(){
         List<Noticia> noticias= new ArrayList<>();
         noticias.add(noticiaMock);
         noticias.add(noticiaMock);
         String titulo="titulo";
 
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         when(servicioHomeMock.obtenerNoticiasPorTitulo(titulo)).thenReturn(noticias);
         when(servicioHomeMock.validarQueHayNoticias(noticias)).thenReturn(false);
+
 
         ModelAndView modelAndView= controladorHome.filtrarPorTitulo(titulo,sessionMock);
         List<Noticia> noticiasEnModelo= (List<Noticia>) modelAndView.getModel().get("noticias");
@@ -128,6 +130,7 @@ public class ControladorHomeTest {
         String titulo="titulo";
 
         when(servicioHomeMock.validarQueHayNoticias(noticias)).thenReturn(true);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         ModelAndView modelAndView= controladorHome.filtrarPorTitulo(titulo,sessionMock);
         String mensajeError= (String) modelAndView.getModel().get("error");

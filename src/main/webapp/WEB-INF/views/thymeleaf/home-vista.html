@@ -146,11 +146,6 @@
     </section>
 
     <section class="lista-noticia">
-
-        <a th:href="@{/noticia/crear}"
-           class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2s">Crear
-            Noticia</a>
-
         <div th:each="noticia : ${noticias}" class="max-w-4xl my-4 py-6 m-auto text-white">
             <div class="flex items-center">
                 <div class="mr-2">

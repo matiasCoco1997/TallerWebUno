@@ -55,10 +55,12 @@ public class ControladorHome {
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Categoria> categorias=servicioHome.obtenerCategorias();
         List<Noticia> noticiasCategorias = servicioHome.obtenerNoticiasPorCategoria(categoria);
+        List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
         model.put("categorias",categorias);
         model.put("usuario",usuario);
         model.put("noticias",noticiasCategorias);
+        model.put("notificaciones", notificaciones.size());
         return new ModelAndView("home-categoria", model);
     }
 
@@ -68,13 +70,15 @@ public class ControladorHome {
 
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Categoria> categorias=servicioHome.obtenerCategorias();
+        Integer notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario()).size();
+
         model.put("usuario",usuario);
         model.put("categorias",categorias);
+        model.put("notificaciones", notificaciones);
 
         List<Noticia> noticias=servicioHome.obtenerNoticiasPorTitulo(titulo);
         if(servicioHome.validarQueHayNoticias(noticias)){
-            String error="No se encontraron noticias con este título: "+titulo;
-            model.put("error",error);
+            model.put("error","No se encontraron noticias con este título: "+titulo);
         }else{
             model.put("noticias",noticias);
         }

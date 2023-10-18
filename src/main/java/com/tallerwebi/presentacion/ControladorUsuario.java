@@ -37,7 +37,7 @@ public class ControladorUsuario {
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
             List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuario(usuarioBuscado.getIdUsuario());
             Map<String,Integer> datosSeguidos= servicioUsuario.obtenerMisSeguidoresYSeguidos(usuarioBuscado.getIdUsuario());
-            List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificaciones(usuarioLogueado.getIdUsuario());
+            List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
             model.put("usuarioBuscado",usuarioBuscado);
             model.put("usuarioLogueado",usuarioLogueado);
             model.put("noticias",noticiasDelUsuario);
@@ -69,7 +69,7 @@ public class ControladorUsuario {
 
             Map<String,Integer> datosSeguidos= servicioUsuario.obtenerMisSeguidoresYSeguidos(usuarioBuscado.getIdUsuario());
 
-            List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificaciones(usuarioLogueado.getIdUsuario());
+            List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
 
             model.put("usuarioBuscado",usuarioBuscado);
             model.put("usuarioLogueado",usuarioLogueado);
@@ -93,8 +93,10 @@ public class ControladorUsuario {
         ModelMap model=new ModelMap();
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificaciones(usuario.getIdUsuario());
+        List<Notificacion> notificacionesSinLeer=servicioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
         servicioUsuario.marcarNotificacionesComoLeidas(usuario.getIdUsuario());
         model.put("notificaciones",notificaciones);
+        model.put("cantidadNotificaciones",notificacionesSinLeer.size());
         model.put("usuario",usuario);
         return new ModelAndView("notificaciones", model);
     }
@@ -107,7 +109,7 @@ public class ControladorUsuario {
         return new ModelAndView("redirect:/login");
     }
 
-    @GetMapping(value = "/perfil")
+    @GetMapping(value = "/perfil/modificar")
     public ModelAndView mostrarFormularioModificar( HttpSession session) {
         ModelMap model = new ModelMap();
         Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");

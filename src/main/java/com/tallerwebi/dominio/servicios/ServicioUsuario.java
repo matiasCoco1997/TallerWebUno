@@ -24,6 +24,7 @@ public interface ServicioUsuario {
     void agregarSeguido(Usuario usuarioLogueado, Usuario usuarioSeguir);
 
     List<Notificacion> obtenerMisNotificaciones(Long idUsuario);
+    List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario);
 
     void marcarNotificacionesComoLeidas(Long idUsuario);
     Map<String,Integer> obtenerMisSeguidoresYSeguidos(Long idUsuario);

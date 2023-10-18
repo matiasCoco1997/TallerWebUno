@@ -2,10 +2,12 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Comentario;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
+import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,10 +23,12 @@ import java.util.List;
 public class ControladorNoticia {
     private ServicioNoticia servicioNoticia;
     private ServicioComentario servicioComentario;
+    private ServicioUsuario servicioUsuario;
     @Autowired
-    public ControladorNoticia(ServicioNoticia servicioNoticia, ServicioComentario servicioComentario) {
+    public ControladorNoticia(ServicioNoticia servicioNoticia, ServicioComentario servicioComentario, ServicioUsuario servicioUsuario) {
         this.servicioNoticia = servicioNoticia;
         this.servicioComentario = servicioComentario;
+        this.servicioUsuario = servicioUsuario;
     }
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.GET)
@@ -167,14 +171,17 @@ public class ControladorNoticia {
         List<Comentario> comentarios = servicioComentario.buscarComentarios(idNoticia);
         Comentario comentarioForm = new Comentario();
 
+        List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
+
 
         comentarioForm.setNoticia(noticia);
         if(usuarioLogueado!=null)
-            model.put("usuarioLogueado", usuarioLogueado.getIdUsuario());
-        model.put("comentarios", comentarios);
-        model.put("fechaPublicacion", fechaFormateada);
-        model.put("noticia", noticia);
-        model.put("comentarioForm", comentarioForm);
+            model.put("usuarioLogueado", usuarioLogueado);
+            model.put("comentarios", comentarios);
+            model.put("notificaciones", notificaciones.size());
+            model.put("fechaPublicacion", fechaFormateada);
+            model.put("noticia", noticia);
+            model.put("comentarioForm", comentarioForm);
 
         return new ModelAndView("noticia", model);
     }

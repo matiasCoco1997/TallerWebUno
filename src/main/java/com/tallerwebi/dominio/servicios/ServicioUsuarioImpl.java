@@ -56,7 +56,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     }
 
     @Override
-
     public void agregarSeguido(Usuario usuarioLogueado, Usuario usuarioSeguir) {
         Seguidos seguidos = new Seguidos();
         seguidos.setIdUsuarioSeguidor(usuarioLogueado);
@@ -67,6 +66,13 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
             repositorioUsuario.crearSeguidos(seguidos);
         }
     }
+
+    @Override
+    public List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario) {
+        return repositorioUsuario.obtenerMisNotificacionesSinLeer(idUsuario);
+    }
+
+    @Override
     public List<Notificacion> obtenerMisNotificaciones(Long idUsuario) {
         return repositorioUsuario.obtenerMisNotificaciones(idUsuario);
     }

@@ -10,6 +10,7 @@ import com.tallerwebi.dominio.entidades.Usuario;
 
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 
+import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -43,6 +44,7 @@ public class ControladorNoticiaTest {
 
     private MultipartFile imgMock;
     private MultipartFile audioMock;
+    private ServicioUsuario servicioUsuarioMock;
 
     @BeforeEach
     public void init(){
@@ -61,8 +63,9 @@ public class ControladorNoticiaTest {
         audioMock = mock(MultipartFile.class);
 
         servicioNoticiaMock = mock(ServicioNoticia.class);
+        servicioUsuarioMock = mock(ServicioUsuario.class);
         servicioComentarioMock = mock(ServicioComentario.class);
-        controladorNoticia = new ControladorNoticia(servicioNoticiaMock, servicioComentarioMock);
+        controladorNoticia = new ControladorNoticia(servicioNoticiaMock, servicioComentarioMock,servicioUsuarioMock);
     }
 
 
