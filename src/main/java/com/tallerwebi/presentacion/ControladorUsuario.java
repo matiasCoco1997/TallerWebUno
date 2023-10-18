@@ -9,13 +9,12 @@ import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ControladorUsuario {
@@ -37,10 +36,13 @@ public class ControladorUsuario {
             Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
             List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuario(usuarioBuscado.getIdUsuario());
+            Map<String,Integer> datosSeguidos= servicioUsuario.obtenerMisSeguidoresYSeguidos(usuarioBuscado.getIdUsuario());
+            List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
             model.put("usuarioBuscado",usuarioBuscado);
             model.put("usuarioLogueado",usuarioLogueado);
             model.put("noticias",noticiasDelUsuario);
-
+            model.put("datosSeguidos",datosSeguidos);
+            model.put("cantidadNotificaciones",notificaciones.size());
             if(servicioUsuario.verificarSiLaDescripcionEsNull(usuarioBuscado.getDescripcion())){
                 model.put("descripcionError", "No tiene una descripción.");
             }
@@ -60,11 +62,20 @@ public class ControladorUsuario {
         try{
 
             Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
+
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
             List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioBuscado.getIdUsuario());
+
+            Map<String,Integer> datosSeguidos= servicioUsuario.obtenerMisSeguidoresYSeguidos(usuarioBuscado.getIdUsuario());
+
+            List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
+
             model.put("usuarioBuscado",usuarioBuscado);
             model.put("usuarioLogueado",usuarioLogueado);
             model.put("noticias",noticiasDelUsuario);
+            model.put("datosSeguidos",datosSeguidos);
+            model.put("cantidadNotificaciones",notificaciones.size());
 
             if(servicioUsuario.verificarSiLaDescripcionEsNull(usuarioBuscado.getDescripcion())){
                 model.put("descripcionError", "No tiene una descripción.");
@@ -83,10 +94,43 @@ public class ControladorUsuario {
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificaciones(usuario.getIdUsuario());
         servicioUsuario.marcarNotificacionesComoLeidas(usuario.getIdUsuario());
+        List<Notificacion> notificacionesSinLeer=servicioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
         model.put("notificaciones",notificaciones);
+        model.put("cantidadNotificaciones",notificacionesSinLeer.size());
         model.put("usuario",usuario);
         return new ModelAndView("notificaciones", model);
     }
 
+
+    @RequestMapping(path = "/usuario/borrar", method = RequestMethod.DELETE)
+    public ModelAndView borrarUsuario(HttpSession session) {
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        servicioUsuario.borrarUsuario(usuario.getIdUsuario());
+        return new ModelAndView("redirect:/login");
+    }
+
+    @GetMapping(value = "/perfil/modificar")
+    public ModelAndView mostrarFormularioModificar( HttpSession session) {
+        ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        model.put("edicion", true);
+        model.put("usuario", usuario);
+
+        return new ModelAndView("/modificar", model); //formulario con los datos del usuario para editar
+    }
+
+    @RequestMapping(value = "/perfil/modificar", method = RequestMethod.POST)
+    public ModelAndView modificarUsuario(@ModelAttribute("usuario") Usuario usuario, HttpSession session) {
+        Usuario usuarioEditar = (Usuario) session.getAttribute("UsuarioAEditar");
+
+        try{
+            servicioUsuario.modificarDatosUsuario(usuario);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return new ModelAndView("redirect:/perfil/" + usuarioEditar.getIdUsuario());
+    }
 
 }

@@ -34,7 +34,11 @@ public interface RepositorioUsuario {
 
     List<Seguidos> obtenerListaDeSeguidos(Long idUsuario);
 
-
     void dejarDeSeguir(Long idSeguido, Long isSeguidor) throws RelacionNoEncontradaException;
+
+    List<Usuario> listarUsuariosRecomendadosSinSeguir(Long idSeguidor);
+
+    void borrarUsuario(Long idUsuario);
+
 }
 

@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.ListaReproduccion;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -35,7 +36,10 @@ public class ControladorListaRep {
         ModelMap model = new ModelMap();
         Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<ListaReproduccion> listaReproduccion = servicioListaRep.obtenerListaReproduccionDelUsuarioLogueado(usuario.getIdUsuario());
+        List<Categoria> categorias=servicioNoticia.listarCategorias();
         model.put("listaReproduccion",listaReproduccion);
+        model.put("categorias",categorias);
+        model.put("usuario",usuario);
         return new ModelAndView("listasReproduccion",model);
     }
 

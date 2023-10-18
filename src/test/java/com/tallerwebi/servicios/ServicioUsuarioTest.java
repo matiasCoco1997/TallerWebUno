@@ -47,7 +47,6 @@ public class ServicioUsuarioTest {
 
     @BeforeEach
     public void init(){
-        seguidosMock = mock(Seguidos.class);
         noticiaMock = mock(Noticia.class);
         noticiaMockArte = mock(Noticia.class);
         noticiaMockDeportes = mock(Noticia.class);
@@ -77,20 +76,32 @@ public class ServicioUsuarioTest {
     }
 
     @Test
-    public void queSePuedanObtenerLasNoticiasDeUnUsuarioEnEspecifico(){
-        List<Noticia> noticias=new ArrayList<>();
+    public void queSePuedanObtenerLasNoticiasDeUnUsuarioEnEspecifico() {
+        List<Noticia> noticias = new ArrayList<>();
         noticias.add(noticiaMock);
         noticias.add(noticiaMockArte);
         noticias.add(noticiaMockDeportes);
         when(repositorioUsuarioMock.obtenerMisNoticias(usuarioMock.getIdUsuario())).thenReturn(noticias);
-        List<Noticia> noticiasObtenidas=servicioUsuarioMock.obtenerNoticiasDeUnUsuario(usuarioMock.getIdUsuario());
-        assertThat(noticiasObtenidas.size(),is(3));
+        List<Noticia> noticiasObtenidas = servicioUsuarioMock.obtenerNoticiasDeUnUsuario(usuarioMock.getIdUsuario());
+        assertThat(noticiasObtenidas.size(), is(3));
+    }
+
+    @Test
+    public void queSePuedanObtenerLosBorradoresDeUnUsuarioEnEspecifico() {
+        List<Noticia> noticias = new ArrayList<>();
+        when(noticiaMock.getActiva()).thenReturn(false);
+        noticias.add(noticiaMock);
+        noticias.add(noticiaMock);
+        when(repositorioUsuarioMock.obtenerMisNoticiasEnEstadoBorrador(usuarioMock.getIdUsuario())).thenReturn(noticias);
+
+        List<Noticia> noticiasObtenidas = servicioUsuarioMock.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioMock.getIdUsuario());
+        assertThat(noticiasObtenidas.size(), is(2));
     }
 
     @Test
     public void queSePuedaObtenerUnUsuarioPorSuID() throws Exception {
         when(repositorioUsuarioMock.obtenerUsuarioPorId(usuarioMock.getIdUsuario())).thenReturn(usuarioMock);
-        Usuario usuarioObtenido=servicioUsuarioMock.obtenerUsuarioPorId(usuarioMock.getIdUsuario());
+        Usuario usuarioObtenido = servicioUsuarioMock.obtenerUsuarioPorId(usuarioMock.getIdUsuario());
         assertThat(usuarioObtenido, is(notNullValue()));
     }
 
@@ -141,6 +152,7 @@ public class ServicioUsuarioTest {
         servicioUsuarioMock.dejarDeSeguirUsuario(1L, 2L);
         verify(repositorioUsuarioMock, times(1)).dejarDeSeguir(anyLong(), anyLong());
     }
+
     @Test
     public void queUnaRelacionEntreSeguidoYSeguidorSePuedaEliminarLanzaExcepcionPorNoExistirLaRelacion() throws RelacionNoEncontradaException {
         doThrow(RelacionNoEncontradaException.class).when(repositorioUsuarioMock).dejarDeSeguir(anyLong(), anyLong());
@@ -148,10 +160,41 @@ public class ServicioUsuarioTest {
             servicioUsuarioMock.dejarDeSeguirUsuario(1L, 2L);
             fail("No lanzó RelacionNoEncontradaException");
         } catch (RelacionNoEncontradaException e) {
-            assertEquals("RelacionNoEncontradaException",e.getClass().getSimpleName());
+            assertEquals("RelacionNoEncontradaException", e.getClass().getSimpleName());
         }
     }
 
+    @Test
+    public void queSePuedaModificarCorrectamenteDatosDeUnUsuario() {
+        Usuario u = new Usuario();
+        u.setIdUsuario(1L);
+        u.setCiudad("Haedo");
+        repositorioUsuarioMock.guardar(u);
+        u.setCiudad("Moron");
+        servicioUsuarioMock.modificarDatosUsuario(u);
+
+        assertThat(u.getCiudad(), is("Moron"));
+    }
+
+    @Test
+    public void queSePuedaListarUsuariosParaSeguir() throws Exception {
+        servicioUsuarioMock.listarUsuarioParaSeguir(anyLong());
+        verify(repositorioUsuarioMock, times(1)).listarUsuariosRecomendadosSinSeguir(anyLong());
+    }
+
+    @Test
+    public void queSePuedaListarUsuariosParaSeguirDevuelveUnaListaDeUsuarios() throws Exception {
+        when(repositorioUsuarioMock.listarUsuariosRecomendadosSinSeguir(anyLong())).thenReturn(new ArrayList<>());
+        List<Usuario> usuariosRecomendados = servicioUsuarioMock.listarUsuarioParaSeguir(anyLong());
+        assertEquals("ArrayList", usuariosRecomendados.getClass().getSimpleName());
+    }
+
+    @Test
+    public void queSePuedaListarUsuariosParaSeguirLanzaExcepcion() {
+        List<Usuario> usuariosRecomendados = servicioUsuarioMock.listarUsuarioParaSeguir(anyLong());
+
+        assertEquals(0, usuariosRecomendados.size());
+    }
 
 
 }

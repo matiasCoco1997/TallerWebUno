@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
+import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.ModelMap;
@@ -19,10 +20,12 @@ import java.util.List;
 public class ControladorHome {
 
     private final ServicioHome servicioHome;
+    private final ServicioUsuario servicioUsuario;
 
     @Autowired
-    public ControladorHome(ServicioHome servicioHome){
+    public ControladorHome(ServicioHome servicioHome, ServicioUsuario servicioUsuario){
         this.servicioHome=servicioHome;
+        this.servicioUsuario=servicioUsuario;
     }
 
     @RequestMapping("/home")
@@ -37,7 +40,10 @@ public class ControladorHome {
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
-        List<Usuario> usuarios= servicioHome.listarUsuarios(usuario.getIdUsuario()); //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
+        List<Usuario> usuarios= null; //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
+
+        usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
+
 
         model.put("noticias", noticias);
         model.put("notificaciones", notificaciones.size());
@@ -55,10 +61,12 @@ public class ControladorHome {
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Categoria> categorias=servicioHome.obtenerCategorias();
         List<Noticia> noticiasCategorias = servicioHome.obtenerNoticiasPorCategoria(categoria);
+        List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
         model.put("categorias",categorias);
         model.put("usuario",usuario);
         model.put("noticias",noticiasCategorias);
+        model.put("notificaciones", notificaciones.size());
         return new ModelAndView("home-categoria", model);
     }
 
@@ -68,13 +76,15 @@ public class ControladorHome {
 
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Categoria> categorias=servicioHome.obtenerCategorias();
+        Integer notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario()).size();
+
         model.put("usuario",usuario);
         model.put("categorias",categorias);
+        model.put("notificaciones", notificaciones);
 
         List<Noticia> noticias=servicioHome.obtenerNoticiasPorTitulo(titulo);
         if(servicioHome.validarQueHayNoticias(noticias)){
-            String error="No se encontraron noticias con este título: "+titulo;
-            model.put("error",error);
+            model.put("error","No se encontraron noticias con este título: "+titulo);
         }else{
             model.put("noticias",noticias);
         }

@@ -120,10 +120,9 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .setParameter("idUsuarioSeguidor", idUsuarioSeguidor)
                 .list();
     }
-
     @Override
     public void dejarDeSeguir(Long idSeguido, Long idSeguidor){
-        Session session = sessionFactory.openSession();
+        Session session = sessionFactory.getCurrentSession();
         try {
             Query query = sessionFactory.getCurrentSession().createQuery(
                     "FROM Seguidos s WHERE s.idUsuarioPropio.idUsuario = :idSeguido AND s.idUsuarioSeguidor.idUsuario = :idSeguidor");
@@ -142,4 +141,22 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
             throw new RuntimeException("Error al dejar de seguir", e);
         }
     }
+
+    @Override
+    public List<Usuario> listarUsuariosRecomendadosSinSeguir(Long idSeguidor){
+        String jpql = "SELECT u FROM Usuario u WHERE u.idUsuario != :idSeguidor AND u.idUsuario NOT IN " +
+                "(SELECT s.idUsuarioPropio.idUsuario FROM Seguidos s WHERE s.idUsuarioSeguidor.idUsuario = :idSeguidor)";
+
+        return sessionFactory.getCurrentSession().createQuery(jpql, Usuario.class)
+                .setParameter("idSeguidor", idSeguidor)
+                .getResultList();
+    }
+
+    @Override
+    public void borrarUsuario(Long idUsuario) {
+        final Session session = sessionFactory.getCurrentSession();
+        Usuario usuario = this.obtenerUsuarioPorId(idUsuario);
+        session.delete(usuario);
+    }
+
 }

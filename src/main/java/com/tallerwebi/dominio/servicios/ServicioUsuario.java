@@ -7,6 +7,7 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 
 import java.util.List;
+import java.util.Map;
 
 public interface ServicioUsuario {
     List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario);
@@ -24,8 +25,15 @@ public interface ServicioUsuario {
     void agregarSeguido(Usuario usuarioLogueado, Usuario usuarioSeguir);
 
     List<Notificacion> obtenerMisNotificaciones(Long idUsuario);
+    List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario);
 
     void marcarNotificacionesComoLeidas(Long idUsuario);
+    Map<String,Integer> obtenerMisSeguidoresYSeguidos(Long idUsuario);
+    void modificarDatosUsuario(Usuario usuario);
+
+    void borrarUsuario(Long idUsuario);
 
     void dejarDeSeguirUsuario(Long idSeguido, Long idSeguidor) throws RelacionNoEncontradaException;
+
+    List<Usuario> listarUsuarioParaSeguir(long idSeguidor);
 }

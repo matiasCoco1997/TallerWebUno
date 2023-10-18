@@ -2,10 +2,12 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Comentario;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
+import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -21,10 +23,12 @@ import java.util.List;
 public class ControladorNoticia {
     private ServicioNoticia servicioNoticia;
     private ServicioComentario servicioComentario;
+    private ServicioUsuario servicioUsuario;
     @Autowired
-    public ControladorNoticia(ServicioNoticia servicioNoticia, ServicioComentario servicioComentario) {
+    public ControladorNoticia(ServicioNoticia servicioNoticia, ServicioComentario servicioComentario, ServicioUsuario servicioUsuario) {
         this.servicioNoticia = servicioNoticia;
         this.servicioComentario = servicioComentario;
+        this.servicioUsuario = servicioUsuario;
     }
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.GET)
@@ -35,6 +39,35 @@ public class ControladorNoticia {
         modelo.put("categorias", servicioNoticia.listarCategorias());
 
         return new ModelAndView("crear_noticia", modelo);
+    }
+
+    @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
+    public ModelAndView crearNuevaNoticia(@ModelAttribute("datosNoticia") Noticia noticia , HttpSession session, @RequestParam("imagenFile") MultipartFile imagen, @RequestParam("audioFile") MultipartFile audio){
+        ModelMap modelo = new ModelMap();
+        try{
+            Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+            modelo.put("sessionUsuarioLogueado", UsuarioLogueado);
+
+            servicioNoticia.crearNoticia(noticia, UsuarioLogueado, imagen, audio);
+            servicioNoticia.generarNotificacion(UsuarioLogueado.getIdUsuario(),UsuarioLogueado.getNombre(),noticia.getTitulo(),noticia);
+        }catch (CampoVacio e) {
+            modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
+            return new ModelAndView("crear_noticia", modelo);
+        }catch (TamanioDeArchivoSuperiorALoPermitido e) {
+            modelo.put("error", "Error, El archivo seleccionado es demasiado pesado.");
+            return new ModelAndView("crear_noticia", modelo);
+        }catch (FormatoDeImagenIncorrecto e) {
+            modelo.put("error", "Error, el formato de la imagen no esta permitido.");
+            return new ModelAndView("crear_noticia", modelo);
+        }catch (FormatoDeAudioIncorrecto e) {
+            modelo.put("error", "Error, el formato del audio no esta permitido, solo es posible un tipo de audio ' .mp3 '.");
+            return new ModelAndView("crear_noticia", modelo);
+        }catch (Exception e) {
+            modelo.put("error", "Error al crear la noticia.");
+            return new ModelAndView("crear_noticia", modelo);
+        }
+
+        return new ModelAndView("redirect:/home" , modelo);
     }
 
     @RequestMapping(path = "/noticia/editar/{id}", method = RequestMethod.GET)
@@ -72,41 +105,11 @@ public class ControladorNoticia {
             modelo.put("error", "Error, el formato de la imagen no esta permitido.");
             return new ModelAndView("editar_noticia", modelo);
         }catch (FormatoDeAudioIncorrecto e) {
-            modelo.put("error", "Error, el formato del audio no esta permitido, solo es posible un tipo de audio ' .mp3 '");
+            modelo.put("error", "Error, el formato del audio no esta permitido, solo es posible un tipo de audio ' .mp3 '.");
             return new ModelAndView("editar_noticia", modelo);
         }catch (Exception e) {
             modelo.put("error", "Error al editar la noticia.");
             return new ModelAndView("editar_noticia", modelo);
-        }
-
-        return new ModelAndView("redirect:/home" , modelo);
-    }
-
-
-    @RequestMapping(path = "/noticia/crear", method = RequestMethod.POST)
-    public ModelAndView crearNuevaNoticia(@ModelAttribute("datosNoticia") Noticia noticia , HttpSession session, @RequestParam("imagenFile") MultipartFile imagen, @RequestParam("audioFile") MultipartFile audio){
-        ModelMap modelo = new ModelMap();
-        try{
-            Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-            modelo.put("sessionUsuarioLogueado", UsuarioLogueado);
-
-            servicioNoticia.crearNoticia(noticia, UsuarioLogueado, imagen, audio);
-            servicioNoticia.generarNotificacion(UsuarioLogueado.getIdUsuario(),UsuarioLogueado.getNombre(),noticia.getTitulo(),noticia);
-        }catch (CampoVacio e) {
-            modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
-            return new ModelAndView("crear_noticia", modelo);
-        }catch (TamanioDeArchivoSuperiorALoPermitido e) {
-            modelo.put("error", "Error, El archivo seleccionado es demasiado pesado.");
-            return new ModelAndView("crear_noticia", modelo);
-        }catch (FormatoDeImagenIncorrecto e) {
-            modelo.put("error", "Error, el formato de la imagen no esta permitido.");
-            return new ModelAndView("crear_noticia", modelo);
-        }catch (FormatoDeAudioIncorrecto e) {
-            modelo.put("error", "Error, el formato del audio no esta permitido, solo es posible un tipo de audio ' .mp3 '");
-            return new ModelAndView("crear_noticia", modelo);
-        }catch (Exception e) {
-            modelo.put("error", "Error al crear la noticia.");
-            return new ModelAndView("crear_noticia", modelo);
         }
 
         return new ModelAndView("redirect:/home" , modelo);
@@ -168,14 +171,17 @@ public class ControladorNoticia {
         List<Comentario> comentarios = servicioComentario.buscarComentarios(idNoticia);
         Comentario comentarioForm = new Comentario();
 
+        List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
+
 
         comentarioForm.setNoticia(noticia);
         if(usuarioLogueado!=null)
-            model.put("usuarioLogueado", usuarioLogueado.getIdUsuario());
-        model.put("comentarios", comentarios);
-        model.put("fechaPublicacion", fechaFormateada);
-        model.put("noticia", noticia);
-        model.put("comentarioForm", comentarioForm);
+            model.put("usuarioLogueado", usuarioLogueado);
+            model.put("comentarios", comentarios);
+            model.put("notificaciones", notificaciones.size());
+            model.put("fechaPublicacion", fechaFormateada);
+            model.put("noticia", noticia);
+            model.put("comentarioForm", comentarioForm);
 
         return new ModelAndView("noticia", model);
     }

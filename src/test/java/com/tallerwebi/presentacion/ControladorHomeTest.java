@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
+import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,7 +25,7 @@ import static org.mockito.Mockito.when;
 public class ControladorHomeTest {
     private ControladorHome controladorHome;
     private ServicioHome servicioHomeMock;
-
+    private ServicioUsuario servicioUsuarioMock;
     private Noticia noticiaMock;
     private HttpServletRequest requestMock;
     private HttpSession sessionMock;
@@ -44,7 +45,8 @@ public class ControladorHomeTest {
         requestMock = mock(HttpServletRequest.class);
         sessionMock = mock(HttpSession.class);
         servicioHomeMock = mock(ServicioHome.class);
-        controladorHome = new ControladorHome(servicioHomeMock);
+        servicioUsuarioMock = mock(ServicioUsuario.class);
+        controladorHome = new ControladorHome(servicioHomeMock, servicioUsuarioMock);
     }
 
     @Test
@@ -56,7 +58,7 @@ public class ControladorHomeTest {
         noticias.add(noticiaMock);
 
         when(servicioHomeMock.listarNoticias()).thenReturn(noticias);
-            when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         // ejecucion
         ModelAndView modelAndView = controladorHome.home(sessionMock);
@@ -88,7 +90,7 @@ public class ControladorHomeTest {
         usuarios.add(usuarioMock);
         usuarios.add(usuarioMock);
 
-        when(servicioHomeMock.listarUsuarios(usuarioMock.getIdUsuario())).thenReturn(usuarios);
+        when(servicioUsuarioMock.listarUsuarioParaSeguir(usuarioMock.getIdUsuario())).thenReturn(usuarios);
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         ModelAndView modelAndView = controladorHome.home(sessionMock);
@@ -107,14 +109,16 @@ public class ControladorHomeTest {
     }
 
     @Test
-    public void queAlListarDosCategoriasPorTituloSeCarguenEnElHome(){
+    public void queAlListarDosNoticiasPorTituloSeCarguenEnElHome(){
         List<Noticia> noticias= new ArrayList<>();
         noticias.add(noticiaMock);
         noticias.add(noticiaMock);
         String titulo="titulo";
 
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         when(servicioHomeMock.obtenerNoticiasPorTitulo(titulo)).thenReturn(noticias);
         when(servicioHomeMock.validarQueHayNoticias(noticias)).thenReturn(false);
+
 
         ModelAndView modelAndView= controladorHome.filtrarPorTitulo(titulo,sessionMock);
         List<Noticia> noticiasEnModelo= (List<Noticia>) modelAndView.getModel().get("noticias");
@@ -128,6 +132,7 @@ public class ControladorHomeTest {
         String titulo="titulo";
 
         when(servicioHomeMock.validarQueHayNoticias(noticias)).thenReturn(true);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         ModelAndView modelAndView= controladorHome.filtrarPorTitulo(titulo,sessionMock);
         String mensajeError= (String) modelAndView.getModel().get("error");

@@ -48,7 +48,6 @@ public class ControladorLoginTest {
 		when(usuarioMock.getPais()).thenReturn("pais");
 		when(usuarioMock.getCiudad()).thenReturn("ciudad");
 		when(usuarioMock.getActivo()).thenReturn(true);
-		//when(usuarioMock.getFechaDeNacimiento()).thenReturn(new Date(2018,12,9));
 		when(usuarioMock.getEmail()).thenReturn("dami@unlam.com");
 		when(usuarioMock.getPassword()).thenReturn("password");
 		when(usuarioMock.getFotoPerfil()).thenReturn("fotoPerfil");
@@ -69,7 +68,7 @@ public class ControladorLoginTest {
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("login"));
 		assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Usuario o clave incorrecta"));
-		//verify(sessionMock, times(0)).setAttribute("ROL", "ADMIN");
+		//verify(sessionMock, times(0)).setAttribute("ROL", "ADMIN"); falta hacer lo de los planes pagos
 	}
 	
 	@Test
@@ -161,88 +160,4 @@ public class ControladorLoginTest {
 		assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al registrar el nuevo usuario"));
 	}
 
-    public static class ControladorHomeTest {
-        private ControladorHome controladorHome;
-        private ServicioHome servicioHomeMock;
-
-        private Noticia noticiaMock;
-        private HttpServletRequest requestMock;
-        private HttpSession sessionMock;
-        private Categoria categoriaMock;
-        private Usuario usuarioMock;
-
-        @BeforeEach
-        public void init(){
-            noticiaMock = mock(Noticia.class);
-            when(noticiaMock.getIdNoticia()).thenReturn(1L);
-            when(noticiaMock.getTitulo()).thenReturn("titulo");
-            when(noticiaMock.getCategoria()).thenReturn("categoria");
-            categoriaMock=mock(Categoria.class);
-            when(categoriaMock.getIdCategoria()).thenReturn(1);
-            when(categoriaMock.getDescripcion()).thenReturn("Deportes");
-            usuarioMock=mock(Usuario.class);
-            requestMock = mock(HttpServletRequest.class);
-            sessionMock = mock(HttpSession.class);
-            servicioHomeMock = mock(ServicioHome.class);
-            controladorHome = new ControladorHome(servicioHomeMock);
-        }
-        @Test
-        public void queSePuedaObtenerLaVistaDelHome(){
-
-        }
-        @Test
-        public void queAlListarDosNoticiasSeCargueElHome() {
-
-            List<Noticia> noticias = new ArrayList<>();
-
-            noticias.add(noticiaMock);
-            noticias.add(noticiaMock);
-
-            when(servicioHomeMock.listarNoticias()).thenReturn(noticias);
-
-            // ejecucion
-            ModelAndView modelAndView = controladorHome.home(sessionMock);
-            List<Noticia> noticiasEnModelo = (List<Noticia>) modelAndView.getModel().get("noticias");
-
-            // validacion
-            assertThat(noticiasEnModelo.size(), equalTo(2));
-            assertThat(modelAndView.getViewName(), equalToIgnoringCase("home-vista"));
-        }
-
-        @Test
-        public void queAlListarDosCategoriasSeCargueElHome(){
-            List<Categoria> categorias=new ArrayList<>();
-            categorias.add(categoriaMock);
-            categorias.add(categoriaMock);
-
-            when(servicioHomeMock.obtenerCategorias()).thenReturn(categorias);
-
-            ModelAndView modelAndView= controladorHome.home(sessionMock);
-            List<Categoria> categoriasEnModelo= (List<Categoria>) modelAndView.getModel().get("categorias");
-
-            assertThat(categoriasEnModelo.size(),equalTo(2));
-        }
-
-        @Test
-        public void queAlListarDosUsuariosSeCargueELHome(){
-            List<Usuario> usuarios= new ArrayList<>();
-            usuarios.add(usuarioMock);
-            usuarios.add(usuarioMock);
-
-            when(servicioHomeMock.listarUsuarios(1L)).thenReturn(usuarios);
-
-            ModelAndView modelAndView= controladorHome.home(sessionMock);
-            List<Usuario> usuariosEnModelo= (List<Usuario>) modelAndView.getModel().get("usuarios");
-
-            assertThat(usuariosEnModelo.size(),equalTo(2));
-        }
-
-        @Test
-        public void queHayaUnUsuarioEnEspecificoEnElModelo(){
-            when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
-            ModelAndView modelAndView=controladorHome.home(sessionMock);
-            Usuario usuarioEnModelo= (Usuario) modelAndView.getModel().get("usuario");
-            assertThat(usuarioEnModelo,notNullValue());
-        }
-    }
 }

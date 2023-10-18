@@ -23,6 +23,7 @@ import java.util.Arrays;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
+import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
 
@@ -90,6 +91,15 @@ public class ServicioNoticiaTest {
 
         //verificacion (evaluo si no esta vacio y si es 2 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(2)).guardar(noticiaMock);
+    }
+
+    @Test
+    public void cuandoEditoUnaNoticiaSeInvocaLaFuncionEditarDelRepositorioSoloUnaVez() throws Exception {
+        //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
+        servicioNoticiaMock.editarNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
+
+        //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
+        verify(repositorioNoticiaMock, times(1)).editarNoticia(noticiaMock);
     }
 
     @Test

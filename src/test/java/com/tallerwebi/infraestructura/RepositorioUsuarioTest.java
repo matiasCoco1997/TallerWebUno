@@ -20,8 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -41,18 +40,17 @@ public class RepositorioUsuarioTest {
     private Usuario usuario;
     private Usuario usuario2;
     private Seguidos seguidos;
-    Usuario seguido = new Usuario();
-    Usuario seguido2 = new Usuario();
-    Usuario seguidor = new Usuario();
+    private Usuario noSeguido;
+    private Usuario seguido;
+    private Usuario seguido2;
+    private Usuario seguidor;
 
     @BeforeEach
-    public void init(){
-        usuario=new Usuario();
-        usuario.setIdUsuario(1L);
-        usuario2=new Usuario();
-        usuario2.setIdUsuario(2L);
+    public void init() {
+        usuario = new Usuario();
+        usuario2 = new Usuario();
 
-        noticia=new Noticia();
+        noticia = new Noticia();
         noticia.setTitulo("titulo");
         noticia.setUsuario(usuario);
         noticia.setActiva(true);
@@ -66,35 +64,56 @@ public class RepositorioUsuarioTest {
         seguidos.setIdUsuarioSeguidor(usuario);
         seguidos.setIdUsuarioPropio(usuario2);
 
-        seguido=new Usuario();
+        seguido = new Usuario();
         seguido.setNombre("seguido");
 
         seguidor = new Usuario();
         seguidor.setNombre("seguidor");
 
-        seguido2=new Usuario();
+        seguido2 = new Usuario();
         seguido2.setNombre("seguido2");
+
+        noSeguido = new Usuario();
+        noSeguido.setNombre("NoSeguido");
     }
 
     @Test
     @Transactional
     @Rollback
-    public void quePuedaFiltrarNoticiasPorElIDDelUsuario(){
+    public void quePuedaFiltrarNoticiasPorElIDDelUsuario() {
         repositorioUsuario.guardar(usuario);
         repositorioUsuario.guardar(usuario2);
         repositorioNoticia.guardar(noticia);
         repositorioNoticia.guardar(noticia2);
-        List<Noticia> noticiasObtenidas=repositorioUsuario.obtenerMisNoticias(usuario.getIdUsuario());
-        assertThat(noticiasObtenidas.size(),is(1));
+        List<Noticia> noticiasObtenidas = repositorioUsuario.obtenerMisNoticias(usuario.getIdUsuario());
+        assertThat(noticiasObtenidas.size(), is(1));
     }
 
     @Test
     @Transactional
     @Rollback
-    public void quePuedaObtenerUnUsuarioPorSuID(){
+    public void quePuedaTraerLasNoticiasEnEstadoBorradorPorElIdDelUsuario() {
+
         repositorioUsuario.guardar(usuario);
-        Usuario usuarioObtenido=repositorioUsuario.obtenerUsuarioPorId(usuario.getIdUsuario());
-        assertThat(usuarioObtenido,is(notNullValue()));
+        repositorioUsuario.guardar(usuario2);
+
+        noticia.setActiva(false);
+        noticia2.setActiva(false);
+
+        repositorioNoticia.guardar(noticia);
+        repositorioNoticia.guardar(noticia2);
+
+        List<Noticia> noticiasObtenidas = repositorioUsuario.obtenerMisNoticiasEnEstadoBorrador(usuario.getIdUsuario());
+        assertThat(noticiasObtenidas.size(), is(1));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void quePuedaObtenerUnUsuarioPorSuID() {
+        repositorioUsuario.guardar(usuario);
+        Usuario usuarioObtenido = repositorioUsuario.obtenerUsuarioPorId(usuario.getIdUsuario());
+        assertThat(usuarioObtenido, is(notNullValue()));
     }
 
     @Test
@@ -219,5 +238,69 @@ public class RepositorioUsuarioTest {
         } catch (RuntimeException e) {
             assertEquals("RuntimeException", e.getClass().getSimpleName());
         }
+    }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void cuandoEliminoUnUsuarioDejaDeExistirEnLaBaseDeDatos() {
+        //preparación
+        String correo = "unmainunicoeirremplazable@wlove.ar";
+        this.usuario.setEmail(correo);
+        repositorioUsuario.guardar(usuario);
+        //ejecución
+        repositorioUsuario.borrarUsuario(usuario.getIdUsuario());
+        //verificación
+        assertThat(repositorioUsuario.buscar(correo), nullValue());
+    }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaListarUsuarioParaSeguirYQueNoLosEsteSiguiendo() {
+        repositorioUsuario.guardar(seguido);
+        repositorioUsuario.guardar(noSeguido);
+        repositorioUsuario.guardar(seguidor);
+
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(seguidor);
+        seguidos.setIdUsuarioPropio(seguido);
+        repositorioUsuario.crearSeguidos(seguidos);
+
+        List<Usuario> usuariosRecomendados = null;
+        try {
+            usuariosRecomendados = repositorioUsuario.listarUsuariosRecomendadosSinSeguir(seguidor.getIdUsuario());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        assertEquals(noSeguido.getIdUsuario(), usuariosRecomendados.get(0).getIdUsuario());
+        assertEquals(1, usuariosRecomendados.size());
+    }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void queRetorneUnaListaVaciaSiNoEncuentraUsuariosParaSeguir() {
+        repositorioUsuario.guardar(seguido);
+        repositorioUsuario.guardar(seguido2);
+        repositorioUsuario.guardar(seguidor);
+
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(seguidor);
+        seguidos.setIdUsuarioPropio(seguido);
+
+        Seguidos seguidos2 = new Seguidos();
+        seguidos2.setIdUsuarioSeguidor(seguidor);
+        seguidos2.setIdUsuarioPropio(seguido2);
+
+        repositorioUsuario.crearSeguidos(seguidos);
+        repositorioUsuario.crearSeguidos(seguidos2);
+
+        repositorioUsuario.guardar(seguidor);
+
+        List<Usuario> usuariosRecomendados = repositorioUsuario.listarUsuariosRecomendadosSinSeguir(seguidor.getIdUsuario());
+
+        assertEquals(0, usuariosRecomendados.size());
+
     }
 }
