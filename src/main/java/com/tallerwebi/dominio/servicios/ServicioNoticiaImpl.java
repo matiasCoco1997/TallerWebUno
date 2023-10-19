@@ -138,8 +138,8 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
     @Override
     public void darMeGusta(Noticia noticia) {
-        noticia.setLikes(noticia.getLikes() + 1);
-        repositorioNoticia.modificar(noticia);
+        //noticia.setLikes(noticia.getLikes() + 1);
+        //repositorioNoticia.modificar(noticia);
     }
 
     @Override

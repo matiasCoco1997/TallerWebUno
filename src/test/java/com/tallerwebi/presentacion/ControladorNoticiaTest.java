@@ -277,7 +277,7 @@ public class ControladorNoticiaTest {
     @Test
     public void queAlDarMeGustaRedireccioneAlHome(){
         //preparacion
-        when(noticiaMock.getLikes()).thenReturn(1);
+        //when(noticiaMock.getLikes()).thenReturn(1);
         when(servicioNoticiaMock.verificarQueNoEsNull(noticiaMock)).thenReturn(false);
         ModelAndView model=new ModelAndView();
         //ejecucion

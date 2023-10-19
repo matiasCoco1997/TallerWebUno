@@ -119,7 +119,7 @@ public class ServicioNoticiaTest {
         //preparación
         Noticia noticia = new Noticia();
         noticia.setTitulo("Título de la noticia");
-        noticia.setLikes(0);
+        //noticia.setLikes(0);
 
         //ejecución
         repositorioNoticiaMock.guardar(noticia);
@@ -134,7 +134,6 @@ public class ServicioNoticiaTest {
         //preparación
         Noticia noticia = new Noticia();
         noticia.setTitulo("Título de la noticia");
-        noticia.setLikes(0);
         //ejecución
         repositorioNoticiaMock.guardar(noticia);
         servicioNoticiaMock.darMeGusta(noticia);

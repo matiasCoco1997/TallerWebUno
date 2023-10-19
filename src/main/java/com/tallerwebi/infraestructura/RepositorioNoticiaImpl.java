@@ -1,13 +1,17 @@
 package com.tallerwebi.infraestructura;
 
+import com.tallerwebi.dominio.entidades.Comentario;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
+import com.tallerwebi.dominio.entidades.Usuario;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository("repositorioNoticia")
@@ -91,6 +95,36 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public void generarNotificacion(Notificacion notificacion) {
         sessionFactory.getCurrentSession().save(notificacion);
+    }
+
+    @Override
+    public List<Usuario> obtenerLikes(Long idNotiocia) {
+        final Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Usuario.class);
+        criteria.createAlias("noticiasLikeadas", "n");
+        criteria.add(Restrictions.eq("n.idNoticia", idNotiocia));
+        return criteria.list();
+    }
+
+    @Override
+    public void darMeGusta(Noticia noticia, Usuario usuario) {
+        final Session session = sessionFactory.getCurrentSession();
+        try {
+            noticia.getLikes().add(usuario);
+            session.update(noticia);
+            usuario.getNoticiasLikeadas().add(noticia);
+            session.update(usuario);
+        } catch (NullPointerException e) {
+            List<Usuario> likes = new ArrayList<>();
+            likes.add(usuario);
+            noticia.setLikes(likes);
+            session.update(noticia);
+
+            List<Noticia> noticiasLikeadas = new ArrayList<>();
+            noticiasLikeadas.add(noticia);
+            usuario.setNoticiasLikeadas(noticiasLikeadas);
+            session.update(usuario);
+        }
     }
 
 }

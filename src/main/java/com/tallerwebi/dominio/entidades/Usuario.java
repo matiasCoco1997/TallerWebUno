@@ -6,6 +6,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -31,5 +33,13 @@ public class Usuario {
     private String altFotoPerfil;
     private Boolean activo = true;
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    private List<Noticia> noticiasLikeadas;
+
+    @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
+    protected void onCreate() {
+        noticiasLikeadas = new ArrayList<>(0);
+    }
 
 }
