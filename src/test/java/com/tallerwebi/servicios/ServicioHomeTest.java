@@ -11,14 +11,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.collection.IsEmptyCollection.empty;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNot.not;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 public class ServicioHomeTest {
 
@@ -142,6 +144,12 @@ public class ServicioHomeTest {
         }
         return noticiasFiltradas;
     }
+    @Test
+    public void queSePuedaListarNoticiasDeSeguidos() {
+        List<Noticia> noticiasEsperadas = Arrays.asList(new Noticia(), new Noticia());
+        when(repositorioUsuarioMock.obtenerNoticiaDeSeguidos(1L)).thenReturn(noticiasEsperadas);
+        List<Noticia> usuariosRecomendados = servicioHomeMock.obtenerNoticiaDeSeguidos(anyLong());
 
-
+        verify(repositorioUsuarioMock, times(1)).obtenerNoticiaDeSeguidos(anyLong());
+    }
 }

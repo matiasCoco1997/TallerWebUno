@@ -63,4 +63,8 @@ public class ServicioHomeImpl implements ServicioHome {
     public List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario) {
         return repositorioUsuario.obtenerMisNotificacionesSinLeer(idUsuario);
     }
+    @Override
+    public List<Noticia> obtenerNoticiaDeSeguidos(Long idUsuario) {
+        return repositorioUsuario.obtenerNoticiaDeSeguidos(idUsuario);
+    }
 }

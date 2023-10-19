@@ -139,4 +139,12 @@ public class ControladorHomeTest {
 
         assertThat(mensajeError,is("No se encontraron noticias con este título: "+titulo));
     }
+    @Test
+    public void queSePuedaMostarNoticiasDeSeguidos(){
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
+        ModelAndView modelAndView=controladorHome.mostrarNoticiaDeSeguidos(sessionMock);
+
+        assertThat("home-vista", is(modelAndView.getViewName()));
+    }
 }

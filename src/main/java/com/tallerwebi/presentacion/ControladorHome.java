@@ -6,9 +6,11 @@ import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -89,5 +91,26 @@ public class ControladorHome {
             model.put("noticias",noticias);
         }
         return new ModelAndView("home-titulo",model);
+    }
+    @GetMapping("/noticia-de-seguidos")
+    public ModelAndView mostrarNoticiaDeSeguidos(HttpSession session){
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Noticia> noticias = servicioHome.obtenerNoticiaDeSeguidos(usuarioLogueado.getIdUsuario());
+
+        ModelMap model = new ModelMap();
+        model.put("noticias", noticias);
+
+        List<Categoria> categorias=servicioHome.obtenerCategorias();
+
+        List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
+
+        List<Usuario> usuarios = servicioUsuario.listarUsuarioParaSeguir(usuarioLogueado.getIdUsuario());
+
+        model.put("notificaciones", notificaciones.size());
+        model.put("usuarios",usuarios);
+        model.put("categorias",categorias);
+        model.put("usuario",usuarioLogueado);
+
+        return new ModelAndView("home-vista",model);
     }
 }

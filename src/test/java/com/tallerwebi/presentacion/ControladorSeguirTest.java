@@ -13,6 +13,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
@@ -136,6 +137,19 @@ public class ControladorSeguirTest {
 
         assertEquals(HttpStatus.BAD_REQUEST, respuesta.getStatusCode());
         verify(servicioUsuarioMock, times(1)).obtenerUsuarioPorId(1L);
+    }
+    @Test
+    public void siEstoyLogueadoQueMeLleveALaPaginaDeSiguiendo(){
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(sessionMock);
+        assertEquals("siguiendo", model.getViewName());
+        assertEquals("Usuario", model.getModel().get("usuario").getClass().getSimpleName());
+    }
+    @Test
+    public void siNoEstoyLogueadoNoPuedoVerLosUsuariosQueEstoySiguiendoyMeLlelvaAlLogin(){
+        when(sessionMock.getAttribute(anyString())).thenReturn(null);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(sessionMock);
+        assertEquals("redirect:/login", model.getViewName());
     }
 
 }

@@ -40,5 +40,6 @@ public interface RepositorioUsuario {
 
     void borrarUsuario(Long idUsuario);
 
+    List<Noticia> obtenerNoticiaDeSeguidos(Long idUsuario);
 }
 

@@ -21,6 +21,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -188,12 +189,12 @@ public class ServicioUsuarioTest {
         List<Usuario> usuariosRecomendados = servicioUsuarioMock.listarUsuarioParaSeguir(anyLong());
         assertEquals("ArrayList", usuariosRecomendados.getClass().getSimpleName());
     }
-
     @Test
     public void queSePuedaListarUsuariosParaSeguirLanzaExcepcion() {
         List<Usuario> usuariosRecomendados = servicioUsuarioMock.listarUsuarioParaSeguir(anyLong());
 
         assertEquals(0, usuariosRecomendados.size());
+        verify(repositorioUsuarioMock, times(1)).listarUsuariosRecomendadosSinSeguir(anyLong());
     }
 
 

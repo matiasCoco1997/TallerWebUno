@@ -79,7 +79,7 @@
                     <!-- Second dropdown menu items -->
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           href="#" data-te-dropdown-item-ref>Action</a>
+                           href="/sunn/siguiendo" data-te-dropdown-item-ref>Siguiendo</a>
                     </li>
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
@@ -100,6 +100,9 @@
             <input th:each="categoria : ${categorias}" type="submit" name="categoria" th:value="${categoria.descripcion}" class="mx-8 hover:text-white">
         </div>
     </form>
+        <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
+            <a href="noticia-de-seguidos" class="mx-8 hover:text-white">Noticias de Seguidos</a>
+        </div>
 </nav>
 <!-- Main navigation container -->
 

@@ -6,11 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 public class ControladorSeguir {
@@ -60,4 +65,19 @@ public class ControladorSeguir {
 
 
     }
+    @GetMapping("/siguiendo")
+    public ModelAndView mostrarLosUsuariosQueEstoySiguiendo(HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        if(usuarioLogueado == null){
+            return new ModelAndView("redirect:/login");
+        }
+        ModelMap model = new ModelMap();
+        List<Usuario> usuariosSugeridos = servicioUsuario.listarUsuarioParaSeguir(usuarioLogueado.getIdUsuario());
+
+        model.put("sugeridos", usuariosSugeridos);
+
+        model.put("usuario", usuarioLogueado);
+        return new ModelAndView("siguiendo",model);
+    }
+
 }

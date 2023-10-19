@@ -144,10 +144,10 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
 
     @Override
     public List<Usuario> listarUsuariosRecomendadosSinSeguir(Long idSeguidor){
-        String jpql = "SELECT u FROM Usuario u WHERE u.idUsuario != :idSeguidor AND u.idUsuario NOT IN " +
+        String query = "SELECT u FROM Usuario u WHERE u.idUsuario != :idSeguidor AND u.idUsuario NOT IN " +
                 "(SELECT s.idUsuarioPropio.idUsuario FROM Seguidos s WHERE s.idUsuarioSeguidor.idUsuario = :idSeguidor)";
 
-        return sessionFactory.getCurrentSession().createQuery(jpql, Usuario.class)
+        return sessionFactory.getCurrentSession().createQuery(query, Usuario.class)
                 .setParameter("idSeguidor", idSeguidor)
                 .getResultList();
     }
@@ -158,5 +158,16 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         Usuario usuario = this.obtenerUsuarioPorId(idUsuario);
         session.delete(usuario);
     }
+
+    @Override
+    public List<Noticia> obtenerNoticiaDeSeguidos(Long idSeguidor) {
+        String query = "SELECT n FROM Noticia n WHERE n.usuario.idUsuario != :idSeguidor AND n.usuario.idUsuario IN " +
+                "(SELECT s.idUsuarioPropio.idUsuario FROM Seguidos s WHERE s.idUsuarioSeguidor.idUsuario = :idSeguidor)";
+
+        return sessionFactory.getCurrentSession().createQuery(query, Noticia.class)
+                .setParameter("idSeguidor", idSeguidor)
+                .getResultList();
+    }
+
 
 }

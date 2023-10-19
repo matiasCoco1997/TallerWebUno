@@ -26,4 +26,6 @@ public interface ServicioHome {
     List<Notificacion> obtenerMisNotificaciones(Long idUsuario);
 
     List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario);
+
+    List<Noticia> obtenerNoticiaDeSeguidos(Long idUsuario);
 }
