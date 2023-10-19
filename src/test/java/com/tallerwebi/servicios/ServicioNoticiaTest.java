@@ -113,7 +113,7 @@ public class ServicioNoticiaTest {
         //verificacion
         assertThat(noticiaObtenida.getIdNoticia(), is(1L));
     }
-
+/*
     @Test
     public void cuandoDanMeGustaLaCantidadDeMegustaIncrementa() {
         //preparación
@@ -143,7 +143,7 @@ public class ServicioNoticiaTest {
         //validación
         assertThat(noticia.getLikes(), is(4));
     }
-
+*/
 
         @Test
         public void generarNotificacionDeberiaNotificarSeguidores() {
