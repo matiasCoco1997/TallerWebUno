@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -117,15 +118,15 @@ public class ControladorUsuario {
         model.put("edicion", true);
         model.put("usuario", usuario);
 
-        return new ModelAndView("/modificar", model); //formulario con los datos del usuario para editar
+        return new ModelAndView("/modificar-usuario", model);
     }
 
     @RequestMapping(value = "/perfil/modificar", method = RequestMethod.POST)
-    public ModelAndView modificarUsuario(@ModelAttribute("usuario") Usuario usuario, HttpSession session) {
+    public ModelAndView modificarUsuario(@ModelAttribute("usuario") Usuario usuario, HttpSession session, @RequestParam("imagenFile") MultipartFile imagen) {
         Usuario usuarioEditar = (Usuario) session.getAttribute("UsuarioAEditar");
 
         try{
-            servicioUsuario.modificarDatosUsuario(usuario);
+            servicioUsuario.modificarDatosUsuario(usuario, imagen);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

@@ -42,4 +42,7 @@ public class Usuario {
         noticiasLikeadas = new ArrayList<>(0);
     }
 
+    public void setAltFotoPerfilUsuario(String nombreOriginalImagen) {
+        this.altFotoPerfil = nombreOriginalImagen;
+    }
 }
