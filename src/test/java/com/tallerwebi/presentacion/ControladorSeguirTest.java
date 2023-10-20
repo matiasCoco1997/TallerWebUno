@@ -17,6 +17,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
@@ -142,7 +145,7 @@ public class ControladorSeguirTest {
     public void siEstoyLogueadoQueMeLleveALaPaginaDeSiguiendo(){
         when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
         ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(sessionMock);
-        assertEquals("siguiendo", model.getViewName());
+        assertEquals("siguiendo-seguidores", model.getViewName());
         assertEquals("Usuario", model.getModel().get("usuario").getClass().getSimpleName());
     }
     @Test
@@ -151,5 +154,33 @@ public class ControladorSeguirTest {
         ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(sessionMock);
         assertEquals("redirect:/login", model.getViewName());
     }
+    @Test
+    public void siLaListaDeSeguidosEstaVaciaEnviaUnMensajeConErrorALaVistaDeSeguiendo(){
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(servicioUsuarioMock.listarUsuarioseguidos(anyLong())).thenReturn(new ArrayList<Usuario>());
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(sessionMock);
+        assertEquals("siguiendo-seguidores", model.getViewName());
+        assertEquals("No estás siguiendo a ningún usuario.",model.getModel().get("error"));
+    }
+    @Test
+    public void siQuieroVerMisSeguidoresMeEnviaALaVistaConLaListaDeSeguidores(){
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(sessionMock);
+        assertEquals("siguiendo-seguidores", model.getViewName());
+    }
 
+    @Test
+    public void siNoEstoyLogueadoNoPuedoVerLosUsuariosQueMeSiguenYMeLlelvaAlLogin(){
+        when(sessionMock.getAttribute(anyString())).thenReturn(null);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(sessionMock);
+        assertEquals("redirect:/login", model.getViewName());
+    }
+    @Test
+    public void siLaListaDeSeguidoresEstaVaciaEnviaUnMensajeConErrorALaVistaDeSeguidores(){
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(servicioUsuarioMock.listarUsuarioQueMeSiguen(anyLong())).thenReturn(new ArrayList<Usuario>());
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(sessionMock);
+        assertEquals("siguiendo-seguidores", model.getViewName());
+        assertEquals("No tenes seguidores.",model.getModel().get("error"));
+    }
 }

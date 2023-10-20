@@ -72,12 +72,32 @@ public class ControladorSeguir {
             return new ModelAndView("redirect:/login");
         }
         ModelMap model = new ModelMap();
-        List<Usuario> usuariosSugeridos = servicioUsuario.listarUsuarioParaSeguir(usuarioLogueado.getIdUsuario());
+        List<Usuario> usuariosSugeridos = servicioUsuario.listarUsuarioseguidos(usuarioLogueado.getIdUsuario());
 
-        model.put("sugeridos", usuariosSugeridos);
+        if (usuariosSugeridos.isEmpty()) {
+            model.put("error", "No estás siguiendo a ningún usuario.");
+        }
 
+        model.put("pagina", "Siguiendo");
+        model.put("seguidos", usuariosSugeridos);
         model.put("usuario", usuarioLogueado);
-        return new ModelAndView("siguiendo",model);
+        return new ModelAndView("siguiendo-seguidores",model);
+    }
+    @GetMapping("/seguidores")
+    public ModelAndView mostrarLosUsuariosQueMeSiguen(HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        if(usuarioLogueado == null){
+            return new ModelAndView("redirect:/login");
+        }
+        ModelMap model = new ModelMap();
+        List<Usuario> seguidores = servicioUsuario.listarUsuarioQueMeSiguen(usuarioLogueado.getIdUsuario());
+        if (seguidores.isEmpty()) {
+            model.put("error", "No tenes seguidores.");
+        }
+        model.put("pagina", "Seguidores");
+        model.put("seguidores", seguidores);
+        model.put("usuario", usuarioLogueado);
+        return new ModelAndView("siguiendo-seguidores",model);
     }
 
 }

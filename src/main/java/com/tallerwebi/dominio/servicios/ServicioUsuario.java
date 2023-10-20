@@ -36,4 +36,8 @@ public interface ServicioUsuario {
     void dejarDeSeguirUsuario(Long idSeguido, Long idSeguidor) throws RelacionNoEncontradaException;
 
     List<Usuario> listarUsuarioParaSeguir(long idSeguidor);
+
+    List<Usuario> listarUsuarioseguidos(Long idUsuario);
+
+    List<Usuario> listarUsuarioQueMeSiguen(Long idUsuario);
 }

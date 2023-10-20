@@ -15,6 +15,8 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import java.util.Properties;
+
 @EnableWebMvc
 @Configuration
 @ComponentScan({"com.tallerwebi.presentacion", "com.tallerwebi.dominio", "com.tallerwebi.infraestructura"})
@@ -81,7 +83,4 @@ public class SpringWebConfig implements WebMvcConfigurer {
         multipartResolver.setMaxUploadSize(2000 * 2000); // Esto es para el tamaño máximo de archivo
         return multipartResolver;
     }
-
-
-
 }

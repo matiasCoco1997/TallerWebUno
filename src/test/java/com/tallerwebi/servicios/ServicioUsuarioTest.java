@@ -196,6 +196,13 @@ public class ServicioUsuarioTest {
         assertEquals(0, usuariosRecomendados.size());
         verify(repositorioUsuarioMock, times(1)).listarUsuariosRecomendadosSinSeguir(anyLong());
     }
+    @Test
+    public void queSePuedaListarLosUsuariosQueMeSiguen() {
+        List<Usuario> usuariosSeguidores = servicioUsuarioMock.listarUsuarioQueMeSiguen(anyLong());
+
+        assertEquals(0, usuariosSeguidores.size());
+        verify(repositorioUsuarioMock, times(1)).listarUsuariosQueMeSiguen(anyLong());
+    }
 
 
 }

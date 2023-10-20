@@ -169,5 +169,25 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .getResultList();
     }
 
+    @Override
+    public List<Usuario> listarUsuariosSeguidos(Long idUsuarioSeguidor) {
+        String query = "SELECT u FROM Usuario u WHERE u.idUsuario != :idSeguidor AND u.idUsuario IN " +
+                "(SELECT s.idUsuarioPropio.idUsuario FROM Seguidos s WHERE s.idUsuarioSeguidor.idUsuario = :idSeguidor)";
+
+        return sessionFactory.getCurrentSession().createQuery(query, Usuario.class)
+                .setParameter("idSeguidor", idUsuarioSeguidor)
+                .getResultList();
+    }
+
+    @Override
+    public List<Usuario> listarUsuariosQueMeSiguen(Long idUsuario) {
+        String query = "SELECT u FROM Usuario u WHERE u.idUsuario != :idSeguido AND u.idUsuario IN " +
+                "(SELECT s.idUsuarioSeguidor.idUsuario FROM Seguidos s WHERE s.idUsuarioPropio.idUsuario = :idSeguido)";
+
+        return sessionFactory.getCurrentSession().createQuery(query, Usuario.class)
+                .setParameter("idSeguido", idUsuario)
+                .getResultList();
+    }
+
 
 }

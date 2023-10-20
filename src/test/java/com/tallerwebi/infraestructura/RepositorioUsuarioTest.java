@@ -334,4 +334,52 @@ public class RepositorioUsuarioTest {
         assertNotNull(noticiasObtenidas);
         assertEquals(2, noticiasObtenidas.size());
     }
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaOntenerLosUsuarioSeguidos(){
+        repositorioUsuario.guardar(seguido);
+        repositorioUsuario.guardar(seguido2);
+        repositorioUsuario.guardar(seguidor);
+
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(seguidor);
+        seguidos.setIdUsuarioPropio(seguido);
+
+        Seguidos seguidos2 = new Seguidos();
+        seguidos2.setIdUsuarioSeguidor(seguidor);
+        seguidos2.setIdUsuarioPropio(seguido2);
+
+        repositorioUsuario.crearSeguidos(seguidos);
+        repositorioUsuario.crearSeguidos(seguidos2);
+
+        List<Usuario> usuariosSeguidos = repositorioUsuario.listarUsuariosSeguidos(seguidor.getIdUsuario());
+
+        assertNotNull(usuariosSeguidos);
+        assertEquals(2, usuariosSeguidos.size());
+    }
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaOntenerLosUsuarioQueMeSiguen(){
+        repositorioUsuario.guardar(seguido);
+        repositorioUsuario.guardar(seguido2);
+        repositorioUsuario.guardar(seguidor);
+
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(seguidor);
+        seguidos.setIdUsuarioPropio(seguido);
+
+        Seguidos seguidos2 = new Seguidos();
+        seguidos2.setIdUsuarioSeguidor(seguidor);
+        seguidos2.setIdUsuarioPropio(seguido2);
+
+        repositorioUsuario.crearSeguidos(seguidos);
+        repositorioUsuario.crearSeguidos(seguidos2);
+
+        List<Usuario> usuariosSeguidores = repositorioUsuario.listarUsuariosQueMeSiguen(seguido.getIdUsuario());
+
+        assertNotNull(usuariosSeguidores);
+        assertEquals(1, usuariosSeguidores.size());
+    }
 }
