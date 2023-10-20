@@ -107,7 +107,6 @@ public class ControladorNoticia {
             modelo.put("error", "Error al editar la noticia.");
             return new ModelAndView("editar_noticia", modelo);
         }
-
         return new ModelAndView("redirect:/home" , modelo);
     }
 
