@@ -62,8 +62,6 @@ public class ControladorSeguir {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
-
-
     }
     @GetMapping("/siguiendo")
     public ModelAndView mostrarLosUsuariosQueEstoySiguiendo(HttpSession session) {
