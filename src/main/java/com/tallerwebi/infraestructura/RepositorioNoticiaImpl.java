@@ -109,7 +109,7 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public void darMeGusta(Noticia noticia, Usuario usuario) {
         final Session session = sessionFactory.getCurrentSession();
-        try {
+        /*try {
             noticia.getLikes().add(usuario);
             session.update(noticia);
             usuario.getNoticiasLikeadas().add(noticia);
@@ -125,6 +125,9 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
             usuario.setNoticiasLikeadas(noticiasLikeadas);
             session.update(usuario);
         }
+        */
+
+
     }
 
 }

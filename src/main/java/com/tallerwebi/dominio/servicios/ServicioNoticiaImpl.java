@@ -2,10 +2,7 @@ package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.*;
-import com.tallerwebi.infraestructura.RepositorioCategoria;
-import com.tallerwebi.infraestructura.RepositorioNoticia;
-import com.tallerwebi.infraestructura.RepositorioNotificacion;
-import com.tallerwebi.infraestructura.RepositorioUsuario;
+import com.tallerwebi.infraestructura.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,13 +24,15 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     private final RepositorioCategoria repositorioCategoria;
     private final RepositorioUsuario repositorioUsuario;
     private final RepositorioNotificacion repositorioNotificacion;
+    private RepositorioLike repositorioLikeImpl;
 
     @Autowired
-    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria, RepositorioUsuario repositorioUsuario, RepositorioNotificacion repositorioNotificacion) {
+    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria, RepositorioUsuario repositorioUsuario, RepositorioNotificacion repositorioNotificacion, RepositorioLikeImpl repositorioLikeImpl) {
         this.repositorioNoticia = repositorioNoticia;
         this.repositorioCategoria = repositorioCategoria;
         this.repositorioUsuario = repositorioUsuario;
         this.repositorioNotificacion = repositorioNotificacion;
+        this.repositorioLikeImpl = repositorioLikeImpl; //arreglar linea 72 testServicioNoticia
     }
 
     @Override
@@ -52,8 +51,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         repositorioNoticia.guardar(noticia);
     }
-
-
 
     @Override
     public void borrarNoticiaPorId(Long idNoticia) {
@@ -144,15 +141,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             throw new UsuarioDeslogueado();
         }
 
-        Set<Usuario> likesDeLaNoticia = new HashSet<>();
-
-        likesDeLaNoticia.addAll(noticia.getLikes());
-
-        likesDeLaNoticia.add(usuarioLogueado);
-
-        noticia.setLikes(likesDeLaNoticia);
-
-        repositorioNoticia.modificar(noticia);
+        repositorioLikeImpl.guardarLike(new Like(usuarioLogueado, noticia));
     }
 
     private boolean verificarQueNoEsNull(Noticia noticia) { //hay que cambiar el test controlador noticia test linea 288 el when me marca

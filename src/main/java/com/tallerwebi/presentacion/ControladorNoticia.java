@@ -9,6 +9,7 @@ import com.tallerwebi.dominio.servicios.ServicioComentario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -164,26 +165,25 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home", modelo);
     }
     */
-    @RequestMapping(value = "/noticia/darLike",method = RequestMethod.POST)
-    public ModelAndView darLike(@RequestParam("noticiaLike") Long noticiaLike ,HttpSession session) throws Exception {
-        ModelMap modelo = new ModelMap();
-        Noticia noticia = servicioNoticia.buscarNoticiaPorId(noticiaLike);
+
+    @RequestMapping(value = "/noticia/likear",method = RequestMethod.POST)
+    public ResponseEntity<Object> darLike(Long idNoticiaLikeada , HttpSession session) {
+
+        Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticiaLikeada);
 
         try {
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
             servicioNoticia.darMeGusta(noticia, usuarioLogueado);
-            //modelo.addAttribute("meGusta", noticia.getLikes());
         } catch (Exception e) {
-            modelo.put("error", "No se puede dar me gusta a la noticia");
-            return new ModelAndView("redirect:/home", modelo);
+            return ResponseEntity.badRequest().build();
         } catch (NoticiaInexistente e) {
-            modelo.put("error", "Error, la noticia que intenta likear no existe.");
-            return new ModelAndView("redirect:/home", modelo);
+            return ResponseEntity.badRequest().build();
         } catch (UsuarioDeslogueado e) {
-            modelo.put("error", "Error, debe estar logueado para likear una noticia.");
-            return new ModelAndView("redirect:/login", modelo);
+
+            return ResponseEntity.badRequest().build();
         }
-        return new ModelAndView("redirect:/home", modelo);
+
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/publicacion/{idNoticia}")

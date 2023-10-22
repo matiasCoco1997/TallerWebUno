@@ -6,16 +6,14 @@ $(document).ready(function() {
         // Realiza la solicitud Ajax aquí
         $.ajax({
             type: "POST", // O el método que necesites
-            url: "/sunn/noticia/darLike", // La URL a la que deseas enviar la solicitud
+            url: "/sunn/noticia/likear", // La URL a la que deseas enviar la solicitud
             data: {
                 buttonId: buttonId
             },
             success: function(response) {
-                // Maneja la respuesta de la solicitud Ajax aquí
-                console.log(response);
+                $(this).addClass();
             },
             error: function(error) {
-                // Maneja los errores de la solicitud Ajax aquí
                 console.error(error);
             }
         });
