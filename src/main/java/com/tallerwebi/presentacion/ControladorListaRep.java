@@ -46,8 +46,8 @@ public class ControladorListaRep {
     @RequestMapping(value = "/listaReproduccion/agregarNoticia", method = RequestMethod.POST)
     public ModelAndView agregarNoticiaALista(@RequestParam("noticiaAgregar") Long idNoticia, HttpSession session){
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
-        Noticia noticia=servicioNoticia.buscarNoticiaPorId(idNoticia);
-        ListaReproduccion lista=new ListaReproduccion(usuario,noticia);
+        Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
+        ListaReproduccion lista = new ListaReproduccion(usuario,noticia);
         servicioListaRep.agregarNoticiaALista(lista);
         return new ModelAndView("redirect:/listaReproduccion");
     }

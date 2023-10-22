@@ -27,7 +27,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     private RepositorioLike repositorioLikeImpl;
 
     @Autowired
-    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria, RepositorioUsuario repositorioUsuario, RepositorioNotificacion repositorioNotificacion, RepositorioLikeImpl repositorioLikeImpl) {
+    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria, RepositorioUsuario repositorioUsuario, RepositorioNotificacion repositorioNotificacion, RepositorioLike repositorioLikeImpl) {
         this.repositorioNoticia = repositorioNoticia;
         this.repositorioCategoria = repositorioCategoria;
         this.repositorioUsuario = repositorioUsuario;
@@ -141,7 +141,25 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             throw new UsuarioDeslogueado();
         }
 
-        repositorioLikeImpl.guardarLike(new Like(usuarioLogueado, noticia));
+        MeGusta megustaEnNoticia = new MeGusta(usuarioLogueado, noticia);
+
+        List<MeGusta> megustaEncontrado = repositorioLikeImpl.verificarSiElMeGustaDelUsuarioYaExiste(noticia.getIdNoticia(), usuarioLogueado.getIdUsuario());
+
+        if(megustaEncontrado.isEmpty()){
+            repositorioLikeImpl.guardarLike(megustaEnNoticia);
+
+            noticia.setLikes(noticia.getLikes()+1);
+
+        } else {
+            repositorioLikeImpl.borrarLike(megustaEncontrado.get(0));
+
+            noticia.setLikes(noticia.getLikes()-1);
+
+        }
+
+        repositorioNoticia.modificarLikes(noticia);
+
+
     }
 
     private boolean verificarQueNoEsNull(Noticia noticia) { //hay que cambiar el test controlador noticia test linea 288 el when me marca

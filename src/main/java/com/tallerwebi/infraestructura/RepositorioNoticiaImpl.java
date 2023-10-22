@@ -126,8 +126,17 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
             session.update(usuario);
         }
         */
+    }
 
-
+    @Override
+    public Boolean modificarLikes(Noticia noticia) {
+        try {
+            sessionFactory.getCurrentSession().merge(noticia);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

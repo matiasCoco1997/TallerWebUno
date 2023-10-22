@@ -167,19 +167,18 @@ public class ControladorNoticia {
     */
 
     @RequestMapping(value = "/noticia/likear",method = RequestMethod.POST)
-    public ResponseEntity<Object> darLike(Long idNoticiaLikeada , HttpSession session) {
+    public ResponseEntity<Object> darLike(@RequestParam Long idNoticia , HttpSession session) {
 
-        Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticiaLikeada);
+        Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
 
         try {
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
             servicioNoticia.darMeGusta(noticia, usuarioLogueado);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().build();
-        } catch (NoticiaInexistente e) {
+        }  catch (NoticiaInexistente e) {
             return ResponseEntity.badRequest().build();
         } catch (UsuarioDeslogueado e) {
-
+            return ResponseEntity.badRequest().build();
+        } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
 

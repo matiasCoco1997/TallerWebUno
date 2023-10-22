@@ -31,7 +31,7 @@ public class Noticia {
     private Boolean activa;
     private  Integer likes;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     private Usuario usuario;
 
     @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
