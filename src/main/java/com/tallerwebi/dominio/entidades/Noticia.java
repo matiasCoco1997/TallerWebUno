@@ -2,11 +2,14 @@ package com.tallerwebi.dominio.entidades;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -22,12 +25,13 @@ public class Noticia {
     private String resumen;
     private String rutaDeimagen;
     private String altDeImagen;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDateTime fechaDePublicacion;
     private String rutaDeAudioPodcast;
     private Boolean activa;
 
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "noticiasLikeadas")
-    private List<Usuario> likes;
+    private Set<Usuario> likes;
 
     @ManyToOne(cascade = CascadeType.ALL)
     private Usuario usuario;
@@ -35,7 +39,7 @@ public class Noticia {
     @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
     protected void onCreate() {
         fechaDePublicacion = LocalDateTime.now();
-        likes = new ArrayList<>(0);
+        likes = new HashSet<>();
     }
 
     public void setAltImagenNoticia(String nombreOriginalImagen) {

@@ -45,11 +45,11 @@ public class ControladorNoticia {
     public ModelAndView crearNuevaNoticia(@ModelAttribute("datosNoticia") Noticia noticia , HttpSession session, @RequestParam("imagenFile") MultipartFile imagen, @RequestParam("audioFile") MultipartFile audio){
         ModelMap modelo = new ModelMap();
         try{
-            Usuario UsuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-            modelo.put("sessionUsuarioLogueado", UsuarioLogueado);
+            Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+            modelo.put("sessionUsuarioLogueado", usuarioLogueado);
 
-            servicioNoticia.crearNoticia(noticia, UsuarioLogueado, imagen, audio);
-            servicioNoticia.generarNotificacion(UsuarioLogueado.getIdUsuario(),UsuarioLogueado.getNombre(),noticia.getTitulo(),noticia);
+            servicioNoticia.crearNoticia(noticia, usuarioLogueado, imagen, audio);
+            servicioNoticia.generarNotificacion(usuarioLogueado.getIdUsuario(),usuarioLogueado.getNombre(),noticia.getTitulo(),noticia);
         }catch (CampoVacio e) {
             modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
             return new ModelAndView("crear_noticia", modelo);
@@ -144,12 +144,15 @@ public class ControladorNoticia {
         return new ModelAndView("home", model);
     }
 
+    /*
     @RequestMapping(value = "/darLike",method = RequestMethod.POST)
     public ModelAndView darLike(@RequestParam("noticiaLike") Long noticiaLike,HttpSession session) throws Exception {
         ModelMap modelo = new ModelMap();
         Noticia noticia = servicioNoticia.buscarNoticiaPorId(noticiaLike);
         if (servicioNoticia.verificarQueNoEsNull(noticia)) {
-            throw new Exception("La noticia fue eliminada");
+            //throw new Exception("La noticia fue eliminada.");
+            modelo.put("error", "La noticia fue eliminada.");
+            return new ModelAndView("home", modelo);
         }
         try {
             servicioNoticia.darMeGusta(noticia);
@@ -160,6 +163,29 @@ public class ControladorNoticia {
         }
         return new ModelAndView("redirect:/home", modelo);
     }
+    */
+    @RequestMapping(value = "/noticia/darLike",method = RequestMethod.POST)
+    public ModelAndView darLike(@RequestParam("noticiaLike") Long noticiaLike ,HttpSession session) throws Exception {
+        ModelMap modelo = new ModelMap();
+        Noticia noticia = servicioNoticia.buscarNoticiaPorId(noticiaLike);
+
+        try {
+            Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+            servicioNoticia.darMeGusta(noticia, usuarioLogueado);
+            //modelo.addAttribute("meGusta", noticia.getLikes());
+        } catch (Exception e) {
+            modelo.put("error", "No se puede dar me gusta a la noticia");
+            return new ModelAndView("redirect:/home", modelo);
+        } catch (NoticiaInexistente e) {
+            modelo.put("error", "Error, la noticia que intenta likear no existe.");
+            return new ModelAndView("redirect:/home", modelo);
+        } catch (UsuarioDeslogueado e) {
+            modelo.put("error", "Error, debe estar logueado para likear una noticia.");
+            return new ModelAndView("redirect:/login", modelo);
+        }
+        return new ModelAndView("redirect:/home", modelo);
+    }
+
     @GetMapping("/publicacion/{idNoticia}")
     public ModelAndView irApublicacion(@PathVariable Long idNoticia, HttpSession session){
         ModelMap model = new ModelMap();

@@ -25,9 +25,7 @@ public interface ServicioNoticia {
 
     List<Noticia> buscarNoticiaPorCategoria(String categoria);
 
-    void darMeGusta(Noticia noticia);
-
-    boolean verificarQueNoEsNull(Noticia noticia);
+    void darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado;
 
     List<Categoria> listarCategorias();
 

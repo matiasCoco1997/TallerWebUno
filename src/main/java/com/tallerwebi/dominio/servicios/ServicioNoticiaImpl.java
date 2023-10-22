@@ -17,9 +17,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service("servicioNoticia")
 @Transactional
@@ -137,14 +135,31 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void darMeGusta(Noticia noticia) {
-        //noticia.setLikes(noticia.getLikes() + 1);
-        //repositorioNoticia.modificar(noticia);
+    public void darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado {
+
+        if(!verificarQueNoEsNull(noticia)){
+            throw new NoticiaInexistente();
+        }
+        if(!verificarQueElUsuarioEsteLogueado(usuarioLogueado)){
+            throw new UsuarioDeslogueado();
+        }
+
+        Set<Usuario> likesDeLaNoticia = new HashSet<>();
+
+        likesDeLaNoticia.addAll(noticia.getLikes());
+
+        likesDeLaNoticia.add(usuarioLogueado);
+
+        noticia.setLikes(likesDeLaNoticia);
+
+        repositorioNoticia.modificar(noticia);
     }
 
-    @Override
-    public boolean verificarQueNoEsNull(Noticia noticia) {
-        return noticia==null;
+    private boolean verificarQueNoEsNull(Noticia noticia) { //hay que cambiar el test controlador noticia test linea 288 el when me marca
+        return noticia != null;
+    }
+    private boolean verificarQueElUsuarioEsteLogueado(Usuario usuarioLogueado) {
+        return usuarioLogueado != null;
     }
 
     @Override
@@ -160,8 +175,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             repositorioNotificacion.generarNotificacion(notificacion);
         }
     }
-
-
 
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
         if(noticia.getTitulo().isBlank()) {
