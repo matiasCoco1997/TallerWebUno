@@ -4,16 +4,20 @@ import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
+import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.mock.web.MockHttpSession;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,11 +40,15 @@ public class ControladorUsuarioTest {
     private Notificacion notificacionMock;
     private Noticia noticiaBorradorMock;
 
+    private MultipartFile imgMock;
+
     @BeforeEach
     public void init(){
         noticiaMock = mock(Noticia.class);
         noticiaMock2 = mock(Noticia.class);
         noticiaBorradorMock = mock(Noticia.class);
+
+        imgMock = mock(MultipartFile.class);
 
         when(noticiaBorradorMock.getIdNoticia()).thenReturn(3L);
         when(noticiaBorradorMock.getTitulo()).thenReturn("borrador");
@@ -201,12 +209,23 @@ public class ControladorUsuarioTest {
         ModelAndView modelAndView = controladorUsuario.mostrarFormularioModificar(session);
 
         //validacion
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("/modificar"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("/modificar-usuario"));
 
     }
 
     @Test
-    public void queAlModificarLosDatosDelUsuarioRedirijaALaVistaDePerfil() {
+    public void queAlModificarLosDatosDelUsuarioRedirijaALaVistaDePerfil() throws FormatoDeImagenIncorrecto, IOException {
+        //preparacion
+
+
+        //ejecucion
+        ModelAndView modelAndView = controladorUsuario.modificarUsuario(usuarioMock, sessionMock, imgMock);
+
+        //validacion
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil"));
+    }
+    /*  @Test
+    public void queAlModificarLosDatosDelUsuarioRedirijaALaVistaDePerfil() throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
         //preparacion
         Long userId = 1L;
         Usuario usuario = new Usuario();
@@ -214,12 +233,12 @@ public class ControladorUsuarioTest {
         usuario.setIdUsuario(userId);
 
         //ejecucion
-        Mockito.doNothing().when(servicioUsuarioMock).modificarDatosUsuario(Mockito.any(Usuario.class));
+        Mockito.doNothing().when(servicioUsuarioMock).modificarDatosUsuario(Mockito.any(Usuario.class), Mockito.any(MultipartFile.class));
         session.setAttribute("UsuarioAEditar", usuario);
-        ModelAndView modelAndView = controladorUsuario.modificarUsuario(usuario, session);
+        ModelAndView modelAndView = controladorUsuario.modificarUsuario(usuario, session, imgMock);
 
         //validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil/" + userId));
-    }
+    }*/
 
 }

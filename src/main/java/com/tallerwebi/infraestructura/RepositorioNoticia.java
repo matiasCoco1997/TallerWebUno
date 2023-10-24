@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface RepositorioNoticia {
 
+    Boolean modificarLikes(Noticia noticia);
+
     Boolean guardar(Noticia noticia);
 
     Boolean modificar(Noticia noticia);

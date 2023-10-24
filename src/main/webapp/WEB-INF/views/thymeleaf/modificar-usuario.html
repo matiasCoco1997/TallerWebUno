@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css"/>
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+
+
+    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+    <link rel="icon" th:href="@{/imagenes/icono-sunn.png}" type="image/x-icon">
+    <title>Modificar usuario</title>
+</head>
+
+<body class="bg-black">
+
+<main class=" container m-auto">
+
+    <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">
+        Modificar datos del usuario</h1>
+
+    <section class="mt-10">
+
+        <form th:action="@{/perfil/modificar}" method="POST" th:object="${usuario}" enctype="multipart/form-data">
+
+            <div class="mx-auto w-[100%] pt-8 pb-8 lg:flex ">
+
+                <div class="flex flex-col lg:w-[80%] gap-6">
+
+                    <input type="hidden" th:field="*{idUsuario}">
+                    <input type="hidden" th:field="*{fotoPerfil}">
+                    <input type="hidden" th:field="*{altFotoPerfil}">
+
+                    <div class="w-[80%] mx-auto">
+                        <label class="text-white text-2xl">Nombre:</label>
+                        <input type="text" th:field="*{nombre}"
+                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                               placeholder="Nombre">
+                    </div>
+
+                    <div class="w-[80%] mx-auto mt-4">
+                        <label class="text-white text-2xl">Apellido:</label>
+                        <input type="text" th:field="*{apellido}"
+                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                               placeholder="Apellido">
+                    </div>
+
+
+                    <div class="w-[80%] mx-auto mt-4">
+                        <label class="text-white text-2xl">Email:</label>
+                        <input type="email" th:field="*{email}"
+                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                               placeholder="Email">
+                    </div>
+
+                    <div class="w-[80%] mx-auto mt-4">
+                        <label class="text-white text-2xl">Contraseña:</label>
+                        <input type="password" th:field="*{password}"
+                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                               placeholder="Contraseña">
+                    </div>
+
+                    <div class="w-[80%] mx-auto mt-4">
+                        <label class="text-white text-2xl">Pais:</label>
+                        <input type="text" th:field="*{pais}"
+                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                               placeholder="Pais">
+                    </div>
+                    <div class="w-[80%] mx-auto mt-4">
+                        <label class="text-white text-2xl">Ciudad:</label>
+                        <input type="text" th:field="*{ciudad}"
+                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                               placeholder="Ciudad">
+                    </div>
+                    <div class="w-[80%] mx-auto mt-4">
+                        <label class="text-white text-2xl">Fecha de nacimiento:</label>
+                        <input type="date" th:field="*{fechaDeNacimiento}"
+                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black">
+                    </div>
+
+                    <div class="w-[80%] mx-auto mt-4">
+
+                        <div class="w-[60%] mb-4">
+                            <p class="text-white text-2xl">Foto de perfil actual:</p>
+                            <img class="mt-4 border border-white border-1" th:src="@{*{fotoPerfil}}" th:alt="*{altFotoPerfil}">
+                        </div>
+
+                        <label class="text-white text-2xl" for="imagenFile">¿Desea cambiar su foto de perfil?</label>
+                        <br>
+                        <input name="imagenFile" type="file" id="imagenFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black">
+                    </div>
+
+                    <div class="w-[80%] mx-auto">
+                        <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto text-white"
+                               value="Actualizar" name="modificarDatos" style="cursor: pointer">
+                        <a th:href="@{/perfil}" type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto text-white align-content-center"
+                           style="cursor: pointer; text-align-all: center">Volver</a>
+                    </div>
+
+                </div>
+            </div>
+            <p th:if="${error}" th:text="${error}" style="color:red"></p>
+        </form>
+
+    </section>
+
+</main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+</body>
+
+</html>

@@ -2,10 +2,7 @@ package com.tallerwebi.dominio.servicios;
 
 import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.*;
-import com.tallerwebi.infraestructura.RepositorioCategoria;
-import com.tallerwebi.infraestructura.RepositorioNoticia;
-import com.tallerwebi.infraestructura.RepositorioNotificacion;
-import com.tallerwebi.infraestructura.RepositorioUsuario;
+import com.tallerwebi.infraestructura.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,9 +14,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 @Service("servicioNoticia")
 @Transactional
@@ -29,13 +24,15 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     private final RepositorioCategoria repositorioCategoria;
     private final RepositorioUsuario repositorioUsuario;
     private final RepositorioNotificacion repositorioNotificacion;
+    private RepositorioLike repositorioLikeImpl;
 
     @Autowired
-    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria, RepositorioUsuario repositorioUsuario, RepositorioNotificacion repositorioNotificacion) {
+    public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria, RepositorioUsuario repositorioUsuario, RepositorioNotificacion repositorioNotificacion, RepositorioLike repositorioLikeImpl) {
         this.repositorioNoticia = repositorioNoticia;
         this.repositorioCategoria = repositorioCategoria;
         this.repositorioUsuario = repositorioUsuario;
         this.repositorioNotificacion = repositorioNotificacion;
+        this.repositorioLikeImpl = repositorioLikeImpl; //arreglar linea 72 testServicioNoticia
     }
 
     @Override
@@ -54,8 +51,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         repositorioNoticia.guardar(noticia);
     }
-
-
 
     @Override
     public void borrarNoticiaPorId(Long idNoticia) {
@@ -137,14 +132,41 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void darMeGusta(Noticia noticia) {
-        //noticia.setLikes(noticia.getLikes() + 1);
-        //repositorioNoticia.modificar(noticia);
+    public void darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado {
+
+        if(!verificarQueNoEsNull(noticia)){
+            throw new NoticiaInexistente();
+        }
+        if(!verificarQueElUsuarioEsteLogueado(usuarioLogueado)){
+            throw new UsuarioDeslogueado();
+        }
+
+        MeGusta megustaEnNoticia = new MeGusta(usuarioLogueado, noticia);
+
+        List<MeGusta> megustaEncontrado = repositorioLikeImpl.verificarSiElMeGustaDelUsuarioYaExiste(noticia.getIdNoticia(), usuarioLogueado.getIdUsuario());
+
+        if(megustaEncontrado.isEmpty()){
+            repositorioLikeImpl.guardarLike(megustaEnNoticia);
+
+            noticia.setLikes(noticia.getLikes()+1);
+
+        } else {
+            repositorioLikeImpl.borrarLike(megustaEncontrado.get(0));
+
+            noticia.setLikes(noticia.getLikes()-1);
+
+        }
+
+        repositorioNoticia.modificarLikes(noticia);
+
+
     }
 
-    @Override
-    public boolean verificarQueNoEsNull(Noticia noticia) {
-        return noticia==null;
+    private boolean verificarQueNoEsNull(Noticia noticia) { //hay que cambiar el test controlador noticia test linea 288 el when me marca
+        return noticia != null;
+    }
+    private boolean verificarQueElUsuarioEsteLogueado(Usuario usuarioLogueado) {
+        return usuarioLogueado != null;
     }
 
     @Override
@@ -160,8 +182,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             repositorioNotificacion.generarNotificacion(notificacion);
         }
     }
-
-
 
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
         if(noticia.getTitulo().isBlank()) {

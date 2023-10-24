@@ -109,7 +109,7 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public void darMeGusta(Noticia noticia, Usuario usuario) {
         final Session session = sessionFactory.getCurrentSession();
-        try {
+        /*try {
             noticia.getLikes().add(usuario);
             session.update(noticia);
             usuario.getNoticiasLikeadas().add(noticia);
@@ -124,6 +124,18 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
             noticiasLikeadas.add(noticia);
             usuario.setNoticiasLikeadas(noticiasLikeadas);
             session.update(usuario);
+        }
+        */
+    }
+
+    @Override
+    public Boolean modificarLikes(Noticia noticia) {
+        try {
+            sessionFactory.getCurrentSession().merge(noticia);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
         }
     }
 

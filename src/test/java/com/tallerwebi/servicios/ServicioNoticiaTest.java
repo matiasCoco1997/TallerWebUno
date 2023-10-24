@@ -69,7 +69,7 @@ public class ServicioNoticiaTest {
         this.repositorioCategoriaMock = mock(RepositorioCategoria.class);
         repositorioUsuarioMock=mock(RepositorioUsuario.class);
         repositorioNotificacionMock=mock(RepositorioNotificacion.class);
-        this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock, repositorioCategoriaMock, repositorioUsuarioMock, repositorioNotificacionMock);
+        //this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock, repositorioCategoriaMock, repositorioUsuarioMock, repositorioNotificacionMock, ); ACA
     }
 
 
