@@ -156,6 +156,9 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
             Path path = Paths.get("src/main/webapp/resources/core/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
 
+            Path imagenABorrar = Paths.get("src/main/webapp/resources/core" + usuario.getFotoPerfil());
+            Files.deleteIfExists(imagenABorrar);
+
             usuario.setFotoPerfil("/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
 
             Files.write(path, bytes);
