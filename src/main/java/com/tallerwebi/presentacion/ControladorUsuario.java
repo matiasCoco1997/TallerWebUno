@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,20 +119,24 @@ public class ControladorUsuario {
         model.put("edicion", true);
         model.put("usuario", usuario);
 
-        return new ModelAndView("/modificar-usuario", model);
+        return new ModelAndView("modificar-usuario", model);
     }
 
     @RequestMapping(value = "/perfil/modificar", method = RequestMethod.POST)
     public ModelAndView modificarUsuario(@ModelAttribute("usuario") Usuario usuario, HttpSession session, @RequestParam("imagenFile") MultipartFile imagen) {
-        Usuario usuarioEditar = (Usuario) session.getAttribute("UsuarioAEditar");
 
+        ModelMap modelo = new ModelMap();
         try{
             servicioUsuario.modificarDatosUsuario(usuario, imagen);
+            session.setAttribute("sessionUsuarioLogueado", usuario);
+        } catch (FormatoDeImagenIncorrecto e){
+            modelo.put("error", "El formato de imagen es incorrecto.");
+            return new ModelAndView("modificar-usuario", modelo);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
-        return new ModelAndView("redirect:/perfil/" + usuarioEditar.getIdUsuario());
+        return new ModelAndView("redirect:/perfil");
     }
 
 }

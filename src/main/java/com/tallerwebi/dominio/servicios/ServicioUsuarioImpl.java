@@ -127,36 +127,39 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
     @Override
     public void modificarDatosUsuario(Usuario usuario, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
-        Long tamanioDeImagen = imagen.getSize();
-        long maxTamanioDeImagen = 5 * 1024 * 1024;
 
-        if(tamanioDeImagen > maxTamanioDeImagen){
-            throw new TamanioDeArchivoSuperiorALoPermitido();
+        if(!imagen.isEmpty()){
+            Long tamanioDeImagen = imagen.getSize();
+            long maxTamanioDeImagen = 5 * 1024 * 1024;
+
+            if(tamanioDeImagen > maxTamanioDeImagen){
+                throw new TamanioDeArchivoSuperiorALoPermitido();
+            }
+
+            String nombreDelArchivo = UUID.randomUUID().toString();
+            byte[] bytes = imagen.getBytes();
+            String nombreOriginalImagen = imagen.getOriginalFilename();
+            usuario.setAltFotoPerfil(nombreOriginalImagen);
+
+            if(! nombreOriginalImagen.endsWith(".jpg") && !nombreOriginalImagen.endsWith(".jpeg") && !nombreOriginalImagen.endsWith(".png")){
+                throw new FormatoDeImagenIncorrecto();
+            }
+
+            String extensionDelArchivoSubido = nombreOriginalImagen.substring(nombreOriginalImagen.lastIndexOf("."));
+            String nuevoNombreDelArchivo = nombreDelArchivo + extensionDelArchivoSubido;
+
+            File folder = new File("src/main/webapp/resources/core/imagenes/imgsPerfiles");
+
+            if(!folder.exists()){
+                folder.mkdirs();
+            }
+
+            Path path = Paths.get("src/main/webapp/resources/core/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
+
+            usuario.setFotoPerfil("/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
+
+            Files.write(path, bytes);
         }
-
-        String nombreDelArchivo = UUID.randomUUID().toString();
-        byte[] bytes = imagen.getBytes();
-        String nombreOriginalImagen = imagen.getOriginalFilename();
-        usuario.setAltFotoPerfil(nombreOriginalImagen);
-
-        if(! nombreOriginalImagen.endsWith(".jpg") && !nombreOriginalImagen.endsWith(".jpeg") && !nombreOriginalImagen.endsWith(".png")){
-            throw new FormatoDeImagenIncorrecto();
-        }
-
-        String extensionDelArchivoSubido = nombreOriginalImagen.substring(nombreOriginalImagen.lastIndexOf("."));
-        String nuevoNombreDelArchivo = nombreDelArchivo + extensionDelArchivoSubido;
-
-        File folder = new File("src/main/webapp/resources/core/imagenes/imgsPerfiles");
-
-        if(!folder.exists()){
-            folder.mkdirs();
-        }
-
-        Path path = Paths.get("src/main/webapp/resources/core/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
-
-        usuario.setFotoPerfil("/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
-
-        Files.write(path, bytes);
         repositorioUsuario.modificar(usuario);
     }
 }

@@ -214,6 +214,17 @@ public class ControladorUsuarioTest {
     }
 
     @Test
+    public void queAlModificarLosDatosDelUsuarioRedirijaALaVistaDePerfil() throws FormatoDeImagenIncorrecto, IOException {
+        //preparacion
+
+
+        //ejecucion
+        ModelAndView modelAndView = controladorUsuario.modificarUsuario(usuarioMock, sessionMock, imgMock);
+
+        //validacion
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil"));
+    }
+    /*  @Test
     public void queAlModificarLosDatosDelUsuarioRedirijaALaVistaDePerfil() throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
         //preparacion
         Long userId = 1L;
@@ -228,6 +239,6 @@ public class ControladorUsuarioTest {
 
         //validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil/" + userId));
-    }
+    }*/
 
 }
