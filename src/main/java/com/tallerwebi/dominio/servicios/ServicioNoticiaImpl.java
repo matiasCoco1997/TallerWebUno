@@ -132,7 +132,9 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado {
+    public Boolean darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado {
+
+        Boolean resultadoMeGusta = false;
 
         if(!verificarQueNoEsNull(noticia)){
             throw new NoticiaInexistente();
@@ -150,24 +152,19 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
             noticia.setLikes(noticia.getLikes()+1);
 
+            resultadoMeGusta = true;
+
         } else {
             repositorioLikeImpl.borrarLike(megustaEncontrado.get(0));
 
             noticia.setLikes(noticia.getLikes()-1);
-
         }
 
         repositorioNoticia.modificarLikes(noticia);
 
-
+        return resultadoMeGusta;
     }
 
-    private boolean verificarQueNoEsNull(Noticia noticia) { //hay que cambiar el test controlador noticia test linea 288 el when me marca
-        return noticia != null;
-    }
-    private boolean verificarQueElUsuarioEsteLogueado(Usuario usuarioLogueado) {
-        return usuarioLogueado != null;
-    }
 
     @Override
     public List<Categoria> listarCategorias() {
@@ -181,6 +178,20 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             Notificacion notificacion=new Notificacion(seguidor.getIdUsuarioSeguidor(),nombre,noticia);
             repositorioNotificacion.generarNotificacion(notificacion);
         }
+    }
+
+    @Override
+    public MeGusta buscoNoticiasLikeadasPorUsuario(Long idUsuario , Long idNoticia) {
+        for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
+            if(meGusta.getNoticia().getIdNoticia() == idNoticia)
+                return meGusta;
+        }
+        return null;
+    }
+
+    @Override
+    public List<MeGusta> obtenerMeGustas(Long idUsuario) {
+        return repositorioLikeImpl.obtenerMegustas(idUsuario);
     }
 
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
@@ -204,8 +215,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             throw new CampoVacio();
         }
     }
-
-
 
     private void verificacionDeLaImagenSeleccionada(Noticia noticia, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
         Long tamanioDeImagen = imagen.getSize();
@@ -290,6 +299,13 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             return true;
         }
         return false;
+    }
+
+    private boolean verificarQueNoEsNull(Noticia noticia) { //hay que cambiar el test controlador noticia test linea 288 el when me marca
+        return noticia != null;
+    }
+    private boolean verificarQueElUsuarioEsteLogueado(Usuario usuarioLogueado) {
+        return usuarioLogueado != null;
     }
 
 }

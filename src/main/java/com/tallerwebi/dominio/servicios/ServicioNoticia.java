@@ -1,9 +1,6 @@
 package com.tallerwebi.dominio.servicios;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Comentario;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,10 +22,14 @@ public interface ServicioNoticia {
 
     List<Noticia> buscarNoticiaPorCategoria(String categoria);
 
-    void darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado;
+    Boolean darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado;
 
     List<Categoria> listarCategorias();
 
     void generarNotificacion(Long idUsuario, String nombre, String titulo, Noticia noticia);
+
+    MeGusta buscoNoticiasLikeadasPorUsuario(Long idUsuario , Long idNoticia);
+
+    List<MeGusta> obtenerMeGustas(Long idUsuario);
 
 }

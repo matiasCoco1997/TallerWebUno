@@ -11,4 +11,6 @@ public interface RepositorioLike {
     List<MeGusta> verificarSiElMeGustaDelUsuarioYaExiste(Long idNoticia, Long idusuario);
 
     void borrarLike(MeGusta megustaEnNoticia);
+
+    List<MeGusta> obtenerMegustas(Long idUsuario);
 }

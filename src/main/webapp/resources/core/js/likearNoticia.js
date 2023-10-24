@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(document).on("click", ".prueba", function (event) {
+    $(document).on("click", ".dar-like-btn", function (event) {
 
         var buttonId = $(this).attr('id'); // Obtiene el ID del botón que se ha hecho clic
 

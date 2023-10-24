@@ -1,10 +1,8 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.servicios.ServicioHome;
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
@@ -21,35 +19,39 @@ public class ControladorHome {
 
     private final ServicioHome servicioHome;
     private final ServicioUsuario servicioUsuario;
+    private final ServicioNoticia servicioNoticia;
 
     @Autowired
-    public ControladorHome(ServicioHome servicioHome, ServicioUsuario servicioUsuario){
-        this.servicioHome=servicioHome;
-        this.servicioUsuario=servicioUsuario;
+    public ControladorHome(ServicioHome servicioHome, ServicioUsuario servicioUsuario, ServicioNoticia servicioNoticia){
+        this.servicioHome = servicioHome;
+        this.servicioUsuario = servicioUsuario;
+        this.servicioNoticia = servicioNoticia;
     }
 
     @RequestMapping("/home")
     public ModelAndView home(HttpSession session){
         ModelMap model=new ModelMap();
 
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+
         List<Noticia> noticias = servicioHome.listarNoticias();
 
+        List<Categoria> categorias = servicioHome.obtenerCategorias();
 
-        List<Categoria> categorias=servicioHome.obtenerCategorias();
+        List<MeGusta> meGustas = servicioNoticia.obtenerMeGustas(usuario.getIdUsuario());
 
-        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
-        List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
+        List<Notificacion> notificaciones = servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
-        List<Usuario> usuarios= null; //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
+        List<Usuario> usuarios = null; //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
 
         usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
-
 
         model.put("noticias", noticias);
         model.put("notificaciones", notificaciones.size());
         model.put("usuarios",usuarios);
         model.put("categorias",categorias);
         model.put("usuario",usuario);
+        model.put("megustasDelUsuario",meGustas);
 
         return new ModelAndView("home-vista",model);
     }

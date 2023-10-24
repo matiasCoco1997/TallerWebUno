@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.entidades.Comentario;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
@@ -11,6 +8,7 @@ import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpSession;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ControladorNoticia {
@@ -26,7 +25,7 @@ public class ControladorNoticia {
     private ServicioComentario servicioComentario;
     private ServicioUsuario servicioUsuario;
     @Autowired
-    public ControladorNoticia(ServicioNoticia servicioNoticia, ServicioComentario servicioComentario, ServicioUsuario servicioUsuario) {
+    public ControladorNoticia(ServicioNoticia servicioNoticia, ServicioComentario servicioComentario, ServicioUsuario servicioUsuario ) {
         this.servicioNoticia = servicioNoticia;
         this.servicioComentario = servicioComentario;
         this.servicioUsuario = servicioUsuario;
@@ -145,34 +144,33 @@ public class ControladorNoticia {
         return new ModelAndView("home", model);
     }
 
-    /*
-    @RequestMapping(value = "/darLike",method = RequestMethod.POST)
-    public ModelAndView darLike(@RequestParam("noticiaLike") Long noticiaLike,HttpSession session) throws Exception {
-        ModelMap modelo = new ModelMap();
-        Noticia noticia = servicioNoticia.buscarNoticiaPorId(noticiaLike);
-        if (servicioNoticia.verificarQueNoEsNull(noticia)) {
-            //throw new Exception("La noticia fue eliminada.");
-            modelo.put("error", "La noticia fue eliminada.");
-            return new ModelAndView("home", modelo);
-        }
-        try {
-            servicioNoticia.darMeGusta(noticia);
-            modelo.addAttribute("meGusta", noticia.getLikes());
-        } catch (Exception e) {
-            modelo.put("error", "No se puede dar me gusta a la noticia");
-            return new ModelAndView("redirect:/home", modelo);
-        }
-        return new ModelAndView("redirect:/home", modelo);
-    }
-    */
-
     @RequestMapping(value = "/noticia/likear",method = RequestMethod.POST)
-    public ResponseEntity<Object> darLike(@RequestParam Long idNoticia , HttpSession session) {
+    public ResponseEntity<Object> darLike(@RequestParam(value = "fav", defaultValue = "false") Boolean fav, @RequestParam Long idNoticia , HttpSession session) {
+
+        ModelMap modelo = new ModelMap();
 
         Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
 
         try {
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+            MeGusta meGusta = servicioNoticia.buscoNoticiasLikeadasPorUsuario(usuarioLogueado.getIdUsuario() , noticia.getIdNoticia());
+
+            if (meGusta != null) {
+                modelo.put("isLiked",true);
+            } else {
+                modelo.put("isLiked",false);
+            }
+
+            if (fav) {
+                servicioNoticia.darMeGusta(noticia, usuarioLogueado);
+                if (meGusta != null) {
+                    modelo.put("isLiked",false);
+                } else {
+                    modelo.put("isLiked",true);
+                }
+            }
+
             servicioNoticia.darMeGusta(noticia, usuarioLogueado);
         }  catch (NoticiaInexistente e) {
             return ResponseEntity.badRequest().build();
