@@ -362,28 +362,7 @@ $(document).ready(function () {
     });
 </script>
 
-<script>
-    //BORRAR NOTICIA
-    $(document).ready(function () {
-        $(".borrar-noticia").click(function (e) {
-            e.preventDefault();
 
-            var noticiaDiv = $(this).closest(".noticia");
-            var noticiaId = noticiaDiv.data("id");
-
-            $.ajax({
-                type: "DELETE",
-                url: "/noticia/borrar/" + noticiaId,
-                success: function () {
-                    noticiaDiv.hide();
-                },
-                error: function () {
-                    alert("Error al borrar la noticia.");
-                }
-            });
-        });
-    });
-</script>
 <script th:src="@{/js/mostrarListaComentarios.js}"></script>
 <script th:src="@{/js/comentarioMenu.js}"></script>
 <script th:src="@{/js/guardarComentario.js}"></script>

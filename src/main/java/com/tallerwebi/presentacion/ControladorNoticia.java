@@ -115,8 +115,8 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home" , modelo);
     }
 
-    @RequestMapping(path = "/noticia/borrar", method = RequestMethod.DELETE)
-    public ModelAndView borrarNoticiaPorId( @ModelAttribute("datosNoticia") Long idNoticia ) {
+    @RequestMapping(path = "/noticia/borrar/{idNoticia}", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public ModelAndView borrarNoticiaPorId( @PathVariable Long idNoticia ) {
 
         ModelMap modelo = new ModelMap();
 
@@ -127,7 +127,7 @@ public class ControladorNoticia {
             return new ModelAndView("error", modelo);
         }
 
-        return new ModelAndView("home", modelo);
+        return new ModelAndView("redirect:/home", modelo);
     }
 
     @RequestMapping(path = "/noticia/buscarNoticiaPorTitulo", method = { RequestMethod.GET, RequestMethod.POST })

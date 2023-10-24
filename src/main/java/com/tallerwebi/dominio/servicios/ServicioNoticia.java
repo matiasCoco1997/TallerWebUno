@@ -13,7 +13,7 @@ import java.util.List;
 public interface ServicioNoticia {
     void crearNoticia(Noticia noticia, Usuario usuarioLogueado, MultipartFile imagen, MultipartFile audio) throws CampoVacio, TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto, FormatoDeAudioIncorrecto;
 
-    void borrarNoticiaPorId(Long idNoticia);
+    void borrarNoticiaPorId(Long idNoticia) throws IOException;
 
     Noticia buscarNoticiaPorId(Long idNoticia);
 
