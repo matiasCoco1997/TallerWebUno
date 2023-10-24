@@ -34,15 +34,4 @@ public class Usuario {
     private Boolean activo = true;
     private Integer idPlan; //Relacionado a la tabla plan, idPlan
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    private List<Noticia> noticiasLikeadas;
-
-    @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
-    protected void onCreate() {
-        noticiasLikeadas = new ArrayList<>(0);
-    }
-
-    public void setAltFotoPerfilUsuario(String nombreOriginalImagen) {
-        this.altFotoPerfil = nombreOriginalImagen;
-    }
 }
