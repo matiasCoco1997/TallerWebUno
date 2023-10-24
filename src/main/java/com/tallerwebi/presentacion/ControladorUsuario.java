@@ -112,7 +112,7 @@ public class ControladorUsuario {
     }
 
     @GetMapping(value = "/perfil/modificar")
-    public ModelAndView mostrarFormularioModificar( HttpSession session) {
+    public ModelAndView mostrarFormularioModificar(HttpSession session) {
         ModelMap model = new ModelMap();
         Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 

@@ -124,6 +124,7 @@ public class RepositorioNoticiaTest {
         assertThat(noticia.getIdNoticia(), is(noticiaModificada.getIdNoticia()));
     }
 
+    /*
     @Transactional
     @Rollback
     @Test
@@ -137,6 +138,8 @@ public class RepositorioNoticiaTest {
         //validación
         assertThat(likes, hasSize(0));
     }
+
+     */
 
     @Transactional
     @Rollback

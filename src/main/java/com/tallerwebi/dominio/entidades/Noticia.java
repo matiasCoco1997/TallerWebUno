@@ -29,7 +29,7 @@ public class Noticia {
     private LocalDateTime fechaDePublicacion;
     private String rutaDeAudioPodcast;
     private Boolean activa;
-    private  Integer likes;
+    private Integer likes;
 
     @ManyToOne
     private Usuario usuario;

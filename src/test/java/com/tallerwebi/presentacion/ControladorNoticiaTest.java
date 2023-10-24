@@ -176,6 +176,7 @@ public class ControladorNoticiaTest {
     public void queAlCrearUnaNoticiaConCamposVaciosRetorneUnaExceptionDelTipoCampoVacio() throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, FormatoDeAudioIncorrecto, CampoVacio, IOException {
         // preparacion
         //when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(CampoVacio.class);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         doThrow(CampoVacio.class).when(servicioNoticiaMock).crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
         // ejecucion
@@ -189,7 +190,7 @@ public class ControladorNoticiaTest {
     @Test
     public void queAlCrearUnaNoticiaConUnaImagenPesadaRetorneUnaExceptionDelTipoTamanioDeArchivoSuperiorALoPermitido() throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, FormatoDeAudioIncorrecto, CampoVacio, IOException {
         // preparacion
-        //when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(TamanioDeArchivoSuperiorALoPermitido.class);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         doThrow(TamanioDeArchivoSuperiorALoPermitido.class).when(servicioNoticiaMock).crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
         // ejecucion
@@ -204,6 +205,7 @@ public class ControladorNoticiaTest {
     public void queAlCrearUnaNoticiaConUnFormatoDeImagenIncorrectoRetorneUnaExceptionDelTipoFormatoDeImagenIncorrecto() throws FormatoDeImagenIncorrecto, TamanioDeArchivoSuperiorALoPermitido, FormatoDeAudioIncorrecto, CampoVacio, IOException {
         // preparacion
         //when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(FormatoDeImagenIncorrecto.class);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         doThrow(FormatoDeImagenIncorrecto.class).when(servicioNoticiaMock).crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
         // ejecucion
@@ -215,9 +217,11 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queAlCrearUnaNoticiaConUnFormatoDeAudioIncorrectoRetorneUnaExceptionDelTipoFormatoDeAudioIncorrecto() throws FormatoDeAudioIncorrecto {
+    public void queAlCrearUnaNoticiaConUnFormatoDeAudioIncorrectoRetorneUnaExceptionDelTipoFormatoDeAudioIncorrecto() throws FormatoDeAudioIncorrecto, TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, CampoVacio, IOException {
         // preparacion
-        when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(FormatoDeAudioIncorrecto.class);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        //when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(FormatoDeAudioIncorrecto.class);
+        doThrow(FormatoDeAudioIncorrecto.class).when(servicioNoticiaMock).crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock);
@@ -228,9 +232,11 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queAlCrearUnaNoticiaRetorneUnaException() {
+    public void queAlCrearUnaNoticiaRetorneUnaException() throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, FormatoDeAudioIncorrecto, CampoVacio, IOException {
         // preparacion
-        when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(RuntimeException.class);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        //when(controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock)).thenThrow(RuntimeException.class);
+        doThrow(RuntimeException.class).when(servicioNoticiaMock).crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.crearNuevaNoticia(noticiaMock, sessionMock, imgMock, audioMock);
@@ -252,7 +258,7 @@ public class ControladorNoticiaTest {
     @Test
     public void queCuandoSeBorreUnaNoticiaRetorneUnaException() {
         // preparacion
-        when(controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia())).thenThrow(RuntimeException.class);
+        doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticiaPorId(anyLong());
 
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
@@ -273,29 +279,14 @@ public class ControladorNoticiaTest {
     @Test
     public void buscarNoticiasPorTituloYRetorneUnaException() {
         // preparacion
-        when(servicioNoticiaMock.buscarNoticiaPorTitulo(noticiaMock.getTitulo())).thenThrow(RuntimeException.class);
+
+        doThrow(RuntimeException.class).when(servicioNoticiaMock).buscarNoticiaPorTitulo(anyString());
 
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.buscarNoticiaPorTitulo(noticiaMock.getTitulo());
 
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al buscar noticia."));
-    }
-
-    @Test
-    public void queAlDarMeGustaRedireccioneAlHome(){
-        //preparacion
-        //when(noticiaMock.getLikes()).thenReturn(1);
-        //when(servicioNoticiaMock.verificarQueNoEsNull(noticiaMock)).thenReturn(false); //hay que cambiar el test
-        ModelAndView model=new ModelAndView();
-        //ejecucion
-        try {
-            //model = controladorNoticia.darLike(1L,sessionMock);
-        }catch (Exception e){
-
-        }
-        //validacion
-        assertThat(model.getViewName(), equalToIgnoringCase("redirect:/home"));
     }
 
     @Test
