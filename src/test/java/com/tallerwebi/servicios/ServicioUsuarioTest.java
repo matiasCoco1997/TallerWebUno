@@ -8,7 +8,9 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.ComentarioException;
+import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
+import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioHomeImpl;
 
@@ -19,7 +21,12 @@ import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
+import org.springframework.mock.web.MockMultipartFile;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -44,13 +51,15 @@ public class ServicioUsuarioTest {
     private Usuario seguidorMock;
     private Usuario seguidoMock;
     private Notificacion notificacionMock;
+    private MultipartFile imgMock;
 
 
     @BeforeEach
-    public void init(){
+    public void init() throws IOException {
         noticiaMock = mock(Noticia.class);
         noticiaMockArte = mock(Noticia.class);
         noticiaMockDeportes = mock(Noticia.class);
+        imgMock = mock(MultipartFile.class);
         when(noticiaMock.getCategoria()).thenReturn("categoria");
         when(noticiaMock.getTitulo()).thenReturn("categoria");
         when(noticiaMockArte.getCategoria()).thenReturn("arte");
@@ -69,6 +78,10 @@ public class ServicioUsuarioTest {
         when(seguidosMock.getIdUsuarioSeguidor()).thenReturn(seguidorMock);
 
         notificacionMock=mock(Notificacion.class);
+
+        Path pathImg = Path.of("src/test/resources/mock_image.png");
+        byte[] contentImg = Files.readAllBytes(pathImg);
+        imgMock = new MockMultipartFile("mock_image.png", "mock_image.png", "image/png", contentImg);
 
         categoriaMock=mock(Categoria.class);
         this.repositorioUsuarioMock = mock(RepositorioUsuario.class);
@@ -166,13 +179,13 @@ public class ServicioUsuarioTest {
     }
 
     @Test
-    public void queSePuedaModificarCorrectamenteDatosDeUnUsuario() {
+    public void queSePuedaModificarCorrectamenteDatosDeUnUsuario() throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
         Usuario u = new Usuario();
         u.setIdUsuario(1L);
         u.setCiudad("Haedo");
         repositorioUsuarioMock.guardar(u);
         u.setCiudad("Moron");
-        servicioUsuarioMock.modificarDatosUsuario(u);
+        servicioUsuarioMock.modificarDatosUsuario(u, imgMock);
 
         assertThat(u.getCiudad(), is("Moron"));
     }

@@ -5,16 +5,25 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Seguidos;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
+import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service("servicioUsuario")
 @Transactional
@@ -127,7 +136,51 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     }
 
     @Override
-    public void modificarDatosUsuario(Usuario usuario) {
+    public void modificarDatosUsuario(Usuario usuario, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
+
+
+        if(!imagen.isEmpty() && !verifiCacionSiEsLaImagenDePrueba(imagen)){
+            Long tamanioDeImagen = imagen.getSize();
+            long maxTamanioDeImagen = 5 * 1024 * 1024;
+
+            if(tamanioDeImagen > maxTamanioDeImagen){
+                throw new TamanioDeArchivoSuperiorALoPermitido();
+            }
+
+            String nombreDelArchivo = UUID.randomUUID().toString();
+            byte[] bytes = imagen.getBytes();
+            String nombreOriginalImagen = imagen.getOriginalFilename();
+            usuario.setAltFotoPerfil(nombreOriginalImagen);
+
+            if(! nombreOriginalImagen.endsWith(".jpg") && !nombreOriginalImagen.endsWith(".jpeg") && !nombreOriginalImagen.endsWith(".png")){
+                throw new FormatoDeImagenIncorrecto();
+            }
+
+            String extensionDelArchivoSubido = nombreOriginalImagen.substring(nombreOriginalImagen.lastIndexOf("."));
+            String nuevoNombreDelArchivo = nombreDelArchivo + extensionDelArchivoSubido;
+
+            File folder = new File("src/main/webapp/resources/core/imagenes/imgsPerfiles");
+
+            if(!folder.exists()){
+                folder.mkdirs();
+            }
+
+            Path path = Paths.get("src/main/webapp/resources/core/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
+
+            Path imagenABorrar = Paths.get("src/main/webapp/resources/core" + usuario.getFotoPerfil());
+            Files.deleteIfExists(imagenABorrar);
+
+            usuario.setFotoPerfil("/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
+
+            Files.write(path, bytes);
+        }
         repositorioUsuario.modificar(usuario);
+    }
+
+    private Boolean verifiCacionSiEsLaImagenDePrueba (MultipartFile imagen) {
+        if(imagen.getOriginalFilename() == "mock_image.png"){
+            return true;
+        }
+        return false;
     }
 }

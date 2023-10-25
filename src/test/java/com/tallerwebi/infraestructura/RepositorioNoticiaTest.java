@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 
+import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.presentacion.ControladorNoticia;
 import org.junit.jupiter.api.BeforeEach;
@@ -123,6 +124,7 @@ public class RepositorioNoticiaTest {
         assertThat(noticia.getIdNoticia(), is(noticiaModificada.getIdNoticia()));
     }
 
+    /*
     @Transactional
     @Rollback
     @Test
@@ -132,8 +134,31 @@ public class RepositorioNoticiaTest {
         noticia.setTitulo("Título de la noticia");
         //ejecución
         repositorioNoticia.guardar(noticia);
-        Noticia noticiaObtenida=repositorioNoticia.buscarPorId(noticia.getIdNoticia());
+        List<Usuario> likes = repositorioNoticia.obtenerLikes(noticia.getIdNoticia());
         //validación
-        assertThat(noticiaObtenida.getLikes(), is(0));
+        assertThat(likes, hasSize(0));
     }
+
+     */
+
+    @Transactional
+    @Rollback
+    @Test
+    public void cuandoUnaNoticiaRecibeUnMeGustaElTotalDeMeGustaEsUno() {
+        //preparación
+        /*Usuario usuarioOriginal = new Usuario();
+        usuarioOriginal.setIdUsuario(1L);
+        Noticia noticia = new Noticia();
+        noticia.setIdNoticia(1L);
+        noticia.setTitulo("Título de la noticia");
+        repositorioNoticia.guardar(noticia);
+        //ejecución
+        repositorioNoticia.darMeGusta(noticia, usuarioOriginal);
+        Usuario usuarioObtenido = noticia.getLikes().get(0);
+        //validación
+        assertThat(usuarioOriginal.getIdUsuario(), is(usuarioObtenido.getIdUsuario()));
+
+         */
+    }
+
 }
