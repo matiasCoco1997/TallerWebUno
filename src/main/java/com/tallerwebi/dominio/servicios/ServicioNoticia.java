@@ -32,4 +32,5 @@ public interface ServicioNoticia {
 
     List<MeGusta> obtenerMeGustas(Long idUsuario);
 
+    List<Noticia> setNoticiasLikeadas(List<Noticia> noticias, Long idUsuario);
 }

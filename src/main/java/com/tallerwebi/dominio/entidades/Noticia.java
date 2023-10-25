@@ -30,6 +30,8 @@ public class Noticia {
     private String rutaDeAudioPodcast;
     private Boolean activa;
     private  Integer likes;
+    private  Boolean estaLikeada;
+
 
     @ManyToOne
     private Usuario usuario;

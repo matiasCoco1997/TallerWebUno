@@ -194,6 +194,23 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         return repositorioLikeImpl.obtenerMegustas(idUsuario);
     }
 
+    @Override
+    public List<Noticia> setNoticiasLikeadas(List<Noticia> noticias, Long idUsuario) {
+
+        for (Noticia noticia : noticias) {
+
+            for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
+
+                if( meGusta.getNoticia().getIdNoticia().equals(noticia.getIdNoticia()) )
+                    noticia.setEstaLikeada(true);
+                    repositorioNoticia.modificar(noticia);
+            }
+
+        }
+
+        return noticias;
+    }
+
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
         if(noticia.getTitulo().isBlank()) {
             throw new CampoVacio();

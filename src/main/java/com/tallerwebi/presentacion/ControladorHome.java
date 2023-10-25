@@ -36,9 +36,11 @@ public class ControladorHome {
 
         List<Noticia> noticias = servicioHome.listarNoticias();
 
-        List<Categoria> categorias = servicioHome.obtenerCategorias();
+        //List<MeGusta> meGustas = servicioNoticia.obtenerMeGustas(usuario.getIdUsuario());
 
-        List<MeGusta> meGustas = servicioNoticia.obtenerMeGustas(usuario.getIdUsuario());
+        noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
+
+        List<Categoria> categorias = servicioHome.obtenerCategorias();
 
         List<Notificacion> notificaciones = servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
@@ -51,7 +53,6 @@ public class ControladorHome {
         model.put("usuarios",usuarios);
         model.put("categorias",categorias);
         model.put("usuario",usuario);
-        model.put("megustasDelUsuario",meGustas);
 
         return new ModelAndView("home-vista",model);
     }
