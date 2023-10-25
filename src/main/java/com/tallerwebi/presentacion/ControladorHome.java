@@ -36,8 +36,6 @@ public class ControladorHome {
 
         List<Noticia> noticias = servicioHome.listarNoticias();
 
-        //List<MeGusta> meGustas = servicioNoticia.obtenerMeGustas(usuario.getIdUsuario());
-
         noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
 
         List<Categoria> categorias = servicioHome.obtenerCategorias();
