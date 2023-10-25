@@ -252,11 +252,11 @@ public class ControladorNoticiaTest {
         ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
 
         // validacion
-        assertThat(modelAndView.getViewName() , equalToIgnoringCase("home"));
+        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/home"));
     }
 
     @Test
-    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() {
+    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws IOException {
         // preparacion
         doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticiaPorId(anyLong());
 

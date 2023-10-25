@@ -61,6 +61,7 @@ public class ControladorHomeTest {
         noticias.add(noticiaMock);
 
         when(servicioHomeMock.listarNoticias()).thenReturn(noticias);
+        when(servicioNoticiaMock.setNoticiasLikeadas(noticias, usuarioMock.getIdUsuario())).thenReturn(noticias);
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         // ejecucion
