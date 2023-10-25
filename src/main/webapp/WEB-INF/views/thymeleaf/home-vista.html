@@ -176,8 +176,7 @@
                         Editar
                     </a>
 
-                    <a th:href="@{/noticia/borrar/} + ${noticia.getIdNoticia()}"
-                       style="padding: 10px; background-color: red; ">
+                    <a class="borrar-noticia" th:href="@{'/noticia/borrar/' + ${noticia.getIdNoticia()}}" style="padding: 10px; background-color: red; ">
                         Borrar
                     </a>
                 </div>

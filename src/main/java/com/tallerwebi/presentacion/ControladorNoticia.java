@@ -49,19 +49,25 @@ public class ControladorNoticia {
             modelo.put("sessionUsuarioLogueado", usuarioLogueado);
 
             servicioNoticia.crearNoticia(noticia, usuarioLogueado, imagen, audio);
+
             servicioNoticia.generarNotificacion(usuarioLogueado.getIdUsuario(),usuarioLogueado.getNombre(),noticia.getTitulo(),noticia);
+
         }catch (CampoVacio e) {
             modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
             return new ModelAndView("crear_noticia", modelo);
+
         }catch (TamanioDeArchivoSuperiorALoPermitido e) {
             modelo.put("error", "Error, El archivo seleccionado es demasiado pesado.");
             return new ModelAndView("crear_noticia", modelo);
+
         }catch (FormatoDeImagenIncorrecto e) {
             modelo.put("error", "Error, el formato de la imagen no esta permitido.");
             return new ModelAndView("crear_noticia", modelo);
+
         }catch (FormatoDeAudioIncorrecto e) {
             modelo.put("error", "Error, el formato del audio no esta permitido, solo es posible un tipo de audio ' .mp3 '.");
             return new ModelAndView("crear_noticia", modelo);
+
         }catch (Exception e) {
             modelo.put("error", "Error al crear la noticia.");
             return new ModelAndView("crear_noticia", modelo);
@@ -114,8 +120,8 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home" , modelo);
     }
 
-    @RequestMapping(path = "/noticia/borrar", method = RequestMethod.DELETE)
-    public ModelAndView borrarNoticiaPorId( @ModelAttribute("datosNoticia") Long idNoticia ) {
+    @RequestMapping(path = "/noticia/borrar/{idNoticia}", method = {RequestMethod.DELETE, RequestMethod.GET})
+    public ModelAndView borrarNoticiaPorId( @PathVariable Long idNoticia ) {
 
         ModelMap modelo = new ModelMap();
 
@@ -126,7 +132,7 @@ public class ControladorNoticia {
             return new ModelAndView("error", modelo);
         }
 
-        return new ModelAndView("home", modelo);
+        return new ModelAndView("redirect:/home", modelo);
     }
 
     @RequestMapping(path = "/noticia/buscarNoticiaPorTitulo", method = { RequestMethod.GET, RequestMethod.POST })

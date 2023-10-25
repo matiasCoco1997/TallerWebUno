@@ -201,15 +201,14 @@ public class ControladorUsuarioTest {
     @Test
     public void queSeMuestreElFormularioParModificarLosDatosDelUsuario(){
         //preparacion
-        MockHttpSession session = new MockHttpSession();
-        Usuario usuario = new Usuario();
-        session.setAttribute("sessionUsuarioLogueado", usuario);
+        //MockHttpSession session = new MockHttpSession();
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         // ejecucion
-        ModelAndView modelAndView = controladorUsuario.mostrarFormularioModificar(session);
+        ModelAndView modelAndView = controladorUsuario.mostrarFormularioModificar(sessionMock);
 
         //validacion
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("/modificar-usuario"));
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("modificar-usuario"));
 
     }
 
