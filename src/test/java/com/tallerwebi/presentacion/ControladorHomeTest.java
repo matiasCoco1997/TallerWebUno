@@ -31,6 +31,8 @@ public class ControladorHomeTest {
     private HttpSession sessionMock;
     private Categoria categoriaMock;
     private Usuario usuarioMock;
+    private ServicioNoticia servicioNoticiaMock;
+    //private ServicioMeGusta servicioMeGustaMock;
 
     @BeforeEach
     public void init(){
@@ -46,7 +48,8 @@ public class ControladorHomeTest {
         sessionMock = mock(HttpSession.class);
         servicioHomeMock = mock(ServicioHome.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
-        controladorHome = new ControladorHome(servicioHomeMock, servicioUsuarioMock);
+        servicioNoticiaMock = mock(ServicioNoticia.class);
+        controladorHome = new ControladorHome(servicioHomeMock, servicioUsuarioMock, servicioNoticiaMock);
     }
 
     @Test
@@ -58,6 +61,7 @@ public class ControladorHomeTest {
         noticias.add(noticiaMock);
 
         when(servicioHomeMock.listarNoticias()).thenReturn(noticias);
+        when(servicioNoticiaMock.setNoticiasLikeadas(noticias, usuarioMock.getIdUsuario())).thenReturn(noticias);
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         // ejecucion

@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioHomeImpl;
 import com.tallerwebi.infraestructura.RepositorioHome;
+import com.tallerwebi.infraestructura.RepositorioLike;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,6 +33,7 @@ public class ServicioHomeTest {
     private RepositorioUsuario repositorioUsuarioMock;
     private Usuario usuarioMock;
     private Categoria categoriaMock;
+    private RepositorioLike repositorioLikeMock;
 
     @BeforeEach
     public void init(){
@@ -44,11 +46,13 @@ public class ServicioHomeTest {
         when(noticiaMockArte.getTitulo()).thenReturn("depor");
         when(noticiaMockDeportes.getCategoria()).thenReturn("deportes");
         when(noticiaMockDeportes.getTitulo()).thenReturn("deportes");
-        usuarioMock=mock(Usuario.class);
-        categoriaMock=mock(Categoria.class);
+        usuarioMock = mock(Usuario.class);
+        categoriaMock = mock(Categoria.class);
+        repositorioLikeMock = mock(RepositorioLike.class);
+        
         this.repositorioHomeMock = mock(RepositorioHome.class);
         this.repositorioUsuarioMock = mock(RepositorioUsuario.class);
-        this.servicioHomeMock = new ServicioHomeImpl(this.repositorioHomeMock, repositorioUsuarioMock);
+        this.servicioHomeMock = new ServicioHomeImpl(this.repositorioHomeMock, repositorioUsuarioMock, repositorioLikeMock);
     }
 
     @Test

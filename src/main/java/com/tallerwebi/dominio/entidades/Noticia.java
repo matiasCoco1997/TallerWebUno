@@ -29,7 +29,9 @@ public class Noticia {
     private LocalDateTime fechaDePublicacion;
     private String rutaDeAudioPodcast;
     private Boolean activa;
-    private Integer likes;
+    private  Integer likes;
+    private  Boolean estaLikeada;
+
 
     @ManyToOne
     private Usuario usuario;
@@ -38,6 +40,7 @@ public class Noticia {
     protected void onCreate() {
         fechaDePublicacion = LocalDateTime.now();
         likes = 0;
+        estaLikeada=false;
     }
 
     public void setAltImagenNoticia(String nombreOriginalImagen) {

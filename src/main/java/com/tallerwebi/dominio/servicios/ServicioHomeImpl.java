@@ -1,10 +1,8 @@
 package com.tallerwebi.dominio.servicios;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.infraestructura.RepositorioHome;
+import com.tallerwebi.infraestructura.RepositorioLike;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,11 +15,13 @@ public class ServicioHomeImpl implements ServicioHome {
 
     private final RepositorioHome repositorioHome;
     private final RepositorioUsuario repositorioUsuario;
+    private final RepositorioLike repositorioLikeImpl;
 
     @Autowired
-    public ServicioHomeImpl(RepositorioHome repositorioHome, RepositorioUsuario repositorioUsuario) {
+    public ServicioHomeImpl(RepositorioHome repositorioHome, RepositorioUsuario repositorioUsuario, RepositorioLike repositorioLikeImpl) {
         this.repositorioHome = repositorioHome;
         this.repositorioUsuario = repositorioUsuario;
+        this.repositorioLikeImpl = repositorioLikeImpl;
     }
 
     @Override

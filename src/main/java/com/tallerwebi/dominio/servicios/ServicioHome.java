@@ -1,10 +1,6 @@
 package com.tallerwebi.dominio.servicios;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
-import org.springframework.stereotype.Service;
+import com.tallerwebi.dominio.entidades.*;
 
 import java.util.List;
 
@@ -28,4 +24,9 @@ public interface ServicioHome {
     List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario);
 
     List<Noticia> obtenerNoticiaDeSeguidos(Long idUsuario);
+
+    //List<MeGusta> obtenerMeGustas(Long usuario);
+
+    //MeGusta buscoNoticiasLikeadasPorUsuario(Long idUsuario , Long idNoticia);
+
 }

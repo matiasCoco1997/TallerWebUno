@@ -53,9 +53,13 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void borrarNoticiaPorId(Long idNoticia) {
-        Noticia noticia = this.buscarNoticiaPorId(idNoticia);
-        repositorioNoticia.borrarNoticia(noticia);
+    public void borrarNoticiaPorId(Long idNoticia) throws IOException {
+        Noticia noticiaBuscada = this.buscarNoticiaPorId(idNoticia);
+        Path audioABorrar = Paths.get("src/main/webapp/resources/core" + noticiaBuscada.getRutaDeAudioPodcast());
+        Path imagenABorrar = Paths.get("src/main/webapp/resources/core" + noticiaBuscada.getRutaDeimagen());
+        Files.deleteIfExists(imagenABorrar);
+        Files.deleteIfExists(audioABorrar);
+        repositorioNoticia.borrarNoticia(noticiaBuscada);
     }
 
     @Override
@@ -132,7 +136,9 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado {
+    public Boolean darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado {
+
+        Boolean resultadoMeGusta = false;
 
         if(!verificarQueNoEsNull(noticia)){
             throw new NoticiaInexistente();
@@ -150,6 +156,8 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
             noticia.setLikes(noticia.getLikes()+1);
 
+            resultadoMeGusta = true;
+
         } else {
             repositorioLikeImpl.borrarLike(megustaEncontrado.get(0));
 
@@ -159,15 +167,9 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         repositorioNoticia.modificarLikes(noticia);
 
-
+        return resultadoMeGusta;
     }
 
-    private boolean verificarQueNoEsNull(Noticia noticia) { //hay que cambiar el test controlador noticia test linea 288 el when me marca
-        return noticia != null;
-    }
-    private boolean verificarQueElUsuarioEsteLogueado(Usuario usuarioLogueado) {
-        return usuarioLogueado != null;
-    }
 
     @Override
     public List<Categoria> listarCategorias() {
@@ -181,6 +183,39 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             Notificacion notificacion=new Notificacion(seguidor.getIdUsuarioSeguidor(),nombre,noticia);
             repositorioNotificacion.generarNotificacion(notificacion);
         }
+    }
+
+    @Override
+    public MeGusta buscarNoticiaLikeadaPorUsuario(Long idUsuario , Long idNoticia) {
+        for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
+            if(meGusta.getNoticia().getIdNoticia() == idNoticia)
+                return meGusta;
+        }
+        return null;
+    }
+
+    @Override
+    public List<MeGusta> obtenerMeGustas(Long idUsuario) {
+        return repositorioLikeImpl.obtenerMegustas(idUsuario);
+    }
+
+    @Override
+    public List<Noticia> setNoticiasLikeadas(List<Noticia> noticias, Long idUsuario) {
+
+        for (Noticia noticia : noticias) {
+
+            for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
+
+                if( meGusta.getNoticia().getIdNoticia().equals(noticia.getIdNoticia()) ){
+                    noticia.setEstaLikeada(true);
+                    repositorioNoticia.modificar(noticia);
+                }
+
+            }
+
+        }
+
+        return noticias;
     }
 
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
@@ -204,8 +239,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             throw new CampoVacio();
         }
     }
-
-
 
     private void verificacionDeLaImagenSeleccionada(Noticia noticia, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, IOException, FormatoDeImagenIncorrecto {
         Long tamanioDeImagen = imagen.getSize();
@@ -290,6 +323,13 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             return true;
         }
         return false;
+    }
+
+    private boolean verificarQueNoEsNull(Noticia noticia) { //hay que cambiar el test controlador noticia test linea 288 el when me marca
+        return noticia != null;
+    }
+    private boolean verificarQueElUsuarioEsteLogueado(Usuario usuarioLogueado) {
+        return usuarioLogueado != null;
     }
 
 }

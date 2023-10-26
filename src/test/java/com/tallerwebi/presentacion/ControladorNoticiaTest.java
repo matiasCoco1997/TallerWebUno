@@ -14,6 +14,7 @@ import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -55,6 +56,7 @@ public class ControladorNoticiaTest {
         when(noticiaMock.getCategoria()).thenReturn("1");
 
         usuarioMock=mock(Usuario.class);
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
 
         imgMock = mock(MultipartFile.class);
         requestMock = mock(HttpServletRequest.class);
@@ -247,21 +249,30 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queCuandoSeBorreUnaNoticiaRedireccioneAlHome(){
+    public void queCuandoSeBorreUnaNoticiaRedireccioneAlHome() {
+
+        when(noticiaMock.getUsuario()).thenReturn(usuarioMock);
+
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+
+        when(noticiaMock.getIdNoticia()).thenReturn(1L);
+        when(servicioNoticiaMock.buscarNoticiaPorId(anyLong())).thenReturn(noticiaMock);
+
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
+        ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia(), sessionMock);
 
         // validacion
-        assertThat(modelAndView.getViewName() , equalToIgnoringCase("home"));
+        assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/home"));
     }
 
     @Test
-    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() {
+    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws IOException {
         // preparacion
-        doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticiaPorId(anyLong());
+        doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticiaPorId(any());
 
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
+        ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia(), sessionMock);
 
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al borrar la noticia."));
@@ -294,7 +305,7 @@ public class ControladorNoticiaTest {
 
         Noticia n1 = new Noticia();
         controladorNoticia.crearNuevaNoticia(n1,sessionMock,imgMock,audioMock);
-        controladorNoticia.borrarNoticiaPorId(n1.getIdNoticia());
+        controladorNoticia.borrarNoticiaPorId(n1.getIdNoticia(), sessionMock);
 
         try {
             //ModelAndView modelo = controladorNoticia.darLike(1L,sessionMock);
