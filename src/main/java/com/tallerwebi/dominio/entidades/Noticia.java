@@ -40,6 +40,7 @@ public class Noticia {
     protected void onCreate() {
         fechaDePublicacion = LocalDateTime.now();
         likes = 0;
+        estaLikeada=false;
     }
 
     public void setAltImagenNoticia(String nombreOriginalImagen) {

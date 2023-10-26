@@ -128,12 +128,10 @@ public class ControladorNoticia {
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
         Noticia noticiaBuscada = servicioNoticia.buscarNoticiaPorId(idNoticia);
 
-        try{
-
-            if(noticiaBuscada.getUsuario().getIdUsuario().equals(usuarioLogueado.getIdUsuario())){
+        try {
+            if (noticiaBuscada.getUsuario().getIdUsuario().equals(usuarioLogueado.getIdUsuario())) {
                 servicioNoticia.borrarNoticiaPorId(noticiaBuscada.getIdNoticia());
             }
-
         } catch (Exception e) {
             modelo.put("error", "Error al borrar la noticia.");
             return new ModelAndView("home", modelo);
@@ -158,34 +156,15 @@ public class ControladorNoticia {
     }
 
     @RequestMapping(value = "/noticia/likear",method = RequestMethod.POST)
-    public ResponseEntity<Object> darLike(@RequestParam(value = "fav", defaultValue = "false") Boolean fav, @RequestParam Long idNoticia , HttpSession session) {
+    public ResponseEntity<Object> darLike(@RequestParam Long idNoticia , HttpSession session) {
 
-        ModelMap modelo = new ModelMap();
-
-        Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
+        Boolean resultadoMeGusta;
 
         try {
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-
-            MeGusta meGusta = servicioNoticia.buscoNoticiasLikeadasPorUsuario(usuarioLogueado.getIdUsuario() , noticia.getIdNoticia());
-
-            if (meGusta != null) {
-                modelo.put("isLiked",true);
-            } else {
-                modelo.put("isLiked",false);
-            }
-
-            if (fav) {
-                servicioNoticia.darMeGusta(noticia, usuarioLogueado);
-                if (meGusta != null) {
-                    modelo.put("isLiked",false);
-                } else {
-                    modelo.put("isLiked",true);
-                }
-            }
-
-            servicioNoticia.darMeGusta(noticia, usuarioLogueado);
-        }  catch (NoticiaInexistente e) {
+            Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
+            resultadoMeGusta = servicioNoticia.darMeGusta(noticia, usuarioLogueado);
+        } catch (NoticiaInexistente e) {
             return ResponseEntity.badRequest().build();
         } catch (UsuarioDeslogueado e) {
             return ResponseEntity.badRequest().build();
@@ -193,7 +172,7 @@ public class ControladorNoticia {
             return ResponseEntity.badRequest().build();
         }
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok(resultadoMeGusta);
     }
 
     @GetMapping("/publicacion/{idNoticia}")

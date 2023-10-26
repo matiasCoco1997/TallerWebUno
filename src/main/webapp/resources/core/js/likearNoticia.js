@@ -10,7 +10,26 @@ $(document).ready(function () {
                 idNoticia: buttonId
             },
             success: function(response) {
-                console.log("me gusta");
+
+                var cantidadMG;
+                var colorDelBoton = $('.like_' + buttonId).css('fill');
+                console.log('Color actual:', colorDelBoton);
+
+                if(colorDelBoton === "rgb(0, 128, 0)"){
+                    $('.like_'+ buttonId).css('fill', 'white');
+                } else {
+                    $('.like_'+ buttonId).css('fill', 'green');
+                }
+
+                if(response){
+                    //aca deberia sumar un me gusta a lo que tengo
+                    cantidadMG = $('.cantidadMG_'+ buttonId).text();
+                    console.log(cantidadMG);
+                    cantidadMG++;
+                    console.log(cantidadMG);
+                } else {
+                    //deberia restar
+                }
             },
             error: function(error) {
                 console.error(error);

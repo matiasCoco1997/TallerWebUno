@@ -162,6 +162,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             repositorioLikeImpl.borrarLike(megustaEncontrado.get(0));
 
             noticia.setLikes(noticia.getLikes()-1);
+
         }
 
         repositorioNoticia.modificarLikes(noticia);
@@ -185,7 +186,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public MeGusta buscoNoticiasLikeadasPorUsuario(Long idUsuario , Long idNoticia) {
+    public MeGusta buscarNoticiaLikeadaPorUsuario(Long idUsuario , Long idNoticia) {
         for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
             if(meGusta.getNoticia().getIdNoticia() == idNoticia)
                 return meGusta;
