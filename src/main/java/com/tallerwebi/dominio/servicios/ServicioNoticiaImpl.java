@@ -54,12 +54,12 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
     @Override
     public void borrarNoticiaPorId(Long idNoticia) throws IOException {
-        Noticia noticia = this.buscarNoticiaPorId(idNoticia);
-        Path audioABorrar = Paths.get("src/main/webapp/resources/core" + noticia.getRutaDeAudioPodcast());
-        Path imagenABorrar = Paths.get("src/main/webapp/resources/core" + noticia.getRutaDeimagen());
+        Noticia noticiaBuscada = this.buscarNoticiaPorId(idNoticia);
+        Path audioABorrar = Paths.get("src/main/webapp/resources/core" + noticiaBuscada.getRutaDeAudioPodcast());
+        Path imagenABorrar = Paths.get("src/main/webapp/resources/core" + noticiaBuscada.getRutaDeimagen());
         Files.deleteIfExists(imagenABorrar);
         Files.deleteIfExists(audioABorrar);
-        repositorioNoticia.borrarNoticia(noticia);
+        repositorioNoticia.borrarNoticia(noticiaBuscada);
     }
 
     @Override

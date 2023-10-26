@@ -121,12 +121,19 @@ public class ControladorNoticia {
     }
 
     @RequestMapping(path = "/noticia/borrar/{idNoticia}", method = {RequestMethod.DELETE, RequestMethod.GET})
-    public ModelAndView borrarNoticiaPorId( @PathVariable Long idNoticia ) {
+    public ModelAndView borrarNoticiaPorId( @PathVariable Long idNoticia , HttpSession session) {
 
         ModelMap modelo = new ModelMap();
 
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Noticia noticiaBuscada = servicioNoticia.buscarNoticiaPorId(idNoticia);
+
         try{
-            servicioNoticia.borrarNoticiaPorId(idNoticia);
+
+            if(noticiaBuscada.getUsuario().getIdUsuario().equals(usuarioLogueado.getIdUsuario())){
+                servicioNoticia.borrarNoticiaPorId(noticiaBuscada.getIdNoticia());
+            }
+
         } catch (Exception e) {
             modelo.put("error", "Error al borrar la noticia.");
             return new ModelAndView("error", modelo);

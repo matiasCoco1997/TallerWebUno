@@ -55,6 +55,7 @@ public class ControladorNoticiaTest {
         when(noticiaMock.getCategoria()).thenReturn("1");
 
         usuarioMock=mock(Usuario.class);
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
 
         imgMock = mock(MultipartFile.class);
         requestMock = mock(HttpServletRequest.class);
@@ -247,9 +248,14 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queCuandoSeBorreUnaNoticiaRedireccioneAlHome(){
+    public void queCuandoSeBorreUnaNoticiaRedireccioneAlHome() {
+
+        when(noticiaMock.getIdNoticia()).thenReturn(1L);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(servicioNoticiaMock.buscarNoticiaPorId(anyLong())).thenReturn(noticiaMock);
+
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
+        ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia(), sessionMock);
 
         // validacion
         assertThat(modelAndView.getViewName() , equalToIgnoringCase("redirect:/home"));
@@ -258,10 +264,10 @@ public class ControladorNoticiaTest {
     @Test
     public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws IOException {
         // preparacion
-        doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticiaPorId(anyLong());
+        doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticiaPorId(any());
 
         // ejecucion
-        ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia());
+        ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia(), sessionMock);
 
         // validacion
         assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al borrar la noticia."));
@@ -294,7 +300,7 @@ public class ControladorNoticiaTest {
 
         Noticia n1 = new Noticia();
         controladorNoticia.crearNuevaNoticia(n1,sessionMock,imgMock,audioMock);
-        controladorNoticia.borrarNoticiaPorId(n1.getIdNoticia());
+        controladorNoticia.borrarNoticiaPorId(n1.getIdNoticia(), sessionMock);
 
         try {
             //ModelAndView modelo = controladorNoticia.darLike(1L,sessionMock);
