@@ -136,7 +136,7 @@ public class ControladorNoticia {
 
         } catch (Exception e) {
             modelo.put("error", "Error al borrar la noticia.");
-            return new ModelAndView("error", modelo);
+            return new ModelAndView("home", modelo);
         }
 
         return new ModelAndView("redirect:/home", modelo);

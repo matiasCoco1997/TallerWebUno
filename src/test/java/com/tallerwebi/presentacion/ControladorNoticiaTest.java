@@ -14,6 +14,7 @@ import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -250,8 +251,12 @@ public class ControladorNoticiaTest {
     @Test
     public void queCuandoSeBorreUnaNoticiaRedireccioneAlHome() {
 
-        when(noticiaMock.getIdNoticia()).thenReturn(1L);
+        when(noticiaMock.getUsuario()).thenReturn(usuarioMock);
+
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
         when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+
+        when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(servicioNoticiaMock.buscarNoticiaPorId(anyLong())).thenReturn(noticiaMock);
 
         // ejecucion
