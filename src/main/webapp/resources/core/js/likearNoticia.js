@@ -17,7 +17,7 @@ $(document).ready(function () {
                     cantidadMG = 0;
                     $('.cantidadMG_'+ buttonId).text(cantidadMG);
                 }
-                console.log(response);
+
                 if(response){
                     cantidadMG++;
                     $('.cantidadMG_'+ buttonId).text(cantidadMG);
@@ -27,6 +27,7 @@ $(document).ready(function () {
                     $('.cantidadMG_'+ buttonId).text(cantidadMG);
                     $('.like_'+ buttonId).css('fill', 'white');
                 }
+
                 console.log("cantidad de mg = " + cantidadMG);
             },
             error: function(error) {
