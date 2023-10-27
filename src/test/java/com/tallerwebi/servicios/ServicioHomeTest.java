@@ -2,6 +2,7 @@ package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Republicacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioHomeImpl;
@@ -34,10 +35,12 @@ public class ServicioHomeTest {
     private Usuario usuarioMock;
     private Categoria categoriaMock;
     private RepositorioLike repositorioLikeMock;
+    private Republicacion republicacionMock;
 
     @BeforeEach
     public void init(){
         noticiaMock = mock(Noticia.class);
+        republicacionMock = mock(Republicacion.class);
         noticiaMockArte = mock(Noticia.class);
         noticiaMockDeportes = mock(Noticia.class);
         when(noticiaMock.getCategoria()).thenReturn("categoria");
@@ -156,4 +159,38 @@ public class ServicioHomeTest {
 
         verify(repositorioUsuarioMock, times(1)).obtenerNoticiaDeSeguidos(anyLong());
     }
+
+
+    @Test
+    public void queSePuedaObtenerUnaListaDePublicacionesYRepublicaciones(){
+        List<Noticia> noticias= new ArrayList<>();
+        noticias.add(noticiaMock);
+        noticias.add(noticiaMockArte);
+        noticias.add(noticiaMockDeportes);
+        List<Republicacion> republicaciones=new ArrayList<>();
+        republicaciones.add(republicacionMock);
+        republicaciones.add(republicacionMock);
+
+        when(repositorioHomeMock.listarNoticias()).thenReturn(noticias);
+        when(repositorioHomeMock.obtenerRepublicaciones()).thenReturn(republicaciones);
+        List<Object> listaFinal=servicioHomeMock.obtenerPosts();
+        assertThat(listaFinal.size(),is(5));
+    }
+
+   /*
+   *  @Test
+    public void queLaListaDeNoticiasYRepublicacionesEsteOrdenadaDeFormaAleatoria(){
+        List<Noticia> noticias= new ArrayList<>();
+        noticias.add(noticiaMock);
+        noticias.add(noticiaMockArte);
+        noticias.add(noticiaMockDeportes);
+        List<Republicacion> republicaciones=new ArrayList<>();
+        republicaciones.add(new Republicacion());
+        republicaciones.add(new Republicacion());
+
+        when(repositorioHomeMock.listarNoticias()).thenReturn(noticias);
+        when(repositorioHomeMock.obtenerRepublicaciones()).thenReturn(republicaciones);
+        List<Object> listaFinal=servicioHomeMock.obtenerPosts();
+        assertThat(listaFinal.get(0),is(noticiaMock));
+    }*/
 }

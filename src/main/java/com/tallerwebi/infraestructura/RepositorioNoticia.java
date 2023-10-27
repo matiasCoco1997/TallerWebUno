@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.ListaReproduccion;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 
 import java.util.List;
 
@@ -32,4 +29,8 @@ public interface RepositorioNoticia {
     List<Usuario> obtenerLikes(Long idNoticia);
 
     void darMeGusta(Noticia noticia, Usuario usuario);
+
+    List<Republicacion> obtenerRepublicaciones();
+
+    void republicarNoticia(Republicacion republicacion);
 }

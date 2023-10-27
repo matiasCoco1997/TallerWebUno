@@ -10,6 +10,7 @@ import static org.mockito.Mockito.when;
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 
+import com.tallerwebi.dominio.entidades.Republicacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.presentacion.ControladorNoticia;
@@ -38,14 +39,9 @@ public class RepositorioNoticiaTest {
 
     @Autowired
     private RepositorioNoticia repositorioNoticia;
-    private Noticia noticiaMock;
 
     @BeforeEach
     public void init(){
-        noticiaMock = mock(Noticia.class);
-        when(noticiaMock.getIdNoticia()).thenReturn(1L);
-        when(noticiaMock.getTitulo()).thenReturn("Titulo de la noticia");
-        when(noticiaMock.getCategoria()).thenReturn("Categoria");
     }
 
     @Transactional
@@ -122,6 +118,16 @@ public class RepositorioNoticiaTest {
         assertThat(nuevoTitulo, is(noticiaModificada.getTitulo()));
         assertThat(noticia.getCategoria(), is(noticiaModificada.getCategoria()));
         assertThat(noticia.getIdNoticia(), is(noticiaModificada.getIdNoticia()));
+    }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaGuardarUnaRepublicacion(){
+        Republicacion republicacion=new Republicacion();
+        repositorioNoticia.republicarNoticia(republicacion);
+        List<Republicacion> republicaciones=repositorioNoticia.obtenerRepublicaciones();
+        assertThat(republicaciones.size(),is(1));
     }
 
     /*

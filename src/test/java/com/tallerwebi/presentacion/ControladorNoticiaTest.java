@@ -321,4 +321,12 @@ public class ControladorNoticiaTest {
         // validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
     }
+    @Test
+    public void queAlRepublicarMeRedirijaAlHome(){
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        ModelAndView modelAndView = controladorNoticia.republicar(1L,sessionMock);
+        // validacion
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
+    }
+
 }

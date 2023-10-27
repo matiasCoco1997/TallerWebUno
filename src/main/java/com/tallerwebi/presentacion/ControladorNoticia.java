@@ -199,6 +199,16 @@ public class ControladorNoticia {
 
         return new ModelAndView("noticia", model);
     }
+
+    @RequestMapping(value = "/republicar",method = RequestMethod.POST)
+    public ModelAndView republicar(@RequestParam("idNoticiaRepublicar")Long idNoticia, HttpSession session){
+        Noticia noticia=servicioNoticia.buscarNoticiaPorId(idNoticia);
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Republicacion republicacion=new Republicacion(usuario,noticia);
+
+        servicioNoticia.republicarNoticia(republicacion);
+        return new ModelAndView("redirect:/home");
+    }
 }
 
 

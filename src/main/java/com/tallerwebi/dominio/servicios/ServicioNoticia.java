@@ -28,9 +28,12 @@ public interface ServicioNoticia {
 
     void generarNotificacion(Long idUsuario, String nombre, String titulo, Noticia noticia);
 
-    MeGusta buscarNoticiaLikeadaPorUsuario(Long idUsuario , Long idNoticia);
+    MeGusta buscarNoticiaLikeadaPorUsuario(Long idUsuario, Long idNoticia);
 
     List<MeGusta> obtenerMeGustas(Long idUsuario);
 
     List<Noticia> setNoticiasLikeadas(List<Noticia> noticias, Long idUsuario);
+
+    void republicarNoticia(Republicacion republicacion);
+
 }

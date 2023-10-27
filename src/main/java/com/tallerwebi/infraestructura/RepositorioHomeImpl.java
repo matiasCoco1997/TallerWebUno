@@ -23,6 +23,11 @@ public class RepositorioHomeImpl implements RepositorioHome{
         final Session session = sessionFactory.getCurrentSession();
         return session.createQuery("FROM Noticia WHERE activa=true").list();
     }
+    @Override
+    public List<Republicacion> obtenerRepublicaciones() {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Republicacion").list();
+    }
 
     @Override
     public List<Categoria> listarCategorias() {

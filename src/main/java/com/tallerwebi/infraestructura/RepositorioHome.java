@@ -15,4 +15,5 @@ public interface RepositorioHome {
 
     List<Noticia> obtenerNoticiasPorTitulo(String titulo);
 
+    List<Republicacion> obtenerRepublicaciones();
 }

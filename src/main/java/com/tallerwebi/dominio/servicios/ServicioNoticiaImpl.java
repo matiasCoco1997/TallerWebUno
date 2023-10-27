@@ -218,6 +218,11 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         return noticias;
     }
 
+    @Override
+    public void republicarNoticia(Republicacion republicacion) {
+        repositorioNoticia.republicarNoticia(republicacion);
+    }
+
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
         if(noticia.getTitulo().isBlank()) {
             throw new CampoVacio();

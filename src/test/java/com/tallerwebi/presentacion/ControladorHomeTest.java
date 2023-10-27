@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Republicacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
@@ -32,10 +33,12 @@ public class ControladorHomeTest {
     private Categoria categoriaMock;
     private Usuario usuarioMock;
     private ServicioNoticia servicioNoticiaMock;
+    private Republicacion republicacionMock;
     //private ServicioMeGusta servicioMeGustaMock;
 
     @BeforeEach
     public void init(){
+        republicacionMock = mock(Republicacion.class);
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
@@ -150,5 +153,16 @@ public class ControladorHomeTest {
         ModelAndView modelAndView=controladorHome.mostrarNoticiaDeSeguidos(sessionMock);
 
         assertThat("home-vista", is(modelAndView.getViewName()));
+    }
+
+    @Test
+    public void queSePuedaObtenerUnaListaDePosts(){
+        List<Object> posts=new ArrayList<>();
+        posts.add(noticiaMock);
+        posts.add(republicacionMock);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(servicioHomeMock.obtenerPosts()).thenReturn(posts);
+        List<Object> postsObtenidos= (List<Object>) controladorHome.home(sessionMock).getModel().get("posts");
+        assertThat(postsObtenidos.size(),is(2));
     }
 }

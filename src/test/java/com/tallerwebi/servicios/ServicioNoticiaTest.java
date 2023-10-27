@@ -1,9 +1,6 @@
 package com.tallerwebi.servicios;
 
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Seguidos;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
 import com.tallerwebi.infraestructura.*;
@@ -38,6 +35,7 @@ public class ServicioNoticiaTest {
     private RepositorioCategoria repositorioCategoriaMock;
     private RepositorioNotificacion repositorioNotificacionMock;
     private RepositorioLike repositorioLikeMock;
+    private Republicacion republicacionMock;
 
     @BeforeEach
     public void init() throws IOException {
@@ -46,6 +44,7 @@ public class ServicioNoticiaTest {
         usuarioMock = mock(Usuario.class);
         notificacionMock = mock(Notificacion.class);
         noticiaMock = mock(Noticia.class);
+        republicacionMock = mock(Republicacion.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
         when(noticiaMock.getCategoria()).thenReturn("1");
@@ -112,6 +111,12 @@ public class ServicioNoticiaTest {
 
         //verificacion
         assertThat(noticiaObtenida.getIdNoticia(), is(1L));
+    }
+
+    @Test
+    public void queSeGuardeLaRepublicacion(){
+        servicioNoticiaMock.republicarNoticia(republicacionMock);
+        verify(repositorioNoticiaMock,times(1)).republicarNoticia(eq(republicacionMock));
     }
 
 }

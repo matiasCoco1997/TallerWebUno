@@ -48,7 +48,9 @@ public class ControladorHome {
 
         usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
 
+        List<Object> posts=servicioHome.obtenerPosts();
         model.put("noticias", noticias);
+        model.put("posts", posts);
         model.put("notificaciones", notificaciones.size());
         model.put("usuarios",usuarios);
         model.put("categorias",categorias);
@@ -113,5 +115,13 @@ public class ControladorHome {
         model.put("usuario",usuarioLogueado);
 
         return new ModelAndView("home-vista",model);
+    }
+
+    @RequestMapping("/prueba")
+    public ModelAndView lista(){
+        ModelMap model=new ModelMap();
+        //List<Object> noticias=servicioNoticia.obtenerPosts();
+        //model.put("noticias",noticias);
+        return new ModelAndView("prueba",model);
     }
 }

@@ -25,6 +25,8 @@ public interface ServicioHome {
 
     List<Noticia> obtenerNoticiaDeSeguidos(Long idUsuario);
 
+    List<Object> obtenerPosts();
+
     //List<MeGusta> obtenerMeGustas(Long usuario);
 
     //MeGusta buscoNoticiasLikeadasPorUsuario(Long idUsuario , Long idNoticia);

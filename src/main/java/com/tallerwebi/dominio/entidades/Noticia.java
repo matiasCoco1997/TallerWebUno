@@ -14,6 +14,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "republicada")
 public class Noticia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
