@@ -73,9 +73,13 @@ public class ServicioHomeImpl implements ServicioHome {
 
     @Override
     public List<Object> obtenerPosts() {
+
         List<Noticia> noticias = repositorioHome.listarNoticias();
+
         List<Republicacion> republicaciones = repositorioHome.obtenerRepublicaciones();
+
         int cantidadTotal = noticias.size() + republicaciones.size();
+
         List<Object> listaFinal = new ArrayList<>(Collections.nCopies(cantidadTotal, null));
 
         for (Noticia noticia : noticias) {

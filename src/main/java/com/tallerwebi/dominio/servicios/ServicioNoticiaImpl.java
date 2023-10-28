@@ -210,9 +210,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
                     noticia.setEstaLikeada(true);
                     repositorioNoticia.modificar(noticia);
                 }
-
             }
-
         }
 
         return noticias;

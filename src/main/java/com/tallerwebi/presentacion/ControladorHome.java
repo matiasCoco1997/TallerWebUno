@@ -48,9 +48,10 @@ public class ControladorHome {
 
         usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
 
-        List<Object> posts=servicioHome.obtenerPosts();
+        //List<Object> posts = servicioHome.obtenerPosts();
+
         model.put("noticias", noticias);
-        model.put("posts", posts);
+        //model.put("posts", posts);
         model.put("notificaciones", notificaciones.size());
         model.put("usuarios",usuarios);
         model.put("categorias",categorias);
