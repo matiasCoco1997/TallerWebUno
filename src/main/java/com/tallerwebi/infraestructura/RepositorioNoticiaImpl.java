@@ -46,6 +46,13 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public void borrarNoticia(Noticia noticia) {
         final Session session = sessionFactory.getCurrentSession();
+
+        session.createQuery("DELETE FROM MeGusta WHERE noticia = :noticia")
+        .setParameter("noticia", noticia).executeUpdate();
+
+        session.createQuery("DELETE FROM Notificacion WHERE noticiaNotificada = :noticia")
+                .setParameter("noticia", noticia).executeUpdate();
+
         session.delete(noticia);
     }
 

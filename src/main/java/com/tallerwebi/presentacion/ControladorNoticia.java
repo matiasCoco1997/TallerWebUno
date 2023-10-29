@@ -120,24 +120,22 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home" , modelo);
     }
 
-    @RequestMapping(path = "/noticia/borrar/{idNoticia}", method = {RequestMethod.DELETE, RequestMethod.GET})
+    @RequestMapping(path = "/noticia/borrar/{idNoticia}", method = {RequestMethod.GET})
     public ModelAndView borrarNoticiaPorId( @PathVariable Long idNoticia , HttpSession session) {
 
         ModelMap modelo = new ModelMap();
 
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
         Noticia noticiaBuscada = servicioNoticia.buscarNoticiaPorId(idNoticia);
-
         try {
             if (noticiaBuscada.getUsuario().getIdUsuario().equals(usuarioLogueado.getIdUsuario())) {
-                servicioNoticia.borrarNoticiaPorId(noticiaBuscada.getIdNoticia());
+                servicioNoticia.borrarNoticiaPorId(noticiaBuscada);
             }
         } catch (Exception e) {
             modelo.put("error", "Error al borrar la noticia.");
-            return new ModelAndView("home", modelo);
+            return new ModelAndView("redirect:/home", modelo);
         }
-
-        return new ModelAndView("redirect:/home", modelo);
+        return new ModelAndView("redirect:/home");
     }
 
     @RequestMapping(path = "/noticia/buscarNoticiaPorTitulo", method = { RequestMethod.GET, RequestMethod.POST })

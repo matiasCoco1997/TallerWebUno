@@ -52,7 +52,6 @@
         <!-- Right elements -->
         <div class="relative flex items-center">
 
-
             <div class="relative">
                 <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
           <span class="[&>svg]:w-5">
@@ -75,7 +74,7 @@
                    href="#" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
                    aria-expanded="false">
                     <!-- User avatar -->
-                    <img th:src="@{${usuario.fotoPerfil}}" class="rounded-full"
+                    <img th:src="@{${usuario.fotoPerfil}}" th:alt="@{${usuario.altFotoPerfil}}"class="rounded-full"
                          style="height: 25px; width: 25px" alt="" loading="lazy"/>
                 </a>
                 <!-- Second dropdown menu -->
