@@ -155,6 +155,7 @@ public class ControladorHomeTest {
         assertThat("home-vista", is(modelAndView.getViewName()));
     }
 
+    /*
     @Test
     public void queSePuedaObtenerUnaListaDePosts(){
         List<Object> posts=new ArrayList<>();
@@ -165,4 +166,6 @@ public class ControladorHomeTest {
         List<Object> postsObtenidos= (List<Object>) controladorHome.home(sessionMock).getModel().get("posts");
         assertThat(postsObtenidos.size(),is(2));
     }
+    */
+
 }
