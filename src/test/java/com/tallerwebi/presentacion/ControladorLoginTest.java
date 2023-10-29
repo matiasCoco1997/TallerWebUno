@@ -160,4 +160,15 @@ public class ControladorLoginTest {
 		assertThat(modelAndView.getModel().get("error").toString(), equalToIgnoringCase("Error al registrar el nuevo usuario"));
 	}
 
+	@Test
+	public void queSeCierreLaSesionYRedirijaAlLogin(){
+
+		//ejecucion
+		ModelAndView model = controladorLogin.cerrarSesion(sessionMock);
+
+		//validacion
+		verify(sessionMock).invalidate();
+		assertThat(model.getViewName(), equalToIgnoringCase("redirect:/login"));
+	}
+
 }

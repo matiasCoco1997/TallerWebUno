@@ -256,7 +256,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() {
+    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws IOException {
         // preparacion
         doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticiaPorId(anyLong());
 

@@ -103,5 +103,17 @@ public class ControladorLogin {
 
     }
 
+    @RequestMapping(path = "/cerrar-sesion")
+    public ModelAndView cerrarSesion(HttpSession session){
+        ModelMap modelo = new ModelMap();
+        try{
+            session.invalidate();
+        }catch(Exception e){
+            modelo.put("error", "Error al cerrar sesion");
+            return new ModelAndView("redirect:/home", modelo);
+        }
+        return new ModelAndView("redirect:/login");
+    }
+
 }
 
