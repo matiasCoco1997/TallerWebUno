@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 
 import java.util.List;
 
@@ -18,4 +15,5 @@ public interface RepositorioHome {
 
     List<Noticia> obtenerNoticiasPorTitulo(String titulo);
 
+    List<Republicacion> obtenerRepublicaciones();
 }

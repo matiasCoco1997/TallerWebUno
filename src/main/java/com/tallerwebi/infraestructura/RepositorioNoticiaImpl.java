@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.Comentario;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -11,7 +8,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Repository("repositorioNoticia")
@@ -50,6 +46,13 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public void borrarNoticia(Noticia noticia) {
         final Session session = sessionFactory.getCurrentSession();
+
+        session.createQuery("DELETE FROM MeGusta WHERE noticia = :noticia")
+        .setParameter("noticia", noticia).executeUpdate();
+
+        session.createQuery("DELETE FROM Notificacion WHERE noticiaNotificada = :noticia")
+                .setParameter("noticia", noticia).executeUpdate();
+
         session.delete(noticia);
     }
 
@@ -126,6 +129,16 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
             session.update(usuario);
         }
         */
+    }
+
+    @Override
+    public List<Republicacion> obtenerRepublicaciones() {
+        return sessionFactory.getCurrentSession().createQuery("FROM Republicacion").list();
+    }
+
+    @Override
+    public void republicarNoticia(Republicacion republicacion) {
+        sessionFactory.getCurrentSession().save(republicacion);
     }
 
     @Override

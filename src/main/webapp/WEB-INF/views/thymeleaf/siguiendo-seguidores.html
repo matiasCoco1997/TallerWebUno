@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+  <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+  <!--Slick-->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
+  <link rel="stylesheet" type="text/css"
+        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+
+  <title>Seguidos</title>
+  <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
+</head>
+
+<body class="bg-black">
+
+<!-- Main navigation container -->
+<nav
+        class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+  <div class="flex w-full flex-wrap items-center justify-between px-3">
+    <!-- Logo -->
+    <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
+       href="home">
+      <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
+           alt="TE Logo" loading="lazy" />
+    </a>
+    <!--Search-->
+
+    <form th:action="@{/titulo}" method="GET" class="flex items-center w-6/12">
+      <label for="simple-search" class="sr-only">Search</label>
+      <div class="relative w-full">
+        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6">
+            <path fill-rule="evenodd"
+                  d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+                  clip-rule="evenodd"/>
+          </svg>
+        </div>
+        <input type="text" id="simple-search" name="titulo"
+               class="bg-black-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-grey-500 focus:border-grey-500 block w-full pl-10 p-2.5  dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-grey-800 dark:focus:border-grey-800"
+               placeholder="Search branch name..." required>
+      </div>
+    </form>
+
+    <!-- Right elements -->
+    <div class="relative flex items-center">
+
+
+      <div class="relative">
+        <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
+          <span class="[&>svg]:w-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+                                <path fill-rule="evenodd"
+                                      d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                                      clip-rule="evenodd" />
+                            </svg>
+                    </span>
+          <span class="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white" th:text="${notificaciones}"></span>
+        </a>
+      </div>
+
+      <!-- Second dropdown container -->
+      <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+        <!-- Second dropdown trigger -->
+        <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+           href="#" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
+           aria-expanded="false">
+          <!-- User avatar -->
+          <img th:src="@{${usuario.fotoPerfil}}" class="rounded-full"
+               style="height: 25px; width: 25px" alt="" loading="lazy" />
+        </a>
+        <!-- Second dropdown menu -->
+        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+            aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
+          <!-- Second dropdown menu items -->
+          <li>
+            <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+               href="/sunn/siguiendo" data-te-dropdown-item-ref>Siguiendo</a>
+          </li>
+          <li>
+            <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+               href="#" data-te-dropdown-item-ref>Another action</a>
+          </li>
+          <li>
+            <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+               href="#" data-te-dropdown-item-ref>Something else here</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<main class="p-2">
+  <div class='flex flex-col items-center min-h-screen text-white p-16 bg-black'>
+    <h1  class="my-10 font-medium text-3xl sm:text-4xl ">
+      <span th:text="${pagina}"></span>
+    </h1>
+    <h2  class="my-10 font-medium text-x  ">
+      <span th:text="${error}"></span>
+    </h2>
+
+    <!-- Seguidos -->
+    <div  th:each="seguido : ${seguidos}" class='user-list w-full max-w-lg mx-auto rounded-xl shadow-xl flex flex-col py-4'>
+      <!--User row -->
+      <div class="user-row flex flex-col items-center justify-between cursor-pointer  p-4 duration-300 sm:flex-row sm:py-4 sm:px-8 hover:bg-zinc-950">
+        <div class="user flex items-center text-center flex-col sm:flex-row sm:text-left">
+          <div class="avatar-content mb-2.5 sm:mb-0 sm:mr-2.5">
+            <img class="avatar w-20 h-20 rounded-full" th:src="@{${seguido.fotoPerfil}}"/>
+          </div>
+          <div class="user-body flex flex-col mb-4 sm:mb-0 sm:mr-4">
+            <a th:text="${seguido.nombre}" href="#" class="title font-medium no-underline"></a>
+          </div>
+        </div>
+        <!--Button content -->
+        <div class="user-option mx-auto sm:ml-auto sm:mr-0">
+          <a href="#" th:data-id-seguir="${seguido.idUsuario}" class="siguiendo">
+            <div class="w-20 h-8 m-auto text-center text-white items-center border border-white rounded-lg cursor-pointer hover:bg-gray-800 hover:text-gray-200 mt-2">
+              Siguiendo
+            </div>
+          </a>
+        </div>
+        <!--Close Button content -->
+      </div>
+      <!--User row -->
+      <hr class="h-px max-w-4xl m-auto my-2 border-0 bg-white">
+      <!--<a class="show-more block w-10/12 mx-auto py-2.5 px-4 text-center no-underline rounded hover:bg-[#f6f8f9] font-medium duration-300" href="#/">Show more members</a>-->
+    </div>
+
+    <!-- Seguidores-->
+    <div th:if="${seguidores}" th:each="seguidor : ${seguidores}" class='user-list w-full max-w-lg mx-auto rounded-xl shadow-xl flex flex-col py-4'>
+      <!--User row -->
+      <div class="user-row flex flex-col items-center justify-between cursor-pointer  p-4 duration-300 sm:flex-row sm:py-4 sm:px-8 hover:bg-zinc-950">
+        <div class="user flex items-center text-center flex-col sm:flex-row sm:text-left">
+          <div class="avatar-content mb-2.5 sm:mb-0 sm:mr-2.5">
+            <img class="avatar w-20 h-20 rounded-full" th:src="@{${seguidor.fotoPerfil}}"/>
+          </div>
+          <div class="user-body flex flex-col mb-4 sm:mb-0 sm:mr-4">
+            <a th:text="${seguidor.nombre}" href="#" class="title font-medium no-underline"></a>
+          </div>
+        </div>
+        <!--
+        <div class="user-option mx-auto sm:ml-auto sm:mr-0">
+          <button class="btn inline-block select-none no-underline align-middle cursor-pointer whitespace-nowrap px-4 py-1.5 rounded text-base font-medium leading-6 tracking-tight text-white text-center border-0 bg-[#6911e7] hover:bg-[#590acb] duration-300" type="button">Follow</button>
+        </div>
+         -->
+      </div>
+      <!--User row -->
+      <hr class="h-px max-w-4xl m-auto my-2 border-0 bg-white">
+      <!--<a class="show-more block w-10/12 mx-auto py-2.5 px-4 text-center no-underline rounded hover:bg-[#f6f8f9] font-medium duration-300" href="#/">Show more members</a>-->
+    </div>
+  </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+
+$(document).ready(function () {
+//SEGUIR
+    $(document).on("click", ".seguir", function (event) {
+        event.preventDefault();
+        let btnSeguir = $(this);
+        let idSeguir = $(this).data("id-seguir");
+        $.ajax({
+            type: 'post',
+            url: "/sunn/seguir",
+            data: { id: idSeguir },
+            success: function (response) {
+                console.log('Éxito', response);
+                btnSeguir.find('div').text('Siguiendo');
+                btnSeguir.find('div').addClass('bg-gray-800');
+                btnSeguir.removeClass();
+                btnSeguir.addClass('siguiendo');
+            },
+            error: function (xhr, error) {
+                if (xhr.status === 401) {
+                    // Redirigir al usuario a login si no esta logueado
+                    window.location.href = "/sunn/login";
+                } else {
+                    console.error('Error al seguir', error);
+                }
+            }
+        });
+    });
+//SIGUIENDO
+    $(document).on("click", ".siguiendo", function (event) {
+        event.preventDefault();
+        let btnSiguiendo = $(this);
+        let idSiguiendo = $(this).data("id-seguir");
+        $.ajax({
+            type: 'post',
+            url: "/sunn/dejar-de-seguir",
+            data: { id: idSiguiendo },
+            success: function (response) {
+                console.log('Éxito', response);
+                btnSiguiendo.find('div').text('Seguir');
+                btnSiguiendo.find('div').removeClass('bg-gray-800');
+                btnSiguiendo.removeClass();
+                btnSiguiendo.addClass('seguir');
+            },
+            error: function (xhr, error) {
+                if (xhr.status === 401) {
+                    // Redirigir al usuario a login si no esta logueado
+                    window.location.href = "/sunn/login";
+                } else {
+                    console.error('Error al seguir', xhr.status);
+                }
+            }
+        });
+    });
+});
+
+</script>
+
+</body>
+
+</html>

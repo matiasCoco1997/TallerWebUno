@@ -24,15 +24,11 @@ public class RepositorioLikeImpl implements RepositorioLike {
 
     @Override
     public List<MeGusta> verificarSiElMeGustaDelUsuarioYaExiste(Long idNoticia, Long idusuario) {
-
-        Boolean resultado = false;
-
         return (List<MeGusta>) sessionFactory.getCurrentSession()
                 .createQuery("FROM MeGusta WHERE usuario.idUsuario = :idusuarioPropio AND noticia.idNoticia = :idNoticiaLikeada")
                 .setParameter("idusuarioPropio", idusuario)
                 .setParameter("idNoticiaLikeada", idNoticia)
                 .list();
-
     }
 
     @Override
@@ -40,15 +36,12 @@ public class RepositorioLikeImpl implements RepositorioLike {
         sessionFactory.getCurrentSession().delete(megustaEnNoticia);
     }
 
-}
-
-/*
     @Override
-    public List<Seguidos> obtenerListaDeSeguidos(Long idUsuarioSeguidor) {
-        return sessionFactory.getCurrentSession()
-                .createQuery("FROM Seguidos WHERE idUsuarioSeguidor.idUsuario = :idUsuarioSeguidor")
-                .setParameter("idUsuarioSeguidor", idUsuarioSeguidor)
+    public List<MeGusta> obtenerMegustas(Long idUsuario) {
+        return (List<MeGusta>) sessionFactory.getCurrentSession()
+                .createQuery("FROM MeGusta WHERE usuario.idUsuario = :idusuarioPropio")
+                .setParameter("idusuarioPropio", idUsuario)
                 .list();
     }
 
- */
+}

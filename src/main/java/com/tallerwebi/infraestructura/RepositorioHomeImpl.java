@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +22,11 @@ public class RepositorioHomeImpl implements RepositorioHome{
     public List<Noticia> listarNoticias() {
         final Session session = sessionFactory.getCurrentSession();
         return session.createQuery("FROM Noticia WHERE activa=true").list();
+    }
+    @Override
+    public List<Republicacion> obtenerRepublicaciones() {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Republicacion").list();
     }
 
     @Override

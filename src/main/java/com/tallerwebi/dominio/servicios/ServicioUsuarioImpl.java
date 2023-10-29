@@ -111,6 +111,16 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     }
 
     @Override
+    public List<Usuario> listarUsuarioseguidos(Long idUsuarioSeguidor) {
+        return repositorioUsuario.listarUsuariosSeguidos(idUsuarioSeguidor);
+    }
+
+    @Override
+    public List<Usuario> listarUsuarioQueMeSiguen(Long idUsuario) {
+        return repositorioUsuario.listarUsuariosQueMeSiguen(idUsuario);
+    }
+
+    @Override
     public boolean verificarSiLaDescripcionEsNull(String descripcion) {
         return descripcion==null;
     }

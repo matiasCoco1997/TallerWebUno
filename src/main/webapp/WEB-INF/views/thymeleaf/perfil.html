@@ -121,8 +121,8 @@
             <p class="text-white text-2xl" th:if="${usuarioBuscado.descripcion==null}" th:text="${descripcionError}"></p>
             <p class="text-white text-2xl" th:unless="${usuarioBuscado.descripcion==null}" th:text="${usuarioBuscado.descripcion}"></p>
             <div class="flex justify-around mt-10">
-                <p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidores')} + ' seguidores'"> </p>
-                <p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidos')} + ' seguidos'"> </p>
+                <a href="/sunn/seguidores"><p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidores')} + ' seguidores'"> </p></a>
+                <a href="/sunn/siguiendo"><p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidos')} + ' seguidos'"> </p></a>
             </div>
         </div>
     </div>

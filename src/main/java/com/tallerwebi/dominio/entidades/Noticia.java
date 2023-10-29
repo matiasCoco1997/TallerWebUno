@@ -14,6 +14,8 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "republicada")
 public class Noticia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +31,9 @@ public class Noticia {
     private LocalDateTime fechaDePublicacion;
     private String rutaDeAudioPodcast;
     private Boolean activa;
-    private Integer likes;
+    private  Integer likes;
+    private  Boolean estaLikeada;
+
 
     @ManyToOne
     private Usuario usuario;
@@ -38,6 +42,7 @@ public class Noticia {
     protected void onCreate() {
         fechaDePublicacion = LocalDateTime.now();
         likes = 0;
+        estaLikeada=false;
     }
 
     public void setAltImagenNoticia(String nombreOriginalImagen) {

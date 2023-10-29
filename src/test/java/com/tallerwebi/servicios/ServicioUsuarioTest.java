@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -201,12 +202,19 @@ public class ServicioUsuarioTest {
         List<Usuario> usuariosRecomendados = servicioUsuarioMock.listarUsuarioParaSeguir(anyLong());
         assertEquals("ArrayList", usuariosRecomendados.getClass().getSimpleName());
     }
-
     @Test
     public void queSePuedaListarUsuariosParaSeguirLanzaExcepcion() {
         List<Usuario> usuariosRecomendados = servicioUsuarioMock.listarUsuarioParaSeguir(anyLong());
 
         assertEquals(0, usuariosRecomendados.size());
+        verify(repositorioUsuarioMock, times(1)).listarUsuariosRecomendadosSinSeguir(anyLong());
+    }
+    @Test
+    public void queSePuedaListarLosUsuariosQueMeSiguen() {
+        List<Usuario> usuariosSeguidores = servicioUsuarioMock.listarUsuarioQueMeSiguen(anyLong());
+
+        assertEquals(0, usuariosSeguidores.size());
+        verify(repositorioUsuarioMock, times(1)).listarUsuariosQueMeSiguen(anyLong());
     }
 
 

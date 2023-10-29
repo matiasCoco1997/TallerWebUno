@@ -1,14 +1,14 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.servicios.ServicioHome;
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
+import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -21,31 +21,37 @@ public class ControladorHome {
 
     private final ServicioHome servicioHome;
     private final ServicioUsuario servicioUsuario;
+    private final ServicioNoticia servicioNoticia;
 
     @Autowired
-    public ControladorHome(ServicioHome servicioHome, ServicioUsuario servicioUsuario){
-        this.servicioHome=servicioHome;
-        this.servicioUsuario=servicioUsuario;
+    public ControladorHome(ServicioHome servicioHome, ServicioUsuario servicioUsuario, ServicioNoticia servicioNoticia){
+        this.servicioHome = servicioHome;
+        this.servicioUsuario = servicioUsuario;
+        this.servicioNoticia = servicioNoticia;
     }
 
     @RequestMapping("/home")
     public ModelAndView home(HttpSession session){
         ModelMap model=new ModelMap();
 
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+
         List<Noticia> noticias = servicioHome.listarNoticias();
 
+        noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
 
-        List<Categoria> categorias=servicioHome.obtenerCategorias();
+        List<Categoria> categorias = servicioHome.obtenerCategorias();
 
-        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
-        List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
+        List<Notificacion> notificaciones = servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
-        List<Usuario> usuarios= null; //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
+        List<Usuario> usuarios = null; //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
 
         usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
 
+        //List<Object> posts = servicioHome.obtenerPosts();
 
         model.put("noticias", noticias);
+        //model.put("posts", posts);
         model.put("notificaciones", notificaciones.size());
         model.put("usuarios",usuarios);
         model.put("categorias",categorias);
@@ -89,5 +95,34 @@ public class ControladorHome {
             model.put("noticias",noticias);
         }
         return new ModelAndView("home-titulo",model);
+    }
+    @GetMapping("/noticia-de-seguidos")
+    public ModelAndView mostrarNoticiaDeSeguidos(HttpSession session){
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Noticia> noticias = servicioHome.obtenerNoticiaDeSeguidos(usuarioLogueado.getIdUsuario());
+
+        ModelMap model = new ModelMap();
+        model.put("noticias", noticias);
+
+        List<Categoria> categorias=servicioHome.obtenerCategorias();
+
+        List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
+
+        List<Usuario> usuarios = servicioUsuario.listarUsuarioParaSeguir(usuarioLogueado.getIdUsuario());
+
+        model.put("notificaciones", notificaciones.size());
+        model.put("usuarios",usuarios);
+        model.put("categorias",categorias);
+        model.put("usuario",usuarioLogueado);
+
+        return new ModelAndView("home-vista",model);
+    }
+
+    @RequestMapping("/prueba")
+    public ModelAndView lista(){
+        ModelMap model=new ModelMap();
+        //List<Object> noticias=servicioNoticia.obtenerPosts();
+        //model.put("noticias",noticias);
+        return new ModelAndView("prueba",model);
     }
 }

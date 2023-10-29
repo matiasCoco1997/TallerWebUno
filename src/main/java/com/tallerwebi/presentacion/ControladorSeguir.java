@@ -6,11 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 @RestController
 public class ControladorSeguir {
@@ -57,7 +62,40 @@ public class ControladorSeguir {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
-
-
     }
+    @GetMapping("/siguiendo")
+    public ModelAndView mostrarLosUsuariosQueEstoySiguiendo(HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        if(usuarioLogueado == null){
+            return new ModelAndView("redirect:/login");
+        }
+        ModelMap model = new ModelMap();
+        List<Usuario> usuariosSugeridos = servicioUsuario.listarUsuarioseguidos(usuarioLogueado.getIdUsuario());
+
+        if (usuariosSugeridos.isEmpty()) {
+            model.put("error", "No estás siguiendo a ningún usuario.");
+        }
+
+        model.put("pagina", "Siguiendo");
+        model.put("seguidos", usuariosSugeridos);
+        model.put("usuario", usuarioLogueado);
+        return new ModelAndView("siguiendo-seguidores",model);
+    }
+    @GetMapping("/seguidores")
+    public ModelAndView mostrarLosUsuariosQueMeSiguen(HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        if(usuarioLogueado == null){
+            return new ModelAndView("redirect:/login");
+        }
+        ModelMap model = new ModelMap();
+        List<Usuario> seguidores = servicioUsuario.listarUsuarioQueMeSiguen(usuarioLogueado.getIdUsuario());
+        if (seguidores.isEmpty()) {
+            model.put("error", "No tenes seguidores.");
+        }
+        model.put("pagina", "Seguidores");
+        model.put("seguidores", seguidores);
+        model.put("usuario", usuarioLogueado);
+        return new ModelAndView("siguiendo-seguidores",model);
+    }
+
 }

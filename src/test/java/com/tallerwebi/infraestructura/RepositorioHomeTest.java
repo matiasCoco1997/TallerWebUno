@@ -2,6 +2,7 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Republicacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
@@ -16,7 +17,10 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 @ExtendWith(SpringExtension.class)
@@ -115,6 +119,15 @@ public class RepositorioHomeTest {
         repositorioNoticia.guardar(noticia2);
         Integer cantidadDeNoticias=repositorioHome.obtenerNoticiasPorTitulo("tit").size();
         assertThat(cantidadDeNoticias,Is.is(2));
+    }
+
+    @Transactional
+    @Test
+    @Rollback
+    public void queSePuedanObtenerLasRepublicaciones(){
+        repositorioNoticia.republicarNoticia(new Republicacion());
+        List<Republicacion> republicaciones=repositorioHome.obtenerRepublicaciones();
+        assertThat(republicaciones.size(),Is.is(1));
     }
 
 }

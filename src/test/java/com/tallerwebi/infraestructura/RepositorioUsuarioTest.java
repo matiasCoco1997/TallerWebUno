@@ -17,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -302,5 +303,83 @@ public class RepositorioUsuarioTest {
 
         assertEquals(0, usuariosRecomendados.size());
 
+    }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaOntenerNoticiaDeUsuariosQueSigo(){
+        repositorioUsuario.guardar(seguido);
+        repositorioUsuario.guardar(seguido2);
+        repositorioUsuario.guardar(seguidor);
+
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(seguidor);
+        seguidos.setIdUsuarioPropio(seguido);
+
+        Seguidos seguidos2 = new Seguidos();
+        seguidos2.setIdUsuarioSeguidor(seguidor);
+        seguidos2.setIdUsuarioPropio(seguido2);
+
+        repositorioUsuario.crearSeguidos(seguidos);
+        repositorioUsuario.crearSeguidos(seguidos2);
+
+        noticia.setUsuario(seguido);
+        noticia2.setUsuario(seguido2);
+        repositorioNoticia.guardar(noticia);
+        repositorioNoticia.guardar(noticia2);
+
+        List<Noticia> noticiasObtenidas = repositorioUsuario.obtenerNoticiaDeSeguidos(seguidor.getIdUsuario());
+
+        assertNotNull(noticiasObtenidas);
+        assertEquals(2, noticiasObtenidas.size());
+    }
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaOntenerLosUsuarioSeguidos(){
+        repositorioUsuario.guardar(seguido);
+        repositorioUsuario.guardar(seguido2);
+        repositorioUsuario.guardar(seguidor);
+
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(seguidor);
+        seguidos.setIdUsuarioPropio(seguido);
+
+        Seguidos seguidos2 = new Seguidos();
+        seguidos2.setIdUsuarioSeguidor(seguidor);
+        seguidos2.setIdUsuarioPropio(seguido2);
+
+        repositorioUsuario.crearSeguidos(seguidos);
+        repositorioUsuario.crearSeguidos(seguidos2);
+
+        List<Usuario> usuariosSeguidos = repositorioUsuario.listarUsuariosSeguidos(seguidor.getIdUsuario());
+
+        assertNotNull(usuariosSeguidos);
+        assertEquals(2, usuariosSeguidos.size());
+    }
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaOntenerLosUsuarioQueMeSiguen(){
+        repositorioUsuario.guardar(seguido);
+        repositorioUsuario.guardar(seguido2);
+        repositorioUsuario.guardar(seguidor);
+
+        Seguidos seguidos = new Seguidos();
+        seguidos.setIdUsuarioSeguidor(seguidor);
+        seguidos.setIdUsuarioPropio(seguido);
+
+        Seguidos seguidos2 = new Seguidos();
+        seguidos2.setIdUsuarioSeguidor(seguidor);
+        seguidos2.setIdUsuarioPropio(seguido2);
+
+        repositorioUsuario.crearSeguidos(seguidos);
+        repositorioUsuario.crearSeguidos(seguidos2);
+
+        List<Usuario> usuariosSeguidores = repositorioUsuario.listarUsuariosQueMeSiguen(seguido.getIdUsuario());
+
+        assertNotNull(usuariosSeguidores);
+        assertEquals(1, usuariosSeguidores.size());
     }
 }

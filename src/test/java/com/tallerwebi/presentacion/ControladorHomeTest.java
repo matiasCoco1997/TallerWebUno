@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Republicacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
@@ -31,9 +32,13 @@ public class ControladorHomeTest {
     private HttpSession sessionMock;
     private Categoria categoriaMock;
     private Usuario usuarioMock;
+    private ServicioNoticia servicioNoticiaMock;
+    private Republicacion republicacionMock;
+    //private ServicioMeGusta servicioMeGustaMock;
 
     @BeforeEach
     public void init(){
+        republicacionMock = mock(Republicacion.class);
         noticiaMock = mock(Noticia.class);
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("titulo");
@@ -46,7 +51,8 @@ public class ControladorHomeTest {
         sessionMock = mock(HttpSession.class);
         servicioHomeMock = mock(ServicioHome.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
-        controladorHome = new ControladorHome(servicioHomeMock, servicioUsuarioMock);
+        servicioNoticiaMock = mock(ServicioNoticia.class);
+        controladorHome = new ControladorHome(servicioHomeMock, servicioUsuarioMock, servicioNoticiaMock);
     }
 
     @Test
@@ -58,6 +64,7 @@ public class ControladorHomeTest {
         noticias.add(noticiaMock);
 
         when(servicioHomeMock.listarNoticias()).thenReturn(noticias);
+        when(servicioNoticiaMock.setNoticiasLikeadas(noticias, usuarioMock.getIdUsuario())).thenReturn(noticias);
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         // ejecucion
@@ -139,4 +146,26 @@ public class ControladorHomeTest {
 
         assertThat(mensajeError,is("No se encontraron noticias con este título: "+titulo));
     }
+    @Test
+    public void queSePuedaMostarNoticiasDeSeguidos(){
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
+        ModelAndView modelAndView=controladorHome.mostrarNoticiaDeSeguidos(sessionMock);
+
+        assertThat("home-vista", is(modelAndView.getViewName()));
+    }
+
+    /*
+    @Test
+    public void queSePuedaObtenerUnaListaDePosts(){
+        List<Object> posts=new ArrayList<>();
+        posts.add(noticiaMock);
+        posts.add(republicacionMock);
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(servicioHomeMock.obtenerPosts()).thenReturn(posts);
+        List<Object> postsObtenidos= (List<Object>) controladorHome.home(sessionMock).getModel().get("posts");
+        assertThat(postsObtenidos.size(),is(2));
+    }
+    */
+
 }
