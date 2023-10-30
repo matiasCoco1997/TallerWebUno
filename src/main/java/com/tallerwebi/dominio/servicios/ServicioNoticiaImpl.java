@@ -220,6 +220,12 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         repositorioNoticia.republicarNoticia(republicacion);
     }
 
+    @Override
+    public List<Noticia> obtenerNoticiasCategoria(long idUsuario, int cantidadNoticias) {
+        List<String> categorias = repositorioLikeImpl.traerCategoriasLikeadasPorUnUsuario(idUsuario);
+        return repositorioNoticia.obtenerNoticiasCategoria(cantidadNoticias, categorias);
+    }
+
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
         if(noticia.getTitulo().isBlank()) {
             throw new CampoVacio();

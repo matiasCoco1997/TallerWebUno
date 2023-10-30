@@ -142,6 +142,24 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     }
 
     @Override
+    public List<Noticia> obtenerNoticiasCategoria(int cantidadNoticias, List<String> categorias) {
+        List<Noticia> noticias = sessionFactory.getCurrentSession()
+                .createQuery("SELECT n FROM Noticia n WHERE n.categoria IN :categorias")
+                .setParameter("categorias", categorias)
+                .setMaxResults(cantidadNoticias)
+                .list();
+        if(noticias.size() == cantidadNoticias){
+            return noticias;
+        }else{
+
+            noticias.addAll((List<Noticia>) sessionFactory.getCurrentSession().createQuery("SELECT n FROM Noticia n ORDER BY n.fechaDePublicacion DESC")
+                    .setMaxResults(cantidadNoticias-noticias.size())
+                    .list());
+            return noticias;
+        }
+    }
+
+    @Override
     public Boolean modificarLikes(Noticia noticia) {
         try {
             sessionFactory.getCurrentSession().merge(noticia);

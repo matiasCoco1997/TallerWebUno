@@ -12,9 +12,12 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.times;
@@ -36,6 +39,7 @@ public class ServicioNoticiaTest {
     private RepositorioNotificacion repositorioNotificacionMock;
     private RepositorioLike repositorioLikeMock;
     private Republicacion republicacionMock;
+    private List<Noticia> noticiasEsperadas;
 
     @BeforeEach
     public void init() throws IOException {
@@ -70,6 +74,7 @@ public class ServicioNoticiaTest {
 
         this.servicioNoticiaMock = new ServicioNoticiaImpl(this.repositorioNoticiaMock, repositorioCategoriaMock, repositorioUsuarioMock, repositorioNotificacionMock, repositorioLikeMock);
 
+        noticiasEsperadas = new ArrayList<>();
     }
 
     @Test
@@ -118,7 +123,19 @@ public class ServicioNoticiaTest {
         servicioNoticiaMock.republicarNoticia(republicacionMock);
         verify(repositorioNoticiaMock,times(1)).republicarNoticia(eq(republicacionMock));
     }
+    @Test
+    public void queSePuedaObtenerUnaCantidadDeNoticiasPorCategoriasQueElUsuarioDioLikeUtilizeRepositorioNoticia(){
+        noticiasEsperadas.add(noticiaMock);
+        List<String> categorias = new ArrayList<>();
+        when(repositorioLikeMock.traerCategoriasLikeadasPorUnUsuario(anyLong())).thenReturn(categorias);
+        when(repositorioNoticiaMock.obtenerNoticiasCategoria(anyInt(), anyList())).thenReturn(noticiasEsperadas);
 
+        List<Noticia> noticiaObtenida = servicioNoticiaMock.obtenerNoticiasCategoria(1L,1);
+
+
+        verify(repositorioNoticiaMock, times(1)).obtenerNoticiasCategoria(anyInt(), anyList());
+        verify(repositorioLikeMock, times(1)).traerCategoriasLikeadasPorUnUsuario(anyLong());
+    }
 }
 
 /*   REHACER ESTOS TESTS

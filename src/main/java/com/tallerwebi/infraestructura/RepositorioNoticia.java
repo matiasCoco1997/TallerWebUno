@@ -33,4 +33,6 @@ public interface RepositorioNoticia {
     List<Republicacion> obtenerRepublicaciones();
 
     void republicarNoticia(Republicacion republicacion);
+
+    List<Noticia> obtenerNoticiasCategoria(int i, List<String> categorias);
 }

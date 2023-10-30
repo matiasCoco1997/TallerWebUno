@@ -13,4 +13,6 @@ public interface RepositorioLike {
     void borrarLike(MeGusta megustaEnNoticia);
 
     List<MeGusta> obtenerMegustas(Long idUsuario);
+
+    List<String> traerCategoriasLikeadasPorUnUsuario(Long idUsuario);
 }

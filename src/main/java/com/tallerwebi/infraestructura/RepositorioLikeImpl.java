@@ -44,4 +44,12 @@ public class RepositorioLikeImpl implements RepositorioLike {
                 .list();
     }
 
+    @Override
+    public List<String> traerCategoriasLikeadasPorUnUsuario(Long idUsuario) {
+        return sessionFactory.getCurrentSession()
+                .createQuery("SELECT DISTINCT n.categoria FROM MeGusta mg INNER JOIN mg.noticia n WHERE mg.usuario.idUsuario = :idUsuario")
+                .setParameter("idUsuario", idUsuario)
+                .list();
+    }
+
 }
