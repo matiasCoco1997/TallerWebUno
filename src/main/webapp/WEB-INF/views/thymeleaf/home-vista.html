@@ -187,7 +187,8 @@
         <div th:each="noticia : ${noticias}">
             <div th:if="${noticia.getClass().simpleName == 'Noticia'}" class="max-w-4xl my-4 py-6 m-auto text-white">
                 <div class="flex items-center">
-                    <div class="mr-2">
+
+                    <div class="mr-2" th:if="${noticia.esAnonima == false}">
                         <form th:action="@{/perfil}" method="POST">
                             <button class="flex items-center" th:value="${noticia.usuario.getIdUsuario()}" name="idUsuario">
                                 <img class="mr-3 w-10 h-10 object-cover rounded-full" th:src="@{${noticia.getUsuario().fotoPerfil}}" th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
@@ -195,6 +196,12 @@
                             </button>
                         </form>
                     </div>
+
+                    <div class="mr-2" th:if="${noticia.esAnonima}">
+                        <img class="mr-3 w-10 h-10 object-cover rounded-full" src="imagenes/imgsPerfiles/anonimo.png" alt="img-anonimo">
+                        <h3 class="font-bold">Anónima</h3>
+                    </div>
+
                     <p style="padding-left: 20px">
                         Fecha de publicación: <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
                     </p>
