@@ -22,6 +22,6 @@ public class RepositorioNotificacionImpl implements RepositorioNotificacion{
 
     @Override
     public List<Notificacion> obtenerTodasLasNotificaciones() {
-        return sessionFactory.getCurrentSession().createQuery("FROM Notificacion ").list();
+        return sessionFactory.getCurrentSession().createQuery("FROM Notificacion").list();
     }
 }

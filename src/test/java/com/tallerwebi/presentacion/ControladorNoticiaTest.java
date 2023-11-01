@@ -329,4 +329,11 @@ public class ControladorNoticiaTest {
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
     }
 
+    @Test
+    public void queAlCompartirNoticiaMeRedirijaAlHome(){
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        ModelAndView modelAndView=controladorNoticia.compartir(1L,1L,sessionMock);
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
+    }
+
 }

@@ -280,7 +280,7 @@
                             </button>
                         </form>
                     </div>
-                    <div>
+                    <!--<div>
                         <form th:action="@{/republicar}" method="POST">
                             <button th:value="${noticia.idNoticia}" name="idNoticiaRepublicar">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512">
@@ -289,6 +289,18 @@
                                 </svg>
                             </button>
                         </form>
+                    </div>-->
+                    <button type="button" name="compartir"><img th:src="@{/imagenes/compartir.png}" class="w-[1.5em]"></button>
+
+                    <div class="hidden bg-black border border-[#5C67DE] rounded-3xl fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 p-20 pb-6" name="form-compartir">
+                        <form th:action="@{/compartir}" method="POST">
+                            <div th:each="usuario : ${usuariosSeguidos}" class="mb-8" >
+                                <input type="radio" th:value="${usuario.getIdUsuario()}" name="receptor">
+                                <label class="text-white text-2xl" th:text="${usuario.nombre}"></label>
+                            </div>
+                            <button th:value="${noticia.idNoticia}" name="idNoticiaCompartida" type="submit" class="text-white text-2xl bg-[#5C67DE] rounded-3xl p-4">Compartir!</button>
+                        </form>
+                        <button class="absolute right-4 top-4 w-[10%]" name="cerrarPopUp"><img th:src="@{/imagenes/cerrar.png}"></button>
                     </div>
 
                 </div>
@@ -398,6 +410,7 @@
                     </div>
 
                 </div>
+                </div>
                 <!--Lista de comentarios-->
                 <div class="bg-black py-8 lg:py-16 antialiased">
                     <div class="max-w-2xl mx-auto px-4">
@@ -408,6 +421,35 @@
             </div>
         </div>
     </section>
+    <!--Mostrar usuarios para compartir-->
+    <script>
+        const compartir = document.getElementsByName("compartir");
+        const formCompartir = document.getElementsByName("form-compartir");
+        const cerrarPopUp = document.getElementsByName("cerrarPopUp");
+        let contadorClicks = 0;
+
+        compartir.forEach((element, index) => {
+            element.addEventListener("click", () => {
+                contadorClicks++;
+                if (contadorClicks % 2 === 0) {
+                    formCompartir[index].style.display = "none";
+                } else {
+                    formCompartir[index].style.display = "block";
+                }
+            });
+        });
+
+        cerrarPopUp.forEach((element, index) => {
+            element.addEventListener("click", () => {
+                contadorClicks++;
+                if (contadorClicks % 2 === 0) {
+                    formCompartir[index].style.display = "none";
+                } else {
+                    formCompartir[index].style.display = "block";
+                }
+            });
+        });
+    </script>
 
     <a th:href="@{/noticia/crear}">
         <div class="rounded-full bg-[#5C67DE] border border-4 border-black fixed right-0 bottom-0 w-[150px] h-[150px] flex items-center justify-center">

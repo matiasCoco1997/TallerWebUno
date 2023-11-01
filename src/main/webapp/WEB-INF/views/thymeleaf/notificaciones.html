@@ -124,20 +124,51 @@
 <main class="p-2">
 
   <h1 class="text-white font-bold text-6xl mt-10">Mis Notificaciones</h1>
-  <div th:each="notificacion : ${notificaciones}" class="w-[80%] mx-auto mt-20 p-8 bg-[#5C67DE] rounded-3xl flex gap-10">
-    <img th:src="@{${notificacion.getNoticiaNotificada().rutaDeimagen}}" class="w-[22%] h-[200px] rounded-full border border-4 border-black">
-    <div class="w-[80%] flex flex-col gap-6">
-      <div class="flex justify-between">
-        <h1 class="text-black font-semibold text-3xl" th:text="${notificacion.getNombreUsuarioSeguido()}"></h1>
-        <h3 class="text-black font-semibold text-2xl" th:text="${notificacion.getNoticiaNotificada().getFechaDePublicacion()}"></h3>
+  <div th:each="notificacion : ${notificaciones}">
+    <div th:if="${notificacion.getEmisor()==null}" class="w-[80%] mx-auto mt-20 p-8 bg-[#5C67DE] rounded-3xl flex gap-10">
+      <img th:src="@{${notificacion.getNoticiaNotificada().rutaDeimagen}}" class="w-[22%] h-[200px] rounded-full border border-4 border-black">
+      <div class="w-[80%] flex flex-col gap-6">
+        <div class="flex justify-between">
+          <h1 class="text-black font-semibold text-3xl" th:text="${notificacion.getNombreUsuarioSeguido()}"></h1>
+          <h3 class="text-black font-semibold text-2xl" th:text="${notificacion.getNoticiaNotificada().getFechaDePublicacion()}"></h3>
+        </div>
+        <p class="text-black font-semibold text-2xl" th:text="${notificacion.descripcion}"></p>
+        <form th:action="@{/publicacion/}+${notificacion.getNoticiaNotificada().getIdNoticia()}" method="GET">
+          <button th:value="${notificacion.getNoticiaNotificada().getIdNoticia()}" class="w-[30%] h-[20%] bg-[white] rounded-2xl text-black mt-4" >Ir ahora!</button>
+        </form>
       </div>
-      <p class="text-black font-semibold text-2xl" th:text="${notificacion.descripcion}"></p>
-      <form th:action="@{#}" method="GET">
-        <button th:value="${notificacion.getNoticiaNotificada().getIdNoticia()}" class="w-[30%] h-[20%] bg-[white] rounded-2xl text-black mt-4" >Ir ahora!</button>
-      </form>
+    </div>
+
+    <div th:if="${notificacion.getEmisor()!=null}">
+      <div th:if="${notificacion.getEmisor().getIdUsuario() != usuario.getIdUsuario()}" class="w-[80%] mx-auto mt-20 p-8 bg-[#5C67DE] rounded-3xl flex gap-10">
+        <img th:src="@{${notificacion.getNoticiaNotificada().rutaDeimagen}}" class="w-[22%] h-[200px] rounded-full border border-4 border-black">
+        <div class="w-[80%] flex flex-col gap-6">
+          <div class="flex justify-between">
+            <p class="text-black font-semibold text-3xl" th:text="${notificacion.descripcion}"></p>
+            <h3 class="text-black font-semibold text-2xl" th:text="${notificacion.getNoticiaNotificada().getFechaDePublicacion()}"></h3>
+          </div>
+          <h1 class="text-black font-semibold text-xl" th:text="${notificacion.getNoticiaNotificada().titulo}"></h1>
+          <form th:action="@{/publicacion/}+${notificacion.getNoticiaNotificada().getIdNoticia()}" method="GET">
+            <button th:value="${notificacion.getNoticiaNotificada().getIdNoticia()}" class="w-[30%] bg-[white] rounded-2xl text-black mt-4" >Ir ahora!</button>
+          </form>
+        </div>
+      </div>
+
+     <div th:if="${notificacion.getEmisor().getIdUsuario() == usuario.getIdUsuario()}" class="w-[80%] mx-auto mt-20 p-8 bg-[#5C67DE] rounded-3xl flex gap-10">
+       <img th:src="@{${notificacion.getNoticiaNotificada().rutaDeimagen}}" class="w-[22%] h-[200px] rounded-full border border-4 border-black">
+       <div class="w-[80%] flex flex-col gap-6">
+         <div class="flex justify-between">
+           <p class="text-black font-semibold text-3xl" th:text="'Compartiste esta noticia con '+${notificacion.getUsuarioNotificado().nombre}+'!'"></p>
+           <h3 class="text-black font-semibold text-2xl" th:text="${notificacion.getNoticiaNotificada().getFechaDePublicacion()}"></h3>
+         </div>
+         <h1 class="text-black font-semibold text-xl" th:text="${notificacion.getNoticiaNotificada().titulo}"></h1>
+         <form th:action="@{/publicacion/}+${notificacion.getNoticiaNotificada().getIdNoticia()}" method="GET">
+           <button th:value="${notificacion.getNoticiaNotificada().getIdNoticia()}" class="w-[30%] bg-[white] rounded-2xl text-black mt-4" >Ir ahora!</button>
+         </form>
+       </div>
+     </div>
     </div>
   </div>
-
 </main>
 
 </body>

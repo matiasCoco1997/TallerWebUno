@@ -47,6 +47,7 @@ public class ControladorHome {
         List<Usuario> usuarios = null; //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
 
         usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
+        List<Usuario> usuariosSeguidos=servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
 
         //List<Object> posts = servicioHome.obtenerPosts();
         List<Noticia> noticiasCarrousel  = servicioNoticia.obtenerNoticiasCategoria(usuario.getIdUsuario(), 5);
@@ -54,6 +55,7 @@ public class ControladorHome {
         //model.put("posts", posts);
         model.put("notificaciones", notificaciones.size());
         model.put("usuarios",usuarios);
+        model.put("usuariosSeguidos",usuariosSeguidos);
         model.put("categorias",categorias);
         model.put("usuario",usuario);
         model.put("noticiasCarrousel", noticiasCarrousel);

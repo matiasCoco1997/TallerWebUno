@@ -37,4 +37,6 @@ public interface ServicioNoticia {
     void republicarNoticia(Republicacion republicacion);
 
     List<Noticia> obtenerNoticiasCategoria(long idUsuario, int candidadNoticias);
+
+    void compartirNoticia(Notificacion notificacion);
 }

@@ -207,6 +207,21 @@ public class ControladorNoticia {
         servicioNoticia.republicarNoticia(republicacion);
         return new ModelAndView("redirect:/home");
     }
+
+    @RequestMapping(value = "/compartir", method = RequestMethod.POST)
+    public ModelAndView compartir(@RequestParam("idNoticiaCompartida")Long idNoticia,@RequestParam("receptor") Long idUsuario, HttpSession session){
+        ModelMap model=new ModelMap();
+        Noticia noticia=servicioNoticia.buscarNoticiaPorId(idNoticia);
+        Usuario receptor= null;
+        try {
+            receptor = servicioUsuario.obtenerUsuarioPorId(idUsuario);
+            Usuario emisor=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+            servicioNoticia.compartirNoticia(new Notificacion(emisor,receptor,noticia));
+        } catch (Exception e) {
+
+        }
+        return new ModelAndView("redirect:/home",model);
+    }
 }
 
 

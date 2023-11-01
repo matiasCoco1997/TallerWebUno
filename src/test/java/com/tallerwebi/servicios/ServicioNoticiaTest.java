@@ -136,6 +136,12 @@ public class ServicioNoticiaTest {
         verify(repositorioNoticiaMock, times(1)).obtenerNoticiasCategoria(anyInt(), anyList());
         verify(repositorioLikeMock, times(1)).traerCategoriasLikeadasPorUnUsuario(anyLong());
     }
+
+    @Test
+    public void queSePuedaCompartirUnaNoticia(){
+        servicioNoticiaMock.compartirNoticia(notificacionMock);
+        verify(repositorioNotificacionMock,times(1)).generarNotificacion(notificacionMock);
+    }
 }
 
 /*   REHACER ESTOS TESTS

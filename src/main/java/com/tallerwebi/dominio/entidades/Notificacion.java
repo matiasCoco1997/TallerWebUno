@@ -15,18 +15,31 @@ public class Notificacion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idNotificacion;
+
     @ManyToOne
     private Usuario usuarioNotificado;
+
     @ManyToOne
     private Noticia noticiaNotificada;
 
     private String nombreUsuarioSeguido;
+
+    @ManyToOne
+    @JoinColumn(name = "usuarioEmisor")
+    private Usuario emisor;
 
     private String descripcion;
     private Boolean vista;
 
     public Notificacion() {
 
+    }
+
+    public Notificacion(Usuario emisor, Usuario receptor, Noticia noticia) {
+        this.emisor=emisor;
+        this.usuarioNotificado=receptor;
+        this.noticiaNotificada=noticia;
+        this.descripcion=emisor.getNombre()+" ha compartido una noticia contigo!";
     }
 
     @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista

@@ -226,6 +226,11 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         return repositorioNoticia.obtenerNoticiasCategoria(cantidadNoticias, categorias);
     }
 
+    @Override
+    public void compartirNoticia(Notificacion notificacion) {
+        repositorioNotificacion.generarNotificacion(notificacion);
+    }
+
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {
         if(noticia.getTitulo().isBlank()) {
             throw new CampoVacio();
