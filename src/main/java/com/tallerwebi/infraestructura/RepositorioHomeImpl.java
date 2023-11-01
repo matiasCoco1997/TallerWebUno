@@ -21,7 +21,7 @@ public class RepositorioHomeImpl implements RepositorioHome{
     @Override
     public List<Noticia> listarNoticias() {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Noticia WHERE activa=true").list();
+        return session.createQuery("FROM Noticia WHERE activa=true ORDER BY idNoticia DESC").list();
     }
     @Override
     public List<Republicacion> obtenerRepublicaciones() {

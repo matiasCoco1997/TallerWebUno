@@ -146,10 +146,6 @@
                                 <h2 th:text="${noticiaC.Titulo}" class="text-3xl font-bold text-white md:text-4xl"> </h2>
                             </a>
                             <p th:text="${noticiaC.resumen}" class="mt-2 text-sm text-white md:text-base"></p>
-                            <!--<div class="flex justify-center lg:justify-start mt-6">
-                                <a class="px-4 py-3 bg-gray-900 text-gray-200 text-xs font-semibold rounded hover:bg-gray-800" href="#">Get Started</a>
-                                <a class="mx-4 px-4 py-3 bg-gray-300 text-gray-900 text-xs font-semibold rounded hover:bg-gray-400" href="#">Learn More</a>
-                            </div>-->
                         </div>
                     </div>
                     <div class="hidden lg:block lg:w-1/2" style="clip-path:polygon(10% 0, 100% 0%, 100% 100%, 0 100%)">
@@ -157,20 +153,6 @@
                             <div class="h-full bg-black opacity-25"></div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section >
-        <div class="max-w-4xl my-4 py-6 m-auto text-white flex">
-            <div th:each="noticia : ${noticias}" class="w-1/2 h-[28rem] relative overflow-hidden">
-                <img th:src="@{${noticia.rutaDeimagen}}"
-                     alt="Avatar" class="w-full "/>
-                <div class="absolute w-full py-3 bottom-0 inset-x-0 text-center"
-                     style="background: rgba(0, 0, 0, 0.6);">
-                    <h3 class="text-2xl font-bold text-white" th:text="${noticia.titulo}">
-                    </h3>
                 </div>
             </div>
         </div>

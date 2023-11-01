@@ -28,8 +28,6 @@ public interface RepositorioNoticia {
 
     List<Usuario> obtenerLikes(Long idNoticia);
 
-    void darMeGusta(Noticia noticia, Usuario usuario);
-
     List<Republicacion> obtenerRepublicaciones();
 
     void republicarNoticia(Republicacion republicacion);

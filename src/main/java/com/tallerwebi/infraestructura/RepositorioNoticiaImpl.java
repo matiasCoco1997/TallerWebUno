@@ -8,6 +8,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 @Repository("repositorioNoticia")
@@ -82,7 +84,9 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public List<Noticia> listarNoticias() {
         final Session session = sessionFactory.getCurrentSession();
+
         return session.createQuery("FROM Noticia").list();
+
     }
 
     @Override
@@ -107,28 +111,6 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
         criteria.createAlias("noticiasLikeadas", "n");
         criteria.add(Restrictions.eq("n.idNoticia", idNotiocia));
         return criteria.list();
-    }
-
-    @Override
-    public void darMeGusta(Noticia noticia, Usuario usuario) {
-        final Session session = sessionFactory.getCurrentSession();
-        /*try {
-            noticia.getLikes().add(usuario);
-            session.update(noticia);
-            usuario.getNoticiasLikeadas().add(noticia);
-            session.update(usuario);
-        } catch (NullPointerException e) {
-            List<Usuario> likes = new ArrayList<>();
-            likes.add(usuario);
-            noticia.setLikes(likes);
-            session.update(noticia);
-
-            List<Noticia> noticiasLikeadas = new ArrayList<>();
-            noticiasLikeadas.add(noticia);
-            usuario.setNoticiasLikeadas(noticiasLikeadas);
-            session.update(usuario);
-        }
-        */
     }
 
     @Override

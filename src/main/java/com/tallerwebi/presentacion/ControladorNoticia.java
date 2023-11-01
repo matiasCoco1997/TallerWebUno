@@ -46,6 +46,7 @@ public class ControladorNoticia {
         ModelMap modelo = new ModelMap();
         try{
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
             modelo.put("sessionUsuarioLogueado", usuarioLogueado);
 
             servicioNoticia.crearNoticia(noticia, usuarioLogueado, imagen, audio);

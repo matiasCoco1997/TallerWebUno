@@ -32,7 +32,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         this.repositorioCategoria = repositorioCategoria;
         this.repositorioUsuario = repositorioUsuario;
         this.repositorioNotificacion = repositorioNotificacion;
-        this.repositorioLikeImpl = repositorioLikeImpl; //arreglar linea 72 testServicioNoticia
+        this.repositorioLikeImpl = repositorioLikeImpl;
     }
 
     @Override
@@ -72,7 +72,8 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
                 noticiasActivas.add(noticia);
             }
         }
-        return noticiasActivas;
+
+        return noticias;
     }
 
     @Override

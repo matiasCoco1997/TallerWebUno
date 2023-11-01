@@ -36,6 +36,10 @@ public class ControladorHome {
 
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
 
+        if(usuario == null){
+            return new ModelAndView("redirect:/login");
+        }
+
         List<Noticia> noticias = servicioHome.listarNoticias();
 
         noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
@@ -49,10 +53,9 @@ public class ControladorHome {
         usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
         List<Usuario> usuariosSeguidos=servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
 
-        //List<Object> posts = servicioHome.obtenerPosts();
         List<Noticia> noticiasCarrousel  = servicioNoticia.obtenerNoticiasCategoria(usuario.getIdUsuario(), 5);
+
         model.put("noticias", noticias);
-        //model.put("posts", posts);
         model.put("notificaciones", notificaciones.size());
         model.put("usuarios",usuarios);
         model.put("usuariosSeguidos",usuariosSeguidos);
