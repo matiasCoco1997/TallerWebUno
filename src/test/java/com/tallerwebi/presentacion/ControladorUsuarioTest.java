@@ -113,10 +113,10 @@ public class ControladorUsuarioTest {
         noticias.add(noticiaMock);
         noticias.add(noticiaMock2);
 
-        when(servicioUsuarioMock.obtenerNoticiasDeUnUsuario(usuarioMock.getIdUsuario())).thenReturn(noticias);
+        when(servicioNoticiaMock.obtenerNoticiasDeUnUsuario(usuarioMock.getIdUsuario())).thenReturn(noticias);
         when(servicioNoticiaMock.setNoticiasLikeadas(noticias, 1L)).thenReturn(noticias);
 
-        ModelAndView modelAndView=controladorUsuario.perfil(usuarioMock.getIdUsuario(),sessionMock);
+        ModelAndView modelAndView = controladorUsuario.perfil(usuarioMock.getIdUsuario(),sessionMock);
         List<Noticia> noticiasObtenidas= (List<Noticia>) modelAndView.getModel().get("noticias");
         assertThat(noticiasObtenidas.size(), is(2));
     }
