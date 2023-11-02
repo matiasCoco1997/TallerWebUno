@@ -61,7 +61,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public List<Noticia> obtenerMisNoticias(Long idUsuario) {
         return sessionFactory.getCurrentSession().
-                createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = true").
+                createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = true ORDER BY idNoticia DESC").
                 setParameter("idUsuario",idUsuario).list();
     }
 

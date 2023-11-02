@@ -188,7 +188,7 @@ public class ControladorNoticia {
 
 
         comentarioForm.setNoticia(noticia);
-        if(usuarioLogueado!=null)
+        if(usuarioLogueado != null)
             model.put("usuarioLogueado", usuarioLogueado);
             model.put("comentarios", comentarios);
             model.put("notificaciones", notificaciones.size());

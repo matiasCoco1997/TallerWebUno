@@ -33,4 +33,8 @@ public interface RepositorioNoticia {
     void republicarNoticia(Republicacion republicacion);
 
     List<Noticia> obtenerNoticiasCategoria(int i, List<String> categorias);
+
+    List<Noticia> obtenerMisNoticias(Long idUsuario);
+
+    Boolean marcarNoticiaComoLikeada(Noticia noticia);
 }

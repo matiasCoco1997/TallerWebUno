@@ -39,4 +39,6 @@ public interface ServicioNoticia {
     List<Noticia> obtenerNoticiasCategoria(long idUsuario, int candidadNoticias);
 
     void compartirNoticia(Notificacion notificacion);
+
+    List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario);
 }

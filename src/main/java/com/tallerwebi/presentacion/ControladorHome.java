@@ -40,7 +40,7 @@ public class ControladorHome {
             return new ModelAndView("redirect:/login");
         }
 
-        List<Noticia> noticias = servicioHome.listarNoticias();
+        List<Noticia> noticias = servicioNoticia.listarNoticias();
 
         noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
 
@@ -51,7 +51,8 @@ public class ControladorHome {
         List<Usuario> usuarios = null; //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
 
         usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
-        List<Usuario> usuariosSeguidos=servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
+
+        List<Usuario> usuariosSeguidos = servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
 
         List<Noticia> noticiasCarrousel  = servicioNoticia.obtenerNoticiasCategoria(usuario.getIdUsuario(), 5);
 

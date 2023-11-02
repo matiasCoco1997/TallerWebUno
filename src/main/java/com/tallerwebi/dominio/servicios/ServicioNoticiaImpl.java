@@ -77,6 +77,11 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
+    public List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario) {
+        return repositorioNoticia.obtenerMisNoticias(idUsuario);
+    }
+
+    @Override
     public Noticia buscarNoticiaPorId(Long idNoticia) {
         return repositorioNoticia.buscarPorId(idNoticia);
     }
@@ -207,8 +212,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
 
                 if( meGusta.getNoticia().getIdNoticia().equals(noticia.getIdNoticia()) ){
-                    noticia.setEstaLikeada(true);
-                    repositorioNoticia.modificar(noticia);
+                    repositorioNoticia.marcarNoticiaComoLikeada(noticia);
                 }
             }
         }

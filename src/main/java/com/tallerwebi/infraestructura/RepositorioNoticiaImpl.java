@@ -46,6 +46,26 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     }
 
     @Override
+    public Boolean marcarNoticiaComoLikeada(Noticia noticia) {
+        try {
+            final Session session = sessionFactory.getCurrentSession();
+
+            Noticia noticiaPersistente = session.get(Noticia.class, noticia.getIdNoticia());
+
+            if (noticiaPersistente != null) {
+                noticiaPersistente.setEstaLikeada(true);
+                session.merge(noticiaPersistente);
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public void borrarNoticia(Noticia noticia) {
         final Session session = sessionFactory.getCurrentSession();
 
@@ -84,9 +104,14 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public List<Noticia> listarNoticias() {
         final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Noticia WHERE activa=true ORDER BY idNoticia DESC").list();
+    }
 
-        return session.createQuery("FROM Noticia").list();
-
+    @Override
+    public List<Noticia> obtenerMisNoticias(Long idUsuario) {
+        return sessionFactory.getCurrentSession().
+                createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = true ORDER BY idNoticia DESC").
+                setParameter("idUsuario",idUsuario).list();
     }
 
     @Override
