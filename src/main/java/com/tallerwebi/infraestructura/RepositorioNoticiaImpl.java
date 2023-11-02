@@ -53,12 +53,12 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
             Noticia noticiaPersistente = session.get(Noticia.class, noticia.getIdNoticia());
 
             if (noticiaPersistente != null) {
-                noticiaPersistente.setEstaLikeada(true);
                 session.merge(noticiaPersistente);
                 return true;
-            } else {
-                return false;
             }
+
+            return false;
+
         } catch (Exception e) {
             e.printStackTrace();
             return false;

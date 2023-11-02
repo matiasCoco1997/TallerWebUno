@@ -212,6 +212,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
 
                 if( meGusta.getNoticia().getIdNoticia().equals(noticia.getIdNoticia()) ){
+                    noticia.setEstaLikeada(true);
                     repositorioNoticia.marcarNoticiaComoLikeada(noticia);
                 }
             }
