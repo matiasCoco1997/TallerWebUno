@@ -34,8 +34,6 @@ public class Noticia {
     private  Integer likes;
     private  Boolean estaLikeada;
     private  Boolean esAnonima;
-
-
     @ManyToOne
     private Usuario usuario;
 
