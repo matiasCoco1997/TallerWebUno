@@ -87,6 +87,16 @@ public class ServicioNoticiaTest {
     }
 
     @Test
+    public void cuandoCreoUnaNoticiaAnonimaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez() throws Exception {
+        when(noticiaMock.getEsAnonima()).thenReturn(true);
+
+        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
+
+        assertThat(noticiaMock.getEsAnonima(), is(true));
+        verify(repositorioNoticiaMock, times(1)).guardar(noticiaMock);
+    }
+
+    @Test
     public void cuandoCreoDosNoticiasSeInvocaLaFuncionGuardarDelRepositorioDosVeces() throws Exception {
 
         //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
@@ -99,10 +109,8 @@ public class ServicioNoticiaTest {
 
     @Test
     public void cuandoEditoUnaNoticiaSeInvocaLaFuncionEditarDelRepositorioSoloUnaVez() throws Exception {
-        //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
         servicioNoticiaMock.editarNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
-        //verificacion (evaluo si no esta vacio y si es 3 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(1)).editarNoticia(noticiaMock);
     }
 
@@ -123,6 +131,7 @@ public class ServicioNoticiaTest {
         servicioNoticiaMock.republicarNoticia(republicacionMock);
         verify(repositorioNoticiaMock,times(1)).republicarNoticia(eq(republicacionMock));
     }
+
     @Test
     public void queSePuedaObtenerUnaCantidadDeNoticiasPorCategoriasQueElUsuarioDioLikeUtilizeRepositorioNoticia(){
         noticiasEsperadas.add(noticiaMock);
@@ -143,31 +152,4 @@ public class ServicioNoticiaTest {
         verify(repositorioNotificacionMock,times(1)).generarNotificacion(notificacionMock);
     }
 }
-
-/*   REHACER ESTOS TESTS
-    @Test
-    public void cuandoDanMeGusta4VecesLaCantidadDeMegustaIncrementa4Veces() {
-        //preparación
-        Noticia noticia = new Noticia();
-        noticia.setTitulo("Título de la noticia");
-        //ejecución
-        repositorioNoticiaMock.guardar(noticia);
-        servicioNoticiaMock.darMeGusta(noticia);
-        servicioNoticiaMock.darMeGusta(noticia);
-        servicioNoticiaMock.darMeGusta(noticia);
-        servicioNoticiaMock.darMeGusta(noticia);
-        //validación
-        assertThat(noticia.getLikes(), is(4));
-    }
-
-    @Test
-    public void generarNotificacionDeberiaNotificarSeguidores() {
-        when(repositorioUsuarioMock.obtenerListaDeSeguidores(anyLong()))
-                .thenReturn(Arrays.asList(new Seguidos(), new Seguidos()));
-
-        servicioNoticiaMock.generarNotificacion(1L, "UsuarioEjemplo", "Título de Noticia", noticiaMock);
-
-        verify(repositorioNotificacionMock, times(2)).generarNotificacion(any(Notificacion.class));
-    }
-*/
 

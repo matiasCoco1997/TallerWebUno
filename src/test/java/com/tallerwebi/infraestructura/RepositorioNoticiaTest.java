@@ -96,6 +96,23 @@ public class RepositorioNoticiaTest {
     @Transactional
     @Rollback
     @Test
+    public void guardarNoticiaAnonimaDeberiaPersistirla() {
+        Noticia noticia = new Noticia();
+        noticia.setTitulo("Titulo de la noticia");
+        noticia.setEsAnonima(true);
+        repositorioNoticia.guardar(noticia);
+
+        Long idNoticiaGuardada = noticia.getIdNoticia();
+        Noticia buscada = repositorioNoticia.buscarPorId(idNoticiaGuardada);
+
+        assertThat(buscada, is(notNullValue()));
+        assertThat(buscada.getIdNoticia(), is(idNoticiaGuardada));
+        assertThat(buscada.getEsAnonima(), is(true));
+    }
+
+    @Transactional
+    @Rollback
+    @Test
     public void buscarPorTituloPuedeTraerMasDeUnaNoticia() {
         Noticia noticia = new Noticia();
         noticia.setTitulo("Titulo de la noticia");
@@ -123,6 +140,32 @@ public class RepositorioNoticiaTest {
 
         assertThat(buscadas,hasSize(0));
 
+    }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaConvertirAUnaNoticiaAnonima() {
+        Noticia noticia = new Noticia();
+        noticia.setTitulo("Título de la noticia");
+        noticia.setDescripcion("Descripción de la noticia");
+        noticia.setCategoria("Categoría de la noticia");
+        noticia.setResumen("Contenido de la noticia");
+        noticia.setRutaDeimagen("URL de la imagen");
+        noticia.setFechaDePublicacion(LocalDateTime.now());
+        noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
+        noticia.setActiva(true);
+        noticia.setEsAnonima(false);
+
+        repositorioNoticia.guardar(noticia);
+        noticia.setEsAnonima(true);
+
+        repositorioNoticia.modificar(noticia);
+        Noticia noticiaModificada = repositorioNoticia.buscarPorId(noticia.getIdNoticia());
+
+        assertThat(noticiaModificada, is(notNullValue()));
+        assertThat(noticia.getIdNoticia(), is(noticiaModificada.getIdNoticia()));
+        assertThat(noticiaModificada.getEsAnonima(), is(true));
     }
 
     @Transactional
@@ -164,42 +207,6 @@ public class RepositorioNoticiaTest {
         assertThat(republicaciones.size(),is(1));
     }
 
-    /*
-    @Transactional
-    @Rollback
-    @Test
-    public void cuandoSeCreaUnaNoticiaNuevaTieneCeroMeGusta() {
-        //preparación
-        Noticia noticia = new Noticia();
-        noticia.setTitulo("Título de la noticia");
-        //ejecución
-        repositorioNoticia.guardar(noticia);
-        List<Usuario> likes = repositorioNoticia.obtenerLikes(noticia.getIdNoticia());
-        //validación
-        assertThat(likes, hasSize(0));
-    }
-
-     */
-
-    @Transactional
-    @Rollback
-    @Test
-    public void cuandoUnaNoticiaRecibeUnMeGustaElTotalDeMeGustaEsUno() {
-        //preparación
-        /*Usuario usuarioOriginal = new Usuario();
-        usuarioOriginal.setIdUsuario(1L);
-        Noticia noticia = new Noticia();
-        noticia.setIdNoticia(1L);
-        noticia.setTitulo("Título de la noticia");
-        repositorioNoticia.guardar(noticia);
-        //ejecución
-        repositorioNoticia.darMeGusta(noticia, usuarioOriginal);
-        Usuario usuarioObtenido = noticia.getLikes().get(0);
-        //validación
-        assertThat(usuarioOriginal.getIdUsuario(), is(usuarioObtenido.getIdUsuario()));
-
-         */
-    }
     @Transactional
     @Rollback
     @Test
