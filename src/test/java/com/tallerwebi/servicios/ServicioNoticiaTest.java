@@ -87,6 +87,24 @@ public class ServicioNoticiaTest {
     }
 
     @Test
+    public void cuandoCreoListoLasNoticiasSeInvoqueMarcarNoticiaComoLikeadaUnaVez() {
+        List<Noticia> noticias = new ArrayList<>();
+        noticias.add(noticiaMock);
+        when(servicioNoticiaMock.listarNoticias()).thenReturn(noticias);
+        when(noticiaMock.getEstaLikeada()).thenReturn(true);
+
+        List<MeGusta> megustas = new ArrayList<>();
+        megustas.add(new MeGusta(usuarioMock, noticiaMock));
+        when(servicioNoticiaMock.obtenerMeGustas(usuarioMock.getIdUsuario())).thenReturn(megustas);
+
+        noticias = servicioNoticiaMock.listarNoticias();
+
+        noticias = servicioNoticiaMock.setNoticiasLikeadas(noticias, usuarioMock.getIdUsuario());
+
+        verify(repositorioNoticiaMock, times(1)).marcarNoticiaComoLikeada(noticiaMock);
+    }
+
+    @Test
     public void cuandoCreoUnaNoticiaAnonimaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez() throws Exception {
         when(noticiaMock.getEsAnonima()).thenReturn(true);
 

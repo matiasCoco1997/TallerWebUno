@@ -12,15 +12,15 @@
     <link rel="stylesheet" type="text/css"
           href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
 
-    <title>Home</title>
+    <title>Perfil</title>
     <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
 </head>
 
 <body class="bg-black">
 
 <!-- Main navigation container -->
-<nav
-        class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+<nav class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+
     <div class="flex w-full flex-wrap items-center justify-between px-3">
         <!-- Logo -->
         <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
@@ -28,8 +28,8 @@
             <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
                  alt="TE Logo" loading="lazy" />
         </a>
-        <!--Search-->
 
+        <!--Search-->
         <form th:action="@{/titulo}" method="GET" class="flex items-center w-6/12">
             <label for="simple-search" class="sr-only">Search</label>
             <div class="relative w-full">
@@ -49,10 +49,9 @@
         <!-- Right elements -->
         <div class="relative flex items-center">
 
-
             <div class="relative">
                 <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
-          <span class="[&>svg]:w-5">
+                    <span class="[&>svg]:w-5">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
                                 <path fill-rule="evenodd"
                                       d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
@@ -79,21 +78,23 @@
                     <!-- Second dropdown menu items -->
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           href="#" data-te-dropdown-item-ref>Action</a>
+                           th:href="@{/siguiendo}" data-te-dropdown-item-ref>Siguiendo</a>
                     </li>
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           href="#" data-te-dropdown-item-ref>Another action</a>
+                           th:href="@{/listaReproduccion}" data-te-dropdown-item-ref>Ver lista de reproducción</a>
                     </li>
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           href="#" data-te-dropdown-item-ref>Something else here</a>
+                           th:href="@{/cerrar-sesion}" data-te-dropdown-item-ref>Cerrar Sesion</a>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
+
 </nav>
+
 <nav id="bar" class="flex justify-center">
     <form  th:action="@{/categoria}" method="get">
         <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
@@ -111,7 +112,6 @@
 
 <!--Sección de Noticias-->
 <main class="p-2">
-
 
     <div class="flex justify-between mt-10">
         <div class="w-[20%]">
@@ -265,7 +265,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- Slick -->
-
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
