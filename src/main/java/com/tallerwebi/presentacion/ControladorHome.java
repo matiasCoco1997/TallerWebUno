@@ -124,11 +124,4 @@ public class ControladorHome {
         return new ModelAndView("home-vista",model);
     }
 
-    @RequestMapping("/prueba")
-    public ModelAndView lista(){
-        ModelMap model=new ModelMap();
-        //List<Object> noticias=servicioNoticia.obtenerPosts();
-        //model.put("noticias",noticias);
-        return new ModelAndView("prueba",model);
-    }
 }
