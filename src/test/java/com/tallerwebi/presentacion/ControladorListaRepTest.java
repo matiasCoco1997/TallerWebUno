@@ -7,6 +7,7 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioListaRep;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
+import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.ui.ModelMap;
@@ -37,6 +38,7 @@ public class ControladorListaRepTest {
     private Categoria categoriaMock;
     private Usuario usuarioMock;
     private ListaReproduccion listaMock;
+    private ServicioUsuario servicioUsuarioMock;
 
     @BeforeEach
     public void init(){
@@ -60,8 +62,9 @@ public class ControladorListaRepTest {
 
         servicioListaRepMock = mock(ServicioListaRep.class);
         servicioNoticiaMock = mock(ServicioNoticia.class);
+        servicioUsuarioMock = mock(ServicioUsuario.class);
 
-        controladorListaRep = new ControladorListaRep(servicioListaRepMock,servicioNoticiaMock);
+        controladorListaRep = new ControladorListaRep(servicioListaRepMock,servicioNoticiaMock, servicioUsuarioMock);
     }
 
     @Test

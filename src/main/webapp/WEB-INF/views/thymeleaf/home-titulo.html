@@ -2,17 +2,17 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
-  <script src="https://cdn.tailwindcss.com/3.3.0"></script>
-  <!--Slick-->
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css" />
-  <link rel="stylesheet" type="text/css"
-        href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css"/>
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <!--Slick-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
-  <title>Home</title>
+    <title>Home</title>
 </head>
 
 <body class="bg-black">
@@ -20,85 +20,100 @@
 <!-- Main navigation container -->
 <nav
         class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
-  <div class="flex w-full flex-wrap items-center justify-between px-3">
-    <!-- Logo -->
-    <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-       href="home">
-      <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
-           alt="TE Logo" loading="lazy" />
-    </a>
-    <!--Search-->
+    <div class="flex w-full flex-wrap items-center justify-between px-3">
+        <!-- Logo -->
+        <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
+           href="home">
+            <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
+                 alt="TE Logo" loading="lazy"/>
+        </a>
+        <!--Search-->
 
-    <form th:action="@{/titulo}" method="GET" class="flex items-center w-6/12">
-      <label for="simple-search" class="sr-only">Search</label>
-      <div class="relative w-full">
-        <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6">
-            <path fill-rule="evenodd"
-                  d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
-                  clip-rule="evenodd"/>
-          </svg>
-        </div>
-        <input type="text" id="simple-search" name="titulo"
-               class="bg-black-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-grey-500 focus:border-grey-500 block w-full pl-10 p-2.5  dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-grey-800 dark:focus:border-grey-800"
-               placeholder="Search branch name..." required>
-      </div>
-    </form>
+        <form th:action="@{/titulo}" method="GET" class="flex items-center w-6/12">
+            <label for="simple-search" class="sr-only">Search</label>
+            <div class="relative w-full">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6">
+                        <path fill-rule="evenodd"
+                              d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <input type="text" id="simple-search" name="titulo"
+                       class="bg-black-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-grey-500 focus:border-grey-500 block w-full pl-10 p-2.5  dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-grey-800 dark:focus:border-grey-800"
+                       placeholder="Search branch name..." required>
+            </div>
+        </form>
 
-    <!-- Right elements -->
-    <div class="relative flex items-center">
+        <!-- Right elements -->
+        <div class="relative flex items-center">
 
 
-      <div class="relative">
-        <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
+            <div class="relative">
+                <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
           <span class="[&>svg]:w-5">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="h-5 w-5">
                                 <path fill-rule="evenodd"
                                       d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
-                                      clip-rule="evenodd" />
+                                      clip-rule="evenodd"/>
                             </svg>
                     </span>
-          <span class="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white" th:text="${notificaciones}"></span>
-        </a>
-      </div>
+                    <span class="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white"
+                          th:text="${notificaciones}"></span>
+                </a>
+            </div>
 
-      <!-- Second dropdown container -->
-      <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
-        <!-- Second dropdown trigger -->
-        <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
-           href="#" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
-           aria-expanded="false">
-          <!-- User avatar -->
-          <img th:src="@{${usuario.fotoPerfil}}" class="rounded-full"
-               style="height: 25px; width: 25px" alt="" loading="lazy" />
-        </a>
-        <!-- Second dropdown menu -->
-        <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
-            aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
-          <!-- Second dropdown menu items -->
-          <li>
-            <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-               href="#" data-te-dropdown-item-ref>Action</a>
-          </li>
-          <li>
-            <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-               href="#" data-te-dropdown-item-ref>Another action</a>
-          </li>
-          <li>
-            <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-               href="#" data-te-dropdown-item-ref>Something else here</a>
-          </li>
-        </ul>
-      </div>
+            <!-- Second dropdown container -->
+            <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+                <!-- Second dropdown trigger -->
+                <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+                   href="" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
+                   aria-expanded="false">
+                    <!-- User avatar -->
+                    <img th:src="@{${usuario.fotoPerfil}}" th:alt="@{${usuario.altFotoPerfil}}" class="rounded-full"
+                         style="height: 25px; width: 25px" alt="" loading="lazy"/>
+                </a>
+                <!-- Second dropdown menu -->
+                <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                    aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
+                    <!-- Second dropdown menu items -->
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/perfil}" data-te-dropdown-item-ref>Ver Perfil</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/siguiendo}" data-te-dropdown-item-ref>Siguiendo</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/listaReproduccion}" data-te-dropdown-item-ref>Ver lista de reproducción</a>
+                    </li>
+
+                    <li class="bg-danger">
+                        <a class=" block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/cerrar-sesion}" data-te-dropdown-item-ref>Cerrar Sesion</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
     </div>
-  </div>
 </nav>
 <nav id="bar" class="flex justify-center">
-  <form  th:action="@{/categoria}" method="get">
+    <form th:action="@{/categoria}" method="get">
+        <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
+            <input th:each="categoria : ${categorias}" type="submit" name="categoria"
+                   th:value="${categoria.descripcion}" class="mx-8 hover:text-white">
+        </div>
+    </form>
     <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
-      <input th:each="categoria : ${categorias}" type="submit" name="categoria" th:value="${categoria.descripcion}" class="mx-8 hover:text-white">
+        <a href="noticia-de-seguidos" class="mx-8 hover:text-white">Noticias de Seguidos</a>
     </div>
-  </form>
 </nav>
 <!-- Main navigation container -->
 
@@ -106,96 +121,105 @@
 
 <!--Sección de Noticias-->
 <main class="p-2">
-  <p th:if="${#lists.isEmpty(noticias)}" th:text="${error}" class="text-white"></p>
+    <p th:if="${#lists.isEmpty(noticias)}" th:text="${error}" class="text-white"></p>
 
-  <section class="lista-noticia">
-    <div th:unless="${#lists.isEmpty(noticias)}" th:each="noticia : ${noticias}" class="max-w-4xl my-4 py-6 m-auto text-white">
-      <div class="flex items-center">
-        <div class="mr-2">
-          <form th:action="@{/perfil}" method="POST">
-            <button class="flex items-center" th:value="${noticia.usuario.getIdUsuario()}" name="idUsuario">
-              <img class="mr-3 w-10 h-10 object-cover rounded-full" th:src="@{${noticia.getUsuario().fotoPerfil}}" th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
-              <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
-            </button>
-          </form>
-        </div>
+    <section class="lista-noticia">
+        <div th:unless="${#lists.isEmpty(noticias)}" th:each="noticia : ${noticias}"
+             class="max-w-4xl my-4 py-6 m-auto text-white">
+            <div class="flex items-center">
+                <div class="mr-2">
+                    <form th:action="@{/perfil}" method="POST">
+                        <button class="flex items-center" th:value="${noticia.usuario.getIdUsuario()}" name="idUsuario">
+                            <img class="mr-3 w-10 h-10 object-cover rounded-full"
+                                 th:src="@{${noticia.getUsuario().fotoPerfil}}"
+                                 th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
+                            <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
+                        </button>
+                    </form>
+                </div>
 
-        <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
+                <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
 
-      </div>
-      <div class="mt-2 flex">
-        <div class="mr-2">
-          <a class="text-2xl font-bold hover:text-gray-300" href="#" th:text="${noticia.titulo}"></a>
-          <p class="mt-2 sm:block hidden" th:text="${noticia.resumen}"></p>
+            </div>
+            <div class="mt-2 flex">
+                <div class="mr-2">
+                    <a class="text-2xl font-bold hover:text-gray-300" href="#" th:text="${noticia.titulo}"></a>
+                    <p class="mt-2 sm:block hidden" th:text="${noticia.resumen}"></p>
+                </div>
+                <div class="imagen-noticia">
+                    <a class="flex items-center" href="#"></a>
+                    <img class="w-[20rem] sm:h-36 object-cover h-20 m-auto"
+                         th:src="@{${noticia.rutaDeimagen}}"
+                         th:alt="${noticia.titulo}">
+                    </a>
+                </div>
+            </div>
+            <div class="flex justify-between max-w-xs items-center text-white">
+                <div
+                        class="flex items-center border-2 border-white rounded-lgs px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-gray-200">
+                    <div class="mr-2">
+                        <audio th:id="${noticia.idNoticia}" th:src="@{${noticia.rutaDeAudioPodcast}}"></audio>
+                        <button class="playButton" th:name="${noticia.idNoticia}">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
+                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <style> svg {
+                                    fill: #ffffff
+                                } </style>
+                                <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    48 min
+                </div>
+                <!--Comentarios-->
+                <div class="comentario">
+                    <svg xmlns="http://www.w3.org/2000/svg" height="1.5em"
+                         viewBox="0 0 512 512">
+                        <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                        <style>
+                            svg {
+                                fill: #ffffff
+                            }
+                        </style>
+                        <path
+                                d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z"/>
+                    </svg>
+                </div>
+                <div class="me-gusta">
+                    <form th:action="@{/darLike}" method="POST">
+                        <button th:value="${noticia.idNoticia}" name="noticiaLike" class="flex ">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
+                                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
+                                <style>svg {
+                                    fill: #ffffff
+                                }</style>
+                                <path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z"/>
+                            </svg>
+                            <label th:text="${noticia.likes}" class="ml-2 text-xl">0</label>
+                        </button>
+                    </form>
+                </div>
+                <div>
+                    <form th:action="@{/listaReproduccion/agregarNoticia}" method="POST">
+                        <button th:value="${noticia.idNoticia}" name="noticiaAgregar">
+                            <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512">
+                                <style> svg {
+                                    fill: #ffffff
+                                } </style>
+                                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
-        <div class="imagen-noticia">
-          <a class="flex items-center" href="#"></a>
-          <img class="w-[20rem] sm:h-36 object-cover h-20 m-auto"
-               th:src="@{${noticia.rutaDeimagen}}"
-               th:alt="${noticia.titulo}">
-          </a>
-        </div>
-      </div>
-      <div class="flex justify-between max-w-xs items-center text-white">
-        <div
-                class="flex items-center border-2 border-white rounded-lgs px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-gray-200">
-          <div class="mr-2">
-            <audio th:id="${noticia.idNoticia}" th:src="@{${noticia.rutaDeAudioPodcast}}"></audio>
-            <button class = "playButton" th:name="${noticia.idNoticia}">
-              <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
-                <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <style> svg {
-                  fill: #ffffff
-                } </style>
-                <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
-              </svg>
-            </button>
-          </div>
-          48 min
-        </div>
-        <!--Comentarios-->
-        <div class="comentario">
-          <svg xmlns="http://www.w3.org/2000/svg" height="1.5em"
-               viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-            <style>
-              svg {
-                fill: #ffffff
-              }
-            </style>
-            <path
-                    d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z" />
-          </svg>
-        </div>
-        <div class="me-gusta">
-          <form th:action="@{/darLike}" method="POST" >
-            <button th:value="${noticia.idNoticia}" name="noticiaLike" class="flex ">
-              <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
-                <style>svg {fill: #ffffff}</style>
-                <path d="M225.8 468.2l-2.5-2.3L48.1 303.2C17.4 274.7 0 234.7 0 192.8v-3.3c0-70.4 50-130.8 119.2-144C158.6 37.9 198.9 47 231 69.6c9 6.4 17.4 13.8 25 22.3c4.2-4.8 8.7-9.2 13.5-13.3c3.7-3.2 7.5-6.2 11.5-9c0 0 0 0 0 0C313.1 47 353.4 37.9 392.8 45.4C462 58.6 512 119.1 512 189.5v3.3c0 41.9-17.4 81.9-48.1 110.4L288.7 465.9l-2.5 2.3c-8.2 7.6-19 11.9-30.2 11.9s-22-4.2-30.2-11.9zM239.1 145c-.4-.3-.7-.7-1-1.1l-17.8-20c0 0-.1-.1-.1-.1c0 0 0 0 0 0c-23.1-25.9-58-37.7-92-31.2C81.6 101.5 48 142.1 48 189.5v3.3c0 28.5 11.9 55.8 32.8 75.2L256 430.7 431.2 268c20.9-19.4 32.8-46.7 32.8-75.2v-3.3c0-47.3-33.6-88-80.1-96.9c-34-6.5-69 5.4-92 31.2c0 0 0 0-.1 .1s0 0-.1 .1l-17.8 20c-.3 .4-.7 .7-1 1.1c-4.5 4.5-10.6 7-16.9 7s-12.4-2.5-16.9-7z" />
-              </svg><label th:text="${noticia.likes}" class="ml-2 text-xl">0</label>
-            </button>
-          </form>
-        </div>
-        <div>
-          <form th:action="@{/listaReproduccion/agregarNoticia}" method="POST" >
-            <button th:value="${noticia.idNoticia}" name="noticiaAgregar">
-              <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512">
-                <style> svg {fill: #ffffff} </style>
-                <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z" />
-              </svg>
-            </button>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
 
 </main>
 
 <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
-
 
 
 <!-- jQuery -->
@@ -206,32 +230,32 @@
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <script>
-  $(document).ready(function () {
-    $('.publicadores').slick({
-      // Opciones de configuración
-      slidesToShow: 4,
-      autoplay: true,
-      autoplaySpeed: 4000,
-      // Otras opciones...
+    $(document).ready(function () {
+        $('.publicadores').slick({
+            // Opciones de configuración
+            slidesToShow: 4,
+            autoplay: true,
+            autoplaySpeed: 4000,
+            // Otras opciones...
+        });
     });
-  });
 </script>
 
 <script>
-  $(document).ready(function() {
+    $(document).ready(function () {
 
-    $('.playButton').on('click', function() {
-      var idAudio = "#" + $(this).attr("name");
-      var elementoAudio = $(idAudio)[0];
+        $('.playButton').on('click', function () {
+            var idAudio = "#" + $(this).attr("name");
+            var elementoAudio = $(idAudio)[0];
 
-      if (elementoAudio.paused) {
-        elementoAudio.play();
-      } else {
-        elementoAudio.pause();
-      }
+            if (elementoAudio.paused) {
+                elementoAudio.play();
+            } else {
+                elementoAudio.pause();
+            }
 
+        });
     });
-  });
 </script>
 
 
