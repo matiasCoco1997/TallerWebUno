@@ -170,7 +170,6 @@ public class ControladorNoticia {
         } catch (Exception e) {
             return ResponseEntity.badRequest().build();
         }
-
         return ResponseEntity.ok(resultadoMeGusta);
     }
 

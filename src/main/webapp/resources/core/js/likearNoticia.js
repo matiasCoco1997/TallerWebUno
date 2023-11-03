@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    $(document).on("click", ".dar-like-btn", function (event) {
+    $(document).on("click", ".dar-like-btn", function () {
 
         var buttonId = $(this).attr('id');
 
@@ -13,7 +13,7 @@ $(document).ready(function () {
 
                 var cantidadMG = parseInt($('.cantidadMG_'+ buttonId).text(), 10);
 
-                if(isNaN(cantidadMG)){
+                if(isNaN(cantidadMG) || cantidadMG === 0){
                     cantidadMG = 0;
                     $('.cantidadMG_'+ buttonId).text(cantidadMG);
                 }

@@ -41,7 +41,6 @@ public interface ServicioUsuario {
 
     List<Usuario> listarUsuarioParaSeguir(long idSeguidor);
 
-
     List<Usuario> listarUsuarioseguidos(Long idUsuario);
 
     List<Usuario> listarUsuarioQueMeSiguen(Long idUsuario);

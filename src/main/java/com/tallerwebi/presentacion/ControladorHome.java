@@ -4,7 +4,6 @@ import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
-import org.dom4j.rule.Mode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.*;
 import org.springframework.ui.ModelMap;
@@ -48,9 +47,7 @@ public class ControladorHome {
 
         List<Notificacion> notificaciones = servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
-        List<Usuario> usuarios = null; //Acá debería ir el id del usuario que inició sesión pero, si lo hago, me tira mal los test
-
-        usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
+        List<Usuario> usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
 
         List<Usuario> usuariosSeguidos = servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
 
@@ -71,7 +68,9 @@ public class ControladorHome {
         ModelMap model=new ModelMap();
 
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+
         List<Categoria> categorias=servicioHome.obtenerCategorias();
+
         List<Noticia> noticiasCategorias = servicioHome.obtenerNoticiasPorCategoria(categoria);
 
         noticiasCategorias = servicioNoticia.setNoticiasLikeadas(noticiasCategorias, usuario.getIdUsuario());
