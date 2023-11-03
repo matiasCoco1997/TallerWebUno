@@ -12,7 +12,7 @@
     <link rel="stylesheet" type="text/css"
           href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
-    <title>Home</title>
+    <title>Lista de reproducción</title>
 </head>
 
 <body class="bg-black">
@@ -21,14 +21,15 @@
 <nav
         class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
     <div class="flex w-full flex-wrap items-center justify-between px-3">
+
         <!-- Logo -->
         <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
            href="home">
             <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
                  alt="TE Logo" loading="lazy"/>
         </a>
-        <!--Search-->
 
+        <!--Search-->
         <form th:action="@{/titulo}" method="GET" class="flex items-center w-6/12">
             <label for="simple-search" class="sr-only">Search</label>
             <div class="relative w-full">
@@ -47,7 +48,6 @@
 
         <!-- Right elements -->
         <div class="relative flex items-center">
-
 
             <div class="relative">
                 <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
@@ -102,6 +102,7 @@
         </div>
     </div>
 </nav>
+
 <nav id="bar" class="flex justify-center">
     <form th:action="@{/categoria}" method="get">
         <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
