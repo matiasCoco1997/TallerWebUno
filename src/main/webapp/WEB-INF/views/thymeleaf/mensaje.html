@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<section style="max-width: 36rem; margin: 0 auto; padding: 2rem; background-color: #fff;">
+    <header>
+        <a href="#">
+            <img style="width: 100px" src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Sunn_O%29%29%29_%28Logo%29.png/1200px-Sunn_O%29%29%29_%28Logo%29.png" alt="">
+        </a>
+    </header>
+
+    <main style="margin-top: 2rem;">
+        <h2 style="color: #333;">Hola, <span th:text="${nombreUsuario}"></span></h2>
+
+        <p style="margin-top: 1rem; line-height: 1.5; color: #666;">
+            ¡Bienvenido a nuestra comunidad de noticias! 📰
+        </p>
+        <a href="http://localhost:8080/sunn/login">
+        <button style="padding: 0.5rem 1.5rem; margin-top: 1rem; font-size: 0.875rem; font-weight: bold; color: #fff; text-transform: capitalize; background-color: #0077B6; border: none; border-radius: 0.25rem; transition: background-color 0.3s; cursor: pointer;">
+
+                Iniciar Sesión
+
+        </button>
+        </a>
+    </main>
+
+</section>
+</body>
+</html>

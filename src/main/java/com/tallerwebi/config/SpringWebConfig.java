@@ -91,6 +91,7 @@ public class SpringWebConfig implements WebMvcConfigurer {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.office365.com");
         mailSender.setPort(587);
+        mailSender.setDefaultEncoding("UTF-8");
 
         mailSender.setUsername("noticierosunn@outlook.com");
         mailSender.setPassword("tallerweb1");

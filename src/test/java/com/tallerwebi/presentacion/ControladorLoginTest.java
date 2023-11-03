@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.excepcion.CampoVacio;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.dominio.servicios.ServicioEmail;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioLogin;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -36,7 +37,7 @@ public class ControladorLoginTest {
 	private HttpSession sessionMock;
 	private ServicioLogin servicioLoginMock;
 	private MultipartFile imgMock;
-
+	private ServicioEmail servicioEmailMock;
 
 	@BeforeEach
 	public void init(){
@@ -54,7 +55,8 @@ public class ControladorLoginTest {
 		requestMock = mock(HttpServletRequest.class);
 		sessionMock = mock(HttpSession.class);
 		servicioLoginMock = mock(ServicioLogin.class);
-		controladorLogin = new ControladorLogin(servicioLoginMock);
+		servicioEmailMock = mock(ServicioEmail.class);
+		controladorLogin = new ControladorLogin(servicioLoginMock, servicioEmailMock);
 	}
 
 	@Test

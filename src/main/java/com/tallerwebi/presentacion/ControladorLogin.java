@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.excepcion.CampoVacio;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.dominio.servicios.ServicioEmail;
 import com.tallerwebi.dominio.servicios.ServicioLogin;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.UsuarioExistente;
@@ -20,10 +21,12 @@ import javax.servlet.http.HttpSession;
 public class ControladorLogin {
 
     private ServicioLogin servicioLogin;
+    private ServicioEmail servicioEmail;
 
     @Autowired
-    public ControladorLogin(ServicioLogin servicioLogin) {
+    public ControladorLogin(ServicioLogin servicioLogin, ServicioEmail servicioEmail) {
         this.servicioLogin = servicioLogin;
+        this.servicioEmail = servicioEmail;
     }
 
     @RequestMapping(path = "/login", method = RequestMethod.GET)
@@ -70,6 +73,7 @@ public class ControladorLogin {
 
         try {
             servicioLogin.registrar(usuario, imagen);
+            servicioEmail.enviarCorreoBienvenida(usuario.getEmail(), usuario.getNombre());
         } catch (UsuarioExistente e) {
             model.put("error", "El email ya esta en uso.");
             return new ModelAndView("registro", model);
