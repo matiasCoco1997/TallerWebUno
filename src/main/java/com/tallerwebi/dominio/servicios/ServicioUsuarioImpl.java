@@ -127,7 +127,7 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
     @Override
     public boolean verificarSiElIDEsNull(Long id) {
-        return id==null;
+        return id == null;
     }
 
     @Override
@@ -137,7 +137,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
     @Override
     public void modificarDatosUsuario(Usuario usuario, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
-
 
         if(!imagen.isEmpty() && !verifiCacionSiEsLaImagenDePrueba(imagen)){
             Long tamanioDeImagen = imagen.getSize();

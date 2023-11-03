@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,6 +42,7 @@ public class ControladorUsuarioTest {
     private Noticia noticiaBorradorMock;
 
     private MultipartFile imgMock;
+    private ServicioNoticia servicioNoticiaMock;
 
     @BeforeEach
     public void init(){
@@ -75,7 +77,8 @@ public class ControladorUsuarioTest {
         notificacionMock=mock(Notificacion.class);
         requestMock = mock(HttpServletRequest.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
-        controladorUsuario = new ControladorUsuario(servicioUsuarioMock);
+        servicioNoticiaMock = mock(ServicioNoticia.class);
+        controladorUsuario = new ControladorUsuario(servicioUsuarioMock, servicioNoticiaMock);
     }
 
     @Test
@@ -102,14 +105,18 @@ public class ControladorUsuarioTest {
 
     @Test
     public void quePuedaObtenerSoloLasNoticiasPertenecientesAlUsuario(){
+
         when(servicioUsuarioMock.verificarSiElIDEsNull(usuarioMock.getIdUsuario())).thenReturn(true);
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
         List<Noticia> noticias= new ArrayList<>();
         noticias.add(noticiaMock);
         noticias.add(noticiaMock2);
-        when(servicioUsuarioMock.obtenerNoticiasDeUnUsuario(usuarioMock.getIdUsuario())).thenReturn(noticias);
-        ModelAndView modelAndView=controladorUsuario.perfil(usuarioMock.getIdUsuario(),sessionMock);
+
+        when(servicioNoticiaMock.obtenerNoticiasDeUnUsuario(usuarioMock.getIdUsuario())).thenReturn(noticias);
+        when(servicioNoticiaMock.setNoticiasLikeadas(noticias, 1L)).thenReturn(noticias);
+
+        ModelAndView modelAndView = controladorUsuario.perfil(usuarioMock.getIdUsuario(),sessionMock);
         List<Noticia> noticiasObtenidas= (List<Noticia>) modelAndView.getModel().get("noticias");
         assertThat(noticiasObtenidas.size(), is(2));
     }

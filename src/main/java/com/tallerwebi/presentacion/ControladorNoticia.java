@@ -46,11 +46,12 @@ public class ControladorNoticia {
         ModelMap modelo = new ModelMap();
         try{
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-            modelo.put("sessionUsuarioLogueado", usuarioLogueado);
 
             servicioNoticia.crearNoticia(noticia, usuarioLogueado, imagen, audio);
 
             servicioNoticia.generarNotificacion(usuarioLogueado.getIdUsuario(),usuarioLogueado.getNombre(),noticia.getTitulo(),noticia);
+
+            modelo.put("sessionUsuarioLogueado", usuarioLogueado);
 
         }catch (CampoVacio e) {
             modelo.put("error", "Error, para crear la nota debe completar todos los campos.");
@@ -187,7 +188,7 @@ public class ControladorNoticia {
 
 
         comentarioForm.setNoticia(noticia);
-        if(usuarioLogueado!=null)
+        if(usuarioLogueado != null)
             model.put("usuarioLogueado", usuarioLogueado);
             model.put("comentarios", comentarios);
             model.put("notificaciones", notificaciones.size());
@@ -206,6 +207,21 @@ public class ControladorNoticia {
 
         servicioNoticia.republicarNoticia(republicacion);
         return new ModelAndView("redirect:/home");
+    }
+
+    @RequestMapping(value = "/compartir", method = RequestMethod.POST)
+    public ModelAndView compartir(@RequestParam("idNoticiaCompartida")Long idNoticia,@RequestParam("receptor") Long idUsuario, HttpSession session){
+        ModelMap model=new ModelMap();
+        Noticia noticia=servicioNoticia.buscarNoticiaPorId(idNoticia);
+        Usuario receptor= null;
+        try {
+            receptor = servicioUsuario.obtenerUsuarioPorId(idUsuario);
+            Usuario emisor=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+            servicioNoticia.compartirNoticia(new Notificacion(emisor,receptor,noticia));
+        } catch (Exception e) {
+
+        }
+        return new ModelAndView("redirect:/home",model);
     }
 }
 

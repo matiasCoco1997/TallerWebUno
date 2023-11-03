@@ -32,7 +32,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         this.repositorioCategoria = repositorioCategoria;
         this.repositorioUsuario = repositorioUsuario;
         this.repositorioNotificacion = repositorioNotificacion;
-        this.repositorioLikeImpl = repositorioLikeImpl; //arreglar linea 72 testServicioNoticia
+        this.repositorioLikeImpl = repositorioLikeImpl;
     }
 
     @Override
@@ -72,7 +72,13 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
                 noticiasActivas.add(noticia);
             }
         }
-        return noticiasActivas;
+
+        return noticias;
+    }
+
+    @Override
+    public List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario) {
+        return repositorioNoticia.obtenerMisNoticias(idUsuario);
     }
 
     @Override
@@ -207,7 +213,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
                 if( meGusta.getNoticia().getIdNoticia().equals(noticia.getIdNoticia()) ){
                     noticia.setEstaLikeada(true);
-                    repositorioNoticia.modificar(noticia);
+                    repositorioNoticia.marcarNoticiaComoLikeada(noticia);
                 }
             }
         }
@@ -224,6 +230,11 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     public List<Noticia> obtenerNoticiasCategoria(long idUsuario, int cantidadNoticias) {
         List<String> categorias = repositorioLikeImpl.traerCategoriasLikeadasPorUnUsuario(idUsuario);
         return repositorioNoticia.obtenerNoticiasCategoria(cantidadNoticias, categorias);
+    }
+
+    @Override
+    public void compartirNoticia(Notificacion notificacion) {
+        repositorioNotificacion.generarNotificacion(notificacion);
     }
 
     private void verificacionCamposVacios(Noticia noticia, MultipartFile imagen, MultipartFile audio) throws CampoVacio {

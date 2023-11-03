@@ -34,7 +34,6 @@ public class ControladorHomeTest {
     private Usuario usuarioMock;
     private ServicioNoticia servicioNoticiaMock;
     private Republicacion republicacionMock;
-    //private ServicioMeGusta servicioMeGustaMock;
 
     @BeforeEach
     public void init(){
@@ -63,7 +62,7 @@ public class ControladorHomeTest {
         noticias.add(noticiaMock);
         noticias.add(noticiaMock);
 
-        when(servicioHomeMock.listarNoticias()).thenReturn(noticias);
+        when(servicioNoticiaMock.listarNoticias()).thenReturn(noticias);
         when(servicioNoticiaMock.setNoticiasLikeadas(noticias, usuarioMock.getIdUsuario())).thenReturn(noticias);
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 

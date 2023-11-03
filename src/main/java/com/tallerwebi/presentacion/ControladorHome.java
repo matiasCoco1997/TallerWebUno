@@ -36,7 +36,11 @@ public class ControladorHome {
 
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
 
-        List<Noticia> noticias = servicioHome.listarNoticias();
+        if(usuario == null){
+            return new ModelAndView("redirect:/login");
+        }
+
+        List<Noticia> noticias = servicioNoticia.listarNoticias();
 
         noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
 
@@ -48,12 +52,14 @@ public class ControladorHome {
 
         usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
 
-        //List<Object> posts = servicioHome.obtenerPosts();
+        List<Usuario> usuariosSeguidos = servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
+
         List<Noticia> noticiasCarrousel  = servicioNoticia.obtenerNoticiasCategoria(usuario.getIdUsuario(), 5);
+
         model.put("noticias", noticias);
-        //model.put("posts", posts);
         model.put("notificaciones", notificaciones.size());
         model.put("usuarios",usuarios);
+        model.put("usuariosSeguidos",usuariosSeguidos);
         model.put("categorias",categorias);
         model.put("usuario",usuario);
         model.put("noticiasCarrousel", noticiasCarrousel);
@@ -118,11 +124,4 @@ public class ControladorHome {
         return new ModelAndView("home-vista",model);
     }
 
-    @RequestMapping("/prueba")
-    public ModelAndView lista(){
-        ModelMap model=new ModelMap();
-        //List<Object> noticias=servicioNoticia.obtenerPosts();
-        //model.put("noticias",noticias);
-        return new ModelAndView("prueba",model);
-    }
 }

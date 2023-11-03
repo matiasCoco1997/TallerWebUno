@@ -61,7 +61,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public List<Noticia> obtenerMisNoticias(Long idUsuario) {
         return sessionFactory.getCurrentSession().
-                createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = true").
+                createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = true ORDER BY idNoticia DESC").
                 setParameter("idUsuario",idUsuario).list();
     }
 
@@ -82,14 +82,14 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public List<Notificacion> obtenerMisNotificaciones(Long idUsuario) {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Notificacion WHERE usuarioNotificado_idUsuario = :idUsuario").
-                setParameter("idUsuario",idUsuario).list();
+        return session.createQuery("FROM Notificacion WHERE usuarioNotificado_idUsuario = :idUsuario or usuarioEmisor = :idUsuarioEmisor").
+                setParameter("idUsuario",idUsuario).setParameter("idUsuarioEmisor",idUsuario).list();
     }
 
     @Override
     public List<Notificacion> obtenerMisNotificacionesSinLeer(Long idUsuario) {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Notificacion WHERE vista=false and  usuarioNotificado_idUsuario = :idUsuario").
+        return session.createQuery("FROM Notificacion WHERE vista=false and usuarioNotificado_idUsuario = :idUsuario").
                 setParameter("idUsuario",idUsuario).list();
     }
 

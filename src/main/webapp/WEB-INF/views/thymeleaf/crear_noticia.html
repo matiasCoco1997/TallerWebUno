@@ -77,6 +77,11 @@
                     </div>
 
                     <div class="w-[80%] mx-auto">
+                        <label for="checkboxNoticiaAnonima" class="text-white text-2xl w-[80%]">Seleccione el checkbox para que su nota aparezca como anonima en el sitio.</label>
+                        <input type="checkbox" name="checkboxNoticiaAnonima" id="checkboxNoticiaAnonima" th:field="*{esAnonima}" class="mt-2 w-[5%] h-[20px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black" >
+                    </div>
+
+                    <div class="w-[80%] mx-auto">
                         <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto text-white"
                                value="Crear Noticia" name="crearNoticia" style="cursor: pointer">
                         <a th:href="@{/home}" type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto text-white align-content-center"
