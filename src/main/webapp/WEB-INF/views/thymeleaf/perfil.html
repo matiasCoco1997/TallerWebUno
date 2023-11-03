@@ -102,21 +102,6 @@
 
 </nav>
 
-<nav id="bar" class="flex justify-center">
-    <form  th:action="@{/categoria}" method="get">
-        <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
-            <input th:each="categoria : ${categorias}" type="submit" name="categoria" th:value="${categoria.descripcion}" class="mx-8 hover:text-white">
-        </div>
-    </form>
-
-    <div class=" flex  md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-slate-300 text-center">
-        <a th:href="@{noticia-de-seguidos}" class="mx-8 hover:text-white">Noticias de Seguidos</a>
-    </div>
-</nav>
-<!-- Main navigation container -->
-
-<hr class="h-px max-w-4xl m-auto my-2 border-0 bg-white">
-
 <!--Sección de Noticias-->
 <main class="p-2">
 
@@ -141,7 +126,7 @@
     <div class="flex justify-around mt-20 border-b border-white py-4">
         <a class="text-3xl text-white font-bold" th:href="@{/perfil?idUsuario=}+${usuarioBuscado.getIdUsuario()}">Mis noticias</a>
         <a th:if="${usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()}" class="text-3xl text-white font-bold" th:href="@{/perfil/borradores}">Mis borradores</a>
-        <a th:if="${usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()}" class="text-3xl text-white" th:href="@{/misLikes}">Me gusta</a>
+        <a th:if="${usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()}" class="text-3xl text-white" th:href="@{/perfil/misLikes}">Me gusta</a>
     </div>
 
 

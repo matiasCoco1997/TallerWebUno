@@ -47,4 +47,5 @@ public interface ServicioUsuario {
 
     void modificarDatosUsuario(Usuario usuario, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException;
 
+    List<Noticia> obtenerNoticiasLikeadas(Long idUsuario);
 }

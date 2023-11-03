@@ -1,6 +1,7 @@
 package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.MeGusta;
+import com.tallerwebi.dominio.entidades.Noticia;
 
 import java.util.List;
 
@@ -15,4 +16,5 @@ public interface RepositorioLike {
     List<MeGusta> obtenerMegustas(Long idUsuario);
 
     List<String> traerCategoriasLikeadasPorUnUsuario(Long idUsuario);
+
 }

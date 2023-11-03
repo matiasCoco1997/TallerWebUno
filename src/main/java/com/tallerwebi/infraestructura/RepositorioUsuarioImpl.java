@@ -189,5 +189,19 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .getResultList();
     }
 
+    @Override
+    public List<Noticia>obtenerNoticiasLikeadasPorElUsuario(Long idUsuario){
+
+        String query = "SELECT n " +
+                        "FROM Noticia n " +
+                        "WHERE n.idNoticia IN " +
+                        "(SELECT mg.noticia.idNoticia FROM MeGusta mg WHERE mg.usuario.idUsuario = :idUsuarioLogueado)";
+
+        return sessionFactory.getCurrentSession()
+                .createQuery(query, Noticia.class)
+                .setParameter("idUsuarioLogueado", idUsuario)
+                .getResultList();
+    }
+
 
 }

@@ -41,4 +41,5 @@ public interface ServicioNoticia {
     void compartirNoticia(Notificacion notificacion);
 
     List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario);
+
 }

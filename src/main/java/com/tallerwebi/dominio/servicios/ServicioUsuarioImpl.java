@@ -20,10 +20,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 @Service("servicioUsuario")
 @Transactional
@@ -174,6 +171,21 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
             Files.write(path, bytes);
         }
         repositorioUsuario.modificar(usuario);
+    }
+
+    @Override
+    public List<Noticia> obtenerNoticiasLikeadas(Long idUsuario) {
+
+        List<Noticia> noticiasSinSetearLike = repositorioUsuario.obtenerNoticiasLikeadasPorElUsuario(idUsuario);
+
+        List<Noticia> noticiasLikeadas = new ArrayList<>();
+
+        for (Noticia noticia : noticiasSinSetearLike ) {
+            noticia.setEstaLikeada(true);
+            noticiasLikeadas.add(noticia);
+        }
+
+        return noticiasLikeadas;
     }
 
     private Boolean verifiCacionSiEsLaImagenDePrueba (MultipartFile imagen) {

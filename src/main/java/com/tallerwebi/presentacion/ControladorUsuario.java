@@ -71,10 +71,13 @@ public class ControladorUsuario {
 
     @RequestMapping(value = "/perfil/borradores", method = RequestMethod.GET)
     public ModelAndView verNoticiasEnEstadoBorrador(@RequestParam(value = "idUsuario", required = false) Long id, HttpSession session) {
+
         ModelMap model = new ModelMap();
-        List<Categoria> categorias = servicioUsuario.obtenerCategorias();
-        model.put("categorias", categorias);
+
         try {
+            List<Categoria> categorias = servicioUsuario.obtenerCategorias();
+
+            model.put("categorias", categorias);
 
             Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
 
@@ -122,6 +125,29 @@ public class ControladorUsuario {
         Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
         servicioUsuario.borrarUsuario(usuario.getIdUsuario());
         return new ModelAndView("redirect:/login");
+    }
+
+    @RequestMapping(value = "/perfil/misLikes")
+    public ModelAndView verLikes(HttpSession session) {
+        ModelMap model = new ModelMap();
+
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        model.put("usuarioLogueado", usuario);
+
+        List<Noticia> noticiasDelUsuarioLikeadas = servicioUsuario.obtenerNoticiasLikeadas(usuario.getIdUsuario());
+
+        Map<String, Integer> datosSeguidos = servicioUsuario.obtenerMisSeguidoresYSeguidos(usuario.getIdUsuario());
+
+        List<Notificacion> notificaciones = servicioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
+
+        model.put("noticias", noticiasDelUsuarioLikeadas);
+        model.put("datosSeguidos", datosSeguidos);
+        model.put("cantidadNotificaciones", notificaciones.size());
+        model.put("usuarioLogueado", usuario);
+        model.put("usuarioBuscado", usuario);
+
+        return new ModelAndView("perfil", model);
     }
 
     @GetMapping(value = "/perfil/modificar")

@@ -24,7 +24,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     private final RepositorioCategoria repositorioCategoria;
     private final RepositorioUsuario repositorioUsuario;
     private final RepositorioNotificacion repositorioNotificacion;
-    private RepositorioLike repositorioLikeImpl;
+    private RepositorioLike repositorioLike;
 
     @Autowired
     public ServicioNoticiaImpl(RepositorioNoticia repositorioNoticia, RepositorioCategoria repositorioCategoria, RepositorioUsuario repositorioUsuario, RepositorioNotificacion repositorioNotificacion, RepositorioLike repositorioLikeImpl) {
@@ -32,7 +32,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         this.repositorioCategoria = repositorioCategoria;
         this.repositorioUsuario = repositorioUsuario;
         this.repositorioNotificacion = repositorioNotificacion;
-        this.repositorioLikeImpl = repositorioLikeImpl;
+        this.repositorioLike = repositorioLikeImpl;
     }
 
     @Override
@@ -72,7 +72,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
                 noticiasActivas.add(noticia);
             }
         }
-
         return noticias;
     }
 
@@ -126,20 +125,6 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         repositorioNoticia.editarNoticia(noticia);
     }
 
-    private void verificacionCamposDeTextoVacios(Noticia noticia) throws CampoVacio {
-        if(noticia.getTitulo().isBlank()) {
-            throw new CampoVacio();
-        }
-
-        if(noticia.getCategoria().isBlank()) {
-            throw new CampoVacio();
-        }
-
-        if(noticia.getResumen().isBlank()) {
-            throw new CampoVacio();
-        }
-    }
-
     @Override
     public Boolean darMeGusta(Noticia noticia, Usuario usuarioLogueado) throws NoticiaInexistente, UsuarioDeslogueado {
 
@@ -154,27 +139,24 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         MeGusta megustaEnNoticia = new MeGusta(usuarioLogueado, noticia);
 
-        List<MeGusta> megustaEncontrado = repositorioLikeImpl.verificarSiElMeGustaDelUsuarioYaExiste(noticia.getIdNoticia(), usuarioLogueado.getIdUsuario());
+        List<MeGusta> megustaEncontrado = repositorioLike.verificarSiElMeGustaDelUsuarioYaExiste(noticia.getIdNoticia(), usuarioLogueado.getIdUsuario());
 
         if(megustaEncontrado.isEmpty()){
-            repositorioLikeImpl.guardarLike(megustaEnNoticia);
-
+            repositorioLike.guardarLike(megustaEnNoticia);
             noticia.setLikes(noticia.getLikes()+1);
-
+            noticia.setEstaLikeada(true);
             resultadoMeGusta = true;
 
         } else {
-            repositorioLikeImpl.borrarLike(megustaEncontrado.get(0));
-
+            repositorioLike.borrarLike(megustaEncontrado.get(0));
+            noticia.setEstaLikeada(false);
             noticia.setLikes(noticia.getLikes()-1);
-
         }
 
         repositorioNoticia.modificarLikes(noticia);
 
         return resultadoMeGusta;
     }
-
 
     @Override
     public List<Categoria> listarCategorias() {
@@ -201,7 +183,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
     @Override
     public List<MeGusta> obtenerMeGustas(Long idUsuario) {
-        return repositorioLikeImpl.obtenerMegustas(idUsuario);
+        return repositorioLike.obtenerMegustas(idUsuario);
     }
 
     @Override
@@ -228,7 +210,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
     @Override
     public List<Noticia> obtenerNoticiasCategoria(long idUsuario, int cantidadNoticias) {
-        List<String> categorias = repositorioLikeImpl.traerCategoriasLikeadasPorUnUsuario(idUsuario);
+        List<String> categorias = repositorioLike.traerCategoriasLikeadasPorUnUsuario(idUsuario);
         return repositorioNoticia.obtenerNoticiasCategoria(cantidadNoticias, categorias);
     }
 
@@ -342,6 +324,20 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
             return true;
         }
         return false;
+    }
+
+    private void verificacionCamposDeTextoVacios(Noticia noticia) throws CampoVacio {
+        if(noticia.getTitulo().isBlank()) {
+            throw new CampoVacio();
+        }
+
+        if(noticia.getCategoria().isBlank()) {
+            throw new CampoVacio();
+        }
+
+        if(noticia.getResumen().isBlank()) {
+            throw new CampoVacio();
+        }
     }
 
     private boolean verificarQueNoEsNull(Noticia noticia) { //hay que cambiar el test controlador noticia test linea 288 el when me marca

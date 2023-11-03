@@ -45,5 +45,7 @@ public interface RepositorioUsuario {
     List<Usuario> listarUsuariosSeguidos(Long idUsuarioSeguidor);
 
     List<Usuario> listarUsuariosQueMeSiguen(Long idUsuario);
+
+    List<Noticia>obtenerNoticiasLikeadasPorElUsuario(Long idUsuario);
 }
 
