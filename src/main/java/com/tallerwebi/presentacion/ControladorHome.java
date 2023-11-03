@@ -73,6 +73,9 @@ public class ControladorHome {
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Categoria> categorias=servicioHome.obtenerCategorias();
         List<Noticia> noticiasCategorias = servicioHome.obtenerNoticiasPorCategoria(categoria);
+
+        noticiasCategorias = servicioNoticia.setNoticiasLikeadas(noticiasCategorias, usuario.getIdUsuario());
+
         List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
         model.put("categorias",categorias);
@@ -87,7 +90,9 @@ public class ControladorHome {
         ModelMap model=new ModelMap();
 
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+
         List<Categoria> categorias=servicioHome.obtenerCategorias();
+
         Integer notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario()).size();
 
         model.put("usuario",usuario);
@@ -95,8 +100,11 @@ public class ControladorHome {
         model.put("notificaciones", notificaciones);
 
         List<Noticia> noticias=servicioHome.obtenerNoticiasPorTitulo(titulo);
+
+        noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
+
         if(servicioHome.validarQueHayNoticias(noticias)){
-            model.put("error","No se encontraron noticias con este título: "+titulo);
+            model.put("error","No se encontraron noticias con este título: " + titulo);
         }else{
             model.put("noticias",noticias);
         }

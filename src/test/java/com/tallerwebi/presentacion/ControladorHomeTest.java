@@ -123,6 +123,7 @@ public class ControladorHomeTest {
 
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         when(servicioHomeMock.obtenerNoticiasPorTitulo(titulo)).thenReturn(noticias);
+        when(servicioNoticiaMock.setNoticiasLikeadas(noticias, usuarioMock.getIdUsuario())).thenReturn(noticias);
         when(servicioHomeMock.validarQueHayNoticias(noticias)).thenReturn(false);
 
 
