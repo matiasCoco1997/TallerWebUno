@@ -37,11 +37,9 @@ public class ControladorUsuario {
 
         try {
 
-            List<Categoria> categorias = servicioUsuario.obtenerCategorias();
-
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
-            Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ?  usuarioLogueado : servicioUsuario.obtenerUsuarioPorId(id);
+            Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? usuarioLogueado : servicioUsuario.obtenerUsuarioPorId(id);
 
             List<Noticia> noticiasDelUsuario = servicioNoticia.obtenerNoticiasDeUnUsuario(usuarioBuscado.getIdUsuario());
 
@@ -51,7 +49,6 @@ public class ControladorUsuario {
 
             List<Notificacion> notificaciones = servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioBuscado.getIdUsuario());
 
-            model.put("categorias", categorias);
             model.put("usuarioLogueado", usuarioLogueado);
             model.put("usuarioBuscado", usuarioBuscado);
             model.put("noticias", noticiasDelUsuario);
@@ -75,15 +72,14 @@ public class ControladorUsuario {
         ModelMap model = new ModelMap();
 
         try {
-            List<Categoria> categorias = servicioUsuario.obtenerCategorias();
-
-            model.put("categorias", categorias);
 
             Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? (Usuario) session.getAttribute("sessionUsuarioLogueado") : servicioUsuario.obtenerUsuarioPorId(id);
 
             Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
             List<Noticia> noticiasDelUsuario = servicioUsuario.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioBuscado.getIdUsuario());
+
+            noticiasDelUsuario = servicioNoticia.setNoticiasLikeadas(noticiasDelUsuario, usuarioLogueado.getIdUsuario());
 
             Map<String, Integer> datosSeguidos = servicioUsuario.obtenerMisSeguidoresYSeguidos(usuarioBuscado.getIdUsuario());
 
@@ -136,6 +132,8 @@ public class ControladorUsuario {
         model.put("usuarioLogueado", usuario);
 
         List<Noticia> noticiasDelUsuarioLikeadas = servicioUsuario.obtenerNoticiasLikeadas(usuario.getIdUsuario());
+
+        //noticiasDelUsuarioLikeadas = servicioNoticia.setNoticiasLikeadas(noticiasDelUsuarioLikeadas, usuario.getIdUsuario());
 
         Map<String, Integer> datosSeguidos = servicioUsuario.obtenerMisSeguidoresYSeguidos(usuario.getIdUsuario());
 

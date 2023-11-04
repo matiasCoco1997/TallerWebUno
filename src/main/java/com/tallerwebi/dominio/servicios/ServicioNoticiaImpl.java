@@ -144,12 +144,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         if(megustaEncontrado.isEmpty()){
             repositorioLike.guardarLike(megustaEnNoticia);
             noticia.setLikes(noticia.getLikes()+1);
-            noticia.setEstaLikeada(true);
             resultadoMeGusta = true;
 
         } else {
             repositorioLike.borrarLike(megustaEncontrado.get(0));
-            noticia.setEstaLikeada(false);
             noticia.setLikes(noticia.getLikes()-1);
         }
 
@@ -191,8 +189,9 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         for (Noticia noticia : noticias) {
 
-            for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
+            noticia.setEstaLikeada(false);
 
+            for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
                 if( meGusta.getNoticia().getIdNoticia().equals(noticia.getIdNoticia()) ){
                     noticia.setEstaLikeada(true);
                     repositorioNoticia.marcarNoticiaComoLikeada(noticia);

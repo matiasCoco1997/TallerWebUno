@@ -166,6 +166,7 @@ public class ControladorUsuarioTest {
         listaDeNoticias.add(noticiaMock);
 
         when(servicioUsuarioMock.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioMock.getIdUsuario())).thenReturn(listaDeNoticias);
+        when(servicioNoticiaMock.setNoticiasLikeadas(listaDeNoticias, usuarioMock.getIdUsuario())).thenReturn(listaDeNoticias);
 
         ModelAndView modelAndView = controladorUsuario.verNoticiasEnEstadoBorrador(usuarioMock.getIdUsuario(),sessionMock);
 
@@ -189,6 +190,7 @@ public class ControladorUsuarioTest {
         noticiasEnEstadoBorrador.add(noticiaBorradorMock);
 
         when(servicioUsuarioMock.obtenerNoticiasDeUnUsuarioEnEstadoBorrador(usuarioMock.getIdUsuario())).thenReturn(noticiasEnEstadoBorrador);
+        when(servicioNoticiaMock.setNoticiasLikeadas(noticiasEnEstadoBorrador, usuarioMock.getIdUsuario())).thenReturn(noticiasEnEstadoBorrador);
 
         ModelAndView modelAndView = controladorUsuario.verNoticiasEnEstadoBorrador(usuarioMock.getIdUsuario(),sessionMock);
         List<Noticia> noticiasObtenidas= (List<Noticia>) modelAndView.getModel().get("noticias");
@@ -198,10 +200,7 @@ public class ControladorUsuarioTest {
     @Test
 
     public void cuandoBorroMiUsuarioMeRedireccionaAlLogin() {
-        //preparación
-        //ejecución
         ModelAndView modelAndView = this.controladorUsuario.borrarUsuario(sessionMock);
-        //verificación
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
     }
 
