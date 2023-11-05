@@ -5,11 +5,9 @@ import lombok.Setter;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+
 
 @Entity
 @Getter
@@ -27,8 +25,8 @@ public class Noticia {
     private String resumen;
     private String rutaDeimagen;
     private String altDeImagen;
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDateTime fechaDePublicacion;
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate fechaDePublicacion;
     private String rutaDeAudioPodcast;
     private Boolean activa;
     private  Integer likes;
@@ -39,7 +37,7 @@ public class Noticia {
 
     @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
     protected void onCreate() {
-        fechaDePublicacion = LocalDateTime.now();
+        fechaDePublicacion = LocalDate.now();
         likes = 0;
         estaLikeada=false;
     }

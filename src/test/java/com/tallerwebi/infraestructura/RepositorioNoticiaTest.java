@@ -27,6 +27,7 @@ import com.tallerwebi.integracion.config.SpringWebTestConfig;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -152,7 +153,7 @@ public class RepositorioNoticiaTest {
         noticia.setCategoria("Categoría de la noticia");
         noticia.setResumen("Contenido de la noticia");
         noticia.setRutaDeimagen("URL de la imagen");
-        noticia.setFechaDePublicacion(LocalDateTime.now());
+        noticia.setFechaDePublicacion(LocalDate.now());
         noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
         noticia.setActiva(true);
         noticia.setEsAnonima(false);
@@ -178,7 +179,7 @@ public class RepositorioNoticiaTest {
         noticia.setCategoria("Categoría de la noticia");
         noticia.setResumen("Contenido de la noticia");
         noticia.setRutaDeimagen("URL de la imagen");
-        noticia.setFechaDePublicacion(LocalDateTime.now());
+        noticia.setFechaDePublicacion(LocalDate.now());
         noticia.setRutaDeAudioPodcast("Ruta del archivo de audio del podcast");
         noticia.setActiva(true);
 

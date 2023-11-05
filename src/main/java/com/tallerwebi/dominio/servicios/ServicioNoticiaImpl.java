@@ -13,7 +13,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Service("servicioNoticia")
@@ -66,9 +68,13 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         List<Noticia> noticias = repositorioNoticia.listarNoticias();
         List<Noticia> noticiasActivas = new ArrayList<>();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
         for (Noticia noticia : noticias) {
             if (noticia.getActiva()) {
+
+                String fechaFormateada = noticia.getFechaDePublicacion().format(formatter);
+                noticia.setFechaDePublicacion(LocalDate.parse(fechaFormateada, formatter));
                 noticiasActivas.add(noticia);
             }
         }
@@ -120,7 +126,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
 
         verificacionDeActivacionDeNoticia(noticia);
 
-        noticia.setFechaDePublicacion(LocalDateTime.now());
+        noticia.setFechaDePublicacion(LocalDate.now());
 
         repositorioNoticia.editarNoticia(noticia);
     }
@@ -173,7 +179,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     @Override
     public MeGusta buscarNoticiaLikeadaPorUsuario(Long idUsuario , Long idNoticia) {
         for (MeGusta meGusta : obtenerMeGustas(idUsuario)) {
-            if(meGusta.getNoticia().getIdNoticia() == idNoticia)
+            if(meGusta.getNoticia().getIdNoticia().equals(idNoticia) )
                 return meGusta;
         }
         return null;

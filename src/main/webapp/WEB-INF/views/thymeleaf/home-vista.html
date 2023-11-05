@@ -130,16 +130,25 @@
                     <div class="flex items-center text-center lg:text-left px-8 md:px-12 lg:w-1/2">
                         <div>
                             <div class="mr-2 flex  items-center">
-                                <form th:action="@{/perfil}" method="POST">
 
-                                    <button class="flex items-center" th:value="${noticiaC.usuario.getIdUsuario()}"
-                                            name="idUsuario">
-                                        <img class="mr-3 w-10 h-10 object-cover rounded-full"
-                                             th:src="@{${noticiaC.getUsuario().fotoPerfil}}"
-                                             th:alt="@{${noticiaC.getUsuario().altFotoPerfil}}">
-                                        <h3 class="font-bold text-white" th:text="${noticiaC.usuario.getNombre()}"></h3>
-                                    </button>
-                                </form>
+                                <div class="mr-2" th:if="${noticiaC.esAnonima == false}">
+                                    <form th:action="@{/perfil}" method="POST">
+                                        <button class="flex items-center" th:value="${noticiaC.usuario.getIdUsuario()}"
+                                                name="idUsuario">
+                                            <img class="mr-3 w-10 h-10 object-cover rounded-full"
+                                                 th:src="@{${noticiaC.getUsuario().fotoPerfil}}"
+                                                 th:alt="@{${noticiaC.getUsuario().altFotoPerfil}}">
+                                            <h3 class="font-bold" th:text="${noticiaC.usuario.getNombre()}"></h3>
+                                        </button>
+                                    </form>
+                                </div>
+
+                                <div class="mr-2" th:if="${noticiaC.esAnonima}">
+                                    <img class="mr-3 w-10 h-10 object-cover rounded-full" src="imagenes/imgsPerfiles/anonimo.png"
+                                         alt="img-anonimo">
+                                    <h3 class="font-bold">Anónima</h3>
+                                </div>
+
                                 <div class="ml-2 text-white">
                                     <p class="text-white">
                                         <span th:text="${noticiaC.fechaDePublicacion}"></span>
