@@ -175,18 +175,25 @@ public class ControladorNoticia {
 
     @GetMapping("/publicacion/{idNoticia}")
     public ModelAndView irApublicacion(@PathVariable Long idNoticia, HttpSession session){
+
         ModelMap model = new ModelMap();
+
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
         Noticia noticia =  servicioNoticia.buscarNoticiaPorId(idNoticia);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM dd, yyyy");
+
         String fechaFormateada = noticia.getFechaDePublicacion().format(formatter);
+
         List<Comentario> comentarios = servicioComentario.buscarComentarios(idNoticia);
+
         Comentario comentarioForm = new Comentario();
 
         List<Notificacion> notificaciones=servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
 
-
         comentarioForm.setNoticia(noticia);
+
         if(usuarioLogueado != null)
             model.put("usuarioLogueado", usuarioLogueado);
             model.put("comentarios", comentarios);
