@@ -98,7 +98,7 @@ public class ControladorHome {
         model.put("categorias",categorias);
         model.put("notificaciones", notificaciones);
 
-        List<Noticia> noticias=servicioHome.obtenerNoticiasPorTitulo(titulo);
+        List<Noticia> noticias = servicioHome.obtenerNoticiasPorTitulo(titulo);
 
         noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
 
@@ -111,13 +111,18 @@ public class ControladorHome {
     }
     @GetMapping("/noticia-de-seguidos")
     public ModelAndView mostrarNoticiaDeSeguidos(HttpSession session){
-        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-        List<Noticia> noticias = servicioHome.obtenerNoticiaDeSeguidos(usuarioLogueado.getIdUsuario());
 
         ModelMap model = new ModelMap();
+
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        List<Noticia> noticias = servicioHome.obtenerNoticiaDeSeguidos(usuarioLogueado.getIdUsuario());
+
+        noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuarioLogueado.getIdUsuario());
+
         model.put("noticias", noticias);
 
-        List<Categoria> categorias=servicioHome.obtenerCategorias();
+        List<Categoria> categorias = servicioHome.obtenerCategorias();
 
         List<Notificacion> notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
 

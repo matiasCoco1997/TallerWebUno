@@ -1,6 +1,8 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,9 +22,12 @@ import java.util.List;
 @RestController
 public class ControladorSeguir {
     private ServicioUsuario servicioUsuario;
+    private ServicioHome servicioHome;
+
     @Autowired
-    public ControladorSeguir(ServicioUsuario servicioUsuario){
+    public ControladorSeguir(ServicioUsuario servicioUsuario, ServicioHome servicioHome){
         this.servicioUsuario = servicioUsuario;
+        this.servicioHome = servicioHome;
     }
     @PostMapping("/seguir")
     public ResponseEntity<Void> seguir(@RequestParam("id")Long idUsuarioASeguir, HttpSession session) {
@@ -65,17 +70,23 @@ public class ControladorSeguir {
     }
     @GetMapping("/siguiendo")
     public ModelAndView mostrarLosUsuariosQueEstoySiguiendo(HttpSession session) {
+
         Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
         if(usuarioLogueado == null){
             return new ModelAndView("redirect:/login");
         }
+
         ModelMap model = new ModelMap();
         List<Usuario> usuariosSugeridos = servicioUsuario.listarUsuarioseguidos(usuarioLogueado.getIdUsuario());
+        
+        List<Notificacion> notificaciones= servicioHome.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
 
         if (usuariosSugeridos.isEmpty()) {
             model.put("error", "No estás siguiendo a ningún usuario.");
         }
 
+        model.put("notificaciones", notificaciones.size());
         model.put("pagina", "Siguiendo");
         model.put("seguidos", usuariosSugeridos);
         model.put("usuario", usuarioLogueado);
@@ -89,9 +100,14 @@ public class ControladorSeguir {
         }
         ModelMap model = new ModelMap();
         List<Usuario> seguidores = servicioUsuario.listarUsuarioQueMeSiguen(usuarioLogueado.getIdUsuario());
+
+        List<Notificacion> notificaciones= servicioHome.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
+
         if (seguidores.isEmpty()) {
             model.put("error", "No tenes seguidores.");
         }
+
+        model.put("notificaciones", notificaciones.size());
         model.put("pagina", "Seguidores");
         model.put("seguidores", seguidores);
         model.put("usuario", usuarioLogueado);

@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
+import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,11 +33,14 @@ public class ControladorSeguirTest {
     private ServicioUsuario servicioUsuarioMock;
     private Usuario usuarioMock;
     private MockMvc mockMvc;
+    private ServicioHome servicioHomeMock;
+
     @BeforeEach
     public void init(){
         sessionMock = mock(HttpSession.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
-        controladorSeguirMock = new ControladorSeguir(servicioUsuarioMock);
+        servicioHomeMock = mock(ServicioHome.class);
+        controladorSeguirMock = new ControladorSeguir(servicioUsuarioMock, servicioHomeMock);
         usuarioMock = mock(Usuario.class);
         mockMvc = MockMvcBuilders.standaloneSetup(controladorSeguirMock).build();
         when(usuarioMock.getIdUsuario()).thenReturn(1L);
