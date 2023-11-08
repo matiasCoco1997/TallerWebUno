@@ -30,7 +30,16 @@ public class ServicioEmailImpl implements ServicioEmail {
     private final JavaMailSender javaMailSender;
     private final ITemplateEngine templateEngine;
     private final Context context;
-    private ExecutorService executorService = Executors.newFixedThreadPool(5); // Puedes ajustar el número de hilos según tus necesidades
+
+    /*ExecutorService: Permite la ejecución
+    asíncrona de tareas sin necesidad de crear hilos de forma manual*/
+
+    /*ExecutorService utiliza un grupo de hilos fijos,
+    lo que significa que siempre habrá 5 hilos disponibles
+    para ejecutar tareas. Si envías más tareas que la capacidad del grupo,
+    estas se pondrán en cola hasta que haya un hilo disponible.
+    */
+    private ExecutorService executorService = Executors.newFixedThreadPool(5);
     private ServicioImagen servicioImagen;
 
     @Autowired
@@ -43,6 +52,7 @@ public class ServicioEmailImpl implements ServicioEmail {
 
     @Override
     public void enviarCorreoBienvenida(String emailUsuario, String nombreUsuario) {
+        executorService.submit(() -> {
         context.setVariable("nombreUsuario", nombreUsuario);
 
         String contenidoHtml = templateEngine.process("mensaje", context);
@@ -58,26 +68,37 @@ public class ServicioEmailImpl implements ServicioEmail {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
+        });
     }
 
     @Override
     public void compartirNoticiaPorEmail(Usuario emisor, Usuario receptor, Noticia noticia) throws IOException, MessagingException {
 
         executorService.submit(() -> {
-            try {
+
 
                 context.setVariable("nombreReseptor", receptor.getNombre());
                 context.setVariable("nombreEmisor", emisor.getNombre());
                 context.setVariable("idNoticia", noticia.getIdNoticia());
                 context.setVariable("noticiaTitulo", noticia.getTitulo());
                 context.setVariable("noticiaResumen", noticia.getResumen());
-                byte[] imagenBytes = servicioImagen.cargarImagenComoBytes(noticia.getRutaDeimagen());
+            byte[] imagenBytes = new byte[0];
+            try {
+                imagenBytes = servicioImagen.cargarImagenComoBytes(noticia.getRutaDeimagen());
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
 
-                String contenidoHtml = templateEngine.process("noticiaCompartidaEmail", context);
+            String contenidoHtml = templateEngine.process("noticiaCompartidaEmail", context);
 
                 MimeMessage message = javaMailSender.createMimeMessage();
-                MimeMessageHelper helper = new MimeMessageHelper(message, true);
-                try {
+            MimeMessageHelper helper = null;
+            try {
+                helper = new MimeMessageHelper(message, true);
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+            try {
                     helper.setFrom("noticierosunn@outlook.com");
                     helper.setTo(receptor.getEmail());
                     helper.setSubject("Sunn - Te compartieron una noticia");
@@ -88,9 +109,7 @@ public class ServicioEmailImpl implements ServicioEmail {
                 } catch (MessagingException e) {
                     throw new RuntimeException(e);
                 }
-            } catch (Exception e) {
 
-            }
         });
     }
 
