@@ -8,6 +8,7 @@ import com.tallerwebi.dominio.servicios.ServicioComentario;
 
 import com.tallerwebi.dominio.entidades.Usuario;
 
+import com.tallerwebi.dominio.servicios.ServicioEmail;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
@@ -46,7 +47,7 @@ public class ControladorNoticiaTest {
     private MultipartFile imgMock;
     private MultipartFile audioMock;
     private ServicioUsuario servicioUsuarioMock;
-
+    private ServicioEmail servicioEmailMock;
     @BeforeEach
     public void init(){
         noticiaMock = mock(Noticia.class);
@@ -67,7 +68,8 @@ public class ControladorNoticiaTest {
         servicioNoticiaMock = mock(ServicioNoticia.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
         servicioComentarioMock = mock(ServicioComentario.class);
-        controladorNoticia = new ControladorNoticia(servicioNoticiaMock, servicioComentarioMock,servicioUsuarioMock);
+        servicioEmailMock = mock(ServicioEmail.class);
+        controladorNoticia = new ControladorNoticia(servicioNoticiaMock, servicioComentarioMock,servicioUsuarioMock, servicioEmailMock);
     }
 
 

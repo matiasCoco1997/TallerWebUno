@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
+import com.tallerwebi.dominio.servicios.ServicioEmail;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,13 @@ public class ControladorNoticia {
     private ServicioNoticia servicioNoticia;
     private ServicioComentario servicioComentario;
     private ServicioUsuario servicioUsuario;
+    private ServicioEmail servicioEmail;
     @Autowired
-    public ControladorNoticia(ServicioNoticia servicioNoticia, ServicioComentario servicioComentario, ServicioUsuario servicioUsuario ) {
+    public ControladorNoticia(ServicioNoticia servicioNoticia, ServicioComentario servicioComentario, ServicioUsuario servicioUsuario, ServicioEmail servicioEmail ) {
         this.servicioNoticia = servicioNoticia;
         this.servicioComentario = servicioComentario;
         this.servicioUsuario = servicioUsuario;
+        this.servicioEmail = servicioEmail;
     }
 
     @RequestMapping(path = "/noticia/crear", method = RequestMethod.GET)
@@ -217,8 +220,9 @@ public class ControladorNoticia {
             receptor = servicioUsuario.obtenerUsuarioPorId(idUsuario);
             Usuario emisor=(Usuario) session.getAttribute("sessionUsuarioLogueado");
             servicioNoticia.compartirNoticia(new Notificacion(emisor,receptor,noticia));
+            servicioEmail.compartirNoticiaPorEmail(emisor, receptor, noticia);
         } catch (Exception e) {
-
+            System.out.println(e.getMessage());
         }
         return new ModelAndView("redirect:/home",model);
     }

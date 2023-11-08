@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+.card {
+  text-align:center;
+}
+
+
+.container {
+  padding: 2px 16px;
+}
+a {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+<section style="max-width: 36rem; margin: 0 auto; padding: 2rem; background-color: #fff;">
+    <header>
+        <a href="#">
+            <img style="width: 100px"
+                 src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Sunn_O%29%29%29_%28Logo%29.png/1200px-Sunn_O%29%29%29_%28Logo%29.png"
+                 alt="">
+        </a>
+    </header>
+
+    <main style="margin-top: 2rem;">
+        <h2 style="color: #333;">Hola, <span th:text="${nombreReseptor}"></span></h2>
+
+        <p style="margin-top: 1rem; line-height: 1.5; color: #666;">
+            El usuario <span th:text="${nombreEmisor}"></span> te ha compartio una noticia📰
+        </p>
+
+        <div class="card">
+            <img src="cid:imagenIncrustada" alt="Imagen compartida">
+            <a th:href="'http://localhost:8080/sunn/publicacion/'+${idNoticia}">
+                <div class="container">
+                    <h3 th:text="${noticiaTitulo}"></h3>
+                    <p th:text="${noticiaResumen}"></p>
+                </div>
+            </a>
+        </div>
+
+    </main>
+
+</section>
+</body>
+</html>
