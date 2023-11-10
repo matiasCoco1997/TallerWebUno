@@ -51,6 +51,7 @@ public class ServicioHomeTest {
         when(noticiaMockDeportes.getTitulo()).thenReturn("deportes");
         usuarioMock = mock(Usuario.class);
         categoriaMock = mock(Categoria.class);
+        when(categoriaMock.getDescripcion()).thenReturn("Deportes");
         repositorioLikeMock = mock(RepositorioLike.class);
         
         this.repositorioHomeMock = mock(RepositorioHome.class);
@@ -175,6 +176,12 @@ public class ServicioHomeTest {
         when(repositorioHomeMock.obtenerRepublicaciones()).thenReturn(republicaciones);
         List<Object> listaFinal=servicioHomeMock.obtenerPosts();
         assertThat(listaFinal.size(),is(5));
+    }
+
+    @Test
+    public void queSePuedaAumentarLaCantidadDeVistasDeUnaCategoria(){
+        servicioHomeMock.aumentarCantidadDeVistasDeUnaCategoria(categoriaMock.getDescripcion());
+        verify(repositorioHomeMock,times(1)).aumentarCantidadDeVistasDeUnaCategoria(categoriaMock.getDescripcion());
     }
 
    /*

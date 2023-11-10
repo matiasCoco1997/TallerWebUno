@@ -27,6 +27,10 @@ public interface ServicioHome {
 
     List<Object> obtenerPosts();
 
+    Categoria obtenerCategoriaPorDescripcion(String categoria);
+
+    void aumentarCantidadDeVistasDeUnaCategoria(String categoriaObtenida);
+
     //List<MeGusta> obtenerMeGustas(Long usuario);
 
     //MeGusta buscoNoticiasLikeadasPorUsuario(Long idUsuario , Long idNoticia);

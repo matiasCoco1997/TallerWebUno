@@ -82,7 +82,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public List<Notificacion> obtenerMisNotificaciones(Long idUsuario) {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Notificacion WHERE usuarioNotificado_idUsuario = :idUsuario or usuarioEmisor = :idUsuarioEmisor").
+        return session.createQuery("FROM Notificacion WHERE (usuarioNotificado_idUsuario = :idUsuario or usuarioEmisor = :idUsuarioEmisor) and DATEDIFF(current_date,fecha)<15").
                 setParameter("idUsuario",idUsuario).setParameter("idUsuarioEmisor",idUsuario).list();
     }
 
