@@ -155,17 +155,4 @@ public class ControladorHomeTest {
         assertThat("home-vista", is(modelAndView.getViewName()));
     }
 
-    /*
-    @Test
-    public void queSePuedaObtenerUnaListaDePosts(){
-        List<Object> posts=new ArrayList<>();
-        posts.add(noticiaMock);
-        posts.add(republicacionMock);
-        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
-        when(servicioHomeMock.obtenerPosts()).thenReturn(posts);
-        List<Object> postsObtenidos= (List<Object>) controladorHome.home(sessionMock).getModel().get("posts");
-        assertThat(postsObtenidos.size(),is(2));
-    }
-    */
-
 }

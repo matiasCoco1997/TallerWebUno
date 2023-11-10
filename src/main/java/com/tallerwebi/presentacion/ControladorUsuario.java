@@ -133,8 +133,6 @@ public class ControladorUsuario {
 
         List<Noticia> noticiasDelUsuarioLikeadas = servicioUsuario.obtenerNoticiasLikeadas(usuario.getIdUsuario());
 
-        //noticiasDelUsuarioLikeadas = servicioNoticia.setNoticiasLikeadas(noticiasDelUsuarioLikeadas, usuario.getIdUsuario());
-
         Map<String, Integer> datosSeguidos = servicioUsuario.obtenerMisSeguidoresYSeguidos(usuario.getIdUsuario());
 
         List<Notificacion> notificaciones = servicioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());

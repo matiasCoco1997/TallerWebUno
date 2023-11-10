@@ -206,14 +206,10 @@ public class ControladorUsuarioTest {
 
     @Test
     public void queSeMuestreElFormularioParModificarLosDatosDelUsuario(){
-        //preparacion
-        //MockHttpSession session = new MockHttpSession();
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
 
-        // ejecucion
         ModelAndView modelAndView = controladorUsuario.mostrarFormularioModificar(sessionMock);
 
-        //validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("modificar-usuario"));
 
     }
@@ -222,28 +218,11 @@ public class ControladorUsuarioTest {
     public void queAlModificarLosDatosDelUsuarioRedirijaALaVistaDePerfil() throws FormatoDeImagenIncorrecto, IOException {
         //preparacion
 
-
         //ejecucion
         ModelAndView modelAndView = controladorUsuario.modificarUsuario(usuarioMock, sessionMock, imgMock);
 
         //validacion
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil"));
     }
-    /*  @Test
-    public void queAlModificarLosDatosDelUsuarioRedirijaALaVistaDePerfil() throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
-        //preparacion
-        Long userId = 1L;
-        Usuario usuario = new Usuario();
-        MockHttpSession session = new MockHttpSession();
-        usuario.setIdUsuario(userId);
-
-        //ejecucion
-        Mockito.doNothing().when(servicioUsuarioMock).modificarDatosUsuario(Mockito.any(Usuario.class), Mockito.any(MultipartFile.class));
-        session.setAttribute("UsuarioAEditar", usuario);
-        ModelAndView modelAndView = controladorUsuario.modificarUsuario(usuario, session, imgMock);
-
-        //validacion
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil/" + userId));
-    }*/
 
 }
