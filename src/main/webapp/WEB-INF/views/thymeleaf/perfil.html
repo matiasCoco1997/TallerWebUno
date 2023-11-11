@@ -109,14 +109,15 @@
     <div class="flex justify-around mt-20 border-b border-white py-4">
         <a class="text-3xl text-white font-bold" th:href="@{/perfil?idUsuario=}+${usuarioBuscado.getIdUsuario()}">Mis noticias</a>
         <a th:if="${usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()}" class="text-3xl text-white font-bold" th:href="@{/perfil/borradores}">Mis borradores</a>
-        <a th:if="${usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()}" class="text-3xl text-white" th:href="@{/perfil/misLikes}">Me gusta</a>
+        <a th:if="${usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()}" class="text-3xl text-white" th:href="@{/perfil/misLikes}">Mis me gusta</a>
+        <a th:if="${usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()}" class="text-3xl text-white" th:href="@{/perfil/misCompartidos}">Mis Compartidos</a>
     </div>
 
 
-    <section class="lista-noticia">
+    <section class="lista-noticia" th:if="${ misCompartidos == false }">
         <div th:unless="${#lists.isEmpty(noticias)}" th:each="noticia : ${noticias}" class="max-w-4xl my-4 py-6 m-auto text-white">
-            <div class="flex items-center">
 
+            <div class="flex items-center">
                 <div class="mr-2" th:if="${noticia.esAnonima == false}">
                     <form th:action="@{/perfil}" method="POST">
                         <button class="flex items-center" th:value="${noticia.usuario.getIdUsuario()}"
@@ -225,9 +226,79 @@
                     </form>
                 </div>
             </div>
+
         </div>
     </section>
 
+    <section th:if="${ misCompartidos == true && usuarioBuscado == usuarioLogueado}">
+
+        <div style="display: flex; align-items: center; justify-content: center; margin-top: 20px">
+
+            <div style="padding: 20px; border: solid white 2px; border-radius: 5px">
+
+                <label for="selectUsuarios" style="color: white; font-size: 1em">Filtrar por usuario usuario:</label>
+
+                <select id="selectUsuarios" name="usuarios" style="background-color: white; padding: 10px; margin-left: 10px" onchange="seleccionarUsuario()">
+                        <option selected idUsuario="0">seleccione un usuario</option>
+                        <div th:each="usuarioSeguido : ${usuariosSeguidos}">
+                            <option th:text="${usuarioSeguido.nombre} + ' ' + ${usuarioSeguido.apellido}" th:idUsuario="${usuarioSeguido.idUsuario}"></option>
+                        </div>
+                </select>
+
+            </div>
+
+        </div>
+
+
+
+        <div th:each="noticiaCompartida : ${ listaDeCompartidos }" class="max-w-4xl my-4 py-6 m-auto text-white">
+            <div th:if="${ noticiaCompartida.emisor.getIdUsuario() == usuarioLogueado.getIdUsuario() }" style="margin: 20px; border: white solid 3px; padding: 10px">
+
+                <h2 style="color: white; margin: 5px; font-size: 20px; border-bottom: white dashed 2px">Compartiste esta noticia con: <span style="font-weight: bold;" th:text="${noticiaCompartida.usuarioNotificado.getNombre()}"></span></h2>
+
+                <div class="flex items-center">
+                    <div class="mr-2" th:if="${noticiaCompartida.noticiaNotificada.esAnonima == false}">
+                        <form th:action="@{/perfil}" method="POST">
+                            <button class="flex items-center" th:value="${noticiaCompartida.emisor.getIdUsuario()}"
+                                    name="idUsuario">
+                                <img class="mr-3 w-10 h-10 object-cover rounded-full"
+                                     th:src="@{${noticiaCompartida.getEmisor().fotoPerfil}}"
+                                     th:alt="@{${noticiaCompartida.getEmisor().altFotoPerfil}}">
+                                <h3 class="font-bold" th:text="${noticiaCompartida.getEmisor().getNombre()}"></h3>
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="mr-2" th:if="${noticiaCompartida.getNoticiaNotificada().esAnonima  == true && usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario()} ">
+                        <img class="mr-3 w-10 h-10 object-cover rounded-full" src="imagenes/imgsPerfiles/anonimo.png"
+                             alt="img-anonimo">
+                        <h3 class="font-bold">Anónima</h3>
+                    </div>
+
+                    <p style="padding-left: 20px">
+                        Fecha de publicación: <span class="font-light" th:text="${noticiaCompartida.getNoticiaNotificada().fechaDePublicacion}"></span>
+                    </p>
+
+                </div>
+
+                <div class="mt-2 flex">
+                    <div class="mr-2">
+                        <a class="text-2xl font-bold hover:text-gray-300" th:href="'/sunn/publicacion/'+${noticiaCompartida.getNoticiaNotificada().idNoticia}" th:text="${noticiaCompartida.getNoticiaNotificada().titulo}"></a>
+                        <p class="mt-2 sm:block hidden" th:text="${noticiaCompartida.getNoticiaNotificada().resumen}"></p>
+                    </div>
+                    <div class="imagen-noticia">
+                        <a class="flex items-center" href="#"></a>
+                        <img class="w-[20rem] sm:h-36 object-cover h-20 m-auto"
+                             th:src="@{${noticiaCompartida.getNoticiaNotificada().rutaDeimagen}}"
+                             th:alt="${noticiaCompartida.getNoticiaNotificada().titulo}">
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </section>
 
 </main>
 
@@ -271,6 +342,10 @@
         });
     });
 </script>
+
+<script th:src="@{/js/filtrarNoticiasCompartidasPorUsuario.js}"></script>
+
+
 </body>
 
 </html>

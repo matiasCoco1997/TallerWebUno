@@ -192,7 +192,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public List<Noticia>obtenerNoticiasLikeadasPorElUsuario(Long idUsuario){
 
-        String query = "SELECT n " +
+        String query =  "SELECT n " +
                         "FROM Noticia n " +
                         "WHERE n.idNoticia IN " +
                         "(SELECT mg.noticia.idNoticia FROM MeGusta mg WHERE mg.usuario.idUsuario = :idUsuarioLogueado)";
@@ -200,6 +200,19 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         return sessionFactory.getCurrentSession()
                 .createQuery(query, Noticia.class)
                 .setParameter("idUsuarioLogueado", idUsuario)
+                .getResultList();
+    }
+
+    @Override
+    public List<Notificacion>obtenerMisNoticiasCompartidas(Long idUsuario){
+
+        String query =  "SELECT n " +
+                        "FROM Notificacion n " +
+                        "WHERE  n.emisor.id = :idUsuario AND n.descripcion LIKE '%ha compartido%' ORDER BY n.id DESC";
+
+        return sessionFactory.getCurrentSession()
+                .createQuery(query, Notificacion.class)
+                .setParameter("idUsuario", idUsuario)
                 .getResultList();
     }
 

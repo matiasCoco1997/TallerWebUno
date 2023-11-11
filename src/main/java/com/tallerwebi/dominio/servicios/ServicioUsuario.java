@@ -33,7 +33,6 @@ public interface ServicioUsuario {
 
     void marcarNotificacionesComoLeidas(Long idUsuario);
     Map<String,Integer> obtenerMisSeguidoresYSeguidos(Long idUsuario);
-    //void modificarDatosUsuario(Usuario usuario);
 
     void borrarUsuario(Long idUsuario);
 
@@ -48,4 +47,7 @@ public interface ServicioUsuario {
     void modificarDatosUsuario(Usuario usuario, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException;
 
     List<Noticia> obtenerNoticiasLikeadas(Long idUsuario);
+
+    List<Notificacion> obtenerMisNoticiasCompartidas(Long idUsuarioPropio , Long idUsuarioBuscado);
+
 }
