@@ -238,10 +238,10 @@
 
                 <label for="selectUsuarios" style="color: white; font-size: 1em">Filtrar por usuario usuario:</label>
 
-                <select id="selectUsuarios" name="usuarios" style="background-color: white; padding: 10px; margin-left: 10px" onchange="seleccionarUsuario()">
-                        <option selected idUsuario="0">seleccione un usuario</option>
+                <select id="selectUsuarios" name="usuarios" style="background-color: white; padding: 10px; margin-left: 10px">
+                        <option selected data-idUsuario="0">seleccione un usuario</option>
                         <div th:each="usuarioSeguido : ${usuariosSeguidos}">
-                            <option th:text="${usuarioSeguido.nombre} + ' ' + ${usuarioSeguido.apellido}" th:idUsuario="${usuarioSeguido.idUsuario}"></option>
+                            <option th:text="${usuarioSeguido.nombre} + ' ' + ${usuarioSeguido.apellido}" th:data-idUsuario="${usuarioSeguido.idUsuario}"></option>
                         </div>
                 </select>
 
@@ -344,7 +344,6 @@
 </script>
 
 <script th:src="@{/js/filtrarNoticiasCompartidasPorUsuario.js}"></script>
-
 
 </body>
 

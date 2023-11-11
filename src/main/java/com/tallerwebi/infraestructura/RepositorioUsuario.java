@@ -49,5 +49,7 @@ public interface RepositorioUsuario {
     List<Noticia>obtenerNoticiasLikeadasPorElUsuario(Long idUsuario);
 
     List<Notificacion>obtenerMisNoticiasCompartidas(Long idUsuario);
+
+    List<Notificacion>obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(Long idUsuario, Long usuarioBuscado);
 }
 

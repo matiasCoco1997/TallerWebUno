@@ -216,5 +216,19 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .getResultList();
     }
 
+    @Override
+    public List<Notificacion>obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(Long idUsuarioPropio, Long idUsuarioBuscado){
+
+        String query =  "SELECT n " +
+                "FROM Notificacion n " +
+                "WHERE  n.emisor.id = :idUsuarioPropio AND n.usuarioNotificado.id = :idUsuarioBuscado AND n.descripcion LIKE '%ha compartido%' ORDER BY n.id DESC";
+
+        return sessionFactory.getCurrentSession()
+                .createQuery(query, Notificacion.class)
+                .setParameter("idUsuarioPropio", idUsuarioPropio)
+                .setParameter("idUsuarioBuscado", idUsuarioBuscado)
+                .getResultList();
+    }
+
 
 }

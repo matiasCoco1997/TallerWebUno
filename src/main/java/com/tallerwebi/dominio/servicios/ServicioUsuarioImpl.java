@@ -191,8 +191,19 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     }
 
     @Override
-    public List<Notificacion> obtenerMisNoticiasCompartidas(Long idUsuarioPropio, Long idUsuarioBuscado) {
-        return repositorioUsuario.obtenerMisNoticiasCompartidas(idUsuarioPropio);
+    public List<Notificacion> obtenerMisNoticiasCompartidas(Long idUsuarioPropio, String idUsuarioBuscado) {
+
+        List<Notificacion> noticiasCompartidas;
+
+        Long idUsuarioBuscadoLong = Long.parseLong(idUsuarioBuscado);
+
+        if(idUsuarioBuscado.equals("0")){
+            noticiasCompartidas = repositorioUsuario.obtenerMisNoticiasCompartidas(idUsuarioPropio);
+        } else {
+            noticiasCompartidas = repositorioUsuario.obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(idUsuarioPropio, idUsuarioBuscadoLong);
+        }
+
+        return noticiasCompartidas;
     }
 
     private Boolean verifiCacionSiEsLaImagenDePrueba (MultipartFile imagen) {
