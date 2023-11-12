@@ -1,5 +1,6 @@
 package com.tallerwebi.dominio.servicios;
 
+import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.excepcion.CampoVacio;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
@@ -24,9 +25,11 @@ public class ServicioLoginImpl implements ServicioLogin {
 
     private RepositorioUsuario repositorioLogin;
 
+
     @Autowired
     public ServicioLoginImpl(RepositorioUsuario servicioLoginDao){
         this.repositorioLogin = servicioLoginDao;
+
     }
 
     @Override
@@ -75,7 +78,7 @@ public class ServicioLoginImpl implements ServicioLogin {
         usuario.setFotoPerfil("/imagenes/imgsPerfiles/" + nuevoNombreDelArchivo);
 
         Files.write(path, bytes);
-
+        usuario.setRol(Rol.USER);
         repositorioLogin.guardar(usuario);
 
     }

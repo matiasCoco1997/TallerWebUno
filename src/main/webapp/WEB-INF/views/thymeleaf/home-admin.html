@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css"/>
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <!--Slick-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+    <title>Home</title>
+    <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
+
+</head>
+
+<body class="bg-white">
+
+<!-- Main navigation container -->
+<nav
+        class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+    <div class="flex w-full flex-wrap items-center justify-between px-3">
+        <!-- Logo -->
+        <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
+           th:href="@{/home}">
+            <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
+                 alt="TE Logo" loading="lazy"/>
+        </a>
+        <!--Search-->
+
+        <form th:action="@{/titulo}" method="GET" class="flex items-center w-6/12">
+            <label for="simple-search" class="sr-only">Search</label>
+            <div class="relative w-full">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6">
+                        <path fill-rule="evenodd"
+                              d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+                              clip-rule="evenodd"/>
+                    </svg>
+                </div>
+                <input type="text" id="simple-search" name="titulo"
+                       class="bg-black-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-grey-500 focus:border-grey-500 block w-full pl-10 p-2.5  dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-grey-800 dark:focus:border-grey-800"
+                       placeholder="Search ..." required>
+            </div>
+        </form>
+
+        <!-- Right elements -->
+        <div class="relative flex items-center">
+
+            <div class="relative">
+                <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
+                    <span class="[&>svg]:w-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="h-5 w-5">
+                                <path fill-rule="evenodd"
+                                      d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                    </span>
+                    <!-- <span class="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white"
+                           th:text="${notificaciones}"></span>-->
+                </a>
+            </div>
+
+            <!-- Second dropdown container -->
+            <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+                <!-- Second dropdown trigger -->
+                <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+                   href="" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
+                   aria-expanded="false">
+                    <!-- User avatar -->
+                    <img th:src="@{${usuario.fotoPerfil}}" th:alt="@{${usuario.altFotoPerfil}}" class="rounded-full"
+                         style="height: 25px; width: 25px" alt="" loading="lazy"/>
+                </a>
+                <!-- Second dropdown menu -->
+                <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                    aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
+                    <!-- Second dropdown menu items -->
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/perfil}" data-te-dropdown-item-ref>Ver Perfil</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/siguiendo}" data-te-dropdown-item-ref>Siguiendo</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/listaReproduccion}" data-te-dropdown-item-ref>Ver lista de reproducción</a>
+                    </li>
+
+                    <li class="bg-danger">
+                        <a class=" block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/cerrar-sesion}" data-te-dropdown-item-ref>Cerrar Sesion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</nav>
+
+
+<!--Sección de Noticias-->
+<main class="p-2">
+    <!-- component -->
+    <div class="min-h-screen bg-gray-50/50">
+        <div class="p-4 mx-52">
+
+            <div class="mt-12">
+                <div class="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                        <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 aria-hidden="true" class="w-6 h-6 text-white">
+                                <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"></path>
+                                <path fill-rule="evenodd"
+                                      d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z"
+                                      clip-rule="evenodd"></path>
+                                <path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z"></path>
+                            </svg>
+                        </div>
+                        <div class="p-4 text-right">
+                            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+                                Today's Money</p>
+                            <h4 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                $53k</h4>
+                        </div>
+                        <div class="border-t border-blue-gray-50 p-4">
+                            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                                <strong class="text-green-500">+55%</strong>&nbsp;than last week
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                        <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 aria-hidden="true" class="w-6 h-6 text-white">
+                                <path fill-rule="evenodd"
+                                      d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
+                                      clip-rule="evenodd"></path>
+                            </svg>
+                        </div>
+                        <div class="p-4 text-right">
+                            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+                                Today's Users</p>
+                            <h4 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                2,300</h4>
+                        </div>
+                        <div class="border-t border-blue-gray-50 p-4">
+                            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                                <strong class="text-green-500">+3%</strong>&nbsp;than last month
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                        <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-green-600 to-green-400 text-white shadow-green-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 aria-hidden="true" class="w-6 h-6 text-white">
+                                <path d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"></path>
+                            </svg>
+                        </div>
+                        <div class="p-4 text-right">
+                            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+                                New Clients</p>
+                            <h4 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                3,462</h4>
+                        </div>
+                        <div class="border-t border-blue-gray-50 p-4">
+                            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                                <strong class="text-red-500">-2%</strong>&nbsp;than yesterday
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                        <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-orange-600 to-orange-400 text-white shadow-orange-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 aria-hidden="true" class="w-6 h-6 text-white">
+                                <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"></path>
+                            </svg>
+                        </div>
+                        <div class="p-4 text-right">
+                            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+                                Sales</p>
+                            <h4 class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                $103,430</h4>
+                        </div>
+                        <div class="border-t border-blue-gray-50 p-4">
+                            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                                <strong class="text-green-500">+5%</strong>&nbsp;than yesterday
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
+                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
+                    </div>
+                </div>
+                <div class="mx-auto w-3/5 overflow-hidden">
+                    <canvas
+                            data-te-chart="bar"
+                            data-te-dataset-label="Traffic"
+                            data-te-labels="['Monday', 'Tuesday' , 'Wednesday' , 'Thursday' , 'Friday' , 'Saturday' , 'Sunday ']"
+                            data-te-dataset-data="[2112, 2343, 2545, 3423, 2365, 1985, 987]">
+                    </canvas>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+</body>
+
+</html>

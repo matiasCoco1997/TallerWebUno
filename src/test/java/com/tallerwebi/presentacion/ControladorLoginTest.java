@@ -95,6 +95,7 @@ public class ControladorLoginTest {
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
 		verify(servicioLoginMock, times(1)).registrar(usuarioMock, imgMock);
+		verify(servicioEmailMock,times(1)).enviarCorreoBienvenida(anyString(), anyString());
 	}
 
 	@Test
