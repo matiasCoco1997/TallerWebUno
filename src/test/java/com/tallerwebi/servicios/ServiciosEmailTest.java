@@ -61,7 +61,7 @@ public class ServiciosEmailTest {
         mimeHelper = mock(MimeMessageHelper.class);
     }
 
-   /* @Test
+    @Test
     public void queSePuedeMandarUnMensajeDeBienvenidaAUnUsuario() {
         when(templateEngine.process(eq("mensaje"), any(Context.class))).thenReturn("<html>Contenido del correo</html>");
         when(javaMailSenderMock.createMimeMessage()).thenReturn(mensajeMimeMock);
@@ -69,7 +69,25 @@ public class ServiciosEmailTest {
         servicioEmail.enviarCorreoBienvenida(emailDestinatario, nombreDestinatario);
 
         verify(templateEngine, times(1)).process(eq("mensaje"), any(Context.class));
+
         verify(javaMailSenderMock, times(1)).send(any(MimeMessage.class));
-    }*/
+    }
+    @Test
+    public void queSePuedeMandarUnEmailCuandoSeComparteUnaNoticiaAUnUsuario() throws IOException, MessagingException {
+        byte[] imagenBytes = new byte[]{1,2,3};
+        when(templateEngine.process(eq("noticiaCompartidaEmail"), any(Context.class))).thenReturn("<html>Contenido del correo</html>");
+        when(servicioImagenMock.cargarImagenComoBytes(anyString())).thenReturn(imagenBytes);
+        when(javaMailSenderMock.createMimeMessage()).thenReturn(mensajeMimeMock);
+        try {
+            servicioEmail.compartirNoticiaPorEmail(emisorMock, receptorMock, noticiaMock);
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+        verify(templateEngine, times(1)).process(eq("noticiaCompartidaEmail"), any(Context.class));
+        verify(javaMailSenderMock, times(1)).send(any(MimeMessage.class));
+        verify(servicioImagenMock, times(1)).cargarImagenComoBytes(anyString());
+
+    }
 }
 

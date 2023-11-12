@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.Context;
@@ -30,17 +31,7 @@ public class ServicioEmailImpl implements ServicioEmail {
     private final JavaMailSender javaMailSender;
     private final ITemplateEngine templateEngine;
     private final Context context;
-
-    /*ExecutorService: Permite la ejecución
-    asíncrona de tareas sin necesidad de crear hilos de forma manual*/
-
-    /*ExecutorService utiliza un grupo de hilos fijos,
-    lo que significa que siempre habrá 5 hilos disponibles
-    para ejecutar tareas. Si envías más tareas que la capacidad del grupo,
-    estas se pondrán en cola hasta que haya un hilo disponible.
-    */
-    private ExecutorService executorService = Executors.newFixedThreadPool(5);
-    private ServicioImagen servicioImagen;
+    private final ServicioImagen servicioImagen;
 
     @Autowired
     public ServicioEmailImpl(JavaMailSender javaMailSender, ITemplateEngine templateEngine, ServicioImagen servicioImagen) {
@@ -51,8 +42,8 @@ public class ServicioEmailImpl implements ServicioEmail {
     }
 
     @Override
+    @Async
     public void enviarCorreoBienvenida(String emailUsuario, String nombreUsuario) {
-        executorService.submit(() -> {
         context.setVariable("nombreUsuario", nombreUsuario);
 
         String contenidoHtml = templateEngine.process("mensaje", context);
@@ -68,21 +59,17 @@ public class ServicioEmailImpl implements ServicioEmail {
         } catch (MessagingException e) {
             throw new RuntimeException(e);
         }
-        });
     }
 
     @Override
-    public void compartirNoticiaPorEmail(Usuario emisor, Usuario receptor, Noticia noticia) throws IOException, MessagingException {
-
-        executorService.submit(() -> {
-
-
-                context.setVariable("nombreReseptor", receptor.getNombre());
-                context.setVariable("nombreEmisor", emisor.getNombre());
-                context.setVariable("idNoticia", noticia.getIdNoticia());
-                context.setVariable("noticiaTitulo", noticia.getTitulo());
-                context.setVariable("noticiaResumen", noticia.getResumen());
-            byte[] imagenBytes = new byte[0];
+    @Async
+    public void compartirNoticiaPorEmail(Usuario emisor, Usuario receptor, Noticia noticia) {
+        context.setVariable("nombreReseptor", receptor.getNombre());
+        context.setVariable("nombreEmisor", emisor.getNombre());
+        context.setVariable("idNoticia", noticia.getIdNoticia());
+        context.setVariable("noticiaTitulo", noticia.getTitulo());
+        context.setVariable("noticiaResumen", noticia.getResumen());
+        byte[] imagenBytes = new byte[0];
             try {
                 imagenBytes = servicioImagen.cargarImagenComoBytes(noticia.getRutaDeimagen());
             } catch (IOException e) {
@@ -109,8 +96,6 @@ public class ServicioEmailImpl implements ServicioEmail {
                 } catch (MessagingException e) {
                     throw new RuntimeException(e);
                 }
-
-        });
     }
 
 }

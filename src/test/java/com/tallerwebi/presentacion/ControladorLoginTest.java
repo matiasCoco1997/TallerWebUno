@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
+import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.excepcion.CampoVacio;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
@@ -77,6 +78,7 @@ public class ControladorLoginTest {
 	public void loginConUsuarioYPasswordCorrectosDeberiaLLevarAHome(){
 		// preparacion
 		when(requestMock.getSession()).thenReturn(sessionMock);
+		when(usuarioMock.getRol()).thenReturn(Rol.USER);
 		when(servicioLoginMock.consultarUsuario(anyString(), anyString())).thenReturn(usuarioMock);
 
 		// ejecucion
@@ -95,6 +97,7 @@ public class ControladorLoginTest {
 		// validacion
 		assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/login"));
 		verify(servicioLoginMock, times(1)).registrar(usuarioMock, imgMock);
+		verify(servicioEmailMock,times(1)).enviarCorreoBienvenida(anyString(), anyString());
 	}
 
 	@Test
@@ -171,6 +174,19 @@ public class ControladorLoginTest {
 		//validacion
 		verify(sessionMock).invalidate();
 		assertThat(model.getViewName(), equalToIgnoringCase("redirect:/login"));
+	}
+	@Test
+	public void loginConUsuarioAdminYPasswordCorrectosDeberiaLLevarAHome(){
+		// preparacion
+		when(requestMock.getSession()).thenReturn(sessionMock);
+		when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
+		when(servicioLoginMock.consultarUsuario(anyString(), anyString())).thenReturn(usuarioMock);
+
+		// ejecucion
+		ModelAndView modelAndView = controladorLogin.validarLogin(datosLoginMock, requestMock);
+
+		// validacion
+		assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/admin/home"));
 	}
 
 }
