@@ -17,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 
@@ -381,5 +382,23 @@ public class RepositorioUsuarioTest {
 
         assertNotNull(usuariosSeguidores);
         assertEquals(1, usuariosSeguidores.size());
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void queSeObtenganSoloLasNotificacionesGeneradasEnLosUltimosQuinceDias(){
+        repositorioUsuario.guardar(usuario);
+        repositorioUsuario.guardar(usuario2);
+        Notificacion notificacion=new Notificacion();
+        notificacion.setFecha(LocalDate.of(2023,11,25));
+        notificacion.setEmisor(usuario);
+        repositorioNotificacion.generarNotificacion(notificacion);
+        Notificacion notificacion2=new Notificacion();
+        notificacion2.setFecha(LocalDate.of(2023,10,06));
+        notificacion2.setEmisor(usuario2);
+        repositorioNotificacion.generarNotificacion(notificacion2);
+        List<Notificacion> notificaciones=repositorioUsuario.obtenerMisNotificaciones(usuario.getIdUsuario());
+        assertThat(notificaciones.size(),is(1));
     }
 }

@@ -30,6 +30,18 @@ public class RepositorioHomeImpl implements RepositorioHome{
     }
 
     @Override
+    public Categoria obtenerCategoriaPorDescripcion(String categoria) {
+        return (Categoria) sessionFactory.getCurrentSession().createQuery("FROM Categoria WHERE descripcion = :categoria").setParameter("categoria",categoria).uniqueResult();
+    }
+
+    @Override
+    public void aumentarCantidadDeVistasDeUnaCategoria(String categoria) {
+        sessionFactory.getCurrentSession().
+                createQuery("UPDATE Categoria SET vistas=vistas+1 WHERE descripcion = :categoria").
+                setParameter("categoria",categoria).executeUpdate();
+    }
+
+    @Override
     public List<Categoria> listarCategorias() {
         final Session session = sessionFactory.getCurrentSession();
         return session.createQuery("FROM Categoria").list();

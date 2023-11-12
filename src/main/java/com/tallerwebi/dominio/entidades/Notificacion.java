@@ -31,6 +31,9 @@ public class Notificacion {
     private String descripcion;
     private Boolean vista;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
+    private LocalDate fecha;
+
     public Notificacion() {
 
     }
@@ -45,6 +48,8 @@ public class Notificacion {
     @PrePersist// Esto generararia automáticamente la fecha de creación antes que se persista
     protected void onCreate() {
         vista = false;
+        fecha = LocalDate.now();
+
     }
 
     public Notificacion(Usuario usuarioNotificado, String nombreUsuarioSeguido, Noticia noticia) {

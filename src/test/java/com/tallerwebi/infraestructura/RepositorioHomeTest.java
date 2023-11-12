@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.isNotNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -37,6 +38,7 @@ public class RepositorioHomeTest {
     @Autowired
     private RepositorioCategoria repositorioCategoria;
     private Noticia noticiaMock;
+    Categoria categoria;
 
     @BeforeEach
     public void init(){
@@ -44,6 +46,9 @@ public class RepositorioHomeTest {
         when(noticiaMock.getIdNoticia()).thenReturn(1L);
         when(noticiaMock.getTitulo()).thenReturn("Titulo de la noticia");
         when(noticiaMock.getCategoria()).thenReturn("categoria");
+        categoria=new Categoria();
+        categoria.setDescripcion("Deportes");
+        categoria.setVistas(0);
     }
 
 
@@ -130,4 +135,16 @@ public class RepositorioHomeTest {
         assertThat(republicaciones.size(),Is.is(1));
     }
 
+    /*
+    *
+    * @Transactional
+    @Test
+    @Rollback
+    public void queSePuedaAumentarLaCantidadDeVistasDeUnaCategoria(){
+        repositorioCategoria.guardar(categoria);
+        repositorioHome.aumentarCantidadDeVistasDeUnaCategoria(categoria.getDescripcion());
+        Categoria categoriaObtenida=repositorioHome.obtenerCategoriaPorDescripcion(categoria.getDescripcion());
+        assertThat(categoriaObtenida.getVistas(),is(1));
+    }
+    * */
 }

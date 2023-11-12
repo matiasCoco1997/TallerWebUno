@@ -71,6 +71,8 @@ public class ControladorHome {
 
         List<Categoria> categorias=servicioHome.obtenerCategorias();
 
+        servicioHome.aumentarCantidadDeVistasDeUnaCategoria(categoria);
+
         List<Noticia> noticiasCategorias = servicioHome.obtenerNoticiasPorCategoria(categoria);
 
         noticiasCategorias = servicioNoticia.setNoticiasLikeadas(noticiasCategorias, usuario.getIdUsuario());

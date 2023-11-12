@@ -89,20 +89,20 @@ public class ServicioNoticiaTest {
     public void cuandoCreoUnaNoticiaAnonimaSeInvocaLaFuncionGuardarDelRepositorioSoloUnaVez() throws Exception {
         when(noticiaMock.getEsAnonima()).thenReturn(true);
 
-        servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
+        Noticia noticia = noticiaMock;
 
-        assertThat(noticiaMock.getEsAnonima(), is(true));
-        verify(repositorioNoticiaMock, times(1)).guardar(noticiaMock);
+        servicioNoticiaMock.crearNoticia(noticia, usuarioMock, imgMock, audioMock);
+
+        assertThat(noticia.getEsAnonima(), is(true));
+        verify(repositorioNoticiaMock, times(1)).guardar(noticia);
     }
 
     @Test
     public void cuandoCreoDosNoticiasSeInvocaLaFuncionGuardarDelRepositorioDosVeces() throws Exception {
 
-        //ejecucion (aca se ejecuta el listarNoticias del repo, interno al servicio)
         servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
         servicioNoticiaMock.crearNoticia(noticiaMock, usuarioMock, imgMock, audioMock);
 
-        //verificacion (evaluo si no esta vacio y si es 2 la cantidad de noticias que retorno)
         verify(repositorioNoticiaMock, times(2)).guardar(noticiaMock);
     }
 

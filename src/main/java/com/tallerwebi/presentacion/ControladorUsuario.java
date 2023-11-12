@@ -5,9 +5,12 @@ import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
+import com.tallerwebi.dominio.excepcion.NoticiaInexistente;
+import com.tallerwebi.dominio.excepcion.UsuarioDeslogueado;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,11 +53,14 @@ public class ControladorUsuario {
 
             List<Notificacion> notificaciones = servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioBuscado.getIdUsuario());
 
+
+
             model.put("usuarioLogueado", usuarioLogueado);
             model.put("usuarioBuscado", usuarioBuscado);
             model.put("noticias", noticiasDelUsuario);
             model.put("datosSeguidos", datosSeguidos);
             model.put("cantidadNotificaciones", notificaciones.size());
+            model.put("misCompartidos", false);
 
             if (servicioUsuario.verificarSiLaDescripcionEsNull(usuarioBuscado.getDescripcion())) {
                 model.put("descripcionError", "No tiene una descripción.");
@@ -90,6 +97,7 @@ public class ControladorUsuario {
             model.put("noticias", noticiasDelUsuario);
             model.put("datosSeguidos", datosSeguidos);
             model.put("cantidadNotificaciones", notificaciones.size());
+            model.put("misCompartidos", false);
 
             if (servicioUsuario.verificarSiLaDescripcionEsNull(usuarioBuscado.getDescripcion())) {
                 model.put("descripcionError", "No tiene una descripción.");
@@ -133,8 +141,6 @@ public class ControladorUsuario {
 
         List<Noticia> noticiasDelUsuarioLikeadas = servicioUsuario.obtenerNoticiasLikeadas(usuario.getIdUsuario());
 
-        //noticiasDelUsuarioLikeadas = servicioNoticia.setNoticiasLikeadas(noticiasDelUsuarioLikeadas, usuario.getIdUsuario());
-
         Map<String, Integer> datosSeguidos = servicioUsuario.obtenerMisSeguidoresYSeguidos(usuario.getIdUsuario());
 
         List<Notificacion> notificaciones = servicioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
@@ -144,6 +150,34 @@ public class ControladorUsuario {
         model.put("cantidadNotificaciones", notificaciones.size());
         model.put("usuarioLogueado", usuario);
         model.put("usuarioBuscado", usuario);
+        model.put("misCompartidos", false);
+
+        return new ModelAndView("perfil", model);
+    }
+
+    @RequestMapping(value = "/perfil/misCompartidos")
+    public ModelAndView verHistorialCompartidos(@RequestParam(value = "idUsuarioFiltrado", required = false, defaultValue = "0") String idUsuarioFiltrado, HttpSession session) {
+
+        ModelMap model = new ModelMap();
+
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        Map<String, Integer> datosSeguidos = servicioUsuario.obtenerMisSeguidoresYSeguidos(usuario.getIdUsuario());
+
+        List<Notificacion> notificaciones = servicioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
+
+        List<Usuario> usuariosSeguidos = servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
+
+        List<Notificacion> noticiasCompartidas = servicioUsuario.obtenerMisNoticiasCompartidas(usuario.getIdUsuario(), idUsuarioFiltrado);
+
+        model.put("usuarioLogueado", usuario);
+        model.put("usuarioBuscado", usuario);
+        model.put("datosSeguidos", datosSeguidos);
+        model.put("cantidadNotificaciones", notificaciones.size());
+        model.put("usuariosSeguidos", usuariosSeguidos);
+        model.put("listaDeCompartidos", noticiasCompartidas);
+        model.put("idUsuarioFiltrado", idUsuarioFiltrado);
+        model.put("misCompartidos", true);
 
         return new ModelAndView("perfil", model);
     }

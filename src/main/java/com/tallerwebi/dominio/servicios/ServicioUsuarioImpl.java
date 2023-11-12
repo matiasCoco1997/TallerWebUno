@@ -22,6 +22,8 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
 
+import static java.util.Collections.*;
+
 @Service("servicioUsuario")
 @Transactional
 public class ServicioUsuarioImpl implements ServicioUsuario{
@@ -186,6 +188,22 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
         }
 
         return noticiasLikeadas;
+    }
+
+    @Override
+    public List<Notificacion> obtenerMisNoticiasCompartidas(Long idUsuarioPropio, String idUsuarioBuscado) {
+
+        List<Notificacion> noticiasCompartidas;
+
+        Long idUsuarioBuscadoLong = Long.parseLong(idUsuarioBuscado);
+
+        if(idUsuarioBuscado.equals("0")){
+            noticiasCompartidas = repositorioUsuario.obtenerMisNoticiasCompartidas(idUsuarioPropio);
+        } else {
+            noticiasCompartidas = repositorioUsuario.obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(idUsuarioPropio, idUsuarioBuscadoLong);
+        }
+
+        return noticiasCompartidas;
     }
 
     private Boolean verifiCacionSiEsLaImagenDePrueba (MultipartFile imagen) {

@@ -101,6 +101,16 @@ public class ServicioHomeImpl implements ServicioHome {
         return listaFinal;
     }
 
+    @Override
+    public Categoria obtenerCategoriaPorDescripcion(String categoria) {
+        return repositorioHome.obtenerCategoriaPorDescripcion(categoria);
+    }
+
+    @Override
+    public void aumentarCantidadDeVistasDeUnaCategoria(String categoriaObtenida) {
+        repositorioHome.aumentarCantidadDeVistasDeUnaCategoria(categoriaObtenida);
+    }
+
     public int generarNumeroAleatorio(Integer limite){
         return (int) (Math.random()*limite);
     }
