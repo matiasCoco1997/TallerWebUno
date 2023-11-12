@@ -48,6 +48,6 @@ public interface ServicioUsuario {
 
     List<Noticia> obtenerNoticiasLikeadas(Long idUsuario);
 
-    List<Notificacion> obtenerMisNoticiasCompartidas(Long idUsuarioPropio , Long idUsuarioBuscado);
+    List<Notificacion> obtenerMisNoticiasCompartidas(Long idUsuarioPropio , String idUsuarioBuscado);
 
 }

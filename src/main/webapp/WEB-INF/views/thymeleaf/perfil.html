@@ -97,8 +97,7 @@
                 <h1 class="font-bold text-4xl text-white" th:text="${usuarioBuscado.nombre}"></h1>
                 <a th:href="@{/perfil/modificar}" th:if="${usuarioBuscado.getIdUsuario()==usuarioLogueado.getIdUsuario()}" class="mr-10 text-2xl bg-blue-600 text-white p-4 rounded-2xl">Editar perfil</a>
             </div>
-            <p class="text-white text-2xl" th:if="${usuarioBuscado.descripcion==null}" th:text="${descripcionError}"></p>
-            <p class="text-white text-2xl" th:unless="${usuarioBuscado.descripcion==null}" th:text="${usuarioBuscado.descripcion}"></p>
+
             <div class="flex justify-around mt-10">
                 <a href="/sunn/seguidores"><p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidores')} + ' seguidores'"> </p></a>
                 <a href="/sunn/siguiendo"><p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidos')} + ' seguidos'"> </p></a>
@@ -236,13 +235,34 @@
 
             <div style="padding: 20px; border: solid white 2px; border-radius: 5px">
 
-                <label for="selectUsuarios" style="color: white; font-size: 1em">Filtrar por usuario usuario:</label>
+                <label for="selectUsuarios" style="color: white; font-size: 1em">Filtrar por usuario :</label>
 
                 <select id="selectUsuarios" name="usuarios" style="background-color: white; padding: 10px; margin-left: 10px">
-                        <option selected data-idUsuario="0">seleccione un usuario</option>
-                        <div th:each="usuarioSeguido : ${usuariosSeguidos}">
-                            <option th:text="${usuarioSeguido.nombre} + ' ' + ${usuarioSeguido.apellido}" th:data-idUsuario="${usuarioSeguido.idUsuario}"></option>
+
+
+
+                        <div th:if="${idUsuarioFiltrado} == '0' ">
+                            <option selected data-idUsuario="0">seleccione un usuario</option>
                         </div>
+
+                        <div th:if="${idUsuarioFiltrado} != '0'">
+                            <option data-idUsuario="0">seleccione un usuario</option>
+                        </div>
+
+                        <div th:each="usuarioSeguido : ${usuariosSeguidos}">
+
+                            <div th:if="${idUsuarioFiltrado} == ${usuarioSeguido.idUsuario}">
+                                <option selected th:text="${usuarioSeguido.nombre} + ' ' + ${usuarioSeguido.apellido}" th:data-idUsuario="${usuarioSeguido.idUsuario}"></option>
+                            </div>
+
+                            <div th:if="${idUsuarioFiltrado} != ${usuarioSeguido.idUsuario}">
+                                <option th:text="${usuarioSeguido.nombre} + ' ' + ${usuarioSeguido.apellido}" th:data-idUsuario="${usuarioSeguido.idUsuario}"></option>
+                            </div>
+
+                        </div>
+
+
+
                 </select>
 
             </div>
@@ -252,6 +272,7 @@
 
 
         <div th:each="noticiaCompartida : ${ listaDeCompartidos }" class="max-w-4xl my-4 py-6 m-auto text-white">
+
             <div th:if="${ noticiaCompartida.emisor.getIdUsuario() == usuarioLogueado.getIdUsuario() }" style="margin: 20px; border: white solid 3px; padding: 10px">
 
                 <h2 style="color: white; margin: 5px; font-size: 20px; border-bottom: white dashed 2px">Compartiste esta noticia con: <span style="font-weight: bold;" th:text="${noticiaCompartida.usuarioNotificado.getNombre()}"></span></h2>
@@ -294,7 +315,6 @@
                         </a>
                     </div>
                 </div>
-
             </div>
         </div>
 

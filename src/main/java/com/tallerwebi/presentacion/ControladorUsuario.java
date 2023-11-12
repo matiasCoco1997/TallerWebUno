@@ -155,8 +155,8 @@ public class ControladorUsuario {
         return new ModelAndView("perfil", model);
     }
 
-    @RequestMapping(value = "/perfil/misCompartidos", method = {RequestMethod.GET, RequestMethod.POST})
-    public ModelAndView verHistorialCompartidos(HttpSession session, @RequestParam(defaultValue = "0") String idUsuarioBuscado) {
+    @RequestMapping(value = "/perfil/misCompartidos")
+    public ModelAndView verHistorialCompartidos(@RequestParam(value = "idUsuarioFiltrado", required = false, defaultValue = "0") String idUsuarioFiltrado, HttpSession session) {
 
         ModelMap model = new ModelMap();
 
@@ -168,7 +168,7 @@ public class ControladorUsuario {
 
         List<Usuario> usuariosSeguidos = servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
 
-        List<Notificacion> noticiasCompartidas = servicioUsuario.obtenerMisNoticiasCompartidas(usuario.getIdUsuario(), idUsuarioBuscado);
+        List<Notificacion> noticiasCompartidas = servicioUsuario.obtenerMisNoticiasCompartidas(usuario.getIdUsuario(), idUsuarioFiltrado);
 
         model.put("usuarioLogueado", usuario);
         model.put("usuarioBuscado", usuario);
@@ -176,6 +176,7 @@ public class ControladorUsuario {
         model.put("cantidadNotificaciones", notificaciones.size());
         model.put("usuariosSeguidos", usuariosSeguidos);
         model.put("listaDeCompartidos", noticiasCompartidas);
+        model.put("idUsuarioFiltrado", idUsuarioFiltrado);
         model.put("misCompartidos", true);
 
         return new ModelAndView("perfil", model);
