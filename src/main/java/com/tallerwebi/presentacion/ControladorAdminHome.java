@@ -19,11 +19,13 @@ public class ControladorAdminHome {
     public ModelAndView irAHomeAdmin(HttpSession session ){
         ModelMap model=new ModelMap();
 
-        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
-        if(usuario == null && usuario.getRol() != (Rol.ADMIN)){
+        if(usuario == null)
             return new ModelAndView("redirect:/login");
-        }
+
+        if(usuario.getRol() != (Rol.ADMIN))
+            return new ModelAndView("redirect:/login");
 
         model.put("usuario",usuario);
 
