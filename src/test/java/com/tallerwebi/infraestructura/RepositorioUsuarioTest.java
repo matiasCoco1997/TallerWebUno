@@ -18,6 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -401,4 +402,38 @@ public class RepositorioUsuarioTest {
         List<Notificacion> notificaciones=repositorioUsuario.obtenerMisNotificaciones(usuario.getIdUsuario());
         assertThat(notificaciones.size(),is(1));
     }
+
+
+    @Test
+    @Transactional
+    @Rollback
+    public void queSePuedanObtenerTodasMisNoticiasCompartidas(){
+
+        usuario.setIdUsuario(1L);
+        usuario.setIdUsuario(2L);
+
+        repositorioUsuario.guardar(usuario);
+        repositorioUsuario.guardar(usuario2);
+
+        repositorioNoticia.guardar(noticia);
+
+        Notificacion notificacion=new Notificacion();
+        notificacion.setEmisor(usuario);
+        notificacion.setUsuarioNotificado(usuario2);
+        notificacion.setNoticiaNotificada(noticia);
+        notificacion.setDescripcion("ha compartido");
+        repositorioNotificacion.generarNotificacion(notificacion);
+
+        Notificacion notificacion2 = new Notificacion();
+        notificacion.setEmisor(usuario);
+        notificacion.setUsuarioNotificado(usuario2);
+        notificacion.setNoticiaNotificada(noticia);
+        notificacion.setDescripcion("ha compartido");
+        repositorioNotificacion.generarNotificacion(notificacion2);
+
+        List<Notificacion> notificaciones = repositorioUsuario.obtenerMisNoticiasCompartidas(usuario.getIdUsuario());
+
+        assertThat(notificaciones.size(),is(1));
+    }
+
 }

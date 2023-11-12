@@ -225,4 +225,78 @@ public class ControladorUsuarioTest {
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/perfil"));
     }
 
+
+    @Test
+    public void queAlVerMisNoticiasCompartidasTraigaTodasSinFiltrar(){
+
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
+        String idUsuarioFiltrado = "0";
+
+        List<Notificacion> notificaciones = new ArrayList<>();
+
+        notificacionMock.setEmisor(usuarioMock);
+
+        notificaciones.add(notificacionMock);
+        notificaciones.add(notificacionMock);
+
+        when(servicioUsuarioMock.obtenerMisNoticiasCompartidas(usuarioMock.getIdUsuario(), idUsuarioFiltrado)).thenReturn(notificaciones);
+
+        ModelAndView modelAndView = controladorUsuario.verHistorialCompartidos(idUsuarioFiltrado, sessionMock);
+
+        //List<Notificacion> notificacionesPrueba = (List<Notificacion>) modelAndView.getModel().get("listaDeCompartidos");
+
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil"));
+        assertThat(modelAndView.getModel().get("idUsuarioFiltrado").toString(), equalToIgnoringCase("0"));
+        assertThat((List<Notificacion>) modelAndView.getModel().get("listaDeCompartidos"), is(notificaciones));
+    }
+
+    @Test
+    public void queAlVerMisNoticiasCompartidasFiltrePorIdDeUsuarioYRetorneUna(){
+
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
+        String idUsuarioFiltrado = "1";
+
+        List<Notificacion> notificacionesFiltradas = new ArrayList<>();
+
+        usuarioMock.setIdUsuario(1L);
+        notificacionMock.setEmisor(usuarioMock);
+
+        notificacionesFiltradas.add(notificacionMock);
+
+        when(servicioUsuarioMock.obtenerMisNoticiasCompartidas(usuarioMock.getIdUsuario(), idUsuarioFiltrado)).thenReturn(notificacionesFiltradas);
+
+        ModelAndView modelAndView = controladorUsuario.verHistorialCompartidos(idUsuarioFiltrado, sessionMock);
+
+        notificacionesFiltradas = (List<Notificacion>) modelAndView.getModel().get("listaDeCompartidos");
+
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil"));
+        assertThat(modelAndView.getModel().get("idUsuarioFiltrado").toString(), equalToIgnoringCase(usuarioMock.getIdUsuario().toString()));
+        assertThat(notificacionesFiltradas.size(), is(1));
+    }
+
+    @Test
+    public void queAlVerMisNoticiasCompartidasLaFlagSeCargueComoTrue(){
+
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+
+        String idUsuarioFiltrado = "1";
+
+        List<Notificacion> notificacionesFiltradas = new ArrayList<>();
+
+        usuarioMock.setIdUsuario(1L);
+        notificacionMock.setEmisor(usuarioMock);
+
+        notificacionesFiltradas.add(notificacionMock);
+
+        when(servicioUsuarioMock.obtenerMisNoticiasCompartidas(usuarioMock.getIdUsuario(), idUsuarioFiltrado)).thenReturn(notificacionesFiltradas);
+
+        ModelAndView modelAndView = controladorUsuario.verHistorialCompartidos(idUsuarioFiltrado, sessionMock);
+
+        assertThat(modelAndView.getViewName(), equalToIgnoringCase("perfil"));
+        assertThat(modelAndView.getModel().get("misCompartidos"), is(true));
+
+    }
+
 }
