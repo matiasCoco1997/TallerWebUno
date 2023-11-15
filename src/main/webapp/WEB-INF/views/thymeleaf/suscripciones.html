@@ -8,26 +8,92 @@
 </head>
 <body class="bg-black">
 <header class="lg:flex justify-around items-center">
-  <img src="/public/imgs/logo.jpg" class="lg:w-[15%] w-[60%]">
-  <div class="hidden lg:flex w-[75%] justify-around items-center">
-    <form>
-      <input type="search" class="bg-[#1A1A1A] w-[800px] h-[40px] rounded-2xl text-white pl-4" placeholder="Quiero escuchar...">
-    </form>
-    <img src="/public/imgs/campanita.png" class="w-[40px] h-[40px]">
+  <nav
+          class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+    <div class="flex w-full flex-wrap items-center justify-between px-3">
+      <!-- Logo -->
+      <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
+         th:href="@{/home}">
+        <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
+             alt="TE Logo" loading="lazy"/>
+      </a>
+      <th:block  th:if="${usuario}" >
+      <!--Search-->
 
-    <img src="/public/imgs/fotoPerfil.png" class="w-[60x] h-[60px]">
-  </div>
-  <div class="lg:hidden w-[100%] flex items-center justify-between px-2 pr-6">
-    <form class="w-[80%]">
-      <input type="search" class="bg-[#1A1A1A] w-[90%] h-[40px] rounded-2xl text-white pl-4 mr-4 ml-2" placeholder="Quiero escuchar...">
-    </form>
-    <div class="w-[20%] flex items-center justify-center">
-      <img src="/public/imgs/campanita.png" class="w-[40%] mr-2 h-[10%]">
+      <form th:action="@{/titulo}" method="GET" class="flex items-center w-6/12">
+        <label for="simple-search" class="sr-only">Search</label>
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6">
+              <path fill-rule="evenodd"
+                    d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+                    clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <input type="text" id="simple-search" name="titulo"
+                 class="bg-black-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-grey-500 focus:border-grey-500 block w-full pl-10 p-2.5  dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-grey-800 dark:focus:border-grey-800"
+                 placeholder="Search ..." required>
+        </div>
+      </form>
 
-      <img src="/public/imgs/fotoPerfil.png" class="w-[65%]">
+      <!-- Right elements -->
+      <div class="relative flex items-center">
+
+        <div class="relative">
+          <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
+                    <span class="[&>svg]:w-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="h-5 w-5">
+                                <path fill-rule="evenodd"
+                                      d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                    </span>
+            <span class="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white"
+                  th:text="${notificaciones}"></span>
+          </a>
+        </div>
+
+        <!-- Second dropdown container -->
+        <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+          <!-- Second dropdown trigger -->
+          <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+             href="" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
+             aria-expanded="false">
+            <!-- User avatar -->
+            <img th:src="@{${usuario.fotoPerfil}}" th:alt="@{${usuario.altFotoPerfil}}" class="rounded-full"
+                 style="height: 25px; width: 25px" alt="" loading="lazy"/>
+          </a>
+          <!-- Second dropdown menu -->
+          <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+              aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
+            <!-- Second dropdown menu items -->
+
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                 th:href="@{/perfil}" data-te-dropdown-item-ref>Ver Perfil</a>
+            </li>
+
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                 th:href="@{/siguiendo}" data-te-dropdown-item-ref>Siguiendo</a>
+            </li>
+
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                 th:href="@{/listaReproduccion}" data-te-dropdown-item-ref>Ver lista de reproducción</a>
+            </li>
+
+            <li class="bg-danger">
+              <a class=" block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                 th:href="@{/cerrar-sesion}" data-te-dropdown-item-ref>Cerrar Sesion</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      </th:block>
     </div>
-
-  </div>
+  </nav>
 </header>
 <main>
   <div class="flex flex-wrap justify-center lg:gap-0 gap-10 mt-4 mb-4">
@@ -50,7 +116,7 @@
           </li>
         </ul>
         <div class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-10">
-          <a href="#" class="font-semibold text-white">En uso</a>
+          <a  th:href="@{'/pagar/'+${planes[0].idPlan}}" class="font-semibold text-white">En uso</a>
         </div>
       </div>
     </div>
@@ -75,7 +141,7 @@
           </li>
         </ul>
         <div class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-28">
-          <a href="#" class="font-semibold text-white">Pagar</a>
+          <a  th:href="@{'/pagar/'+${planes[1].idPlan}}" class="font-semibold text-white">En uso</a>
         </div>
       </div>
     </div>
@@ -99,7 +165,8 @@
           </li>
         </ul>
         <div class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-10">
-          <a href="#" class="font-semibold text-white">Pagar</a>
+          <a  th:href="@{'/pagar/'+${planes[2].idPlan}}" class="font-semibold text-white">En uso</a>
+
         </div>
       </div>
     </div>
