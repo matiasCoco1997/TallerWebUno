@@ -134,7 +134,7 @@ public class ControladorNoticia {
         Noticia noticiaBuscada = servicioNoticia.buscarNoticiaPorId(idNoticia);
         try {
             if (noticiaBuscada.getUsuario().getIdUsuario().equals(usuarioLogueado.getIdUsuario())) {
-                servicioNoticia.borrarNoticiaPorId(noticiaBuscada);
+                servicioNoticia.borrarNoticia(noticiaBuscada);
             }
         } catch (Exception e) {
             modelo.put("error", "Error al borrar la noticia.");
@@ -239,12 +239,12 @@ public class ControladorNoticia {
     public ModelAndView borrarNoticiaAdmin(@PathVariable Long idNoticia, HttpSession session){
 
         ModelMap model = new ModelMap();
-        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Usuario admin = (Usuario) session.getAttribute("sessionUsuarioLogueado");
         Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
 
         try{
-            if(usuarioLogueado.getRol().equals(Rol.ADMIN)){
-                servicioNoticia.borrarNoticiaPorId(noticia);
+            if(admin.getRol().equals(Rol.ADMIN)){
+                servicioNoticia.borrarNoticia(noticia);
             }
         } catch (IOException e) {
             model.put("error", "Error al eliminar la noticia");

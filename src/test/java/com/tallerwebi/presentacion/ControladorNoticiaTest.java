@@ -273,7 +273,7 @@ public class ControladorNoticiaTest {
     @Test
     public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws IOException {
         // preparacion
-        doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticiaPorId(any());
+        doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticia(any());
 
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia(), sessionMock);
@@ -360,7 +360,7 @@ public class ControladorNoticiaTest {
         //preparacion
         when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
         when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
-        doThrow(IOException.class).when(servicioNoticiaMock).borrarNoticiaPorId(any());
+        doThrow(IOException.class).when(servicioNoticiaMock).borrarNoticia(any());
 
         //ejecucion
         ModelAndView model = controladorNoticia.borrarNoticiaAdmin(noticiaMock.getIdNoticia(), sessionMock);

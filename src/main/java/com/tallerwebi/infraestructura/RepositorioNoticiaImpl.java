@@ -75,6 +75,12 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
         session.createQuery("DELETE FROM Notificacion WHERE noticiaNotificada = :noticia")
                 .setParameter("noticia", noticia).executeUpdate();
 
+        session.createQuery("DELETE FROM Comentario WHERE noticia = :noticia")
+                .setParameter("noticia", noticia).executeUpdate();
+
+        session.createQuery("DELETE FROM Republicacion WHERE id_noticiaRepublicada = :noticia")
+                .setParameter("noticia", noticia).executeUpdate();
+
         session.delete(noticia);
     }
 
