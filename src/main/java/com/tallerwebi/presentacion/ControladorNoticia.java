@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -232,6 +233,24 @@ public class ControladorNoticia {
             System.out.println(e.getMessage());
         }
         return new ModelAndView("redirect:/home",model);
+    }
+
+    @RequestMapping(value = "/admin/borrar-Noticia/{idNoticia}", method = RequestMethod.GET)
+    public ModelAndView borrarNoticiaAdmin(@PathVariable Long idNoticia, HttpSession session){
+
+        ModelMap model = new ModelMap();
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
+
+        try{
+            if(usuarioLogueado.getRol().equals(Rol.ADMIN)){
+                servicioNoticia.borrarNoticiaPorId(noticia);
+            }
+        } catch (IOException e) {
+            model.put("error", "Error al eliminar la noticia");
+            return new ModelAndView("/home-admin", model);
+        }
+        return new ModelAndView("/home-admin");
     }
 }
 

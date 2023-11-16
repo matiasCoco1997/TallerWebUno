@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.entidades.Noticia;
 
 import com.tallerwebi.dominio.entidades.Notificacion;
+import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
 
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.stubbing.OngoingStubbing;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -336,6 +338,35 @@ public class ControladorNoticiaTest {
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         ModelAndView modelAndView=controladorNoticia.compartir(1L,1L,sessionMock);
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
+    }
+
+    @Test
+    public void queAlEliminarUnaNoticiaComoAdministradorRedirijaAlHome(){
+        //preparacion
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
+        when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+
+        when(noticiaMock.getIdNoticia()).thenReturn(1L);
+        //ejecucion
+        ModelAndView model = controladorNoticia.borrarNoticiaAdmin(noticiaMock.getIdNoticia(), sessionMock);
+
+        //validacion
+        assertThat(model.getViewName(), equalToIgnoringCase("/home-admin"));
+    }
+
+    @Test
+    public void queAlEliminarUnaNoticiaTireUnaExcepcion() throws IOException {
+        //preparacion
+        when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        doThrow(IOException.class).when(servicioNoticiaMock).borrarNoticiaPorId(any());
+
+        //ejecucion
+        ModelAndView model = controladorNoticia.borrarNoticiaAdmin(noticiaMock.getIdNoticia(), sessionMock);
+
+        //validacion
+        assertThat(model.getModel().get("error").toString(), equalToIgnoringCase("Error al eliminar la noticia"));
     }
 
 }
