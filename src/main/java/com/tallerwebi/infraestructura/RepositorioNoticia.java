@@ -37,4 +37,6 @@ public interface RepositorioNoticia {
     List<Noticia> obtenerMisNoticias(Long idUsuario);
 
     Boolean marcarNoticiaComoLikeada(Noticia noticia);
+
+    Long obtenerCantidadNoticiasRelacionadas(String categoria);
 }

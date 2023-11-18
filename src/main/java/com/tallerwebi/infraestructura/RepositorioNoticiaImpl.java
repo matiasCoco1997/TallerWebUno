@@ -66,6 +66,12 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     }
 
     @Override
+    public Long obtenerCantidadNoticiasRelacionadas(String categoria) {
+        final Session session = sessionFactory.getCurrentSession();
+        return (Long) session.createQuery("SELECT count(id) FROM Noticia WHERE categoria = :categoria").setParameter("categoria",categoria).uniqueResult();
+    }
+
+    @Override
     public void borrarNoticia(Noticia noticia) {
         final Session session = sessionFactory.getCurrentSession();
 
