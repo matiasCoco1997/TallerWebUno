@@ -218,4 +218,42 @@ public class ServicioUsuarioTest {
     }
 
 
+    @Test
+    public void queSePuedaListarTodasLasNoticiasCompartidas() {
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
+
+        List<Notificacion> noticiasCompartidasMock = new ArrayList<>();
+        usuarioMock.setIdUsuario(1L);
+        notificacionMock.setEmisor(usuarioMock);
+        noticiasCompartidasMock.add(notificacionMock);
+
+        when(repositorioUsuarioMock.obtenerMisNoticiasCompartidas(anyLong())).thenReturn(noticiasCompartidasMock);
+
+        List<Notificacion> noticiasCompartidas = servicioUsuarioMock.obtenerMisNoticiasCompartidas(usuarioMock.getIdUsuario(), "0");
+
+        assertEquals(1, noticiasCompartidas.size());
+        verify(repositorioUsuarioMock, times(1)).obtenerMisNoticiasCompartidas(usuarioMock.getIdUsuario());
+    }
+
+    @Test
+    public void queAlFiltrarNoticiasCompartidasPorUsuarioRetorneDos() {
+
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
+
+        List<Notificacion> noticiasCompartidasMock = new ArrayList<>();
+        usuarioMock.setIdUsuario(2L);
+        notificacionMock.setEmisor(usuarioMock);
+        noticiasCompartidasMock.add(notificacionMock);
+        noticiasCompartidasMock.add(notificacionMock);
+
+
+        when(repositorioUsuarioMock.obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(anyLong(), anyLong())).thenReturn(noticiasCompartidasMock);
+
+        List<Notificacion> noticiasCompartidas = servicioUsuarioMock.obtenerMisNoticiasCompartidas(usuarioMock.getIdUsuario(), "1");
+
+        assertEquals(2, noticiasCompartidas.size());
+        verify(repositorioUsuarioMock, times(1)).obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(usuarioMock.getIdUsuario(), 1L);
+    }
+
+
 }

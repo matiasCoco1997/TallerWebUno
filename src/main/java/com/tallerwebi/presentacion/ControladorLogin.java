@@ -1,5 +1,6 @@
 package com.tallerwebi.presentacion;
 
+import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.excepcion.CampoVacio;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
@@ -50,7 +51,10 @@ public class ControladorLogin {
                 if (usuarioBuscado.getActivo()) {
                     HttpSession session = request.getSession();
                     session.setAttribute("sessionUsuarioLogueado", usuarioBuscado);
-                    return new ModelAndView("redirect:/home");
+                    if(usuarioBuscado.getRol().equals(Rol.USER)){
+                        return new ModelAndView("redirect:/home");
+                    }
+                    return new ModelAndView("redirect:/admin/home");
                 } else {
                     model.put("error", "Usuario bloqueado.");
                 }

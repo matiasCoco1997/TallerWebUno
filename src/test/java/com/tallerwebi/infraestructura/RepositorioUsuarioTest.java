@@ -18,6 +18,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -401,4 +402,84 @@ public class RepositorioUsuarioTest {
         List<Notificacion> notificaciones=repositorioUsuario.obtenerMisNotificaciones(usuario.getIdUsuario());
         assertThat(notificaciones.size(),is(1));
     }
+
+
+    @Test
+    @Transactional
+    @Rollback
+    public void queSePuedanObtenerTodasMisNoticiasCompartidasDos(){
+
+        usuario.setIdUsuario(1L);
+        usuario.setIdUsuario(2L);
+
+        repositorioUsuario.guardar(usuario);
+        repositorioUsuario.guardar(usuario2);
+
+        repositorioNoticia.guardar(noticia);
+
+        Notificacion notificacion=new Notificacion();
+        notificacion.setEmisor(usuario);
+        notificacion.setUsuarioNotificado(usuario2);
+        notificacion.setNoticiaNotificada(noticia);
+        notificacion.setDescripcion("ha compartido");
+        repositorioNotificacion.generarNotificacion(notificacion);
+
+        Notificacion notificacion2 = new Notificacion();
+        notificacion2.setEmisor(usuario);
+        notificacion2.setUsuarioNotificado(usuario2);
+        notificacion2.setNoticiaNotificada(noticia);
+        notificacion2.setDescripcion("ha compartido");
+        repositorioNotificacion.generarNotificacion(notificacion2);
+
+        List<Notificacion> notificaciones = repositorioUsuario.obtenerMisNoticiasCompartidas(usuario.getIdUsuario());
+
+        assertThat(notificaciones.size(),is(2));
+    }
+
+    @Test
+    @Transactional
+    @Rollback
+    public void queSePuedanObtenerMisNoticiasCompartidasFiltradasPorUnUsuarioNotificado(){
+
+        usuario.setIdUsuario(1L);
+        usuario.setIdUsuario(2L);
+
+        repositorioUsuario.guardar(usuario);
+        repositorioUsuario.guardar(usuario2);
+
+        repositorioNoticia.guardar(noticia);
+
+        Notificacion notificacion=new Notificacion();
+        notificacion.setEmisor(usuario);
+        notificacion.setUsuarioNotificado(usuario2);
+        notificacion.setNoticiaNotificada(noticia);
+        notificacion.setDescripcion("ha compartido");
+        repositorioNotificacion.generarNotificacion(notificacion);
+
+        Notificacion notificacion2 = new Notificacion();
+        notificacion2.setEmisor(usuario);
+        notificacion2.setUsuarioNotificado(usuario2);
+        notificacion2.setNoticiaNotificada(noticia);
+        notificacion2.setDescripcion("ha compartido");
+        repositorioNotificacion.generarNotificacion(notificacion2);
+
+        Notificacion notificacion3 = new Notificacion();
+        notificacion3.setEmisor(usuario2);
+        notificacion3.setUsuarioNotificado(usuario);
+        notificacion3.setNoticiaNotificada(noticia);
+        notificacion3.setDescripcion("prueba");
+        repositorioNotificacion.generarNotificacion(notificacion3);
+
+        Notificacion notificacion4 = new Notificacion();
+        notificacion4.setEmisor(usuario);
+        notificacion4.setUsuarioNotificado(usuario2);
+        notificacion4.setNoticiaNotificada(noticia);
+        notificacion4.setDescripcion("prueba");
+        repositorioNotificacion.generarNotificacion(notificacion4);
+
+        List<Notificacion> notificaciones = repositorioUsuario.obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(usuario.getIdUsuario(), usuario2.getIdUsuario());
+
+        assertThat(notificaciones.size(),is(2));
+    }
+
 }
