@@ -1,6 +1,7 @@
 package com.tallerwebi.servicios;
 
 import com.tallerwebi.dominio.entidades.*;
+import com.tallerwebi.dominio.excepcion.NoticiaInexistente;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioNoticiaImpl;
 import com.tallerwebi.infraestructura.*;
@@ -149,6 +150,12 @@ public class ServicioNoticiaTest {
     public void queSePuedaCompartirUnaNoticia(){
         servicioNoticiaMock.compartirNoticia(notificacionMock);
         verify(repositorioNotificacionMock,times(1)).generarNotificacion(notificacionMock);
+    }
+
+    @Test
+    public void queSePuedaEliminarUnaNoticia() throws NoticiaInexistente, IOException {
+        servicioNoticiaMock.borrarNoticia(noticiaMock);
+        verify(repositorioNoticiaMock,times(1)).borrarNoticia(noticiaMock);
     }
 }
 

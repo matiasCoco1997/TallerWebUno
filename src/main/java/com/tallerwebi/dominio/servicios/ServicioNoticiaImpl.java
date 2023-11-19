@@ -55,7 +55,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void borrarNoticia(Noticia noticia) throws IOException {
+    public void borrarNoticia(Noticia noticia) throws IOException, NoticiaInexistente {
+        if(noticia == null){
+            throw new NoticiaInexistente();
+        }
         repositorioNoticia.borrarNoticia(noticia);
         Path audioABorrar = Paths.get("src/main/webapp/resources/core" + noticia.getRutaDeAudioPodcast());
         Path imagenABorrar = Paths.get("src/main/webapp/resources/core" + noticia.getRutaDeimagen());

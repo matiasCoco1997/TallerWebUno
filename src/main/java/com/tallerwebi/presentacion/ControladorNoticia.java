@@ -139,6 +139,9 @@ public class ControladorNoticia {
         } catch (Exception e) {
             modelo.put("error", "Error al borrar la noticia.");
             return new ModelAndView("redirect:/home", modelo);
+        } catch (NoticiaInexistente e) {
+            modelo.put("error", "La noticia que quiere borrar no existe");
+            return new ModelAndView("/home-admin", modelo);
         }
         return new ModelAndView("redirect:/home");
     }
@@ -248,6 +251,9 @@ public class ControladorNoticia {
             }
         } catch (IOException e) {
             model.put("error", "Error al eliminar la noticia");
+            return new ModelAndView("/home-admin", model);
+        } catch (NoticiaInexistente e){
+            model.put("error", "La noticia que quiere borrar no existe");
             return new ModelAndView("/home-admin", model);
         }
         return new ModelAndView("/home-admin");

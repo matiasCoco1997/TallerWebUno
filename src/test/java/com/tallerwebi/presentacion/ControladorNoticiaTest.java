@@ -271,7 +271,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws IOException {
+    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws IOException, NoticiaInexistente {
         // preparacion
         doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticia(any());
 
@@ -356,7 +356,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queAlEliminarUnaNoticiaTireUnaExcepcion() throws IOException {
+    public void queAlEliminarUnaNoticiaTireUnaExcepcion() throws IOException, NoticiaInexistente {
         //preparacion
         when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
         when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
@@ -367,6 +367,18 @@ public class ControladorNoticiaTest {
 
         //validacion
         assertThat(model.getModel().get("error").toString(), equalToIgnoringCase("Error al eliminar la noticia"));
+    }
+
+    @Test
+    public void queAlBorrarUnaNoticiaQueNoExisteLanceUnaExcepcion() throws NoticiaInexistente, IOException {
+        when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(noticiaMock.getIdNoticia()).thenReturn(null);
+        doThrow(NoticiaInexistente.class).when(servicioNoticiaMock).borrarNoticia(any());
+
+        ModelAndView model = controladorNoticia.borrarNoticiaAdmin(noticiaMock.getIdNoticia(), sessionMock);
+
+        assertThat(model.getModel().get("error").toString(), equalToIgnoringCase("La noticia que quiere borrar no existe"));
     }
 
 }
