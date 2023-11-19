@@ -31,7 +31,7 @@ public class ControladorAdmin {
     }
 
     @RequestMapping("/informes")
-    public ModelAndView obtenerEstadisticasCategorias(HttpSession session){
+    public ModelAndView informes(HttpSession session){
         ModelMap model=new ModelMap();
         Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Notificacion> notificaciones = servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
