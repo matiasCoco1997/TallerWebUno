@@ -238,7 +238,19 @@ public class ControladorNoticia {
         return new ModelAndView("redirect:/home",model);
     }
 
-    @RequestMapping(value = "/admin/borrar-Noticia/{idNoticia}", method = RequestMethod.GET)
+    @RequestMapping(value = "/eliminar-noticia")
+    public ModelAndView listarNoticias(HttpSession session){
+        ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Noticia> noticias = servicioNoticia.listarNoticias();
+        model.addAttribute("noticias", noticias);
+        model.put("usuario", usuario);
+        model.put("noticias", noticias);
+
+        return new ModelAndView("eliminar-noticias-admin", model);
+
+    }
+    @RequestMapping(value = "/borrar-Noticia/{idNoticia}", method = RequestMethod.GET)
     public ModelAndView borrarNoticiaAdmin(@PathVariable Long idNoticia, HttpSession session){
 
         ModelMap model = new ModelMap();
@@ -248,15 +260,16 @@ public class ControladorNoticia {
         try{
             if(admin.getRol().equals(Rol.ADMIN)){
                 servicioNoticia.borrarNoticia(noticia);
+                model.put("usuario", admin);
             }
         } catch (IOException e) {
             model.put("error", "Error al eliminar la noticia");
-            return new ModelAndView("/home-admin", model);
+            return new ModelAndView("/eliminar-noticia", model);
         } catch (NoticiaInexistente e){
             model.put("error", "La noticia que quiere borrar no existe");
-            return new ModelAndView("/home-admin", model);
+            return new ModelAndView("/eliminar-noticia", model);
         }
-        return new ModelAndView("/home-admin");
+        return new ModelAndView("redirect:/eliminar-noticia", model);
     }
 }
 

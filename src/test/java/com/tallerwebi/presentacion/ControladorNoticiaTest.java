@@ -341,7 +341,7 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queAlEliminarUnaNoticiaComoAdministradorRedirijaAlHome(){
+    public void queAlEliminarUnaNoticiaComoAdministradorRedirijaALaVistaEliminarNoticia(){
         //preparacion
         when(usuarioMock.getIdUsuario()).thenReturn(1L);
         when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
@@ -352,7 +352,7 @@ public class ControladorNoticiaTest {
         ModelAndView model = controladorNoticia.borrarNoticiaAdmin(noticiaMock.getIdNoticia(), sessionMock);
 
         //validacion
-        assertThat(model.getViewName(), equalToIgnoringCase("/home-admin"));
+        assertThat(model.getViewName(), equalToIgnoringCase("redirect:/eliminar-noticia"));
     }
 
     @Test

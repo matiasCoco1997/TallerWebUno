@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css"/>
+    <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+    <!--Slick-->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+    <title>Admin</title>
+    <link rel="icon" th:href="@{/imagenes/icono-sunn.png}" type="image/x-icon">
+
+</head>
+
+<body class="bg-black">
+
+<!-- Main navigation container -->
+<nav style="background-color: black"
+     class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+    <div class="flex w-full flex-wrap items-center justify-between px-3">
+        <!-- Logo -->
+        <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
+           th:href="@{/admin/home}">
+            <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
+                 alt="TE Logo" loading="lazy"/>
+        </a>
+
+
+        <!-- Right elements -->
+        <div class="relative flex items-center">
+
+
+            <!-- Second dropdown container -->
+            <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+                <!-- Second dropdown trigger -->
+                <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+                   href="" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
+                   aria-expanded="false">
+                    <!-- User avatar -->
+                    <img th:src="@{${usuario.getFotoPerfil()}}" th:alt="@{${usuario.getAltFotoPerfil()}}" class="rounded-full"
+                         style="height: 25px; width: 25px" alt="" loading="lazy"/>
+                </a>
+                <!-- Second dropdown menu -->
+                <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                    aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
+                    <!-- Second dropdown menu items -->
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/perfil}" data-te-dropdown-item-ref>Ver Perfil</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/siguiendo}" data-te-dropdown-item-ref>Siguiendo</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/listaReproduccion}" data-te-dropdown-item-ref>Ver lista de reproducción</a>
+                    </li>
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/informes}" data-te-dropdown-item-ref>Informes</a>
+                    </li>
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/eliminar-noticias-admin}" data-te-dropdown-item-ref>Borrar noticias</a>
+                    </li>
+
+                    <li class="bg-danger">
+                        <a class=" block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/cerrar-sesion}" data-te-dropdown-item-ref>Cerrar Sesion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+</nav>
+
+<!-- Main navigation container -->
+<hr class="h-px max-w-4xl m-auto my-2 border-0 bg-white">
+
+<!--Sección de Noticias-->
+<main class="p-2">
+    <div th:each="noticia : ${noticias}">
+        <div th:if="${noticia.getClass().simpleName == 'Noticia'}" class="max-w-4xl my-4 py-6 m-auto text-white">
+            <div class="flex items-center">
+
+                <div class="mr-2" th:if="${noticia.esAnonima == false}">
+                    <form th:action="@{/perfil}" method="POST">
+                        <button class="flex items-center" th:value="${noticia.usuario.getIdUsuario()}"
+                                name="idUsuario">
+                            <img class="mr-3 w-10 h-10 object-cover rounded-full"
+                                 th:src="@{${noticia.getUsuario().fotoPerfil}}"
+                                 th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
+                            <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
+                        </button>
+                    </form>
+                </div>
+
+                <div class="mr-2" th:if="${noticia.esAnonima}">
+                    <img class="mr-3 w-10 h-10 object-cover rounded-full" src="imagenes/imgsPerfiles/anonimo.png"
+                         alt="img-anonimo">
+                    <h3 class="font-bold">Anónima</h3>
+                </div>
+
+                <p style="padding-left: 20px">
+                    Fecha de publicación: <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
+                </p>
+
+                <div>
+                    <a class="borrar-noticia" th:href="@{'/borrar-Noticia/' + ${noticia.getIdNoticia()}}"
+                       style="padding: 10px; background-color: red; ">Borrar</a>
+                </div>
+            </div>
+            <div class="mt-2 flex">
+                <div class="mr-2">
+                    <a class="text-2xl font-bold hover:text-gray-300"
+                       th:href="'/sunn/publicacion/'+${noticia.idNoticia}" th:text="${noticia.titulo}"></a>
+                    <p class="mt-2 sm:block hidden" th:text="${noticia.resumen}"></p>
+                </div>
+                <div class="imagen-noticia">
+                    <a class="flex items-center" href="#"></a>
+                    <img class="w-[20rem] sm:h-36 object-cover h-20 m-auto" th:src="@{${noticia.rutaDeimagen}}"
+                         th:alt="${noticia.altDeImagen}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- Slick -->
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<script type="text/javascript" src=""></script>
+</body>
+</html>
