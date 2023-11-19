@@ -1,9 +1,7 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Seguidos;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 
 import java.util.List;
@@ -51,5 +49,9 @@ public interface RepositorioUsuario {
     List<Notificacion>obtenerMisNoticiasCompartidas(Long idUsuario);
 
     List<Notificacion>obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(Long idUsuario, Long usuarioBuscado);
+
+    List<Usuario> obtenerUsuarios();
+
+    List<ListaReproduccion> obtenerMiListaDeReproduccion(Long idUsuario);
 }
 

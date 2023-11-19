@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Seguidos;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -228,6 +225,18 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .setParameter("idUsuarioPropio", idUsuarioPropio)
                 .setParameter("idUsuarioBuscado", idUsuarioBuscado)
                 .getResultList();
+    }
+
+    @Override
+    public List<Usuario> obtenerUsuarios() {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Usuario").list();
+    }
+
+    @Override
+    public List<ListaReproduccion> obtenerMiListaDeReproduccion(Long idUsuario) {
+        return sessionFactory.getCurrentSession().
+                createQuery("FROM ListaReproduccion WHERE usuario.id= :idUsuario").setParameter("idUsuario",idUsuario).list();
     }
 
 
