@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Rol;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
@@ -57,5 +54,18 @@ public class ControladorAdmin {
         model.put("usuario",usuario);
 
         return new ModelAndView("home-admin",model);
+    }
+
+    @RequestMapping("/noticias-mas-likeadas")
+    public ModelAndView mostrarNoticiasMasLikeadas(HttpSession session) {
+        ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        if (usuario.getRol().equals(Rol.ADMIN)) {
+            List<Noticia> noticias = servicioNoticia.listarNoticiasMasLikeadas();
+            model.put("noticias", noticias);
+            model.put("usuario", usuario);
+        }
+        return new ModelAndView("noticias-mas-likeadas", model);
     }
 }

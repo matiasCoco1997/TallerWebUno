@@ -157,5 +157,14 @@ public class ServicioNoticiaTest {
         servicioNoticiaMock.borrarNoticia(noticiaMock);
         verify(repositorioNoticiaMock,times(1)).borrarNoticia(noticiaMock);
     }
+
+    @Test
+    public void queSePuedaListarLasCincoNoticiasMasLikeadas(){
+        noticiasEsperadas.add(noticiaMock);
+        when(repositorioNoticiaMock.listarNoticiasMasLikeadas()).thenReturn(noticiasEsperadas);
+        List<Noticia> noticias = servicioNoticiaMock.listarNoticiasMasLikeadas();
+
+        verify(repositorioNoticiaMock, times(1)).listarNoticiasMasLikeadas();
+    }
 }
 

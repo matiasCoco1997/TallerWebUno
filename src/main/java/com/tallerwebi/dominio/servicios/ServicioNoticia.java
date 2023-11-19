@@ -42,4 +42,5 @@ public interface ServicioNoticia {
 
     List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario);
 
+    List<Noticia> listarNoticiasMasLikeadas();
 }

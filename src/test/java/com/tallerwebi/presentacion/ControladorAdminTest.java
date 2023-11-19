@@ -13,6 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -51,5 +53,13 @@ public class ControladorAdminTest {
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(null);
         ModelAndView resultado= controladorAdmin.irAHomeAdmin(sessionMock);
         assertThat("redirect:/login",equalTo(resultado.getViewName()));
+    }
+
+    @Test
+    public void queSeRedirijaALaVistaCuandoSeQuieraVerLasNoticiasMasLikeadas(){
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
+        ModelAndView model = controladorAdmin.mostrarNoticiasMasLikeadas(sessionMock);
+        assertThat(model.getViewName(), equalToIgnoringCase("noticias-mas-likeadas"));
     }
 }
