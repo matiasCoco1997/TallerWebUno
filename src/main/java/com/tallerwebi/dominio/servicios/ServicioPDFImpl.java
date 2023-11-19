@@ -123,33 +123,33 @@ public class ServicioPDFImpl implements ServicioPDF{
         table.addCell(cell);
     }
 
-    @Override
+
     public int obtenerCantidadDeNoticiasDeUnUsuario(Long idUsuario) {
         return repositorioUsuario.obtenerMisNoticias(idUsuario).size();
     }
 
-    @Override
+
     public int obtenerCantidadDeLikesDeUnUsuario(Long idUsuario) {
         return repositorioUsuario.obtenerNoticiasLikeadasPorElUsuario(idUsuario).size();
     }
 
-    @Override
+
     public int obtenerCantidadDeNoticiasEnListaDeUnUsuario(Long idUsuario) {
         return repositorioUsuario.obtenerMiListaDeReproduccion(idUsuario).size();
     }
 
-    @Override
+
     public int obtenerCantidadDeSeguidoresDeUnUsuario(Long idUsuario) {
         return repositorioUsuario.obtenerListaDeSeguidores(idUsuario).size();
     }
 
-    @Override
+
     public int obtenerCantidadDeSeguidosDeUnUsuario(Long idUsuario) {
         return repositorioUsuario.obtenerListaDeSeguidos(idUsuario).size();
     }
 
     @Override
-    public void generarTablaDeUsuarios(PdfPTable table,Usuario usuario) throws BadElementException, IOException {
+    public void cargarDatosTablaUsuarios(PdfPTable table, Usuario usuario) throws BadElementException, IOException {
         Image imagen=Image.getInstance("src/main/webapp/resources/core/"+usuario.getFotoPerfil());
         imagen.scaleToFit(70,70);
         PdfPCell imagenCell = new PdfPCell(imagen);
@@ -197,7 +197,7 @@ public class ServicioPDFImpl implements ServicioPDF{
     }
 
     @Override
-    public void generarTablaDeNoticias(PdfPTable table, Noticia noticia) throws BadElementException, IOException {
+    public void cargarDatosATablaNoticias(PdfPTable table, Noticia noticia) throws BadElementException, IOException {
         Image imagen=Image.getInstance("src/main/webapp/resources/core/"+noticia.getRutaDeimagen());
         imagen.scaleToFit(70,70);
         PdfPCell imagenCell = new PdfPCell(imagen);
@@ -220,6 +220,54 @@ public class ServicioPDFImpl implements ServicioPDF{
         agregarFila("Comentarios: "+obtenerCantidadDeComentariosDeUnaNoticia(noticia.getIdNoticia()),table,true);
         agregarFila("Listas de reproducción: "+obtenerCantidadDeListasDeUnaNoticia(noticia.getIdNoticia()),table,true);
 
+    }
+
+
+
+    @Override
+    public void generarTablaNoticias(List<Noticia> noticias, Integer contador, Boolean flag, Document document) throws DocumentException, IOException {
+        for (Noticia noticia: noticias) {
+            contador++;
+            PdfPTable table=new PdfPTable(2);
+            generarEspacioEnBlanco(true,table);
+            cargarDatosATablaNoticias(table,noticia);
+            generarEspacioEnBlanco(false,table);
+
+            document.add(table);
+            document.add(new Paragraph("\n"));
+            document.add(new Paragraph("\n"));
+
+            if(flag==false && contador%2==0){
+                flag=true;
+                contador=0;
+                document.newPage();
+            }else if(contador%3==0){
+                document.newPage();
+            }
+        }
+    }
+
+    @Override
+    public void generarTablaUsuarios(List<Usuario> usuarios, Integer contador, Boolean flag, Document document) throws DocumentException, IOException {
+        for (Usuario usuario: usuarios) {
+            contador++;
+            PdfPTable table=new PdfPTable(2);
+            generarEspacioEnBlanco(true,table);
+            cargarDatosTablaUsuarios(table,usuario);
+            generarEspacioEnBlanco(false,table);
+
+            document.add(table);
+            document.add(new Paragraph("\n"));
+            document.add(new Paragraph("\n"));
+
+            if(flag==false && contador%2==0){
+                flag=true;
+                contador=0;
+                document.newPage();
+            }else if(contador%3==0){
+                document.newPage();
+            }
+        }
     }
 
     private Long obtenerCantidadDeListasDeUnaNoticia(Long idNoticia) {
