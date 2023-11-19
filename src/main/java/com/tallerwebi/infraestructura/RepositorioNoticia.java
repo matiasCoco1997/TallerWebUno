@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.itextpdf.text.pdf.PdfPTable;
 import com.tallerwebi.dominio.entidades.*;
 
 import java.util.List;
@@ -39,4 +40,8 @@ public interface RepositorioNoticia {
     Boolean marcarNoticiaComoLikeada(Noticia noticia);
 
     Long obtenerCantidadNoticiasRelacionadas(String categoria);
+
+    List<Comentario> obtenerComentarios(Long idNoticia);
+
+    Long obtenerCantidadDeListasDeUnaNoticia(Long idNoticia);
 }

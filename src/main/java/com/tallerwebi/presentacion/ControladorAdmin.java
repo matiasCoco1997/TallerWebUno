@@ -2,6 +2,7 @@ package com.tallerwebi.presentacion;
 
 import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Notificacion;
+import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
@@ -9,8 +10,8 @@ import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -40,5 +41,22 @@ public class ControladorAdmin {
         model.put("notificaciones",notificaciones);
         model.put("usuario",usuario);
         return new ModelAndView("estadisticasCategorias",model);
+    }
+
+    @GetMapping("/admin/home")
+    public ModelAndView irAHomeAdmin(HttpSession session ){
+        ModelMap model=new ModelMap();
+
+        Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        if(usuario == null)
+            return new ModelAndView("redirect:/login");
+
+        if(usuario.getRol() != (Rol.ADMIN))
+            return new ModelAndView("redirect:/login");
+
+        model.put("usuario",usuario);
+
+        return new ModelAndView("home-admin",model);
     }
 }
