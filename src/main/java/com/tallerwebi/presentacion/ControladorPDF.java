@@ -29,7 +29,7 @@ public class ControladorPDF {
     public void generarPDFCategorias(HttpServletResponse response) throws IOException, DocumentException {
         response.setContentType("application/pdf");
 
-        response.setHeader("Content-Disposition", "inline; filename=ejemplo.pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=Informe-Categorias.pdf");
 
         Document document = new Document();
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -56,7 +56,7 @@ public class ControladorPDF {
     public void generarPDFUsuarios(HttpServletResponse response) throws IOException, DocumentException {
         response.setContentType("application/pdf");
 
-        response.setHeader("Content-Disposition", "inline; filename=ejemplo.pdf");
+        response.setHeader("Content-Disposition","attachment; filename=Informe-Usuarios.pdf");
 
         Document document = new Document();
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -77,7 +77,7 @@ public class ControladorPDF {
     public void generarPDFNoticias(HttpServletResponse response) throws IOException, DocumentException {
         response.setContentType("application/pdf");
 
-        response.setHeader("Content-Disposition", "inline; filename=ejemplo.pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=Informe-Noticias.pdf");
 
         Document document = new Document();
         PdfWriter.getInstance(document, response.getOutputStream());
