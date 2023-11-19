@@ -33,22 +33,15 @@ public interface ServicioPDF {
     List<Usuario> obtenerUsuarios();
 
     void agregarFila(String valor, PdfPTable table,Boolean borde);
-
-    int obtenerCantidadDeNoticiasDeUnUsuario(Long idUsuario);
-
-    int obtenerCantidadDeLikesDeUnUsuario(Long idUsuario);
-
-    int obtenerCantidadDeNoticiasEnListaDeUnUsuario(Long idUsuario);
-
-    int obtenerCantidadDeSeguidoresDeUnUsuario(Long idUsuario);
-
-    int obtenerCantidadDeSeguidosDeUnUsuario(Long idUsuario);
-
-    void generarTablaDeUsuarios(PdfPTable table,Usuario usuario) throws BadElementException, IOException;
+    void cargarDatosTablaUsuarios(PdfPTable table, Usuario usuario) throws BadElementException, IOException;
 
     void generarEspacioEnBlanco(boolean encabezado,PdfPTable table);
 
     List<Noticia> obtenerNoticias();
 
-    void generarTablaDeNoticias(PdfPTable table, Noticia noticia) throws BadElementException, IOException;
+    void cargarDatosATablaNoticias(PdfPTable table, Noticia noticia) throws BadElementException, IOException;
+
+    void generarTablaNoticias(List<Noticia> noticias, Integer contador, Boolean flag, Document document) throws DocumentException, IOException;
+
+    void generarTablaUsuarios(List<Usuario> usuarios, Integer contador, Boolean flag, Document document) throws DocumentException, IOException;
 }

@@ -30,17 +30,16 @@ public class ControladorAdmin {
         this.servicioNoticia = servicioNoticia;
     }
 
-    @RequestMapping("/categorias/estadisticas")
-    public ModelAndView obtenerEstadisticasCategorias(HttpSession session){
+    @RequestMapping("/informes")
+    public ModelAndView informes(HttpSession session){
         ModelMap model=new ModelMap();
-        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
-        List<Categoria> categorias= servicioHome.obtenerCategorias();
+        Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Notificacion> notificaciones = servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
-        model.put("categorias",categorias);
+
         model.put("notificaciones",notificaciones);
         model.put("usuario",usuario);
-        return new ModelAndView("estadisticasCategorias",model);
+        return new ModelAndView("informes",model);
     }
 
     @GetMapping("/admin/home")

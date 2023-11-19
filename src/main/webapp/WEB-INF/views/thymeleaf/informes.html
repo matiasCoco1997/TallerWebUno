@@ -104,10 +104,30 @@
     </div>
 </nav>
 <main class="p-2">
-    <div th:each="categoria : ${categorias}">
-            <div class="border border-white p-10 w-[30%] flex flex-wrap gap-6">
-                <h1 class="text-6xl text-white" th:text="${categoria.descripcion}"></h1>
-                <p class="text-xl text-white" th:text="'Cantidad de vistas ' + ${categoria.vistas}"></p>
-            </div>
+    <div class="flex justify-around gap-6 mt-20">
+        <div class="bg-[#5C67DE] flex flex-col justify-center gap-6 p-10 border border-white rounded-3xl">
+            <h1 class="text-white text-3xl">Informe de las categorías</h1>
+            <a th:href="@{/categorias/pdf}" class="text-white text-2xl flex justify-center">
+                <div class="text-center bg-black w-[60%] rounded-3xl">
+                    <p>¡Descargar!</p>
+                </div>
+            </a>
+        </div>
+        <div class="bg-[#5C67DE] flex flex-col justify-center gap-6 p-10 border border-white rounded-3xl">
+            <h1 class="text-white text-3xl">Informe de los usuarios</h1>
+            <a th:href="@{/usuarios/pdf}" class="text-white text-2xl flex justify-center">
+                <div class="text-center bg-black w-[60%] rounded-3xl">
+                    <p>¡Descargar!</p>
+                </div>
+            </a>
+        </div>
+        <div class="bg-[#5C67DE] flex flex-col justify-center gap-6 p-10 border border-white rounded-3xl">
+            <h1 class="text-white text-3xl">Informe de las noticias</h1>
+            <a th:href="@{/noticias/pdf}" class="text-white text-2xl flex justify-center">
+                <div class="text-center bg-black w-[60%] rounded-3xl">
+                    <p>¡Descargar!</p>
+                </div>
+            </a>
+        </div>
     </div>
 </main>

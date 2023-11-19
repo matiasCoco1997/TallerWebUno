@@ -29,7 +29,7 @@ public class ControladorPDF {
     public void generarPDFCategorias(HttpServletResponse response) throws IOException, DocumentException {
         response.setContentType("application/pdf");
 
-        response.setHeader("Content-Disposition", "inline; filename=ejemplo.pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=Informe-Categorias.pdf");
 
         Document document = new Document();
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -56,7 +56,7 @@ public class ControladorPDF {
     public void generarPDFUsuarios(HttpServletResponse response) throws IOException, DocumentException {
         response.setContentType("application/pdf");
 
-        response.setHeader("Content-Disposition", "inline; filename=ejemplo.pdf");
+        response.setHeader("Content-Disposition","attachment; filename=Informe-Usuarios.pdf");
 
         Document document = new Document();
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -68,27 +68,16 @@ public class ControladorPDF {
 
         List<Usuario> usuarios=servicioPDF.obtenerUsuarios();
         Integer contador=0;
-        for (Usuario usuario: usuarios) {
-            contador++;
-            PdfPTable table=new PdfPTable(2);
-            servicioPDF.generarEspacioEnBlanco(true,table);
-            servicioPDF.generarTablaDeUsuarios(table,usuario);
-            servicioPDF.generarEspacioEnBlanco(false,table);
-
-            document.add(table);
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("\n"));
-            if(contador%2==0){
-                document.newPage();
-            }
-        }
+        Boolean flag=false;
+        servicioPDF.generarTablaUsuarios(usuarios,contador,flag,document);
         document.close();
     }
+
     @RequestMapping("/noticias/pdf")
     public void generarPDFNoticias(HttpServletResponse response) throws IOException, DocumentException {
         response.setContentType("application/pdf");
 
-        response.setHeader("Content-Disposition", "inline; filename=ejemplo.pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=Informe-Noticias.pdf");
 
         Document document = new Document();
         PdfWriter.getInstance(document, response.getOutputStream());
@@ -101,24 +90,9 @@ public class ControladorPDF {
         List<Noticia> noticias=servicioPDF.obtenerNoticias();
         Integer contador=0;
         Boolean flag = false;
-        for (Noticia noticia: noticias) {
-            contador++;
-            PdfPTable table=new PdfPTable(2);
-            servicioPDF.generarEspacioEnBlanco(true,table);
-            servicioPDF.generarTablaDeNoticias(table,noticia);
-            servicioPDF.generarEspacioEnBlanco(false,table);
 
-            document.add(table);
-            document.add(new Paragraph("\n"));
-            document.add(new Paragraph("\n"));
-            if(flag==false && contador%2==0){
-                flag=true;
-                contador=0;
-                document.newPage();
-            }else if(contador%3==0){
-                document.newPage();
-            }
-        }
+        servicioPDF.generarTablaNoticias(noticias,contador,flag,document);
+
         document.close();
     }
 }
