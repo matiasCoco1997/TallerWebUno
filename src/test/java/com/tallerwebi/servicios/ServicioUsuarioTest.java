@@ -248,6 +248,7 @@ public class ServicioUsuarioTest {
 
     @Test
     public void queSePuedaActualizarElRolDeUnUsuarioParQueSeaAdmin() throws UsuarioInexistente {
+        when(usuarioMock.getRol()).thenReturn(Rol.USER);
         servicioUsuarioMock.darRolAdmin(usuarioMock);
         verify(repositorioUsuarioMock, times(1)).modificar(usuarioMock);
     }
