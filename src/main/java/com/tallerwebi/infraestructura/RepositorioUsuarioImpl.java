@@ -266,5 +266,4 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 createQuery("FROM ListaReproduccion WHERE usuario.id= :idUsuario").setParameter("idUsuario",idUsuario).list();
     }
 
-
 }

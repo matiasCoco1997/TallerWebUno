@@ -3,11 +3,13 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
+import com.tallerwebi.dominio.excepcion.UsuarioInexistente;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -115,5 +117,33 @@ public class ControladorAdminTest {
 
         assertThat(vistaObtenida.getViewName(), equalToIgnoringCase("usuariosActivos"));
         assertThat(vistaObtenida.getModel().get("error").toString(), equalToIgnoringCase("Error al borrar usuario."));
+    }
+
+    @Test
+    public void queElAdminPuedaDarElRolDeAdmin() throws Exception {
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(usuarioMock.getRol()).thenReturn(rolAdminMock);
+        when(servicioUsuarioMock.obtenerUsuarioPorId(anyLong())).thenReturn(usuarioMock);
+
+        ModelAndView model = controladorAdmin.darRolAdmin(usuarioMock.getIdUsuario(), sessionMock);
+
+        assertThat(model.getViewName(), equalToIgnoringCase("redirect:/admin/usuarios"));
+    }
+
+    @Test
+    public void siElUsuarioNoExisteQueLanceUnaExcepcion() throws Exception {
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(usuarioMock.getRol()).thenReturn(rolAdminMock);
+
+        Usuario usuarioConRolMock = mock(Usuario.class);
+        when(usuarioConRolMock.getRol()).thenReturn(Rol.USER);
+        when(servicioUsuarioMock.obtenerUsuarioPorId(anyLong())).thenReturn(usuarioConRolMock);
+
+        doThrow(UsuarioInexistente.class).when(servicioUsuarioMock).darRolAdmin(usuarioConRolMock);
+
+        ModelAndView model = controladorAdmin.darRolAdmin(usuarioMock.getIdUsuario(), sessionMock);
+
+        assertThat(model.getModel().get("error").toString(), equalToIgnoringCase("El usuario no existe"));
+        assertThat(model.getViewName(), equalToIgnoringCase("usuariosActivos"));
     }
 }

@@ -7,6 +7,7 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.dominio.excepcion.UsuarioInexistente;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -50,4 +51,5 @@ public interface ServicioUsuario {
 
     List<Notificacion> obtenerMisNoticiasCompartidas(Long idUsuarioPropio , String idUsuarioBuscado);
 
+    void darRolAdmin(Usuario usuario) throws UsuarioInexistente;
 }

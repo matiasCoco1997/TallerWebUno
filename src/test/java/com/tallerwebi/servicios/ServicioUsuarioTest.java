@@ -7,10 +7,7 @@ import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.dominio.excepcion.ComentarioException;
-import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
-import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
-import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioHomeImpl;
 
@@ -247,6 +244,12 @@ public class ServicioUsuarioTest {
     public void queSePuedaBorrarUnUsuario() {
         servicioUsuarioMock.borrarUsuario(usuarioMock);
         verify(repositorioUsuarioMock, times(1)).borrarUsuario(usuarioMock);
+    }
+
+    @Test
+    public void queSePuedaActualizarElRolDeUnUsuarioParQueSeaAdmin() throws UsuarioInexistente {
+        servicioUsuarioMock.darRolAdmin(usuarioMock);
+        verify(repositorioUsuarioMock, times(1)).modificar(usuarioMock);
     }
 
 }

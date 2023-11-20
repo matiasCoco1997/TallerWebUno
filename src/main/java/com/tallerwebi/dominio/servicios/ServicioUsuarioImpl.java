@@ -1,14 +1,8 @@
 package com.tallerwebi.dominio.servicios;
 
 import com.mysql.cj.Session;
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Seguidos;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
-import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
-import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.dominio.entidades.*;
+import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -213,6 +207,18 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
         }
 
         return noticiasCompartidas;
+    }
+
+    @Override
+    public void darRolAdmin(Usuario usuario) throws UsuarioInexistente {
+        if(usuario == null){
+            throw new UsuarioInexistente();
+        }
+        if (usuario.getRol().equals(Rol.ADMIN)){
+            throw new MismoRol();
+        }
+        usuario.setRol(Rol.ADMIN);
+        repositorioUsuario.modificar(usuario);
     }
 
     private Boolean verifiCacionSiEsLaImagenDePrueba (MultipartFile imagen) {

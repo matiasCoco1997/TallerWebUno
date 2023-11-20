@@ -4,6 +4,8 @@ import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.excepcion.MismoRol;
+import com.tallerwebi.dominio.excepcion.UsuarioInexistente;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
@@ -99,6 +101,28 @@ public class ControladorAdmin {
             return new ModelAndView("usuariosActivos", model);
         }
 
+        return new ModelAndView("redirect:/admin/usuarios");
+    }
+
+    @RequestMapping(value = "/hacerAdmin/{idUsuario}")
+    public ModelAndView darRolAdmin(@PathVariable Long idUsuario, HttpSession session) throws Exception {
+        ModelMap model = new ModelMap();
+        Usuario admin = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Usuario usuario = servicioUsuario.obtenerUsuarioPorId(idUsuario);
+        if(!admin.getRol().equals(Rol.ADMIN)){
+            return new ModelAndView("redirect:/login");
+        }
+
+        try{
+            servicioUsuario.darRolAdmin(usuario);
+
+        }catch (UsuarioInexistente e){
+            model.put("error", "El usuario no existe");
+            return new ModelAndView("usuariosActivos", model);
+        }catch (MismoRol e){
+            model.put("error", "No se puede cambiar el rol porque ya esta seteado.");
+            return new ModelAndView("usuariosActivos", model);
+        }
         return new ModelAndView("redirect:/admin/usuarios");
     }
 }

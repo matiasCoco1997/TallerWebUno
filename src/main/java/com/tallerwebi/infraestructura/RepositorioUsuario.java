@@ -53,5 +53,6 @@ public interface RepositorioUsuario {
     List<Usuario> obtenerUsuarios();
 
     List<ListaReproduccion> obtenerMiListaDeReproduccion(Long idUsuario);
+
 }
 
