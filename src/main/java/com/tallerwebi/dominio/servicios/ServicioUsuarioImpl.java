@@ -133,7 +133,6 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
     @Override
     public void borrarUsuario(Usuario usuario) {
-
         this.repositorioUsuario.borrarUsuario(usuario);
     }
 
