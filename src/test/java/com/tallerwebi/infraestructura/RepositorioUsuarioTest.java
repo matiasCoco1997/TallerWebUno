@@ -252,7 +252,7 @@ public class RepositorioUsuarioTest {
         this.usuario.setEmail(correo);
         repositorioUsuario.guardar(usuario);
         //ejecución
-        repositorioUsuario.borrarUsuario(usuario.getIdUsuario());
+        repositorioUsuario.borrarUsuario(usuario);
         //verificación
         assertThat(repositorioUsuario.buscar(correo), nullValue());
     }

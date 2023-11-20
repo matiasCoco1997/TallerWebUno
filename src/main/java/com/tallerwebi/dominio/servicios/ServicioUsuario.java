@@ -34,7 +34,7 @@ public interface ServicioUsuario {
     void marcarNotificacionesComoLeidas(Long idUsuario);
     Map<String,Integer> obtenerMisSeguidoresYSeguidos(Long idUsuario);
 
-    void borrarUsuario(Long idUsuario);
+    void borrarUsuario(Usuario idUsuario);
 
     void dejarDeSeguirUsuario(Long idSeguido, Long idSeguidor) throws RelacionNoEncontradaException;
 
@@ -44,7 +44,7 @@ public interface ServicioUsuario {
 
     List<Usuario> listarUsuarioQueMeSiguen(Long idUsuario);
 
-    void modificarDatosUsuario(Usuario usuario, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException;
+    void modificarDatosUsuario(Usuario usuario, MultipartFile imagen, Usuario datosPreviosUsuario) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException;
 
     List<Noticia> obtenerNoticiasLikeadas(Long idUsuario);
 
