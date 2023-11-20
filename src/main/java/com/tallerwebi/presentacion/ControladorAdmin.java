@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -57,5 +58,43 @@ public class ControladorAdmin {
         model.put("usuario",usuario);
 
         return new ModelAndView("home-admin",model);
+    }
+
+    @GetMapping("/admin/usuarios")
+    public ModelAndView verUsuarios(HttpSession session ){
+
+        ModelMap model=new ModelMap();
+
+        Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        if(usuario == null || (usuario.getRol() != (Rol.ADMIN))){
+            return new ModelAndView("redirect:/login");
+        }
+
+        List<Usuario> usuariosActivos = servicioHome.listarUsuarios(usuario.getIdUsuario());
+
+        model.put("usuario",usuario);
+        model.put("usuariosActivos", usuariosActivos);
+
+        return new ModelAndView("usuariosActivos",model);
+    }
+
+    @GetMapping("/admin/eliminarUsuario/{idUsuario}")
+    public ModelAndView eliminarUsuario(HttpSession session , @PathVariable Long idUsuario){
+
+        ModelMap model=new ModelMap();
+
+        Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        if(usuario == null || (usuario.getRol() != (Rol.ADMIN))){
+            return new ModelAndView("redirect:/login");
+        }
+
+        List<Usuario> usuariosActivos = servicioHome.listarUsuarios(usuario.getIdUsuario());
+
+        model.put("usuario",usuario);
+        model.put("usuariosActivos", usuariosActivos);
+
+        return new ModelAndView("usuariosActivos",model);
     }
 }

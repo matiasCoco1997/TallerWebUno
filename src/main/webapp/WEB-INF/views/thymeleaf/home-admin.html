@@ -65,6 +65,11 @@
                            th:href="@{/eliminar-noticia}" data-te-dropdown-item-ref>Borrar noticias</a>
                     </li>
 
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/ver/usuarios}" data-te-dropdown-item-ref>Ver usuarios</a>
+                    </li>
+
                     <li class="bg-danger">
                         <a class=" block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
                            th:href="@{/cerrar-sesion}" data-te-dropdown-item-ref>Cerrar Sesion</a>
@@ -79,6 +84,11 @@
     <div class="flex md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-center mr-4">
         <a th:href="@{/eliminar-noticia}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900">Borrar noticias</a>
     </div>
+
+    <div class="flex md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-center ml-4">
+        <a th:href="@{/admin/usuarios}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900" >Ver usuarios</a>
+    </div>
+
     <div class="flex md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-center ml-4">
         <a th:href="@{/informes}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900">Informes</a>
     </div>
