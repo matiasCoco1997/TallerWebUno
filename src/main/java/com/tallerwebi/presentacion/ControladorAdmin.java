@@ -92,7 +92,8 @@ public class ControladorAdmin {
         }
 
         try {
-            //servicioUsuario.borrarUsuario(idUsuario); borrar el usuario
+            Usuario usuarioABorrar = servicioUsuario.obtenerUsuarioPorId(idUsuario);
+            servicioUsuario.borrarUsuario(usuarioABorrar);
         } catch (Exception e) {
             model.put("error", "Error al borrar usuario.");
             return new ModelAndView("usuariosActivos", model);

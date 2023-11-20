@@ -34,7 +34,7 @@ public interface ServicioUsuario {
     void marcarNotificacionesComoLeidas(Long idUsuario);
     Map<String,Integer> obtenerMisSeguidoresYSeguidos(Long idUsuario);
 
-    void borrarUsuario(Long idUsuario);
+    void borrarUsuario(Usuario idUsuario);
 
     void dejarDeSeguirUsuario(Long idSeguido, Long idSeguidor) throws RelacionNoEncontradaException;
 

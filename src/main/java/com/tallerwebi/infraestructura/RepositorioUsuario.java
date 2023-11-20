@@ -36,7 +36,7 @@ public interface RepositorioUsuario {
 
     List<Usuario> listarUsuariosRecomendadosSinSeguir(Long idSeguidor);
 
-    void borrarUsuario(Long idUsuario);
+    void borrarUsuario(Usuario usuario);
 
     List<Noticia> obtenerNoticiaDeSeguidos(Long idUsuario);
 

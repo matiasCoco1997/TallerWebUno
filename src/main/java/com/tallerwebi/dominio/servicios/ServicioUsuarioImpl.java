@@ -132,8 +132,9 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     }
 
     @Override
-    public void borrarUsuario(Long idUsuario) {
-        this.repositorioUsuario.borrarUsuario(idUsuario);
+    public void borrarUsuario(Usuario usuario) {
+
+        this.repositorioUsuario.borrarUsuario(usuario);
     }
 
     @Override

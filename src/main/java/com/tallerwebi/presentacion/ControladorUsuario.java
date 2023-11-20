@@ -164,7 +164,7 @@ public class ControladorUsuario {
     @RequestMapping(path = "/usuario/borrar", method = RequestMethod.DELETE)
     public ModelAndView borrarUsuario(HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-        servicioUsuario.borrarUsuario(usuario.getIdUsuario());
+        servicioUsuario.borrarUsuario(usuario);
         return new ModelAndView("redirect:/login");
     }
 
