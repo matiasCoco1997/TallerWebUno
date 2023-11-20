@@ -97,10 +97,12 @@
 
 <!--Sección de Noticias-->
 <main class="p-2">
-    <!-- component -->
-    <div class="min-h-screen bg-gray-50/50">
-        <div class="p-4 mx-52">
 
+    <p th:if="${error != null}" style="color: red"></p>
+
+    <!-- component -->
+    <div th:if="${error == null}" class="min-h-screen bg-gray-50/50">
+        <div class="p-4 mx-52">
             <div class="mt-12">
                 <div class="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
                     <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
