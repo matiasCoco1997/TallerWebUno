@@ -159,7 +159,7 @@ public class ServicioNoticiaTest {
     }
 
     @Test
-    public void queSePuedaListarLasCincoNoticiasMasLikeadas(){
+    public void queSePuedaListarLasNoticiasMasLikeadas(){
         noticiasEsperadas.add(noticiaMock);
         when(repositorioNoticiaMock.listarNoticiasMasLikeadas()).thenReturn(noticiasEsperadas);
         List<Noticia> noticias = servicioNoticiaMock.listarNoticiasMasLikeadas();

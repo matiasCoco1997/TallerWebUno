@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Rol;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
