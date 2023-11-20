@@ -90,6 +90,11 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
+    public List<Noticia> listarNoticiasMasLikeadas() {
+        return repositorioNoticia.listarNoticiasMasLikeadas();
+    }
+
+    @Override
     public Noticia buscarNoticiaPorId(Long idNoticia) {
         return repositorioNoticia.buscarPorId(idNoticia);
     }

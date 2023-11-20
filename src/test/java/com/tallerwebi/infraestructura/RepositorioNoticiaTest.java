@@ -55,6 +55,7 @@ public class RepositorioNoticiaTest {
         noticia1 = new Noticia();
         noticia1.setCategoria("Deporte");
         noticia1.setTitulo("Titulo Deporte");
+        noticia1.setLikes(2);
 
         noticia2 = new Noticia();
         noticia2.setCategoria("Tecnología");

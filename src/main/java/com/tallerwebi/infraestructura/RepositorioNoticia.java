@@ -44,4 +44,6 @@ public interface RepositorioNoticia {
     List<Comentario> obtenerComentarios(Long idNoticia);
 
     Long obtenerCantidadDeListasDeUnaNoticia(Long idNoticia);
+
+    List<Noticia> listarNoticiasMasLikeadas();
 }

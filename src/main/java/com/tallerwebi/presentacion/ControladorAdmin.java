@@ -1,9 +1,6 @@
 package com.tallerwebi.presentacion;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Rol;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.MismoRol;
 import com.tallerwebi.dominio.excepcion.UsuarioInexistente;
 import com.tallerwebi.dominio.servicios.ServicioHome;
@@ -124,5 +121,18 @@ public class ControladorAdmin {
             return new ModelAndView("usuariosActivos", model);
         }
         return new ModelAndView("redirect:/admin/usuarios");
+    }
+
+    @RequestMapping("/noticias-mas-likeadas")
+    public ModelAndView mostrarNoticiasMasLikeadas(HttpSession session) {
+        ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        if (usuario.getRol().equals(Rol.ADMIN)) {
+            List<Noticia> noticias = servicioNoticia.listarNoticiasMasLikeadas();
+            model.put("noticias", noticias);
+            model.put("usuario", usuario);
+        }
+        return new ModelAndView("noticias-mas-likeadas", model);
     }
 }

@@ -20,6 +20,10 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
+import static org.hamcrest.text.IsEqualIgnoringCase.equalToIgnoringCase;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.*;
@@ -117,6 +121,14 @@ public class ControladorAdminTest {
 
         assertThat(vistaObtenida.getViewName(), equalToIgnoringCase("usuariosActivos"));
         assertThat(vistaObtenida.getModel().get("error").toString(), equalToIgnoringCase("Error al borrar usuario."));
+    }
+
+    @Test
+    public void queSeRedirijaALaVistaCuandoSeQuieraVerLasNoticiasMasLikeadas(){
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
+        ModelAndView model = controladorAdmin.mostrarNoticiasMasLikeadas(sessionMock);
+        assertThat(model.getViewName(), equalToIgnoringCase("noticias-mas-likeadas"));
     }
 
     @Test
