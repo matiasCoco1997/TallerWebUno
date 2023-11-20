@@ -44,7 +44,7 @@ public interface ServicioUsuario {
 
     List<Usuario> listarUsuarioQueMeSiguen(Long idUsuario);
 
-    void modificarDatosUsuario(Usuario usuario, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException;
+    void modificarDatosUsuario(Usuario usuario, MultipartFile imagen, Usuario datosPreviosUsuario) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException;
 
     List<Noticia> obtenerNoticiasLikeadas(Long idUsuario);
 

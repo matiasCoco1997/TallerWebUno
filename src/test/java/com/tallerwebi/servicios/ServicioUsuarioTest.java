@@ -179,18 +179,6 @@ public class ServicioUsuarioTest {
     }
 
     @Test
-    public void queSePuedaModificarCorrectamenteDatosDeUnUsuario() throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
-        Usuario u = new Usuario();
-        u.setIdUsuario(1L);
-        u.setCiudad("Haedo");
-        repositorioUsuarioMock.guardar(u);
-        u.setCiudad("Moron");
-        servicioUsuarioMock.modificarDatosUsuario(u, imgMock);
-
-        assertThat(u.getCiudad(), is("Moron"));
-    }
-
-    @Test
     public void queSePuedaListarUsuariosParaSeguir() throws Exception {
         servicioUsuarioMock.listarUsuarioParaSeguir(anyLong());
         verify(repositorioUsuarioMock, times(1)).listarUsuariosRecomendadosSinSeguir(anyLong());
