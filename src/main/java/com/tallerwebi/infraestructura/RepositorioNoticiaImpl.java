@@ -66,6 +66,30 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     }
 
     @Override
+    public Long obtenerCantidadNoticiasRelacionadas(String categoria) {
+        final Session session = sessionFactory.getCurrentSession();
+        return (Long) session.createQuery("SELECT count(id) FROM Noticia WHERE categoria = :categoria").setParameter("categoria",categoria).uniqueResult();
+    }
+
+    @Override
+    public List<Comentario> obtenerComentarios(Long idNoticia) {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Comentario WHERE idNoticia = :idNoticia").setParameter("idNoticia",idNoticia).list();
+    }
+
+    @Override
+    public Long obtenerCantidadDeListasDeUnaNoticia(Long idNoticia) {
+        final Session session = sessionFactory.getCurrentSession();
+        return (Long) session.createQuery("SELECT count(id) FROM ListaReproduccion WHERE noticia_idNoticia= :idNoticia").setParameter("idNoticia",idNoticia).uniqueResult();
+    }
+
+    @Override
+    public List<Noticia> listarNoticiasMasLikeadas() {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Noticia WHERE activa=true ORDER BY likes DESC").list();
+    }
+
+    @Override
     public void borrarNoticia(Noticia noticia) {
         final Session session = sessionFactory.getCurrentSession();
 
@@ -73,6 +97,12 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
         .setParameter("noticia", noticia).executeUpdate();
 
         session.createQuery("DELETE FROM Notificacion WHERE noticiaNotificada = :noticia")
+                .setParameter("noticia", noticia).executeUpdate();
+
+        session.createQuery("DELETE FROM Comentario WHERE noticia = :noticia")
+                .setParameter("noticia", noticia).executeUpdate();
+
+        session.createQuery("DELETE FROM Republicacion WHERE id_noticiaRepublicada = :noticia")
                 .setParameter("noticia", noticia).executeUpdate();
 
         session.delete(noticia);

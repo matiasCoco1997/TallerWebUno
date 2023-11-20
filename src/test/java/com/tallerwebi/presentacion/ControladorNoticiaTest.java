@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.entidades.Noticia;
 
 import com.tallerwebi.dominio.entidades.Notificacion;
+import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.dominio.servicios.ServicioComentario;
 
@@ -16,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.stubbing.OngoingStubbing;
+import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -269,9 +271,9 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws IOException {
+    public void queCuandoSeBorreUnaNoticiaRetorneUnaException() throws IOException, NoticiaInexistente {
         // preparacion
-        doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticiaPorId(any());
+        doThrow(RuntimeException.class).when(servicioNoticiaMock).borrarNoticia(any());
 
         // ejecucion
         ModelAndView modelAndView = controladorNoticia.borrarNoticiaPorId(noticiaMock.getIdNoticia(), sessionMock);
@@ -336,6 +338,47 @@ public class ControladorNoticiaTest {
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         ModelAndView modelAndView=controladorNoticia.compartir(1L,1L,sessionMock);
         assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
+    }
+
+    @Test
+    public void queAlEliminarUnaNoticiaComoAdministradorRedirijaALaVistaEliminarNoticia(){
+        //preparacion
+        when(usuarioMock.getIdUsuario()).thenReturn(1L);
+        when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+
+        when(noticiaMock.getIdNoticia()).thenReturn(1L);
+        //ejecucion
+        ModelAndView model = controladorNoticia.borrarNoticiaAdmin(noticiaMock.getIdNoticia(), sessionMock);
+
+        //validacion
+        assertThat(model.getViewName(), equalToIgnoringCase("redirect:/eliminar-noticia"));
+    }
+
+    @Test
+    public void queAlEliminarUnaNoticiaTireUnaExcepcion() throws IOException, NoticiaInexistente {
+        //preparacion
+        when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        doThrow(IOException.class).when(servicioNoticiaMock).borrarNoticia(any());
+
+        //ejecucion
+        ModelAndView model = controladorNoticia.borrarNoticiaAdmin(noticiaMock.getIdNoticia(), sessionMock);
+
+        //validacion
+        assertThat(model.getModel().get("error").toString(), equalToIgnoringCase("Error al eliminar la noticia"));
+    }
+
+    @Test
+    public void queAlBorrarUnaNoticiaQueNoExisteLanceUnaExcepcion() throws NoticiaInexistente, IOException {
+        when(usuarioMock.getRol()).thenReturn(Rol.ADMIN);
+        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+        when(noticiaMock.getIdNoticia()).thenReturn(null);
+        doThrow(NoticiaInexistente.class).when(servicioNoticiaMock).borrarNoticia(any());
+
+        ModelAndView model = controladorNoticia.borrarNoticiaAdmin(noticiaMock.getIdNoticia(), sessionMock);
+
+        assertThat(model.getModel().get("error").toString(), equalToIgnoringCase("La noticia que quiere borrar no existe"));
     }
 
 }

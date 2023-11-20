@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Seguidos;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -153,9 +150,36 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
-    public void borrarUsuario(Long idUsuario) {
+    public void borrarUsuario(Usuario usuario) {
         final Session session = sessionFactory.getCurrentSession();
-        Usuario usuario = this.obtenerUsuarioPorId(idUsuario);
+
+        session.createQuery("DELETE FROM MeGusta mg WHERE mg.usuario = :usuario")
+                .setParameter("usuario", usuario).executeUpdate();
+
+        session.createQuery("DELETE FROM Comentario c WHERE c.usuario = :usuario")
+                .setParameter("usuario", usuario).executeUpdate();
+
+        session.createQuery("DELETE FROM Comentario c WHERE c.noticia.idNoticia IN " + "(SELECT n.idNoticia FROM Noticia n WHERE n.usuario = :usuario)")
+                .setParameter("usuario", usuario).executeUpdate();
+
+        session.createQuery("DELETE FROM MeGusta mg WHERE mg.noticia.idNoticia IN " + "(SELECT n.idNoticia FROM Noticia n WHERE n.usuario = :usuario)")
+                .setParameter("usuario", usuario).executeUpdate();
+
+        session.createQuery("DELETE FROM Noticia n WHERE n.usuario = :usuario")
+                .setParameter("usuario", usuario).executeUpdate();
+
+        session.createQuery("DELETE FROM Notificacion n WHERE n.emisor = :usuario")
+                .setParameter("usuario", usuario).executeUpdate();
+
+        session.createQuery("DELETE FROM Notificacion n WHERE n.usuarioNotificado = :usuario")
+                .setParameter("usuario", usuario).executeUpdate();
+
+        session.createQuery("DELETE FROM Seguidos s WHERE s.idUsuarioSeguidor.idUsuario = :usuarioID")
+                .setParameter("usuarioID", usuario.getIdUsuario()).executeUpdate();
+
+        session.createQuery("DELETE FROM Seguidos s WHERE s.idUsuarioPropio.idUsuario = :usuarioID")
+                .setParameter("usuarioID", usuario.getIdUsuario()).executeUpdate();
+
         session.delete(usuario);
     }
 
@@ -230,5 +254,16 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .getResultList();
     }
 
+    @Override
+    public List<Usuario> obtenerUsuarios() {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Usuario").list();
+    }
+
+    @Override
+    public List<ListaReproduccion> obtenerMiListaDeReproduccion(Long idUsuario) {
+        return sessionFactory.getCurrentSession().
+                createQuery("FROM ListaReproduccion WHERE usuario.id= :idUsuario").setParameter("idUsuario",idUsuario).list();
+    }
 
 }

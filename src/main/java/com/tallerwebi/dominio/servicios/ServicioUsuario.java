@@ -7,6 +7,7 @@ import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.dominio.excepcion.UsuarioInexistente;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -34,7 +35,7 @@ public interface ServicioUsuario {
     void marcarNotificacionesComoLeidas(Long idUsuario);
     Map<String,Integer> obtenerMisSeguidoresYSeguidos(Long idUsuario);
 
-    void borrarUsuario(Long idUsuario);
+    void borrarUsuario(Usuario idUsuario);
 
     void dejarDeSeguirUsuario(Long idSeguido, Long idSeguidor) throws RelacionNoEncontradaException;
 
@@ -44,10 +45,11 @@ public interface ServicioUsuario {
 
     List<Usuario> listarUsuarioQueMeSiguen(Long idUsuario);
 
-    void modificarDatosUsuario(Usuario usuario, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException;
+    void modificarDatosUsuario(Usuario usuario, MultipartFile imagen, Usuario datosPreviosUsuario) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException;
 
     List<Noticia> obtenerNoticiasLikeadas(Long idUsuario);
 
     List<Notificacion> obtenerMisNoticiasCompartidas(Long idUsuarioPropio , String idUsuarioBuscado);
 
+    void darRolAdmin(Usuario usuario) throws UsuarioInexistente;
 }

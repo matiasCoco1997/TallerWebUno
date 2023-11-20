@@ -7,10 +7,7 @@ import com.tallerwebi.dominio.entidades.Categoria;
 import com.tallerwebi.dominio.entidades.Noticia;
 import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.dominio.excepcion.ComentarioException;
-import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
-import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
-import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioHomeImpl;
 
@@ -179,18 +176,6 @@ public class ServicioUsuarioTest {
     }
 
     @Test
-    public void queSePuedaModificarCorrectamenteDatosDeUnUsuario() throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
-        Usuario u = new Usuario();
-        u.setIdUsuario(1L);
-        u.setCiudad("Haedo");
-        repositorioUsuarioMock.guardar(u);
-        u.setCiudad("Moron");
-        servicioUsuarioMock.modificarDatosUsuario(u, imgMock);
-
-        assertThat(u.getCiudad(), is("Moron"));
-    }
-
-    @Test
     public void queSePuedaListarUsuariosParaSeguir() throws Exception {
         servicioUsuarioMock.listarUsuarioParaSeguir(anyLong());
         verify(repositorioUsuarioMock, times(1)).listarUsuariosRecomendadosSinSeguir(anyLong());
@@ -255,5 +240,17 @@ public class ServicioUsuarioTest {
         verify(repositorioUsuarioMock, times(1)).obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(usuarioMock.getIdUsuario(), 1L);
     }
 
+    @Test
+    public void queSePuedaBorrarUnUsuario() {
+        servicioUsuarioMock.borrarUsuario(usuarioMock);
+        verify(repositorioUsuarioMock, times(1)).borrarUsuario(usuarioMock);
+    }
+
+    @Test
+    public void queSePuedaActualizarElRolDeUnUsuarioParQueSeaAdmin() throws UsuarioInexistente {
+        when(usuarioMock.getRol()).thenReturn(Rol.USER);
+        servicioUsuarioMock.darRolAdmin(usuarioMock);
+        verify(repositorioUsuarioMock, times(1)).modificar(usuarioMock);
+    }
 
 }

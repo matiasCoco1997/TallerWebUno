@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Map;
@@ -133,11 +134,14 @@ public class ControladorNoticia {
         Noticia noticiaBuscada = servicioNoticia.buscarNoticiaPorId(idNoticia);
         try {
             if (noticiaBuscada.getUsuario().getIdUsuario().equals(usuarioLogueado.getIdUsuario())) {
-                servicioNoticia.borrarNoticiaPorId(noticiaBuscada);
+                servicioNoticia.borrarNoticia(noticiaBuscada);
             }
         } catch (Exception e) {
             modelo.put("error", "Error al borrar la noticia.");
             return new ModelAndView("redirect:/home", modelo);
+        } catch (NoticiaInexistente e) {
+            modelo.put("error", "La noticia que quiere borrar no existe");
+            return new ModelAndView("/home-admin", modelo);
         }
         return new ModelAndView("redirect:/home");
     }
@@ -232,6 +236,40 @@ public class ControladorNoticia {
             System.out.println(e.getMessage());
         }
         return new ModelAndView("redirect:/home",model);
+    }
+
+    @RequestMapping(value = "/eliminar-noticia")
+    public ModelAndView listarNoticias(HttpSession session){
+        ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Noticia> noticias = servicioNoticia.listarNoticias();
+        model.addAttribute("noticias", noticias);
+        model.put("usuario", usuario);
+        model.put("noticias", noticias);
+
+        return new ModelAndView("eliminar-noticias-admin", model);
+
+    }
+    @RequestMapping(value = "/borrar-Noticia/{idNoticia}", method = RequestMethod.GET)
+    public ModelAndView borrarNoticiaAdmin(@PathVariable Long idNoticia, HttpSession session){
+
+        ModelMap model = new ModelMap();
+        Usuario admin = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
+
+        try{
+            if(admin.getRol().equals(Rol.ADMIN)){
+                servicioNoticia.borrarNoticia(noticia);
+                model.put("usuario", admin);
+            }
+        } catch (IOException e) {
+            model.put("error", "Error al eliminar la noticia");
+            return new ModelAndView("/eliminar-noticia", model);
+        } catch (NoticiaInexistente e){
+            model.put("error", "La noticia que quiere borrar no existe");
+            return new ModelAndView("/eliminar-noticia", model);
+        }
+        return new ModelAndView("redirect:/eliminar-noticia", model);
     }
 }
 
