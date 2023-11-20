@@ -243,5 +243,10 @@ public class ServicioUsuarioTest {
         verify(repositorioUsuarioMock, times(1)).obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(usuarioMock.getIdUsuario(), 1L);
     }
 
+    @Test
+    public void queSePuedaBorrarUnUsuario() {
+        servicioUsuarioMock.borrarUsuario(usuarioMock);
+        verify(repositorioUsuarioMock, times(1)).borrarUsuario(usuarioMock);
+    }
 
 }
