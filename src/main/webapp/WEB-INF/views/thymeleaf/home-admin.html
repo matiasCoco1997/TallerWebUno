@@ -9,19 +9,67 @@
     <script src="https://cdn.tailwindcss.com/3.3.0"></script>
     <!--Slick-->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+    <script src="https://kit.fontawesome.com/dc0786cc41.js" crossorigin="anonymous"></script>
 
     <title>Admin</title>
     <link rel="icon" th:href="@{/imagenes/icono-sunn.png}" type="image/x-icon">
 
     <style>
-        .cantidadDeNoticiasDiv {
-            border: 1px solid #ccc;
-            margin-bottom: 10px;
-            padding: 20px;
-            text-align: right;
+        .card-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            padding-right: 20%;
+            padding-left: 20%;
+            border-right: 10px;
         }
+
+        .card {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 60%;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            height: 120px;
+            border-radius: 10px;
+            background-color: black;
+            color:white;
+        }
+
+        .card-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 120px;
+            height: 100%;
+            background-color: darkblue;
+            padding: 10px;
+            border-radius: 10px 0px 0px 10px;
+        }
+
+        .card-image i{
+            font-size: 60px;
+            color:white;
+        }
+
+        .card-content{
+            padding:10px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1rem;
+        }
+
     </style>
 
 </head>
@@ -115,131 +163,58 @@
 
     <!-- component -->
     <div th:if="${error == null}" class="min-h-screen bg-gray-50/50">
-        <!--
-        <div class="cantidadDeNoticiasDiv">
-            <div><i>icono</i></div>
-            <div>icono</div>
-        </div>
-        -->
 
+        <div class="card-container">
 
-        <div class="p-4 mx-52">
-            <div class="mt-12">
-                <div class="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
-                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-                        <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                 aria-hidden="true" class="w-6 h-6 text-white">
-                                <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"></path>
-                                <path fill-rule="evenodd"
-                                      d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z"
-                                      clip-rule="evenodd"></path>
-                                <path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z"></path>
-                            </svg>
-                        </div>
-                        <div class="p-4 text-right">
-                            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                                Deportes</p>
-                            <h4 th:text="${deportes}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                                $53k</h4>
-                        </div>
-                        <div class="border-t border-blue-gray-50 p-4">
-                            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
-                                <strong class="text-green-500">+55%</strong>&nbsp;than last week
-                            </p>
-                        </div>
-                    </div>
-                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-                        <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                 aria-hidden="true" class="w-6 h-6 text-white">
-                                <path fill-rule="evenodd"
-                                      d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
-                                      clip-rule="evenodd"></path>
-                            </svg>
-                        </div>
-                        <div class="p-4 text-right">
-                            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                                Política</p>
-                            <h4 th:text="${politica}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                                2,300</h4>
-                        </div>
-                        <div class="border-t border-blue-gray-50 p-4">
-                            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
-                                <strong class="text-green-500">+3%</strong>&nbsp;than last month
-                            </p>
-                        </div>
-                    </div>
-                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-                        <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-green-600 to-green-400 text-white shadow-green-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                 aria-hidden="true" class="w-6 h-6 text-white">
-                                <path d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"></path>
-                            </svg>
-                        </div>
-                        <div class="p-4 text-right">
-                            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                                Programación</p>
-                            <h4 th:text="${programacion}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                                3,462</h4>
-                        </div>
-                        <div class="border-t border-blue-gray-50 p-4">
-                            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
-                                <strong class="text-red-500">-2%</strong>&nbsp;than yesterday
-                            </p>
-                        </div>
-                    </div>
-                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-                        <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-orange-600 to-orange-400 text-white shadow-orange-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                 aria-hidden="true" class="w-6 h-6 text-white">
-                                <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"></path>
-                            </svg>
-                        </div>
-                        <div class="p-4 text-right">
-                            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                                Arte</p>
-                            <h4 th:text="${arte}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                                $103,430</h4>
-                        </div>
-                        <div class="border-t border-blue-gray-50 p-4">
-                            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
-                                <strong class="text-green-500">+5%</strong>&nbsp;than yesterday
-                            </p>
-                        </div>
-                    </div>
-                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
-                        <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-orange-600 to-orange-400 text-white shadow-orange-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                 aria-hidden="true" class="w-6 h-6 text-white">
-                                <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"></path>
-                            </svg>
-                        </div>
-                        <div class="p-4 text-right">
-                            <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
-                                Juegos</p>
-                            <h4 th:text="${juegos}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
-                                $103,430</h4>
-                        </div>
-                        <div class="border-t border-blue-gray-50 p-4">
-                            <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
-                                <strong class="text-green-500">+5%</strong>&nbsp;than yesterday
-                            </p>
-                        </div>
-                    </div>
+            <h2 style="width: 100%; font-size: 30px; font-weight: bold; color: black; margin-bottom: 20px">Cantidad de noticias por categoría:</h2>
+
+            <div class="card">
+                <div class="card-image">
+                    <i class="fa-solid fa-basketball"></i>
                 </div>
-
-                <div class="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
-                    <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
-                    </div>
+                <div class="card-content">
+                    <h3 class="card-title">Categoría: Deporte</h3>
+                    <h4>Cantidad de noticias: <span class="card-text" th:text="${deportes}"></span></h4>
                 </div>
-                <div class="mx-auto w-3/5 overflow-hidden">
-                    <canvas
-                            data-te-chart="bar"
-                            data-te-dataset-label="Traffic"
-                            data-te-labels="['Monday', 'Tuesday' , 'Wednesday' , 'Thursday' , 'Friday' , 'Saturday' , 'Sunday ']"
-                            data-te-dataset-data="[2112, 2343, 2545, 3423, 2365, 1985, 987]">
-                    </canvas>
+            </div>
+
+            <div class="card">
+                <div class="card-image">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Categoría: Juegos</h3>
+                    <h4>Cantidad de noticias: <span class="card-text" th:text="${juegos}"></span></h4>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image">
+                    <i class="fa-solid fa-landmark"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Categoría: Política</h3>
+                    <h4>Cantidad de noticias: <span class="card-text" th:text="${politica}"></span></h4>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image">
+                    <i class="fa-solid fa-computer"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Categoría: Programación</h3>
+                    <h4>Cantidad de noticias: <span class="card-text" th:text="${programacion}"></span></h4>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image">
+                    <i class="fa-solid fa-paintbrush"></i>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Categoría: Arte</h3>
+                    <h4>Cantidad de noticias: <span class="card-text" th:text="${arte}"></span></h4>
                 </div>
             </div>
 
@@ -247,7 +222,129 @@
 
     </div>
 </main>
+<!--
+       <div class="p-4 mx-52">
+               <div class="mt-12">
+                   <div class="mb-12 grid gap-y-10 gap-x-6 md:grid-cols-2 xl:grid-cols-4">
+                       <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                           <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-blue-600 to-blue-400 text-white shadow-blue-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    aria-hidden="true" class="w-6 h-6 text-white">
+                                   <path d="M12 7.5a2.25 2.25 0 100 4.5 2.25 2.25 0 000-4.5z"></path>
+                                   <path fill-rule="evenodd"
+                                         d="M1.5 4.875C1.5 3.839 2.34 3 3.375 3h17.25c1.035 0 1.875.84 1.875 1.875v9.75c0 1.036-.84 1.875-1.875 1.875H3.375A1.875 1.875 0 011.5 14.625v-9.75zM8.25 9.75a3.75 3.75 0 117.5 0 3.75 3.75 0 01-7.5 0zM18.75 9a.75.75 0 00-.75.75v.008c0 .414.336.75.75.75h.008a.75.75 0 00.75-.75V9.75a.75.75 0 00-.75-.75h-.008zM4.5 9.75A.75.75 0 015.25 9h.008a.75.75 0 01.75.75v.008a.75.75 0 01-.75.75H5.25a.75.75 0 01-.75-.75V9.75z"
+                                         clip-rule="evenodd"></path>
+                                   <path d="M2.25 18a.75.75 0 000 1.5c5.4 0 10.63.722 15.6 2.075 1.19.324 2.4-.558 2.4-1.82V18.75a.75.75 0 00-.75-.75H2.25z"></path>
+                               </svg>
+                           </div>
+                           <div class="p-4 text-right">
+                               <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+                                   Deportes</p>
+                               <h4 th:text="${deportes}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                   $53k</h4>
+                           </div>
+                           <div class="border-t border-blue-gray-50 p-4">
+                               <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                                   <strong class="text-green-500">+55%</strong>&nbsp;than last week
+                               </p>
+                           </div>
+                       </div>
+                       <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                           <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-pink-600 to-pink-400 text-white shadow-pink-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    aria-hidden="true" class="w-6 h-6 text-white">
+                                   <path fill-rule="evenodd"
+                                         d="M7.5 6a4.5 4.5 0 119 0 4.5 4.5 0 01-9 0zM3.751 20.105a8.25 8.25 0 0116.498 0 .75.75 0 01-.437.695A18.683 18.683 0 0112 22.5c-2.786 0-5.433-.608-7.812-1.7a.75.75 0 01-.437-.695z"
+                                         clip-rule="evenodd"></path>
+                               </svg>
+                           </div>
+                           <div class="p-4 text-right">
+                               <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+                                   Política</p>
+                               <h4 th:text="${politica}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                   2,300</h4>
+                           </div>
+                           <div class="border-t border-blue-gray-50 p-4">
+                               <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                                   <strong class="text-green-500">+3%</strong>&nbsp;than last month
+                               </p>
+                           </div>
+                       </div>
+                       <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                           <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-green-600 to-green-400 text-white shadow-green-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    aria-hidden="true" class="w-6 h-6 text-white">
+                                   <path d="M6.25 6.375a4.125 4.125 0 118.25 0 4.125 4.125 0 01-8.25 0zM3.25 19.125a7.125 7.125 0 0114.25 0v.003l-.001.119a.75.75 0 01-.363.63 13.067 13.067 0 01-6.761 1.873c-2.472 0-4.786-.684-6.76-1.873a.75.75 0 01-.364-.63l-.001-.122zM19.75 7.5a.75.75 0 00-1.5 0v2.25H16a.75.75 0 000 1.5h2.25v2.25a.75.75 0 001.5 0v-2.25H22a.75.75 0 000-1.5h-2.25V7.5z"></path>
+                               </svg>
+                           </div>
+                           <div class="p-4 text-right">
+                               <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+                                   Programación</p>
+                               <h4 th:text="${programacion}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                   3,462</h4>
+                           </div>
+                           <div class="border-t border-blue-gray-50 p-4">
+                               <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                                   <strong class="text-red-500">-2%</strong>&nbsp;than yesterday
+                               </p>
+                           </div>
+                       </div>
+                       <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                           <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-orange-600 to-orange-400 text-white shadow-orange-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    aria-hidden="true" class="w-6 h-6 text-white">
+                                   <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"></path>
+                               </svg>
+                           </div>
+                           <div class="p-4 text-right">
+                               <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+                                   Arte</p>
+                               <h4 th:text="${arte}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                   $103,430</h4>
+                           </div>
+                           <div class="border-t border-blue-gray-50 p-4">
+                               <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                                   <strong class="text-green-500">+5%</strong>&nbsp;than yesterday
+                               </p>
+                           </div>
+                       </div>
+                       <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md">
+                           <div class="bg-clip-border mx-4 rounded-xl overflow-hidden bg-gradient-to-tr from-orange-600 to-orange-400 text-white shadow-orange-500/40 shadow-lg absolute -mt-4 grid h-16 w-16 place-items-center">
+                               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                    aria-hidden="true" class="w-6 h-6 text-white">
+                                   <path d="M18.375 2.25c-1.035 0-1.875.84-1.875 1.875v15.75c0 1.035.84 1.875 1.875 1.875h.75c1.035 0 1.875-.84 1.875-1.875V4.125c0-1.036-.84-1.875-1.875-1.875h-.75zM9.75 8.625c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v11.25c0 1.035-.84 1.875-1.875 1.875h-.75a1.875 1.875 0 01-1.875-1.875V8.625zM3 13.125c0-1.036.84-1.875 1.875-1.875h.75c1.036 0 1.875.84 1.875 1.875v6.75c0 1.035-.84 1.875-1.875 1.875h-.75A1.875 1.875 0 013 19.875v-6.75z"></path>
+                               </svg>
+                           </div>
+                           <div class="p-4 text-right">
+                               <p class="block antialiased font-sans text-sm leading-normal font-normal text-blue-gray-600">
+                                   Juegos</p>
+                               <h4 th:text="${juegos}" class="block antialiased tracking-normal font-sans text-2xl font-semibold leading-snug text-blue-gray-900">
+                                   $103,430</h4>
+                           </div>
+                           <div class="border-t border-blue-gray-50 p-4">
+                               <p class="block antialiased font-sans text-base leading-relaxed font-normal text-blue-gray-600">
+                                   <strong class="text-green-500">+5%</strong>&nbsp;than yesterday
+                               </p>
+                           </div>
+                       </div>
+                   </div>
 
+                   <div class="mb-4 grid grid-cols-1 gap-6 xl:grid-cols-3">
+                       <div class="relative flex flex-col bg-clip-border rounded-xl bg-white text-gray-700 shadow-md overflow-hidden xl:col-span-2">
+                       </div>
+                   </div>
+                   <div class="mx-auto w-3/5 overflow-hidden">
+                       <canvas
+                               data-te-chart="bar"
+                               data-te-dataset-label="Traffic"
+                               data-te-labels="['Monday', 'Tuesday' , 'Wednesday' , 'Thursday' , 'Friday' , 'Saturday' , 'Sunday ']"
+                               data-te-dataset-data="[2112, 2343, 2545, 3423, 2365, 1985, 987]">
+                       </canvas>
+                   </div>
+               </div>
+
+           </div>
+       -->
 <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
