@@ -4,6 +4,7 @@ import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.entidades.Usuario;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.UsuarioInexistente;
+import com.tallerwebi.dominio.servicios.ServicioAdmin;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
@@ -35,6 +36,7 @@ public class ControladorAdminTest {
     private ServicioHome servicioHomeMock;
     private ServicioNoticia servicioNoticiaMock;
     private ServicioUsuario servicioUsuarioMock;
+    private ServicioAdmin servicioAdminMock;
     private Rol rolAdminMock;
 
     @BeforeEach
@@ -42,11 +44,12 @@ public class ControladorAdminTest {
         servicioHomeMock = mock(ServicioHome.class);
         servicioUsuarioMock = mock(ServicioUsuario.class);
         servicioNoticiaMock = mock(ServicioNoticia.class);
+        servicioAdminMock = mock(ServicioAdmin.class);
         sessionMock = mock(HttpSession.class);
         usuarioMock = mock(Usuario.class);
         rolAdminMock = mock(Rol.class);
         rolAdminMock = Rol.valueOf("ADMIN");
-        controladorAdmin = new ControladorAdmin(servicioHomeMock,servicioUsuarioMock,servicioNoticiaMock);
+        controladorAdmin = new ControladorAdmin(servicioHomeMock,servicioUsuarioMock,servicioNoticiaMock, servicioAdminMock);
     }
     @Test
     public void siElUsuarioEstaLogueadoRedirigeAlHomeAdmin(){

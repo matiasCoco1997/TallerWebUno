@@ -3,6 +3,7 @@ package com.tallerwebi.presentacion;
 import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.MismoRol;
 import com.tallerwebi.dominio.excepcion.UsuarioInexistente;
+import com.tallerwebi.dominio.servicios.ServicioAdmin;
 import com.tallerwebi.dominio.servicios.ServicioHome;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
@@ -23,12 +24,14 @@ public class ControladorAdmin {
     private final ServicioHome servicioHome;
     private final ServicioUsuario servicioUsuario;
     private final ServicioNoticia servicioNoticia;
+    private ServicioAdmin servicioAdmin;
 
     @Autowired
-    public ControladorAdmin(ServicioHome servicioHome, ServicioUsuario servicioUsuario, ServicioNoticia servicioNoticia){
+    public ControladorAdmin(ServicioHome servicioHome, ServicioUsuario servicioUsuario, ServicioNoticia servicioNoticia, ServicioAdmin servicioAdmin){
         this.servicioHome = servicioHome;
         this.servicioUsuario = servicioUsuario;
         this.servicioNoticia = servicioNoticia;
+        this.servicioAdmin = servicioAdmin;
     }
 
     @RequestMapping("/informes")
@@ -56,6 +59,11 @@ public class ControladorAdmin {
             return new ModelAndView("redirect:/login");
 
         model.put("usuario",usuario);
+        model.put("deportes", servicioAdmin.obtenerNroNoticiasPorCategoria("Deportes"));
+        model.put("politica", servicioAdmin.obtenerNroNoticiasPorCategoria("Politica"));
+        model.put("programacion", servicioAdmin.obtenerNroNoticiasPorCategoria("Programacion"));
+        model.put("arte", servicioAdmin.obtenerNroNoticiasPorCategoria("Arte"));
+        model.put("juegos", servicioAdmin.obtenerNroNoticiasPorCategoria("Juegos"));
 
         return new ModelAndView("home-admin",model);
     }
