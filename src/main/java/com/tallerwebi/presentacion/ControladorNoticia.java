@@ -9,7 +9,6 @@ import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 public class ControladorNoticia {
@@ -141,7 +139,7 @@ public class ControladorNoticia {
             return new ModelAndView("redirect:/home", modelo);
         } catch (NoticiaInexistente e) {
             modelo.put("error", "La noticia que quiere borrar no existe");
-            return new ModelAndView("/home-admin", modelo);
+            return new ModelAndView("home-admin", modelo);
         }
         return new ModelAndView("redirect:/home");
     }
