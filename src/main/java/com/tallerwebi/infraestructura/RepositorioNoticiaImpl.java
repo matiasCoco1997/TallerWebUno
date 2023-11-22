@@ -86,7 +86,7 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public List<Noticia> listarNoticiasMasLikeadas() {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Noticia WHERE activa=true ORDER BY likes DESC").list();
+        return session.createQuery("FROM Noticia ORDER BY likes DESC").list();
     }
 
     @Override

@@ -240,7 +240,7 @@ public class ControladorNoticia {
     public ModelAndView listarNoticias(HttpSession session){
         ModelMap model = new ModelMap();
         Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-        List<Noticia> noticias = servicioNoticia.listarNoticias();
+        List<Noticia> noticias = servicioNoticia.listarNoticiasMasLikeadas();
         model.addAttribute("noticias", noticias);
         model.put("usuario", usuario);
         model.put("noticias", noticias);
