@@ -81,16 +81,12 @@
 </nav>
 
 <nav id="bar" class="flex justify-center">
-    <div class="flex md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-center mr-4">
-        <a th:href="@{/eliminar-noticia}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900">Ver noticias</a>
-    </div>
-
-    <div class="flex md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-center ml-4">
-        <a th:href="@{/admin/usuarios}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900" >Ver usuarios</a>
-    </div>
-
-    <div class="flex md:flex-row justify-center md:space-y-0 my-4 space-y-4 text-center ml-4">
-        <a th:href="@{/informes}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-900">Informes</a>
+    <div class="flex md:flex-row justify-between items-center my-4 space-x-4">
+        <a th:href="@{/admin/home}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Inicio</a>
+        <a th:href="@{/eliminar-noticia}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver noticias</a>
+        <a th:href="@{/admin/usuarios}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver usuarios</a>
+        <a th:href="@{/informes}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Informes</a>
+        <a th:href="@{/noticias-mas-likeadas}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Noticias más likeadas</a>
     </div>
 </nav>
 
