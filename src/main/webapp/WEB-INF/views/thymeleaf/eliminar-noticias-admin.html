@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,15 +10,73 @@
     <script src="https://cdn.tailwindcss.com/3.3.0"></script>
     <!--Slick-->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css"
-          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+
+    <script src="https://kit.fontawesome.com/dc0786cc41.js" crossorigin="anonymous"></script>
 
     <title>Admin</title>
     <link rel="icon" th:href="@{/imagenes/icono-sunn.png}" type="image/x-icon">
 
+    <style>
+        .card-container {
+            width: 100%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: center;
+            padding-right: 20%;
+            padding-left: 20%;
+            margin-top: 30px;
+            border-right: 10px;
+        }
+
+        .card {
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            width: 60%;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            height: 120px;
+            border-radius: 10px;
+            background-color: black;
+            color:white;
+        }
+
+        .card-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 120px;
+            height: 100%;
+            background-color: darkblue;
+            padding: 10px;
+            border-radius: 10px 0px 0px 10px;
+        }
+
+        .card-image i{
+            font-size: 60px;
+            color:white;
+        }
+
+        .card-content{
+            padding:10px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1rem;
+        }
+
+    </style>
+
 </head>
 
-<body class="bg-black">
+<body class="bg-white">
 
 <!-- Main navigation container -->
 <nav style="background-color: black"
@@ -43,7 +102,7 @@
                    aria-expanded="false">
                     <!-- User avatar -->
                     <img th:src="@{${usuario.getFotoPerfil()}}" th:alt="@{${usuario.getAltFotoPerfil()}}" class="rounded-full"
-                         style="height: 25px; width: 25px" alt="" loading="lazy"/>
+                         style="height: 25px; width: 25px" loading="lazy"/>
                 </a>
                 <!-- Second dropdown menu -->
                 <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
@@ -52,25 +111,26 @@
 
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           th:href="@{/perfil}" data-te-dropdown-item-ref>Ver Perfil</a>
+                           th:href="@{/perfil/admin}" data-te-dropdown-item-ref>Ver Perfil</a>
                     </li>
 
-                    <li>
-                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           th:href="@{/siguiendo}" data-te-dropdown-item-ref>Siguiendo</a>
-                    </li>
-
-                    <li>
-                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           th:href="@{/listaReproduccion}" data-te-dropdown-item-ref>Ver lista de reproducción</a>
-                    </li>
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
                            th:href="@{/informes}" data-te-dropdown-item-ref>Informes</a>
                     </li>
+
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           th:href="@{/eliminar-noticias-admin}" data-te-dropdown-item-ref>Borrar noticias</a>
+                           th:href="@{/eliminar-noticia}" data-te-dropdown-item-ref>Ver noticias</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/ver/usuarios}" data-te-dropdown-item-ref>Ver usuarios</a>
+                    </li>
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/noticias-mas-likeadas}" data-te-dropdown-item-ref>Noticias mas likeadas</a>
                     </li>
 
                     <li class="bg-danger">
@@ -80,62 +140,81 @@
                 </ul>
             </div>
         </div>
-
     </div>
 </nav>
 
-<!-- Main navigation container -->
-<hr class="h-px max-w-4xl m-auto my-2 border-0 bg-white">
+<nav id="bar" class="flex justify-center">
+    <div class="flex md:flex-row justify-between items-center my-4 space-x-4">
+        <a th:href="@{/admin/home}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Inicio</a>
+        <a th:href="@{/eliminar-noticia}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver noticias</a>
+        <a th:href="@{/admin/usuarios}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver usuarios</a>
+        <a th:href="@{/informes}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Informes</a>
+        <a th:href="@{/noticias-mas-likeadas}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Noticias más likeadas</a>
+    </div>
+</nav>
+
 
 <!--Sección de Noticias-->
 <main class="p-2">
-    <div th:each="noticia : ${noticias}">
-        <div th:if="${noticia.getClass().simpleName == 'Noticia'}" class="max-w-4xl my-4 py-6 m-auto text-white">
-            <div class="flex items-center">
 
-                <div class="mr-2" th:if="${noticia.esAnonima == false}">
-                    <form th:action="@{/perfil}" method="POST">
-                        <button class="flex items-center" th:value="${noticia.usuario.getIdUsuario()}"
-                                name="idUsuario">
-                            <img class="mr-3 w-10 h-10 object-cover rounded-full"
-                                 th:src="@{${noticia.getUsuario().fotoPerfil}}"
-                                 th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
-                            <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
-                        </button>
-                    </form>
-                </div>
+    <p th:if="${error != null}" style="color: red"></p>
 
-                <div class="mr-2" th:if="${noticia.esAnonima}">
-                    <img class="mr-3 w-10 h-10 object-cover rounded-full" src="imagenes/imgsPerfiles/anonimo.png"
-                         alt="img-anonimo">
-                    <h3 class="font-bold">Anónima</h3>
-                </div>
+    <!-- component -->
+    <div th:if="${error == null}" class="min-h-screen bg-gray-50/50">
 
-                <p style="padding-left: 20px">
-                    Fecha de publicación: <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
-                </p>
+        <div class="card-container">
 
-                <div>
-                    <a class="borrar-noticia" th:href="@{'/borrar-Noticia/' + ${noticia.getIdNoticia()}}"
-                       style="padding: 10px; background-color: red; ">Borrar</a>
-                </div>
-            </div>
-            <div class="mt-2 flex">
-                <div class="mr-2">
-                    <a class="text-2xl font-bold hover:text-gray-300"
-                       th:href="'/sunn/publicacion/'+${noticia.idNoticia}" th:text="${noticia.titulo}"></a>
-                    <p class="mt-2 sm:block hidden" th:text="${noticia.resumen}"></p>
-                </div>
-                <div class="imagen-noticia">
-                    <a class="flex items-center" href="#"></a>
-                    <img class="w-[20rem] sm:h-36 object-cover h-20 m-auto" th:src="@{${noticia.rutaDeimagen}}"
-                         th:alt="${noticia.altDeImagen}">
-                    </a>
+            <h1 style="text-align: center; width: 100%; font-size: 30px; font-weight: bold; color: black; margin-bottom: 20px">Noticias creadas:</h1>
+
+            <div th:each="noticia : ${noticias}">
+                <div th:if="${noticia.getClass().simpleName == 'Noticia'}" class="max-w-4xl my-4 py-6 m-auto text-white" style="border-radius: 10px ;padding: 10px;background-color: black">
+                    <div class="flex items-center">
+                        <div class="mr-2" th:if="${noticia.esAnonima == false}">
+                            <form th:action="@{/perfil}" method="POST">
+                                <button class="flex items-center" th:value="${noticia.usuario.getIdUsuario()}"
+                                        name="idUsuario">
+                                    <img class="mr-3 w-10 h-10 object-cover rounded-full"
+                                         th:src="@{${noticia.getUsuario().fotoPerfil}}"
+                                         th:alt="@{${noticia.getUsuario().altFotoPerfil}}">
+                                    <h3 class="font-bold" th:text="${noticia.usuario.getNombre()}"></h3>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="mr-2" th:if="${noticia.esAnonima}">
+                            <img class="mr-3 w-10 h-10 object-cover rounded-full" src="imagenes/imgsPerfiles/anonimo.png"
+                                 alt="img-anonimo">
+                            <h3 class="font-bold">Anónima</h3>
+                        </div>
+
+                        <p style="padding-left: 20px">
+                            Fecha de publicación: <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
+                        </p>
+
+                        <div>
+                            <a class="borrar-noticia" th:href="@{'/borrar-Noticia/' + ${noticia.getIdNoticia()}}"
+                               style="padding: 10px; background-color: red; ">Borrar</a>
+                        </div>
+                    </div>
+                    <div class="mt-2 flex">
+                        <div class="mr-2">
+                            <a class="text-2xl font-bold hover:text-gray-300"
+                               th:href="'/sunn/publicacion/'+${noticia.idNoticia}" th:text="${noticia.titulo}"></a>
+                            <p class="mt-2 sm:block hidden" th:text="${noticia.resumen}"></p>
+                        </div>
+                        <div class="imagen-noticia">
+                            <a class="flex items-center" href="#"></a>
+                            <img class="w-[20rem] sm:h-36 object-cover h-20 m-auto" th:src="@{${noticia.rutaDeimagen}}"
+                                 th:alt="${noticia.altDeImagen}">
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </main>
+
 <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
 
@@ -143,10 +222,16 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Slick -->
 
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
-
-<script type="text/javascript" src=""></script>
 </body>
+
+</html>
+
+
+
+
+
+
+
+
 </html>

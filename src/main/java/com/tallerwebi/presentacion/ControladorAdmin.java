@@ -38,10 +38,6 @@ public class ControladorAdmin {
     public ModelAndView informes(HttpSession session){
         ModelMap model=new ModelMap();
         Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
-        List<Notificacion> notificaciones = servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
-
-
-        model.put("notificaciones",notificaciones);
         model.put("usuario",usuario);
         return new ModelAndView("informes",model);
     }
