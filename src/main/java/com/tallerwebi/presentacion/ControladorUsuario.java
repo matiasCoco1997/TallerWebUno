@@ -73,6 +73,43 @@ public class ControladorUsuario {
         return new ModelAndView("perfil", model);
     }
 
+    @RequestMapping(value = "/perfil/admin", method = {RequestMethod.GET, RequestMethod.POST})
+    public ModelAndView perfilAdmin(@RequestParam(value = "idUsuario", required = false) Long id, HttpSession session) {
+
+        ModelMap model = new ModelMap();
+
+        try {
+
+            Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+            Usuario usuarioBuscado = (servicioUsuario.verificarSiElIDEsNull(id)) ? usuarioLogueado : servicioUsuario.obtenerUsuarioPorId(id);
+
+            List<Noticia> noticiasDelUsuario = servicioNoticia.obtenerNoticiasDeUnUsuario(usuarioBuscado.getIdUsuario());
+
+            noticiasDelUsuario = servicioNoticia.setNoticiasLikeadas(noticiasDelUsuario, usuarioLogueado.getIdUsuario());
+
+            Map<String, Integer> datosSeguidos = servicioUsuario.obtenerMisSeguidoresYSeguidos(usuarioBuscado.getIdUsuario());
+
+            List<Notificacion> notificaciones = servicioUsuario.obtenerMisNotificacionesSinLeer(usuarioBuscado.getIdUsuario());
+
+            model.put("usuarioLogueado", usuarioLogueado);
+            model.put("usuarioBuscado", usuarioBuscado);
+            model.put("noticias", noticiasDelUsuario);
+            model.put("datosSeguidos", datosSeguidos);
+            model.put("cantidadNotificaciones", notificaciones.size());
+            model.put("misCompartidos", false);
+
+            if (servicioUsuario.verificarSiLaDescripcionEsNull(usuarioBuscado.getDescripcion())) {
+                model.put("descripcionError", "No tiene una descripción.");
+            }
+
+        } catch (Exception e) {
+            model.put("errorUsuario", "No existe un usuario con ese ID");
+            return new ModelAndView("usuarioNoEncontrado", model);
+        }
+        return new ModelAndView("perfil-admin", model);
+    }
+
     @RequestMapping(value = "/perfil/borradores", method = RequestMethod.GET)
     public ModelAndView verNoticiasEnEstadoBorrador(@RequestParam(value = "idUsuario", required = false) Long id, HttpSession session) {
 
@@ -127,7 +164,7 @@ public class ControladorUsuario {
     @RequestMapping(path = "/usuario/borrar", method = RequestMethod.DELETE)
     public ModelAndView borrarUsuario(HttpSession session) {
         Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-        servicioUsuario.borrarUsuario(usuario.getIdUsuario());
+        servicioUsuario.borrarUsuario(usuario);
         return new ModelAndView("redirect:/login");
     }
 
@@ -184,7 +221,9 @@ public class ControladorUsuario {
 
     @GetMapping(value = "/perfil/modificar")
     public ModelAndView mostrarFormularioModificar(HttpSession session) {
+
         ModelMap model = new ModelMap();
+
         Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
         model.put("edicion", true);
@@ -198,7 +237,10 @@ public class ControladorUsuario {
 
         ModelMap modelo = new ModelMap();
         try {
-            servicioUsuario.modificarDatosUsuario(usuario, imagen);
+
+            Usuario datosUsuarioPrevios = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+            servicioUsuario.modificarDatosUsuario(usuario, imagen, datosUsuarioPrevios);
             session.setAttribute("sessionUsuarioLogueado", usuario);
         } catch (FormatoDeImagenIncorrecto e) {
             modelo.put("error", "El formato de imagen es incorrecto.");

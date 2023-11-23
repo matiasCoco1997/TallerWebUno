@@ -1,13 +1,8 @@
 package com.tallerwebi.dominio.servicios;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Seguidos;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
-import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
-import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
-import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
+import com.mysql.cj.Session;
+import com.tallerwebi.dominio.entidades.*;
+import com.tallerwebi.dominio.excepcion.*;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -130,12 +126,12 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
     }
 
     @Override
-    public void borrarUsuario(Long idUsuario) {
-        this.repositorioUsuario.borrarUsuario(idUsuario);
+    public void borrarUsuario(Usuario usuario) {
+        this.repositorioUsuario.borrarUsuario(usuario);
     }
 
     @Override
-    public void modificarDatosUsuario(Usuario usuario, MultipartFile imagen) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
+    public void modificarDatosUsuario(Usuario usuario, MultipartFile imagen, Usuario datosPreviosUsuario) throws TamanioDeArchivoSuperiorALoPermitido, FormatoDeImagenIncorrecto, IOException {
 
         if(!imagen.isEmpty() && !verifiCacionSiEsLaImagenDePrueba(imagen)){
             Long tamanioDeImagen = imagen.getSize();
@@ -172,6 +168,13 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
             Files.write(path, bytes);
         }
+
+        usuario.setRol(datosPreviosUsuario.getRol());
+
+        if(usuario.getPassword().isBlank()){
+            usuario.setPassword(datosPreviosUsuario.getPassword());
+        }
+
         repositorioUsuario.modificar(usuario);
     }
 
@@ -204,6 +207,18 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
         }
 
         return noticiasCompartidas;
+    }
+
+    @Override
+    public void darRolAdmin(Usuario usuario) throws UsuarioInexistente {
+        if(usuario == null){
+            throw new UsuarioInexistente();
+        }
+        if (usuario.getRol().equals(Rol.ADMIN)){
+            throw new MismoRol();
+        }
+        usuario.setRol(Rol.ADMIN);
+        repositorioUsuario.modificar(usuario);
     }
 
     private Boolean verifiCacionSiEsLaImagenDePrueba (MultipartFile imagen) {

@@ -9,44 +9,31 @@
     <script src="https://cdn.tailwindcss.com/3.3.0"></script>
     <!--Slick-->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
-    <title>Lista de reproducción</title>
-    <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
+    <title>Admin</title>
+    <link rel="icon" th:href="@{/imagenes/icono-sunn.png}" type="image/x-icon">
 
 </head>
 
-<body class="bg-black">
+<body class="bg-white">
 
 <!-- Main navigation container -->
 <nav style="background-color: black"
         class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
     <div class="flex w-full flex-wrap items-center justify-between px-3">
-
         <!-- Logo -->
         <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
-           href="home">
+           th:href="@{/admin/home}">
             <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
                  alt="TE Logo" loading="lazy"/>
         </a>
 
+
         <!-- Right elements -->
         <div class="relative flex items-center">
 
-            <div class="relative">
-                <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
-          <span class="[&>svg]:w-5">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                 class="h-5 w-5">
-                                <path fill-rule="evenodd"
-                                      d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
-                                      clip-rule="evenodd"/>
-                            </svg>
-                    </span>
-                    <span class="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white"
-                          th:text="${notificaciones}"></span>
-                </a>
-            </div>
 
             <!-- Second dropdown container -->
             <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
@@ -55,30 +42,36 @@
                    href="" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
                    aria-expanded="false">
                     <!-- User avatar -->
-                    <img th:src="@{${usuario.fotoPerfil}}" class="rounded-full"
-                         style="height: 25px; width: 25px" th:alt="@{${usuario.altFotoPerfil}}" loading="lazy" />
+                    <img th:src="@{${usuario.getFotoPerfil()}}" th:alt="@{${usuario.getAltFotoPerfil()}}" class="rounded-full"
+                         style="height: 25px; width: 25px" loading="lazy"/>
                 </a>
                 <!-- Second dropdown menu -->
                 <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
                     aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
                     <!-- Second dropdown menu items -->
+
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           th:href="@{/perfil}" data-te-dropdown-item-ref>Ver Perfil</a>
+                           th:href="@{/perfil/admin}" data-te-dropdown-item-ref>Ver Perfil</a>
                     </li>
 
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           th:href="@{/siguiendo}" data-te-dropdown-item-ref>Siguiendo</a>
+                           th:href="@{/informes}" data-te-dropdown-item-ref>Informes</a>
                     </li>
 
                     <li>
                         <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
-                           th:href="@{/listaReproduccion}" data-te-dropdown-item-ref>Ver lista de reproducción</a>
+                           th:href="@{/eliminar-noticia}" data-te-dropdown-item-ref>Ver noticias</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/ver/usuarios}" data-te-dropdown-item-ref>Ver usuarios</a>
                     </li>
 
                     <li class="bg-danger">
-                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                        <a class=" block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
                            th:href="@{/cerrar-sesion}" data-te-dropdown-item-ref>Cerrar Sesion</a>
                     </li>
                 </ul>
@@ -87,36 +80,45 @@
     </div>
 </nav>
 
-<main class="h-[100vh] lg:flex">
-    <div class="">
+<nav id="bar" class="flex justify-center">
+    <div class="flex md:flex-row justify-between items-center my-4 space-x-4">
+        <a th:href="@{/admin/home}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Inicio</a>
+        <a th:href="@{/eliminar-noticia}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver noticias</a>
+        <a th:href="@{/admin/usuarios}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver usuarios</a>
+        <a th:href="@{/informes}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Informes</a>
+        <a th:href="@{/noticias-mas-likeadas}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Noticias más likeadas</a>
+    </div>
+</nav>
 
-        <div class="mt-16 pb-4">
 
-            <h3 class="text-white text-6xl font-bold ml-6">Mis Listas de Reproducción</h3>
-            <div id="play-list" th:each="lista : ${listaReproduccion}"
-                 class="flex p-10 bg-[#5C67DE] w-[90%] mx-auto rounded-3xl mt-20">
-                <img th:src="@{${lista.noticia.rutaDeimagen}}"
-                     class="w-[25%] rounded-full border border-4 border-black">
-                <div class="w-[58%]">
-                    <p th:text="${lista.noticia.titulo}" class="text-black font-semibold text-3xl ml-6"></p>
-                    <p th:text="${lista.noticia.resumen}" class="text-black text-xl ml-6 mt-6"></p>
-                    <img th:src="@{/imagenes/basura.png}" class="h-[15%] w-[7%] mt-10 ml-6">
-                </div>
-                <div class="w-[17%] flex items-center">
-                    <audio th:id="${lista.noticia.idNoticia}" th:src="@{${lista.noticia.rutaDeAudioPodcast}}" class="audio"></audio>
-                    <button class="playButton" th:name="${lista.noticia.idNoticia}">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
-                            <style> svg {
-                                fill: #ffffff
-                            } </style>
-                            <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
-                        </svg>
-                    </button>
-                </div>
+<!--Sección de Noticias-->
+<main class="p-2">
+
+    <div th:each="usuario : ${usuariosActivos}" class="flex justify-center mb-4">
+
+        <div th:if="${usuario.getRol().toString() != 'ADMIN'}" class="bg-black p-3 md:p-6 rounded-lg shadow-lg w-full md:w-1/2 flex items-center justify-between">
+            <img style="border: 3px solid white;" th:src="@{${usuario.getFotoPerfil()}}" th:alt="${usuario.getAltFotoPerfil()}" class="rounded-full w-16 h-16 md:w-24 md:h-24 mr-4">
+
+            <div class="flex flex-col" style="width: 70%">
+                <h3 class="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2 mt-0 md:mt-1" th:text="${usuario.getNombre()}"></h3>
+
+                <p class="text-base md:text-lg text-gray-200 mb-1 md:mb-2 mt-0 md:mt-1" >Ciudad: <span th:text="${usuario.getCiudad()}"></span></p>
+
+                <p class="text-base md:text-lg text-gray-200 mb-1 md:mb-2 mt-0 md:mt-1" >Email: <span th:text="${usuario.getEmail()}"></span></p>
+
+                <p class="text-base md:text-lg text-gray-200 mb-1 md:mb-2 mt-0 md:mt-1" >Rol: <span th:text="${usuario.getRol()}"></span></p>
+            </div>
+
+            <div style="width: 20%; display: flex; flex-direction: column; justify-content: space-around">
+                <a th:href="'/sunn/hacerAdmin/'+${usuario.getIdUsuario()}" class="button-style bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" style="display: flex; justify-content: center; align-items: center; width: 80%; margin: 10px; cursor: pointer">Hacer Admin</a>
+                <a th:href="'/sunn/eliminarUsuario/'+${usuario.getIdUsuario()}" class="button-style bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" style="display: flex; justify-content: center; align-items: center; width: 80%; margin: 10px; cursor: pointer">Eliminar</a>
             </div>
         </div>
+
     </div>
+
 </main>
+
 
 <script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
@@ -125,27 +127,7 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!--<script>
-    $(document).ready(function () {
 
-        $('.playButton').on('click', function () {
-            var idAudio = "#" + $(this).attr("name");
-            var elementoAudio = $(idAudio)[0];
-
-            if (elementoAudio.paused) {
-                elementoAudio.play();
-            } else {
-                elementoAudio.pause();
-            }
-        });
-    });
-</script>-->
-
-<script>
-
-</script>
-
-<script th:src="@{/js/likearNoticia.js}"></script>
-<script th:src="@{/js/playList.js}"></script>
 </body>
+
 </html>

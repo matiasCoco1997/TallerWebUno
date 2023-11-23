@@ -58,7 +58,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
 
     @Override
-    public void borrarNoticiaPorId(Noticia noticia) throws IOException {
+    public void borrarNoticia(Noticia noticia) throws IOException, NoticiaInexistente {
+        if(noticia == null){
+            throw new NoticiaInexistente();
+        }
         repositorioNoticia.borrarNoticia(noticia);
         Path audioABorrar = Paths.get("src/main/webapp/resources/core" + noticia.getRutaDeAudioPodcast());
         Path imagenABorrar = Paths.get("src/main/webapp/resources/core" + noticia.getRutaDeimagen());
@@ -87,6 +90,11 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     @Override
     public List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario) {
         return repositorioNoticia.obtenerMisNoticias(idUsuario);
+    }
+
+    @Override
+    public List<Noticia> listarNoticiasMasLikeadas() {
+        return repositorioNoticia.listarNoticiasMasLikeadas();
     }
 
     @Override

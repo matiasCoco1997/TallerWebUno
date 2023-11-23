@@ -1,5 +1,6 @@
 package com.tallerwebi.infraestructura;
 
+import com.itextpdf.text.pdf.PdfPTable;
 import com.tallerwebi.dominio.entidades.*;
 
 import java.text.ParseException;
@@ -40,5 +41,15 @@ public interface RepositorioNoticia {
 
     Boolean marcarNoticiaComoLikeada(Noticia noticia);
 
+
     List<Noticia> obtenerNoticiaPorFecha(String fecha) throws ParseException;
+
+    Long obtenerCantidadNoticiasRelacionadas(String categoria);
+
+    List<Comentario> obtenerComentarios(Long idNoticia);
+
+    Long obtenerCantidadDeListasDeUnaNoticia(Long idNoticia);
+
+    List<Noticia> listarNoticiasMasLikeadas();
+
 }

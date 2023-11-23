@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Seguidos;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import com.tallerwebi.integracion.config.HibernateTestConfig;
 import com.tallerwebi.integracion.config.SpringWebTestConfig;
@@ -252,7 +249,7 @@ public class RepositorioUsuarioTest {
         this.usuario.setEmail(correo);
         repositorioUsuario.guardar(usuario);
         //ejecución
-        repositorioUsuario.borrarUsuario(usuario.getIdUsuario());
+        repositorioUsuario.borrarUsuario(usuario);
         //verificación
         assertThat(repositorioUsuario.buscar(correo), nullValue());
     }
@@ -481,5 +478,6 @@ public class RepositorioUsuarioTest {
 
         assertThat(notificaciones.size(),is(2));
     }
+
 
 }
