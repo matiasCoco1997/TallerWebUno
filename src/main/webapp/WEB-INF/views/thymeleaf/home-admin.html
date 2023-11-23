@@ -162,7 +162,7 @@
 <!--Sección de Noticias-->
 <main class="p-2">
 
-    <p th:if="${error != null}" style="color: red"></p>
+    <p th:if="${error != null}" th:text="${error}" style="color: red"></p>
 
     <!-- component -->
     <div th:if="${error == null}" class="min-h-screen bg-gray-50/50">

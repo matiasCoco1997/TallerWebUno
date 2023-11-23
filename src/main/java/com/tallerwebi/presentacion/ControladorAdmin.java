@@ -15,6 +15,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -142,7 +143,7 @@ public class ControladorAdmin {
     public ModelAndView filtrarPorFecha(@RequestParam("fecha-publicacion") String fechaPublicacion, HttpSession session) {
 
         ModelMap model = new ModelMap();
-
+        List<Noticia> noticias = new ArrayList<>();
         Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
         List<Categoria> categorias = servicioHome.obtenerCategorias();
@@ -151,18 +152,17 @@ public class ControladorAdmin {
         model.put("categorias", categorias);
 
         if (!fechaPublicacion.equals("")) {
-            List<Noticia> noticias = servicioNoticia.obtenerNoticiasPorFecha(fechaPublicacion);
+            noticias = servicioNoticia.obtenerNoticiasPorFecha(fechaPublicacion);
             noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
-            if (noticias.isEmpty()) {
-                model.put("error", "No se encontraron noticias de esa fecha.");
-            } else {
-                model.put("noticias", noticias);
-            }
-            return new ModelAndView("home-fecha", model);
-        } else {
-            return new ModelAndView("redirect:/admin/home");
         }
 
+        if (noticias.isEmpty()) {
+            model.put("error", "No se encontraron noticias de esa fecha.");
+        } else {
+            model.put("noticias", noticias);
+        }
+
+        return new ModelAndView("home-fecha", model);
     }
 
 }
