@@ -215,7 +215,7 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     }
 
     @Override
-    public List<Noticia> obtenerNoticiaPorFecha(String fecha) throws ParseException {
+    public List<Noticia> obtenerNoticiaPorFecha(String fecha) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDate fromDate = LocalDate.parse(fecha, formatter);
         LocalDate toDate = LocalDate.parse(fecha, formatter);
@@ -226,19 +226,4 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
         query.setParameter("fechaFinal",toDate);
         return query.list();
     }
-
-    /*
-    @Override
-    public List<Noticia> obtenerNoticiaPorFecha(String fecha) throws ParseException {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(fecha, formatter);
-        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        fecha = localDate.format(formatter);
-
-        final Session session = sessionFactory.getCurrentSession();
-        Query query = session.createQuery("FROM Noticia WHERE fechaDePublicacion BETWEEN :fecha AND :fecha");
-        query.setParameter("fecha",fecha);
-        return query.list();
-    }
-    */
 }

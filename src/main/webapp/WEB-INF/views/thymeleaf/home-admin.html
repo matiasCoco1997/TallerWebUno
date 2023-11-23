@@ -150,6 +150,12 @@
         <a th:href="@{/informes}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Informes</a>
         <a th:href="@{/noticias-mas-likeadas}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Noticias más likeadas</a>
     </div>
+    <form th:action="@{/fecha}" method="GET" class="ml-4 flex items-center">
+        <label for="simple-search" class="sr-only">Buscar por fecha</label>
+        <input type="date" id="simple-search" name="fecha-publicacion"
+               class="px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:border-primary-500 bg-black text-white">
+        <button type="submit" class="bg-green-900 text-white px-4 py-2 rounded-md ml-2 hover:bg-green-700">Buscar</button>
+    </form>
 </nav>
 
 

@@ -363,7 +363,7 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
         return usuarioLogueado != null;
     }
 
-    public List<Noticia> obtenerNoticiasPorFecha(String fecha) throws ParseException {
+    public List<Noticia> obtenerNoticiasPorFecha(String fecha) {
         return repositorioNoticia.obtenerNoticiaPorFecha(fecha);
     }
 

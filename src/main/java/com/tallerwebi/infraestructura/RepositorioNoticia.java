@@ -42,7 +42,7 @@ public interface RepositorioNoticia {
     Boolean marcarNoticiaComoLikeada(Noticia noticia);
 
 
-    List<Noticia> obtenerNoticiaPorFecha(String fecha) throws ParseException;
+    List<Noticia> obtenerNoticiaPorFecha(String fecha);
 
     Long obtenerCantidadNoticiasRelacionadas(String categoria);
 

@@ -10,13 +10,11 @@ import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -138,5 +136,30 @@ public class ControladorAdmin {
             model.put("usuario", usuario);
         }
         return new ModelAndView("noticias-mas-likeadas", model);
+    }
+
+    @RequestMapping("/fecha")
+    public ModelAndView filtrarPorFecha(@RequestParam("fecha-publicacion")String fechaPublicacion, HttpSession session){
+        ModelMap model=new ModelMap();
+
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        List<Categoria> categorias=servicioHome.obtenerCategorias();
+
+        Integer notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario()).size();
+
+        model.put("usuario",usuario);
+        model.put("categorias",categorias);
+        model.put("notificaciones", notificaciones);
+
+        List<Noticia> noticias = servicioNoticia.obtenerNoticiasPorFecha(fechaPublicacion);
+        noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
+        if(servicioHome.validarQueHayNoticias(noticias)){
+            model.put("error","No se encontraron noticias de esa fecha.");
+        }else{
+            model.put("noticias",noticias);
+        }
+
+        return new ModelAndView("home-fecha",model);
     }
 }

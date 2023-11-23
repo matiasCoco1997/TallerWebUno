@@ -43,7 +43,7 @@ public interface ServicioNoticia {
 
     List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario);
 
-    List<Noticia> obtenerNoticiasPorFecha(String fecha) throws ParseException;
+    List<Noticia> obtenerNoticiasPorFecha(String fecha);
 
     List<Noticia> listarNoticiasMasLikeadas();
 
