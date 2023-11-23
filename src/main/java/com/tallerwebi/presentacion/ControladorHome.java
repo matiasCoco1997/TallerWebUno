@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
 import java.util.List;
 
 @Controller
@@ -136,6 +137,35 @@ public class ControladorHome {
         model.put("usuario",usuarioLogueado);
 
         return new ModelAndView("home-vista",model);
+    }
+
+    @RequestMapping("/fecha")
+    public ModelAndView filtrarPorFecha(@RequestParam("fecha-publicacion")String fechaPublicacion,HttpSession session){
+        ModelMap model=new ModelMap();
+
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+
+        List<Categoria> categorias=servicioHome.obtenerCategorias();
+
+        Integer notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario()).size();
+
+        model.put("usuario",usuario);
+        model.put("categorias",categorias);
+        model.put("notificaciones", notificaciones);
+
+        try {
+            List<Noticia> noticias = servicioNoticia.obtenerNoticiasPorFecha(fechaPublicacion);
+            noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
+            if(servicioHome.validarQueHayNoticias(noticias)){
+                model.put("error","No se encontraron noticias de esa fecha.");
+            }else{
+                model.put("noticias",noticias);
+            }
+        } catch (ParseException e) {
+            model.put("error","Problema durante la búsqueda.");
+        }
+
+        return new ModelAndView("home-fecha",model);
     }
 
 }

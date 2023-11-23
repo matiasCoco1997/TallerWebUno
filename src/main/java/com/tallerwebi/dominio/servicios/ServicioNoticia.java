@@ -5,6 +5,7 @@ import com.tallerwebi.dominio.excepcion.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 
 public interface ServicioNoticia {
@@ -41,5 +42,7 @@ public interface ServicioNoticia {
     void compartirNoticia(Notificacion notificacion);
 
     List<Noticia> obtenerNoticiasDeUnUsuario(Long idUsuario);
+
+    List<Noticia> obtenerNoticiasPorFecha(String fecha) throws ParseException;
 
 }

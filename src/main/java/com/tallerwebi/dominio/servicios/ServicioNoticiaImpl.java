@@ -13,9 +13,12 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.text.SimpleDateFormat;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.*;
 
 @Service("servicioNoticia")
@@ -350,6 +353,10 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     }
     private boolean verificarQueElUsuarioEsteLogueado(Usuario usuarioLogueado) {
         return usuarioLogueado != null;
+    }
+
+    public List<Noticia> obtenerNoticiasPorFecha(String fecha) throws ParseException {
+        return repositorioNoticia.obtenerNoticiaPorFecha(fecha);
     }
 
 }

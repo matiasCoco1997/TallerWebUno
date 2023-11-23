@@ -5,11 +5,18 @@ import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.TemporalType;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 @Repository("repositorioNoticia")
@@ -177,4 +184,31 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
         }
     }
 
+    @Override
+    public List<Noticia> obtenerNoticiaPorFecha(String fecha) throws ParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate fromDate = LocalDate.parse(fecha, formatter);
+        LocalDate toDate = LocalDate.parse(fecha, formatter);
+
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM Noticia WHERE fechaDePublicacion BETWEEN :fechaInicio AND :fechaFinal");
+        query.setParameter("fechaInicio",fromDate);
+        query.setParameter("fechaFinal",toDate);
+        return query.list();
+    }
+
+    /*
+    @Override
+    public List<Noticia> obtenerNoticiaPorFecha(String fecha) throws ParseException {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate localDate = LocalDate.parse(fecha, formatter);
+        formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        fecha = localDate.format(formatter);
+
+        final Session session = sessionFactory.getCurrentSession();
+        Query query = session.createQuery("FROM Noticia WHERE fechaDePublicacion BETWEEN :fecha AND :fecha");
+        query.setParameter("fecha",fecha);
+        return query.list();
+    }
+    */
 }

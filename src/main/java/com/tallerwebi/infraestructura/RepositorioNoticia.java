@@ -2,6 +2,8 @@ package com.tallerwebi.infraestructura;
 
 import com.tallerwebi.dominio.entidades.*;
 
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
 
 public interface RepositorioNoticia {
@@ -37,4 +39,6 @@ public interface RepositorioNoticia {
     List<Noticia> obtenerMisNoticias(Long idUsuario);
 
     Boolean marcarNoticiaComoLikeada(Noticia noticia);
+
+    List<Noticia> obtenerNoticiaPorFecha(String fecha) throws ParseException;
 }
