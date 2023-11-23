@@ -103,7 +103,10 @@
 <!-- Main navigation container -->
 <hr class="h-px max-w-4xl m-auto my-2 border-0 bg-white">
 <main class="p-2 ">
-    <h1 class="text-black text-center font-bold text-6xl m-5">Las noticias mas likeadas</h1>
+    <h1 class="text-black text-center font-bold text-6xl m-5">Noticias encontradas</h1>
+
+    <h3 th:if="${error}" style="color: black; width: 100%; margin: auto; text-align: center" th:text="${error}"></h3>
+
     <div th:each="noticia : ${noticias}">
         <div th:if="${noticia.getClass().simpleName == 'Noticia'}" class="max-w-4xl my-4 py-6 rounded-lg m-auto text-white bg-black p-3">
             <div class="flex items-center">

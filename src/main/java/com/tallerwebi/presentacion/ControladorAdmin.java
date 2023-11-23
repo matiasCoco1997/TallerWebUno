@@ -25,7 +25,7 @@ public class ControladorAdmin {
     private ServicioAdmin servicioAdmin;
 
     @Autowired
-    public ControladorAdmin(ServicioHome servicioHome, ServicioUsuario servicioUsuario, ServicioNoticia servicioNoticia, ServicioAdmin servicioAdmin){
+    public ControladorAdmin(ServicioHome servicioHome, ServicioUsuario servicioUsuario, ServicioNoticia servicioNoticia, ServicioAdmin servicioAdmin) {
         this.servicioHome = servicioHome;
         this.servicioUsuario = servicioUsuario;
         this.servicioNoticia = servicioNoticia;
@@ -33,62 +33,62 @@ public class ControladorAdmin {
     }
 
     @RequestMapping("/informes")
-    public ModelAndView informes(HttpSession session){
-        ModelMap model=new ModelMap();
-        Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
-        model.put("usuario",usuario);
-        return new ModelAndView("informes",model);
+    public ModelAndView informes(HttpSession session) {
+        ModelMap model = new ModelMap();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        model.put("usuario", usuario);
+        return new ModelAndView("informes", model);
     }
 
     @GetMapping("/admin/home")
-    public ModelAndView irAHomeAdmin(HttpSession session ){
-        ModelMap model=new ModelMap();
+    public ModelAndView irAHomeAdmin(HttpSession session) {
+        ModelMap model = new ModelMap();
 
-        Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
-        if(usuario == null)
+        if (usuario == null)
             return new ModelAndView("redirect:/login");
 
-        if(usuario.getRol() != (Rol.ADMIN))
+        if (usuario.getRol() != (Rol.ADMIN))
             return new ModelAndView("redirect:/login");
 
-        model.put("usuario",usuario);
+        model.put("usuario", usuario);
         model.put("deportes", servicioAdmin.obtenerNroNoticiasPorCategoria("Deportes"));
         model.put("politica", servicioAdmin.obtenerNroNoticiasPorCategoria("Politica"));
         model.put("programacion", servicioAdmin.obtenerNroNoticiasPorCategoria("Programacion"));
         model.put("arte", servicioAdmin.obtenerNroNoticiasPorCategoria("Arte"));
         model.put("juegos", servicioAdmin.obtenerNroNoticiasPorCategoria("Juegos"));
 
-        return new ModelAndView("home-admin",model);
+        return new ModelAndView("home-admin", model);
     }
 
     @GetMapping("/admin/usuarios")
-    public ModelAndView verUsuarios(HttpSession session ){
+    public ModelAndView verUsuarios(HttpSession session) {
 
-        ModelMap model=new ModelMap();
+        ModelMap model = new ModelMap();
 
-        Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
-        if(usuario == null || (usuario.getRol() != (Rol.ADMIN))){
+        if (usuario == null || (usuario.getRol() != (Rol.ADMIN))) {
             return new ModelAndView("redirect:/login");
         }
 
         List<Usuario> usuariosActivos = servicioHome.listarUsuarios(usuario.getIdUsuario());
 
-        model.put("usuario",usuario);
+        model.put("usuario", usuario);
         model.put("usuariosActivos", usuariosActivos);
 
-        return new ModelAndView("usuariosActivos",model);
+        return new ModelAndView("usuariosActivos", model);
     }
 
     @RequestMapping(value = "/eliminarUsuario/{idUsuario}", method = RequestMethod.GET)
-    public ModelAndView eliminarUsuario(HttpSession session , @PathVariable(required = false) Long idUsuario){
+    public ModelAndView eliminarUsuario(HttpSession session, @PathVariable(required = false) Long idUsuario) {
 
-        ModelMap model=new ModelMap();
+        ModelMap model = new ModelMap();
 
-        Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
-        if(usuario == null || (usuario.getRol() != (Rol.ADMIN))){
+        if (usuario == null || (usuario.getRol() != (Rol.ADMIN))) {
             return new ModelAndView("redirect:/login");
         }
 
@@ -108,17 +108,17 @@ public class ControladorAdmin {
         ModelMap model = new ModelMap();
         Usuario admin = (Usuario) session.getAttribute("sessionUsuarioLogueado");
         Usuario usuario = servicioUsuario.obtenerUsuarioPorId(idUsuario);
-        if(!admin.getRol().equals(Rol.ADMIN)){
+        if (!admin.getRol().equals(Rol.ADMIN)) {
             return new ModelAndView("redirect:/login");
         }
 
-        try{
+        try {
             servicioUsuario.darRolAdmin(usuario);
 
-        }catch (UsuarioInexistente e){
+        } catch (UsuarioInexistente e) {
             model.put("error", "El usuario no existe");
             return new ModelAndView("usuariosActivos", model);
-        }catch (MismoRol e){
+        } catch (MismoRol e) {
             model.put("error", "No se puede cambiar el rol porque ya esta seteado.");
             return new ModelAndView("usuariosActivos", model);
         }
@@ -139,27 +139,30 @@ public class ControladorAdmin {
     }
 
     @RequestMapping("/fecha")
-    public ModelAndView filtrarPorFecha(@RequestParam("fecha-publicacion")String fechaPublicacion, HttpSession session){
-        ModelMap model=new ModelMap();
+    public ModelAndView filtrarPorFecha(@RequestParam("fecha-publicacion") String fechaPublicacion, HttpSession session) {
 
-        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        ModelMap model = new ModelMap();
 
-        List<Categoria> categorias=servicioHome.obtenerCategorias();
+        Usuario usuario = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
-        Integer notificaciones=servicioHome.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario()).size();
+        List<Categoria> categorias = servicioHome.obtenerCategorias();
 
-        model.put("usuario",usuario);
-        model.put("categorias",categorias);
-        model.put("notificaciones", notificaciones);
+        model.put("usuario", usuario);
+        model.put("categorias", categorias);
 
-        List<Noticia> noticias = servicioNoticia.obtenerNoticiasPorFecha(fechaPublicacion);
-        noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
-        if(servicioHome.validarQueHayNoticias(noticias)){
-            model.put("error","No se encontraron noticias de esa fecha.");
-        }else{
-            model.put("noticias",noticias);
+        if (!fechaPublicacion.equals("")) {
+            List<Noticia> noticias = servicioNoticia.obtenerNoticiasPorFecha(fechaPublicacion);
+            noticias = servicioNoticia.setNoticiasLikeadas(noticias, usuario.getIdUsuario());
+            if (noticias.isEmpty()) {
+                model.put("error", "No se encontraron noticias de esa fecha.");
+            } else {
+                model.put("noticias", noticias);
+            }
+            return new ModelAndView("home-fecha", model);
+        } else {
+            return new ModelAndView("redirect:/admin/home");
         }
 
-        return new ModelAndView("home-fecha",model);
     }
+
 }
