@@ -1,6 +1,8 @@
 package com.tallerwebi.infraestructura;
 
+
 import com.itextpdf.text.pdf.PdfPTable;
+
 import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 
@@ -50,9 +52,13 @@ public interface RepositorioUsuario {
 
     List<Notificacion>obtenerMisNoticiasCompartidasDeUnUsuarioEspecifico(Long idUsuario, Long usuarioBuscado);
 
+
     List<Usuario> obtenerUsuarios();
 
     List<ListaReproduccion> obtenerMiListaDeReproduccion(Long idUsuario);
+
+
+    void guardarPlan(Long idUsuario, Plan plan);
 
 }
 

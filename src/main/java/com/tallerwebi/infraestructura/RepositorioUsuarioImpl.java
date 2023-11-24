@@ -255,6 +255,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
+
     public List<Usuario> obtenerUsuarios() {
         final Session session = sessionFactory.getCurrentSession();
         return session.createQuery("FROM Usuario").list();
@@ -265,5 +266,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         return sessionFactory.getCurrentSession().
                 createQuery("FROM ListaReproduccion WHERE usuario.id= :idUsuario").setParameter("idUsuario",idUsuario).list();
     }
+
+    public void guardarPlan(Long idUsuario, Plan plan) {
+            Usuario usuario = sessionFactory.getCurrentSession().get(Usuario.class, idUsuario);
+            usuario.setPlan(plan);
+            sessionFactory.getCurrentSession().update(usuario);
+    }
+
+
 
 }

@@ -1,8 +1,13 @@
 package com.tallerwebi.dominio.servicios;
 
+
 import com.mysql.cj.Session;
 import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.*;
+import com.tallerwebi.dominio.entidades.*;
+import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
+import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
+import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
 import com.tallerwebi.infraestructura.RepositorioCategoria;
 import com.tallerwebi.infraestructura.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +22,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-
-import static java.util.Collections.*;
 
 @Service("servicioUsuario")
 @Transactional
@@ -207,6 +210,10 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
         }
 
         return noticiasCompartidas;
+    }
+    @Override
+    public void guardarPlan(Long idUsuario, Plan plan) {
+        repositorioUsuario.guardarPlan(idUsuario, plan);
     }
 
     @Override
