@@ -32,4 +32,9 @@ public class RepositorioPlanImpl implements RepositorioPlan{
                 .add(Restrictions.eq("idPlan", idPlan))
                 .uniqueResult();
     }
+
+    @Override
+    public void guardarPlan(Plan plan) {
+        sessionFactory.getCurrentSession().save(plan);
+    }
 }

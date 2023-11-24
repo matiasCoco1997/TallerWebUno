@@ -1,5 +1,6 @@
 package com.tallerwebi.config;
 
+import com.mercadopago.MercadoPagoConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;

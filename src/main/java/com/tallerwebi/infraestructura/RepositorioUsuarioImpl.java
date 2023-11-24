@@ -1,9 +1,6 @@
 package com.tallerwebi.infraestructura;
 
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Seguidos;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -228,6 +225,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
                 .setParameter("idUsuarioPropio", idUsuarioPropio)
                 .setParameter("idUsuarioBuscado", idUsuarioBuscado)
                 .getResultList();
+    }
+
+    @Override
+    public void guardarPlan(Long idUsuario, Plan plan) {
+            Usuario usuario = sessionFactory.getCurrentSession().get(Usuario.class, idUsuario);
+            usuario.setPlan(plan);
+            sessionFactory.getCurrentSession().update(usuario);
     }
 
 

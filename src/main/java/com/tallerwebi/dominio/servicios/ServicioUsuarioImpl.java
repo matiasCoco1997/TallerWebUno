@@ -1,10 +1,6 @@
 package com.tallerwebi.dominio.servicios;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Seguidos;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
@@ -21,8 +17,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
-
-import static java.util.Collections.*;
 
 @Service("servicioUsuario")
 @Transactional
@@ -204,6 +198,10 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
         }
 
         return noticiasCompartidas;
+    }
+    @Override
+    public void guardarPlan(Long idUsuario, Plan plan) {
+        repositorioUsuario.guardarPlan(idUsuario, plan);
     }
 
     private Boolean verifiCacionSiEsLaImagenDePrueba (MultipartFile imagen) {

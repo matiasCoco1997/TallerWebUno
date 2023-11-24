@@ -8,4 +8,5 @@ public interface RepositorioPlan {
     List<Plan> traerPlanes();
 
     Plan traerPlanPorId(Long idPlan);
+    void guardarPlan(Plan plan);
 }

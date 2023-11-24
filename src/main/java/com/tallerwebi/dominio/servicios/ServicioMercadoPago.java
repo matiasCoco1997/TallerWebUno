@@ -1,8 +1,11 @@
 package com.tallerwebi.dominio.servicios;
-import com.mercadopago.client.preference.PreferenceItemRequest;
+import com.mercadopago.exceptions.MPApiException;
+import com.mercadopago.exceptions.MPException;
 import com.tallerwebi.dominio.entidades.Plan;
 import com.tallerwebi.dominio.entidades.Usuario;
 
+import java.util.Map;
+
 public interface ServicioMercadoPago {
-    PreferenceItemRequest crearPedido(Usuario usuario, Plan plan);
+    Map crearPago(Usuario usuario, Plan plan) throws MPException, MPApiException;
 }

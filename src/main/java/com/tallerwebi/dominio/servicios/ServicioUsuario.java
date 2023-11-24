@@ -1,9 +1,6 @@
 package com.tallerwebi.dominio.servicios;
 
-import com.tallerwebi.dominio.entidades.Categoria;
-import com.tallerwebi.dominio.entidades.Noticia;
-import com.tallerwebi.dominio.entidades.Notificacion;
-import com.tallerwebi.dominio.entidades.Usuario;
+import com.tallerwebi.dominio.entidades.*;
 import com.tallerwebi.dominio.excepcion.FormatoDeImagenIncorrecto;
 import com.tallerwebi.dominio.excepcion.RelacionNoEncontradaException;
 import com.tallerwebi.dominio.excepcion.TamanioDeArchivoSuperiorALoPermitido;
@@ -49,5 +46,5 @@ public interface ServicioUsuario {
     List<Noticia> obtenerNoticiasLikeadas(Long idUsuario);
 
     List<Notificacion> obtenerMisNoticiasCompartidas(Long idUsuarioPropio , String idUsuarioBuscado);
-
+    void guardarPlan(Long idUsuario, Plan plan);
 }

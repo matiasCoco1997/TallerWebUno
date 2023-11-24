@@ -32,7 +32,8 @@ public class Usuario {
     private String fotoPerfil;
     private String altFotoPerfil;
     private Boolean activo = true;
-    private Integer idPlan; //Relacionado a la tabla plan, idPlan
+    @ManyToOne
+    private Plan plan;
     @Enumerated(EnumType.STRING)
     private Rol rol;
 }
