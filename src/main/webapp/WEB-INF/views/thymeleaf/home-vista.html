@@ -258,9 +258,11 @@
                         </a>
                     </div>
                 </div>
-                <div class="flex justify-between max-w-xs items-center text-white">
-                    <div class="flex items-center border-2 border-white rounded-lgs px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-gray-200">
-                        <div class="mr-2">
+                <div class="flex justify-start max-w-xs items-center text-white">
+                   <!-- <div class="flex max-w-xs items-center text-white"></div>-->
+                    <div th:if="${usuario.getPlan() != null}" class="flex items-center border-2 border-white mr-6 rounded-lgs px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-gray-200">
+                        <!--<button type="button" name="compartir" th:value="${noticia.idNoticia}"><img th:src="@{/imagenes/compartir.png}" class="w-[1.5em]"></button>-->
+                        <div>
                             <audio th:id="${noticia.idNoticia}" th:src="@{${noticia.rutaDeAudioPodcast}}"></audio>
                             <button class="playButton" th:name="${noticia.idNoticia}">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
@@ -273,7 +275,7 @@
                         </div>
                     </div>
                     <!--Comentarios acciones-->
-                    <div class="comentario">
+                    <div class="comentario mr-6 ml-2" th:if="${usuario.getPlan() != null}">
                         <a th:data-id-noticia="${noticia.idNoticia}"
                            th:href="'/sunn/comentarios/publicacion/'+${noticia.idNoticia}" class="mostrar-comentarios">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
@@ -286,7 +288,7 @@
                     </div>
 
                     <!--Me Gusta acciones-->
-                    <div class="me-gusta">
+                    <div class="me-gusta mr-6 ml-2">
 
                         <button th:id="${noticia.idNoticia}" class="flex dar-like-btn" th:if="${ noticia.estaLikeada }">
                             <svg th:class="'like_' + ${noticia.idNoticia}" xmlns="http://www.w3.org/2000/svg"
@@ -308,7 +310,7 @@
 
                     </div>
 
-                    <div>
+                    <div class="mr-6 ml-2" th:if="${usuario.getPlan() != null}">
                             <button th:value="${noticia.idNoticia}" name="noticiaAgregar">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512">
                                     <style> svg {
@@ -318,7 +320,8 @@
                                 </svg>
                             </button>
                     </div>
-                    <button type="button" name="compartir" th:value="${noticia.idNoticia}"><img th:src="@{/imagenes/compartir.png}" class="w-[1.5em]"></button>
+                    <button type="button" name="compartir" class="ml-2" th:value="${noticia.idNoticia}"><img th:src="@{/imagenes/compartir.png}" class="w-[1.5em]"></button>
+
                 </div>
                 <!--Lista de comentarios-->
                 <div class="bg-black py-8 lg:py-16 antialiased">
