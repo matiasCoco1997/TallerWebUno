@@ -97,30 +97,6 @@
 </header>
 <main>
   <div class="flex flex-wrap justify-center lg:gap-0 gap-10 mt-4 mb-4">
-    <div class="lg:w-[22%] w-[90%] mx-auto rounded-3xl">
-      <div class="bg-[#FF490F] rounded-3xl pt-8 pb-8 pl-4 pr-4 lg:mt-16">
-        <h1 class="text-white text-xl font-semibold">Premio</h1>
-        <h2 class="text-white text-xl"><strong class="text-2xl">$9.99</strong>/mes</h2>
-        <ul class="flex flex-col gap-6 mt-6">
-          <li class="flex text-white ">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Acceso limitado a la versión <br> de podcast de las notas
-          </li>
-          <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Pueden elegir dos canales de <br> noticias gratuitos para habilitar <br> la opción de podcast.
-          </li>
-          <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Pueden generar 3 <br> listas de reproducción
-          </li>
-        </ul>
-        <div class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-10">
-          <a  th:href="@{'/pagar/'+${planes[0].idPlan}}" class="font-semibold text-white">En uso</a>
-        </div>
-      </div>
-    </div>
-
     <div class="lg:w-[24%] w-[90%] mx-auto bg-[#323232] rounded-3xl">
       <h1 class="text-white text-2xl text-center mt-4 font-bold">Más popular</h1>
       <div class="bg-[#5C67DE] rounded-3xl pt-8 pb-8 pl-4 pr-4 mt-2">
@@ -141,35 +117,11 @@
           </li>
         </ul>
         <div class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-28">
-          <a  th:href="@{'/pagar/'+${planes[1].idPlan}}" class="font-semibold text-white">En uso</a>
+          <a  th:href="@{'/pagar/'+${planes[0].idPlan}}" class="font-semibold text-white">En uso</a>
         </div>
       </div>
     </div>
 
-
-    <div class="lg:w-[22%] w-[90%] mx-auto rounded-3xl">
-      <div class="bg-[#FF0FAD] rounded-3xl pt-8 pb-8 pl-4 pr-4 lg:mt-16 ">
-        <h1 class="text-white text-xl font-semibold">Premio</h1>
-        <h2 class="text-white text-xl"><strong class="text-2xl">$9.99</strong>/mes</h2>
-        <ul class="flex flex-col gap-6 mt-6">
-          <li class="flex text-white ">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Acceso ilimitado a <br> los podcasts
-          </li>
-          <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Pueden generar listas de <br> reproducción personalizadas <br> con todas  las notas que <br> deseen escuchar.                   </li>
-          <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Voice messages anywhere
-          </li>
-        </ul>
-        <div class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-10">
-          <a  th:href="@{'/pagar/'+${planes[2].idPlan}}" class="font-semibold text-white">En uso</a>
-
-        </div>
-      </div>
-    </div>
 
   </div>
 </main>
