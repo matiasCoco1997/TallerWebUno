@@ -309,7 +309,6 @@
                     </div>
 
                     <div>
-                        <form th:action="@{/listaReproduccion/agregarNoticia}" method="POST">
                             <button th:value="${noticia.idNoticia}" name="noticiaAgregar">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512">
                                     <style> svg {
@@ -318,7 +317,6 @@
                                     <path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/>
                                 </svg>
                             </button>
-                        </form>
                     </div>
                     <button type="button" name="compartir" th:value="${noticia.idNoticia}"><img th:src="@{/imagenes/compartir.png}" class="w-[1.5em]"></button>
                 </div>
@@ -333,11 +331,9 @@
         </div>
     </section>
 
-    <div id="form-compartir" class="bg-black border border-[#5C67DE] rounded-3xl fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <div id="form-compartir" class="bg-black rounded-3xl fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
 
     </div>
-
-
 
     <a th:href="@{/noticia/crear}">
         <div class="rounded-full bg-[#5C67DE] border border-4 border-black fixed right-0 bottom-0 w-[150px] h-[150px] flex items-center justify-center">
@@ -462,6 +458,7 @@
 </script>
 
 <script th:src="@{/js/likearNoticia.js}"></script>
+<script th:src="@{/js/agregarNoticiaListaReproduccion.js}"></script>
 <script th:src="@{/js/obtenerUsuariosParaCompartirNoticia.js}"></script>
 <script th:src="@{/js/mostrarListaComentarios.js}"></script>
 <script th:src="@{/js/comentarioMenu.js}"></script>

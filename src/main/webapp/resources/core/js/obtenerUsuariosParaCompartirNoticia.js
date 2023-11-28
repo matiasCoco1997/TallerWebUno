@@ -6,6 +6,7 @@ compartir.forEach(c => {
         var url = "/sunn/obtenerFormCompartir";
         $.post(url).done(function (data) {
             contenedorCompartir.innerHTML=data
+            contenedorCompartir.classList.add("border","border-[#5C67DE]")
             cerrarPopUp();
             var botonCompartirNoticia=document.getElementById("idNoticiaCompartida");
 
@@ -17,6 +18,8 @@ compartir.forEach(c => {
                 $.post(url,data).done(function (data) {
                     cantidadNotificaciones.textContent=parseInt(cantidadNotificaciones.textContent)+1
                     contenedorCompartir.innerHTML=""
+                    contenedorCompartir.classList.remove("border","border-[#5C67DE]")
+
                 });
             })
 

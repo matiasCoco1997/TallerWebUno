@@ -10,6 +10,7 @@ import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -89,7 +90,7 @@ public class ControladorListaRepTest {
     }
     @Test
     public void siSeCargaCorrectamenteUnaNoticiaDebeRedirigirmeAMiListasDeReproduccion(){
-        String viewName = controladorListaRep.agregarNoticiaALista(usuarioMock.getIdUsuario(),sessionMock).getViewName();
-        assertThat(viewName,is("redirect:/listaReproduccion"));
+        ResponseEntity<String> viewName = controladorListaRep.agregarNoticiaALista(usuarioMock.getIdUsuario(),sessionMock);
+        assertThat(viewName,is("Noticia agregada correctamente!"));
     }
 }

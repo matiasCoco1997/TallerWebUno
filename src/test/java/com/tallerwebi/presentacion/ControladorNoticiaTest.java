@@ -17,6 +17,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.stubbing.OngoingStubbing;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -334,10 +335,10 @@ public class ControladorNoticiaTest {
     }
 
     @Test
-    public void queAlCompartirNoticiaMeRedirijaAlHome(){
+    public void queAlCompartirNoticiaMeNotifiqueQueSeHizoCorrectamente(){
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
-        ModelAndView modelAndView=controladorNoticia.compartir(1L,1L,sessionMock);
-        assertThat(modelAndView.getViewName(), equalToIgnoringCase("redirect:/home"));
+        ResponseEntity<String> mensaje =controladorNoticia.compartir(1L,1L,sessionMock);
+        assertThat(mensaje, is("La noticia se compartió correctamente!"));
     }
 
     @Test

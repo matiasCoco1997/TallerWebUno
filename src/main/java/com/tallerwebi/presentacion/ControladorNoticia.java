@@ -221,8 +221,7 @@ public class ControladorNoticia {
     }
 
     @RequestMapping(value = "/compartir", method = RequestMethod.POST)
-    public ModelAndView compartir(@RequestParam("idNoticiaCompartida") Long idNoticia,@RequestParam("receptor") Long idUsuario, HttpSession session){
-        ModelMap model=new ModelMap();
+    public ResponseEntity<String> compartir(@RequestParam("idNoticiaCompartida") Long idNoticia,@RequestParam("receptor") Long idUsuario, HttpSession session){
         Noticia noticia=servicioNoticia.buscarNoticiaPorId(idNoticia);
         Usuario receptor= null;
         try {
@@ -231,9 +230,9 @@ public class ControladorNoticia {
             servicioNoticia.compartirNoticia(new Notificacion(emisor,receptor,noticia));
             servicioEmail.compartirNoticiaPorEmail(emisor, receptor, noticia);
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            return ResponseEntity.ok("No se pudo compartir la noticia!");
         }
-        return new ModelAndView("redirect:/home",model);
+        return ResponseEntity.ok("La noticia se compartió correctamente!");
     }
 
     @RequestMapping(value = "/eliminar-noticia")

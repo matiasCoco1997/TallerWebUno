@@ -6,6 +6,7 @@ import com.tallerwebi.dominio.servicios.ServicioListaRep;
 import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -52,12 +53,12 @@ public class ControladorListaRep {
     }
 
     @RequestMapping(value = "/listaReproduccion/agregarNoticia", method = RequestMethod.POST)
-    public ModelAndView agregarNoticiaALista(@RequestParam("noticiaAgregar") Long idNoticia, HttpSession session){
+    public ResponseEntity<String> agregarNoticiaALista(@RequestParam("noticiaAgregar") Long idNoticia, HttpSession session){
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
         ListaReproduccion lista = new ListaReproduccion(usuario,noticia);
         servicioListaRep.agregarNoticiaALista(lista);
-        return new ModelAndView("redirect:/listaReproduccion");
+        return ResponseEntity.ok("Noticia agregada correctamente!");
     }
 
 }
