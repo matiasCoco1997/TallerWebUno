@@ -68,7 +68,11 @@ public class ServicioPDFImpl implements ServicioPDF{
         List<String> valores=new ArrayList<>();
         for (Categoria categoria:categorias) {
             valores.add(categoria.getDescripcion());
-            valores.add(String.valueOf(categoria.getVistas()));
+            if(categoria!=null || categoria.getVistas()!=0){
+                valores.add(String.valueOf(categoria.getVistas()));
+            }else{
+                valores.add(String.valueOf(0));
+            }
             valores.add(String.valueOf(obtenerCantidadNoticiasRelacionadas(categoria.getDescripcion())));
         }
         return valores;

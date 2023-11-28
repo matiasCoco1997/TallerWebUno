@@ -140,7 +140,7 @@
                         <p class="text-black font-semibold text-3xl"
                            th:text="'Compartiste esta noticia con '+${notificacion.getUsuarioNotificado().nombre}+'!'"></p>
                         <h3 class="text-black font-semibold text-2xl"
-                            th:text="${notificacion.getNoticiaNotificada().getFechaDePublicacion()}"></h3>
+                            th:text="${notificacion.fecha}"></h3>
                     </div>
                     <h1 class="text-black font-semibold text-xl"
                         th:text="${notificacion.getNoticiaNotificada().titulo}"></h1>

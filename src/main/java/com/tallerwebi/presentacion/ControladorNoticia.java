@@ -221,7 +221,7 @@ public class ControladorNoticia {
     }
 
     @RequestMapping(value = "/compartir", method = RequestMethod.POST)
-    public ModelAndView compartir(@RequestParam("idNoticiaCompartida")Long idNoticia,@RequestParam("receptor") Long idUsuario, HttpSession session){
+    public ModelAndView compartir(@RequestParam("idNoticiaCompartida") Long idNoticia,@RequestParam("receptor") Long idUsuario, HttpSession session){
         ModelMap model=new ModelMap();
         Noticia noticia=servicioNoticia.buscarNoticiaPorId(idNoticia);
         Usuario receptor= null;

@@ -49,7 +49,6 @@ public class Notificacion {
     protected void onCreate() {
         vista = false;
         fecha = LocalDate.now();
-
     }
 
     public Notificacion(Usuario usuarioNotificado, String nombreUsuarioSeguido, Noticia noticia) {
