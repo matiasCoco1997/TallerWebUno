@@ -9,6 +9,7 @@ import org.springframework.stereotype.*;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -50,14 +51,11 @@ public class ControladorHome {
 
         List<Usuario> usuarios = servicioUsuario.listarUsuarioParaSeguir(usuario.getIdUsuario());
 
-        List<Usuario> usuariosSeguidos = servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
-
         List<Noticia> noticiasCarrousel  = servicioNoticia.obtenerNoticiasCategoria(usuario.getIdUsuario(), 5);
 
         model.put("noticias", noticias);
         model.put("notificaciones", notificaciones.size());
         model.put("usuarios",usuarios);
-        model.put("usuariosSeguidos",usuariosSeguidos);
         model.put("categorias",categorias);
         model.put("usuario",usuario);
         model.put("noticiasCarrousel", noticiasCarrousel);
@@ -137,5 +135,14 @@ public class ControladorHome {
         model.put("usuario",usuarioLogueado);
 
         return new ModelAndView("home-vista",model);
+    }
+
+    @RequestMapping(value = "/obtenerFormCompartir",method = RequestMethod.POST)
+    public ModelAndView obtenerFormCompartir(HttpSession session){
+        ModelMap model=new ModelMap();
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        List<Usuario> usuariosSeguidos = servicioUsuario.listarUsuarioseguidos(usuario.getIdUsuario());
+        model.put("usuariosSeguidos",usuariosSeguidos);
+        return new ModelAndView("formCompartir",model);
     }
 }

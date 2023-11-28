@@ -9,7 +9,8 @@
     <script src="https://cdn.tailwindcss.com/3.3.0"></script>
     <!--Slick-->
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
+    <link rel="stylesheet" type="text/css"
+          href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
     <script src="https://kit.fontawesome.com/dc0786cc41.js" crossorigin="anonymous"></script>
 
@@ -39,7 +40,7 @@
             height: 120px;
             border-radius: 10px;
             background-color: black;
-            color:white;
+            color: white;
         }
 
         .card-image {
@@ -53,13 +54,13 @@
             border-radius: 10px 0px 0px 10px;
         }
 
-        .card-image i{
+        .card-image i {
             font-size: 60px;
-            color:white;
+            color: white;
         }
 
-        .card-content{
-            padding:10px;
+        .card-content {
+            padding: 10px;
         }
 
         .card-title {
@@ -79,7 +80,7 @@
 
 <!-- Main navigation container -->
 <nav style="background-color: black"
-        class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+     class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
     <div class="flex w-full flex-wrap items-center justify-between px-3">
         <!-- Logo -->
         <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
@@ -100,7 +101,8 @@
                    href="" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
                    aria-expanded="false">
                     <!-- User avatar -->
-                    <img th:src="@{${usuario.getFotoPerfil()}}" th:alt="@{${usuario.getAltFotoPerfil()}}" class="rounded-full"
+                    <img th:src="@{${usuario.getFotoPerfil()}}" th:alt="@{${usuario.getAltFotoPerfil()}}"
+                         class="rounded-full"
                          style="height: 25px; width: 25px" loading="lazy"/>
                 </a>
                 <!-- Second dropdown menu -->
@@ -145,16 +147,21 @@
 <nav id="bar" class="flex justify-center">
     <div class="flex md:flex-row justify-between items-center my-4 space-x-4">
         <a th:href="@{/admin/home}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Inicio</a>
-        <a th:href="@{/eliminar-noticia}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver noticias</a>
-        <a th:href="@{/admin/usuarios}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver usuarios</a>
+        <a th:href="@{/eliminar-noticia}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver
+            noticias</a>
+        <a th:href="@{/admin/usuarios}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Ver
+            usuarios</a>
         <a th:href="@{/informes}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Informes</a>
-        <a th:href="@{/noticias-mas-likeadas}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Noticias más likeadas</a>
+        <a th:href="@{/noticias-mas-likeadas}" class="bg-black text-white px-4 py-2 rounded-md hover:bg-green-900">Noticias
+            más likeadas</a>
     </div>
     <form th:action="@{/fecha}" method="GET" class="ml-4 flex items-center">
         <label for="simple-search" class="sr-only">Buscar por fecha</label>
         <input type="date" id="simple-search" name="fecha-publicacion"
-               class="px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:border-primary-500 bg-black text-white" required>
-        <button type="submit" class="bg-green-900 text-white px-4 py-2 rounded-md ml-2 hover:bg-green-700">Buscar</button>
+               class="px-3 py-2 border border-neutral-300 rounded-md focus:outline-none focus:border-primary-500 bg-black text-white"
+               required>
+        <button type="submit" class="bg-green-900 text-white px-4 py-2 rounded-md ml-2 hover:bg-green-700">Buscar
+        </button>
     </form>
 </nav>
 
@@ -167,63 +174,54 @@
     <!-- component -->
     <div th:if="${error == null}" class="min-h-screen bg-gray-50/50">
 
-        <div class="card-container">
 
-            <h1 style="text-align: center; width: 100%; font-size: 30px; font-weight: bold; color: black; margin-bottom: 20px">Cantidad de noticias por categoría:</h1>
+        <div class="card-container" style="padding: 15px; width:50%;margin: auto">
 
-            <div class="card">
-                <div class="card-image">
-                    <i class="fa-solid fa-basketball"></i>
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Categoría: Deporte</h3>
-                    <h4>Cantidad de noticias: <span class="card-text" th:text="${deportes}"></span></h4>
-                </div>
-            </div>
+            <h1 style="text-align: center; width: 100%; font-size: 30px; font-weight: bold; color: black; margin-bottom: 20px">
+                Categorías mas visitadas :</h1>
 
-            <div class="card">
-                <div class="card-image">
-                    <i class="fa-solid fa-gamepad"></i>
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Categoría: Juegos</h3>
-                    <h4>Cantidad de noticias: <span class="card-text" th:text="${juegos}"></span></h4>
-                </div>
-            </div>
+            <div class="card" th:each="categoria : ${categoriasOrdenadasPorVisitas}">
 
-            <div class="card">
-                <div class="card-image">
-                    <i class="fa-solid fa-landmark"></i>
-                </div>
-                <div class="card-content">
-                    <h3 class="card-title">Categoría: Política</h3>
-                    <h4>Cantidad de noticias: <span class="card-text" th:text="${politica}"></span></h4>
-                </div>
-            </div>
-
-            <div class="card">
-                <div class="card-image">
+                <div th:if="${categoria.getDescripcion() == 'Arte'}" class="card-image">
                     <i class="fa-solid fa-computer"></i>
                 </div>
-                <div class="card-content">
-                    <h3 class="card-title">Categoría: Programación</h3>
-                    <h4>Cantidad de noticias: <span class="card-text" th:text="${programacion}"></span></h4>
-                </div>
-            </div>
 
-            <div class="card">
-                <div class="card-image">
-                    <i class="fa-solid fa-paintbrush"></i>
+                <div th:if="${categoria.getDescripcion() == 'Deportes'}" class="card-image">
+                    <i class="fa-solid fa-basketball"></i>
                 </div>
+
+                <div th:if="${categoria.getDescripcion() == 'Politica'}" class="card-image">
+                    <i class="fa-solid fa-landmark"></i>
+                </div>
+
+                <div th:if="${categoria.getDescripcion() == 'Programacion'}" class="card-image">
+                    <i class="fa-solid fa-computer"></i>
+                </div>
+
+                <div th:if="${categoria.getDescripcion() == 'Juegos'}" class="card-image">
+                    <i class="fa-solid fa-gamepad"></i>
+                </div>
+
                 <div class="card-content">
-                    <h3 class="card-title">Categoría: Arte</h3>
-                    <h4>Cantidad de noticias: <span class="card-text" th:text="${arte}"></span></h4>
+                    <h3 class="card-title">Categoría: <span th:text="${categoria.getDescripcion()}"></span></h3>
+                    <h4>Cantidad de visitas a la categoría: <span class="card-text" th:text="${categoria.getVistas()}"></span></h4>
+
+                    <h4>Cantidad de noticias activas:
+                        <span th:if="${categoria.getDescripcion() == 'Arte'}" class="card-text" th:text="${arte}"></span>
+                        <span th:if="${categoria.getDescripcion() == 'Deportes'}" class="card-text" th:text="${deportes}"></span>
+                        <span th:if="${categoria.getDescripcion() == 'Politica'}" class="card-text" th:text="${politica}"></span>
+                        <span th:if="${categoria.getDescripcion() == 'Programacion'}" class="card-text" th:text="${programacion}"></span>
+                        <span th:if="${categoria.getDescripcion() == 'Juegos'}" class="card-text" th:text="${juegos}"></span>
+                    </h4>
                 </div>
+
+
             </div>
 
         </div>
 
     </div>
+
 </main>
 <!--
        <div class="p-4 mx-52">

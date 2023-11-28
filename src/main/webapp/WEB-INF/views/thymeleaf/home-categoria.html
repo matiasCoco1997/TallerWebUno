@@ -154,11 +154,10 @@
                     </a>
                 </div>
             </div>
-            <div class="flex justify-between max-w-xs items-center text-white">
+            <div class="flex justify-start max-w-xs items-center text-white">
                 <!--aca estaba el boton por las dudas-->
-                <div
-                        class="flex items-center border-2 border-white rounded-lgs px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-gray-200">
-                    <div class="mr-2">
+                <div th:if="${usuario.getPlan() != null}" class="flex items-center mr-6 border-2 border-white rounded-lgs px-3 py-2 cursor-pointer hover:bg-gray-800 hover:text-gray-200">
+                    <div>
                         <audio th:id="${noticia.idNoticia}" th:src="@{${noticia.rutaDeAudioPodcast}}"></audio>
                         <button class="playButton" th:name="${noticia.idNoticia}">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
@@ -173,7 +172,7 @@
                 </div>
 
                 <!--Comentarios-->
-                <div class="comentario">
+                <div class="comentario mr-6 ml-2" th:if="${usuario.getPlan() != null}">
                     <svg xmlns="http://www.w3.org/2000/svg" height="1.5em"
                          viewBox="0 0 512 512">
                         <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
@@ -186,7 +185,7 @@
                     </svg>
                 </div>
 
-                <div class="me-gusta">
+                <div class="me-gusta mr-6 ml-2">
                     <button th:id="${noticia.idNoticia}" class="flex dar-like-btn" th:if="${ noticia.estaLikeada }">
                         <svg th:class="'like_' + ${noticia.idNoticia}" xmlns="http://www.w3.org/2000/svg"
                              height="1.5em" viewBox="0 0 512 512" style="fill:green">
@@ -207,7 +206,7 @@
                     </button>
                 </div>
 
-                <div>
+                <div class="mr-6 ml-2" th:if="${usuario.getPlan() != null}">
                     <form th:action="@{/listaReproduccion/agregarNoticia}" method="POST">
                         <button th:value="${noticia.idNoticia}" name="noticiaAgregar">
                             <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 448 512">
@@ -219,9 +218,14 @@
                         </button>
                     </form>
                 </div>
+                <button type="button" class="ml-2" name="compartir" th:value="${noticia.idNoticia}"><img th:src="@{/imagenes/compartir.png}" class="w-[1.5em]"></button>
+
             </div>
         </div>
     </section>
+    <div id="form-compartir" class="bg-black rounded-3xl fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+
+    </div>
 
 </main>
 
@@ -265,6 +269,8 @@
     });
 </script>
 <script th:src="@{/js/likearNoticia.js}"></script>
+<script th:src="@{/js/obtenerUsuariosParaCompartirNoticia.js}"></script>
+
 
 </body>
 

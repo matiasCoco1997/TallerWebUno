@@ -48,6 +48,12 @@ public class RepositorioHomeImpl implements RepositorioHome{
     }
 
     @Override
+    public List<Categoria> obtenerCategoriasSegunVisitas() {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Categoria c ORDER BY c.vistas DESC").list();
+    }
+
+    @Override
     public List<Usuario> listarUsuarios(Long idUsuario) {
         final Session session = sessionFactory.getCurrentSession();
         return session.createQuery("FROM Usuario WHERE id != :id")

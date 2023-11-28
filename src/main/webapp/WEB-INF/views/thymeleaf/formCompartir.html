@@ -1,0 +1,13 @@
+
+<div class="p-10 pb-6">
+  <div th:each="usuario : ${usuariosSeguidos}" class="mb-8">
+    <input type="radio" th:value="${usuario.getIdUsuario()}" name="receptor">
+    <label class="text-white text-2xl" th:text="${usuario.nombre}"></label>
+  </div>
+  <button id="idNoticiaCompartida" type="button"
+          class="text-white text-2xl bg-[#5C67DE] rounded-3xl p-4">Compartir!
+  </button>
+</div>
+
+<button class="absolute right-4 top-4 w-[10%]" id="cerrarPopUp"><img
+        th:src="@{/imagenes/cerrar.png}"></button>

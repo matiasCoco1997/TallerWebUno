@@ -53,6 +53,7 @@ public class ControladorAdmin {
         if (usuario.getRol() != (Rol.ADMIN))
             return new ModelAndView("redirect:/login");
 
+        model.put("categoriasOrdenadasPorVisitas" , servicioHome.obtenerCategoriasSegunVisitas());
         model.put("usuario", usuario);
         model.put("deportes", servicioAdmin.obtenerNroNoticiasPorCategoria("Deportes"));
         model.put("politica", servicioAdmin.obtenerNroNoticiasPorCategoria("Politica"));
