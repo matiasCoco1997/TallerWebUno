@@ -338,7 +338,7 @@ public class ControladorNoticiaTest {
     public void queAlCompartirNoticiaMeNotifiqueQueSeHizoCorrectamente(){
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         ResponseEntity<String> mensaje =controladorNoticia.compartir(1L,1L,sessionMock);
-        assertThat(mensaje, is("La noticia se compartió correctamente!"));
+        assertThat(mensaje.getBody(), is("La noticia se compartió correctamente!"));
     }
 
     @Test

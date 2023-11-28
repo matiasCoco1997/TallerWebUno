@@ -90,7 +90,9 @@ public class ControladorListaRepTest {
     }
     @Test
     public void siSeCargaCorrectamenteUnaNoticiaDebeRedirigirmeAMiListasDeReproduccion(){
-        ResponseEntity<String> viewName = controladorListaRep.agregarNoticiaALista(usuarioMock.getIdUsuario(),sessionMock);
-        assertThat(viewName,is("Noticia agregada correctamente!"));
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
+        ResponseEntity<String> respuesta = controladorListaRep.agregarNoticiaALista(usuarioMock.getIdUsuario(),sessionMock);
+        assertThat(respuesta.getBody(),is("Noticia agregada correctamente!"));
     }
 }

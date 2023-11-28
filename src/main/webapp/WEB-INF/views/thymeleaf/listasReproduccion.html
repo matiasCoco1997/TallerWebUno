@@ -100,12 +100,14 @@
                 <div class="w-[58%]">
                     <p th:text="${lista.noticia.titulo}" class="text-black font-semibold text-3xl ml-6"></p>
                     <p th:text="${lista.noticia.resumen}" class="text-black text-xl ml-6 mt-6"></p>
-                    <img th:src="@{/imagenes/basura.png}" class="h-[15%] w-[7%] mt-10 ml-6">
+                    <button type="button" name="eliminarNoticiaLista" th:value="${lista.noticia.idNoticia}">
+                        <img th:src="@{/imagenes/basura.png}" class="h-[15%] w-[7%] mt-10 ml-6">
+                    </button>
                 </div>
                 <div class="w-[17%] flex items-center">
                     <audio th:id="${lista.noticia.idNoticia}" th:src="@{${lista.noticia.rutaDeAudioPodcast}}" class="audio"></audio>
                     <button class="playButton" th:name="${lista.noticia.idNoticia}">
-                        <svg xmlns="http://www.w3.org/2000/svg" height="1.5em" viewBox="0 0 512 512">
+                        <svg xmlns="http://www.w3.org/2000/svg" height="w-[100px]" viewBox="0 0 512 512">
                             <style> svg {
                                 fill: #ffffff
                             } </style>
@@ -145,6 +147,7 @@
 
 </script>
 
+<script th:src="@{/js/eliminarNoticiaListaReproduccion.js}"></script>
 <script th:src="@{/js/likearNoticia.js}"></script>
 <script th:src="@{/js/playList.js}"></script>
 </body>

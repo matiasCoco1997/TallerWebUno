@@ -46,5 +46,4 @@ public interface ServicioNoticia {
     List<Noticia> obtenerNoticiasPorFecha(String fecha);
 
     List<Noticia> listarNoticiasMasLikeadas();
-
 }

@@ -55,10 +55,26 @@ public class ControladorListaRep {
     @RequestMapping(value = "/listaReproduccion/agregarNoticia", method = RequestMethod.POST)
     public ResponseEntity<String> agregarNoticiaALista(@RequestParam("noticiaAgregar") Long idNoticia, HttpSession session){
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
-        Noticia noticia = servicioNoticia.buscarNoticiaPorId(idNoticia);
+        Noticia noticia =   servicioNoticia.buscarNoticiaPorId(idNoticia);
         ListaReproduccion lista = new ListaReproduccion(usuario,noticia);
         servicioListaRep.agregarNoticiaALista(lista);
         return ResponseEntity.ok("Noticia agregada correctamente!");
+    }
+    @RequestMapping(value = "/listaReproduccion/eliminarNoticia", method = RequestMethod.POST)
+    public ResponseEntity<String> eliminarNoticiaALista(@RequestParam("noticiaEliminar") Long idNoticia, HttpSession session){
+        Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
+        ListaReproduccion lista = null;
+        try {
+            lista = servicioListaRep.buscarListaReproduccion(idNoticia,usuario.getIdUsuario());
+        } catch (Exception e) {
+            return ResponseEntity.ok("No se encontró la noticia!!");
+        }
+        try {
+            servicioListaRep.eliminarNoticiaDeLista(lista);
+        } catch (Exception e) {
+            return ResponseEntity.ok("No se pudo eliminar!");
+        }
+        return ResponseEntity.ok("Noticia eliminada correctamente!");
     }
 
 }

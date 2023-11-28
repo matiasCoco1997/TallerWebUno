@@ -9,4 +9,8 @@ public interface RepositorioListaRep {
 
     List<ListaReproduccion> obtenerListaReproduccionDelUsuarioLogueado(Long idUsuario);
     ListaReproduccion buscarListaPorID(Long id);
+
+    ListaReproduccion buscarListaReproduccion(Long idNoticia, Long idUsuario);
+
+    void eliminarNoticiaDeLista(ListaReproduccion lista);
 }

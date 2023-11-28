@@ -11,4 +11,8 @@ public interface ServicioListaRep {
     void agregarNoticiaALista(ListaReproduccion listaReproduccion);
 
     List<ListaReproduccion> obtenerListaReproduccionDelUsuarioLogueado(Long idUsuario);
+
+    ListaReproduccion buscarListaReproduccion(Long idNoticia, Long idUsuario) throws Exception;
+
+    void eliminarNoticiaDeLista(ListaReproduccion lista) throws Exception;
 }

@@ -28,4 +28,21 @@ public class ServicioListaRepImpl implements ServicioListaRep {
     public List<ListaReproduccion> obtenerListaReproduccionDelUsuarioLogueado(Long idUsuario) {
         return repositorioListaRep.obtenerListaReproduccionDelUsuarioLogueado(idUsuario);
     }
+
+    @Override
+    public ListaReproduccion buscarListaReproduccion(Long idNoticia, Long idUsuario) throws Exception {
+        ListaReproduccion listaRep=repositorioListaRep.buscarListaReproduccion(idNoticia,idUsuario);
+        if(listaRep==null){
+            throw new Exception();
+        }
+        return listaRep;
+    }
+
+    @Override
+    public void eliminarNoticiaDeLista(ListaReproduccion lista) throws Exception {
+        if(lista==null){
+            throw new Exception();
+        }
+        repositorioListaRep.eliminarNoticiaDeLista(lista);
+    }
 }
