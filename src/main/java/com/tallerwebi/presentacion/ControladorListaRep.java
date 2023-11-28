@@ -61,7 +61,7 @@ public class ControladorListaRep {
         return ResponseEntity.ok("Noticia agregada correctamente!");
     }
     @RequestMapping(value = "/listaReproduccion/eliminarNoticia", method = RequestMethod.POST)
-    public ResponseEntity<String> eliminarNoticiaALista(@RequestParam("noticiaEliminar") Long idNoticia, HttpSession session){
+    public ResponseEntity<String> eliminarNoticiaDeLista(@RequestParam("noticiaEliminar") Long idNoticia, HttpSession session){
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
         ListaReproduccion lista = null;
         try {

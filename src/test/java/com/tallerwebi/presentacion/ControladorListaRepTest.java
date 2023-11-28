@@ -89,10 +89,18 @@ public class ControladorListaRepTest {
         assertThat(listasObtenidas.size(),equalTo(2));
     }
     @Test
-    public void siSeCargaCorrectamenteUnaNoticiaDebeRedirigirmeAMiListasDeReproduccion(){
+    public void siSeCargaCorrectamenteUnaNoticiaDebeNotificarme(){
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         when(servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
         ResponseEntity<String> respuesta = controladorListaRep.agregarNoticiaALista(usuarioMock.getIdUsuario(),sessionMock);
         assertThat(respuesta.getBody(),is("Noticia agregada correctamente!"));
+    }
+
+    @Test
+    public void siSeEliminaCorrectamenteUnaNoticiaDebeNotificarme(){
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
+        ResponseEntity<String> respuesta = controladorListaRep.eliminarNoticiaDeLista(usuarioMock.getIdUsuario(),sessionMock);
+        assertThat(respuesta.getBody(),is("Noticia eliminada correctamente!"));
     }
 }

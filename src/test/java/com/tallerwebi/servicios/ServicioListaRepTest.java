@@ -59,5 +59,13 @@ public class ServicioListaRepTest {
         assertThat(sizeListas, Matchers.is(2));
     }
 
+    @Test
+    public void queSePuedaEliminarUnaNoticiaDeLista(){
+        try {
+            servicioListaRep.eliminarNoticiaDeLista(listaMock);
+        } catch (Exception e) {
+        }
+        verify(repositorioListaRepMock,times(1)).eliminarNoticiaDeLista(listaMock);
+    }
 
 }
