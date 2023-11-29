@@ -141,13 +141,13 @@ public class RepositorioNoticiaImpl implements RepositorioNoticia {
     @Override
     public List<Noticia> listarNoticias() {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Noticia WHERE activa=true ORDER BY idNoticia DESC").list();
+        return session.createQuery("FROM Noticia WHERE activa=true ORDER BY fechaDePublicacion DESC").list();
     }
 
     @Override
     public List<Noticia> obtenerMisNoticias(Long idUsuario) {
         return sessionFactory.getCurrentSession().
-                createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = true ORDER BY idNoticia DESC").
+                createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = true ORDER BY fechaDePublicacion DESC").
                 setParameter("idUsuario",idUsuario).list();
     }
 

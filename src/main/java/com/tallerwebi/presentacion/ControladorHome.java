@@ -33,6 +33,7 @@ public class ControladorHome {
 
     @RequestMapping("/home")
     public ModelAndView home(HttpSession session){
+        
         ModelMap model=new ModelMap();
 
         Usuario usuario=(Usuario) session.getAttribute("sessionUsuarioLogueado");
