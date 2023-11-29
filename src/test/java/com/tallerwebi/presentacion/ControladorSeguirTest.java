@@ -148,40 +148,40 @@ public class ControladorSeguirTest {
     @Test
     public void siEstoyLogueadoQueMeLleveALaPaginaDeSiguiendo() throws Exception {
         when(servicioUsuarioMock.obtenerUsuarioPorId(1L)).thenReturn(usuarioMock);
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(usuarioMock.getIdUsuario());
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(usuarioMock.getIdUsuario(), sessionMock);
         assertEquals("siguiendo-seguidores", model.getViewName());
         assertEquals("Usuario", model.getModel().get("usuario").getClass().getSimpleName());
     }
     @Test
     public void siNoEstoyLogueadoNoPuedoVerLosUsuariosQueEstoySiguiendoyMeLlelvaAlLogin(){
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(usuarioMock.getIdUsuario());
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(usuarioMock.getIdUsuario(), sessionMock);
         assertEquals("redirect:/login", model.getViewName());
     }
     @Test
     public void siLaListaDeSeguidosEstaVaciaEnviaUnMensajeConErrorALaVistaDeSeguiendo() throws Exception {
         when(servicioUsuarioMock.obtenerUsuarioPorId(1L)).thenReturn(usuarioMock);
         when(servicioUsuarioMock.listarUsuarioseguidos(anyLong())).thenReturn(new ArrayList<Usuario>());
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(usuarioMock.getIdUsuario());
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(usuarioMock.getIdUsuario(), sessionMock);
         assertEquals("siguiendo-seguidores", model.getViewName());
         assertEquals("No estás siguiendo a ningún usuario.",model.getModel().get("error"));
     }
     @Test
     public void siQuieroVerMisSeguidoresMeEnviaALaVistaConLaListaDeSeguidores() throws Exception {
         when(servicioUsuarioMock.obtenerUsuarioPorId(1L)).thenReturn(usuarioMock);
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(usuarioMock.getIdUsuario());
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(usuarioMock.getIdUsuario(), sessionMock);
         assertEquals("siguiendo-seguidores", model.getViewName());
     }
 
     @Test
     public void siNoEstoyLogueadoNoPuedoVerLosUsuariosQueMeSiguenYMeLlelvaAlLogin(){
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(usuarioMock.getIdUsuario());
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(usuarioMock.getIdUsuario(), sessionMock);
         assertEquals("redirect:/login", model.getViewName());
     }
     @Test
     public void siLaListaDeSeguidoresEstaVaciaEnviaUnMensajeConErrorALaVistaDeSeguidores() throws Exception {
         when(servicioUsuarioMock.obtenerUsuarioPorId(1L)).thenReturn(usuarioMock);
         when(servicioUsuarioMock.listarUsuarioQueMeSiguen(anyLong())).thenReturn(new ArrayList<Usuario>());
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(usuarioMock.getIdUsuario());
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(usuarioMock.getIdUsuario(), sessionMock);
         assertEquals("siguiendo-seguidores", model.getViewName());
         assertEquals("No tenes seguidores.",model.getModel().get("error"));
     }
