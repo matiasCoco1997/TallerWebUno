@@ -32,5 +32,19 @@ public class RepositorioListaRepImpl implements RepositorioListaRep{
         return (ListaReproduccion) sessionFactory.getCurrentSession().createQuery("FROM ListaReproduccion  where id = :id").setParameter("id",id).uniqueResult();
     }
 
+    @Override
+    public ListaReproduccion buscarListaReproduccion(Long idNoticia, Long idUsuario) {
+        return (ListaReproduccion) sessionFactory.getCurrentSession().
+                createQuery("FROM ListaReproduccion WHERE usuario_idUsuario= :idUsuario and noticia_idNoticia= :idNoticia")
+                .setParameter("idUsuario",idUsuario).setParameter("idNoticia",idNoticia).setMaxResults(1).uniqueResult();
+    }
+
+    @Override
+    public void eliminarNoticiaDeLista(ListaReproduccion lista) {
+        sessionFactory.getCurrentSession().
+                createQuery("DELETE FROM ListaReproduccion WHERE id= :idLista")
+                .setParameter("idLista",lista.getId()).executeUpdate();
+    }
+
 
 }

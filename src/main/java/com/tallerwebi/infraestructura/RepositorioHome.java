@@ -21,4 +21,6 @@ public interface RepositorioHome {
 
     void aumentarCantidadDeVistasDeUnaCategoria(String categoriaObtenida);
 
+    List<Categoria> obtenerCategoriasSegunVisitas();
+
 }

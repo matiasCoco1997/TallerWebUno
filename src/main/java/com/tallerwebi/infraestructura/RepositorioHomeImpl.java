@@ -21,7 +21,7 @@ public class RepositorioHomeImpl implements RepositorioHome{
     @Override
     public List<Noticia> listarNoticias() {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Noticia WHERE activa=true ORDER BY idNoticia DESC").list();
+        return session.createQuery("FROM Noticia WHERE activa=true ORDER BY fechaDePublicacion DESC").list();
     }
     @Override
     public List<Republicacion> obtenerRepublicaciones() {
@@ -48,6 +48,12 @@ public class RepositorioHomeImpl implements RepositorioHome{
     }
 
     @Override
+    public List<Categoria> obtenerCategoriasSegunVisitas() {
+        final Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("FROM Categoria c ORDER BY c.vistas DESC").list();
+    }
+
+    @Override
     public List<Usuario> listarUsuarios(Long idUsuario) {
         final Session session = sessionFactory.getCurrentSession();
         return session.createQuery("FROM Usuario WHERE id != :id")
@@ -65,7 +71,7 @@ public class RepositorioHomeImpl implements RepositorioHome{
     @Override
     public List<Noticia> obtenerNoticiasPorTitulo(String titulo) {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Noticia WHERE activa=true and titulo like :titulo")
+        return session.createQuery("FROM Noticia WHERE activa=true and titulo like :titulo ORDER BY fechaDePublicacion DESC")
                 .setParameter("titulo", "%"+titulo+"%")
                 .list();
     }

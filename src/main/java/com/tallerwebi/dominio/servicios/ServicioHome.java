@@ -31,8 +31,6 @@ public interface ServicioHome {
 
     void aumentarCantidadDeVistasDeUnaCategoria(String categoriaObtenida);
 
-    //List<MeGusta> obtenerMeGustas(Long usuario);
-
-    //MeGusta buscoNoticiasLikeadasPorUsuario(Long idUsuario , Long idNoticia);
+    List<Categoria> obtenerCategoriasSegunVisitas();
 
 }

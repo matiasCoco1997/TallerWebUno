@@ -100,7 +100,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public List<Noticia> obtenerMisNoticiasEnEstadoBorrador(Long idUsuario) {
         return sessionFactory.getCurrentSession().
-                createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = false").
+                createQuery("FROM Noticia WHERE usuario.idUsuario= :idUsuario AND activa = false ORDER BY fechaDePublicacion DESC").
                 setParameter("idUsuario",idUsuario).list();
     }
 
@@ -186,7 +186,8 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     @Override
     public List<Noticia> obtenerNoticiaDeSeguidos(Long idSeguidor) {
         String query = "SELECT n FROM Noticia n WHERE n.usuario.idUsuario != :idSeguidor AND n.usuario.idUsuario IN " +
-                "(SELECT s.idUsuarioPropio.idUsuario FROM Seguidos s WHERE s.idUsuarioSeguidor.idUsuario = :idSeguidor)";
+                "(SELECT s.idUsuarioPropio.idUsuario FROM Seguidos s WHERE s.idUsuarioSeguidor.idUsuario = :idSeguidor)" +
+                "ORDER BY n.fechaDePublicacion DESC";
 
         return sessionFactory.getCurrentSession().createQuery(query, Noticia.class)
                 .setParameter("idSeguidor", idSeguidor)
@@ -255,6 +256,7 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
     }
 
     @Override
+
     public List<Usuario> obtenerUsuarios() {
         final Session session = sessionFactory.getCurrentSession();
         return session.createQuery("FROM Usuario").list();
@@ -265,5 +267,13 @@ public class RepositorioUsuarioImpl implements RepositorioUsuario {
         return sessionFactory.getCurrentSession().
                 createQuery("FROM ListaReproduccion WHERE usuario.id= :idUsuario").setParameter("idUsuario",idUsuario).list();
     }
+
+    public void guardarPlan(Long idUsuario, Plan plan) {
+            Usuario usuario = sessionFactory.getCurrentSession().get(Usuario.class, idUsuario);
+            usuario.setPlan(plan);
+            sessionFactory.getCurrentSession().update(usuario);
+    }
+
+
 
 }

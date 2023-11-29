@@ -10,6 +10,7 @@ import com.tallerwebi.dominio.servicios.ServicioNoticia;
 import com.tallerwebi.dominio.servicios.ServicioUsuario;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -88,8 +89,18 @@ public class ControladorListaRepTest {
         assertThat(listasObtenidas.size(),equalTo(2));
     }
     @Test
-    public void siSeCargaCorrectamenteUnaNoticiaDebeRedirigirmeAMiListasDeReproduccion(){
-        String viewName = controladorListaRep.agregarNoticiaALista(usuarioMock.getIdUsuario(),sessionMock).getViewName();
-        assertThat(viewName,is("redirect:/listaReproduccion"));
+    public void siSeCargaCorrectamenteUnaNoticiaDebeNotificarme(){
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
+        ResponseEntity<String> respuesta = controladorListaRep.agregarNoticiaALista(usuarioMock.getIdUsuario(),sessionMock);
+        assertThat(respuesta.getBody(),is("Noticia agregada correctamente!"));
+    }
+
+    @Test
+    public void siSeEliminaCorrectamenteUnaNoticiaDebeNotificarme(){
+        when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
+        when(servicioNoticiaMock.buscarNoticiaPorId(noticiaMock.getIdNoticia())).thenReturn(noticiaMock);
+        ResponseEntity<String> respuesta = controladorListaRep.eliminarNoticiaDeLista(usuarioMock.getIdUsuario(),sessionMock);
+        assertThat(respuesta.getBody(),is("Noticia eliminada correctamente!"));
     }
 }

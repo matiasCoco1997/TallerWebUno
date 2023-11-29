@@ -71,4 +71,14 @@ public class RepositorioListaRepTest {
         List<ListaReproduccion> listaObtenida= repositorioListaRep.obtenerListaReproduccionDelUsuarioLogueado(lista.getUsuario().getIdUsuario());
         assertThat(listaObtenida.size(), is(1));
     }
+
+    @Transactional
+    @Rollback
+    @Test
+    public void queSePuedaEliminarUnaNoticiaLista(){
+        repositorioListaRep.agregarNoticiaALista(lista);
+        repositorioListaRep.eliminarNoticiaDeLista(lista);
+        List<ListaReproduccion> listaObtenida= repositorioListaRep.obtenerListaReproduccionDelUsuarioLogueado(lista.getUsuario().getIdUsuario());
+        assertThat(listaObtenida.size(), is(0));
+    }
 }

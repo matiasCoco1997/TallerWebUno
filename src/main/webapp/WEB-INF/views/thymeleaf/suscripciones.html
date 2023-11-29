@@ -3,111 +3,178 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <title>Document</title>
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tw-elements/dist/css/tw-elements.min.css" />
+  <script src="https://cdn.tailwindcss.com/3.3.0"></script>
+
+  <title>Suscripción</title>
+  <link rel="icon" href="imagenes/icono-sunn.png" type="image/x-icon">
 </head>
 <body class="bg-black">
 <header class="lg:flex justify-around items-center">
-  <img src="/public/imgs/logo.jpg" class="lg:w-[15%] w-[60%]">
-  <div class="hidden lg:flex w-[75%] justify-around items-center">
-    <form>
-      <input type="search" class="bg-[#1A1A1A] w-[800px] h-[40px] rounded-2xl text-white pl-4" placeholder="Quiero escuchar...">
-    </form>
-    <img src="/public/imgs/campanita.png" class="w-[40px] h-[40px]">
+  <nav style="background-color: black"
+       class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
+    <div class="flex w-full flex-wrap items-center justify-between px-3">
+      <!-- Logo -->
+      <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
+         th:href="@{/home}">
+        <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
+             alt="TE Logo" loading="lazy"/>
+      </a>
+      <!--Search-->
 
-    <img src="/public/imgs/fotoPerfil.png" class="w-[60x] h-[60px]">
-  </div>
-  <div class="lg:hidden w-[100%] flex items-center justify-between px-2 pr-6">
-    <form class="w-[80%]">
-      <input type="search" class="bg-[#1A1A1A] w-[90%] h-[40px] rounded-2xl text-white pl-4 mr-4 ml-2" placeholder="Quiero escuchar...">
-    </form>
-    <div class="w-[20%] flex items-center justify-center">
-      <img src="/public/imgs/campanita.png" class="w-[40%] mr-2 h-[10%]">
+      <form th:action="@{/titulo}" method="GET" class="flex items-center w-6/12">
+        <label for="simple-search" class="sr-only">Search</label>
+        <div class="relative w-full">
+          <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" class="w-6 h-6">
+              <path fill-rule="evenodd"
+                    d="M10.5 3.75a6.75 6.75 0 100 13.5 6.75 6.75 0 000-13.5zM2.25 10.5a8.25 8.25 0 1114.59 5.28l4.69 4.69a.75.75 0 11-1.06 1.06l-4.69-4.69A8.25 8.25 0 012.25 10.5z"
+                    clip-rule="evenodd"/>
+            </svg>
+          </div>
+          <input type="text" id="simple-search" name="titulo"
+                 class="bg-black-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-grey-500 focus:border-grey-500 block w-full pl-10 p-2.5  dark:bg-gray-900 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-grey-800 dark:focus:border-grey-800"
+                 placeholder="Search ..." required>
+        </div>
+      </form>
 
-      <img src="/public/imgs/fotoPerfil.png" class="w-[65%]">
+      <!-- Right elements -->
+      <div class="relative flex items-center">
+
+        <div class="relative">
+          <a class="mr-4 flex items-center" th:href="@{/notificaciones}">
+                    <span class="[&>svg]:w-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                                 class="h-5 w-5">
+                                <path fill-rule="evenodd"
+                                      d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                                      clip-rule="evenodd"/>
+                            </svg>
+                    </span>
+            <span id="cantidadNotificaciones" class="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white"
+                  th:text="${notificaciones}"></span>
+          </a>
+        </div>
+
+        <!-- Second dropdown container -->
+        <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+          <!-- Second dropdown trigger -->
+          <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+             href="" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
+             aria-expanded="false">
+            <!-- User avatar -->
+            <img th:src="@{${usuario.fotoPerfil}}" th:alt="@{${usuario.altFotoPerfil}}" class="rounded-full"
+                 style="height: 25px; width: 25px" alt="" loading="lazy"/>
+          </a>
+          <!-- Second dropdown menu -->
+          <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+              aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
+            <!-- Second dropdown menu items -->
+
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                 th:href="@{/perfil}" data-te-dropdown-item-ref>Ver Perfil</a>
+            </li>
+
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                 th:href="@{/siguiendo}" data-te-dropdown-item-ref>Siguiendo</a>
+            </li>
+
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                 th:href="@{/listaReproduccion}" data-te-dropdown-item-ref>Ver lista de reproducción</a>
+            </li>
+
+            <li>
+              <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                 th:href="@{/planes}" data-te-dropdown-item-ref>Planes</a>
+            </li>
+
+            <li class="bg-danger">
+              <a class=" block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                 th:href="@{/cerrar-sesion}" data-te-dropdown-item-ref>Cerrar Sesion</a>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
+  </nav>
 
-  </div>
 </header>
 <main>
   <div class="flex flex-wrap justify-center lg:gap-0 gap-10 mt-4 mb-4">
-    <div class="lg:w-[22%] w-[90%] mx-auto rounded-3xl">
-      <div class="bg-[#FF490F] rounded-3xl pt-8 pb-8 pl-4 pr-4 lg:mt-16">
-        <h1 class="text-white text-xl font-semibold">Premio</h1>
-        <h2 class="text-white text-xl"><strong class="text-2xl">$9.99</strong>/mes</h2>
-        <ul class="flex flex-col gap-6 mt-6">
-          <li class="flex text-white ">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Acceso limitado a la versión <br> de podcast de las notas
+    <div class="w-full h-8 text-5xl  flex justify-center items-center m-20">
+      <h1 id="typewriter" class="text-4xl font-bold text-white"></h1>
+    </div>
+    <div class="lg:w-[49%] w-[90%] mx-auto bg-[#323232] rounded-3xl bg-gradient-to-r from-cyan-500 to-blue-500">
+     <div class="px-6">
+        <h1 class="text-white text-2xl text-center mt-4 font-bold ">Accede a contenido exclusivo con una única suscripción</h1>
+      </div>
+      <div class="bg-gradient-to-r from-cyan-500 to-blue-500 rounded-3xl pt-5 pb-8 pl-4 pr-4 mt-1 text-center m-auto">
+        <h1 class="text-white text-xl font-semibold">Precio</h1>
+        <h2 class="text-white text-xl">$<strong class="text-2xl" th:text="${planes[0].precio}"></strong>/mes</h2>
+        <ul class="flex flex-col gap-5 mt-6 w-96 m-auto">
+          <li class="flex text-white">
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"  viewBox="0 0 448 512" class="w-14"><!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#ffffff" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+            <p>Comenta en las noticias y participa activamente en las conversaciones.</p>
           </li>
           <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Pueden elegir dos canales de <br> noticias gratuitos para habilitar <br> la opción de podcast.
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20"  viewBox="0 0 448 512" class="w-14"><!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#ffffff" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+            <p>Agrega a la lista de reproducción tu selección personalizada de noticias para disfrutarlas cuando quieras.</p>
           </li>
           <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Pueden generar 3 <br> listas de reproducción
+            <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 448 512" class="w-14"><!--!Font Awesome Free 6.5.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2023 Fonticons, Inc.--><path fill="#ffffff" d="M438.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L160 338.7 393.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>
+            <p >Reproducir contenido de audio exclusivo.</p>
           </li>
         </ul>
-        <div class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-10">
-          <a href="#" class="font-semibold text-white">En uso</a>
-        </div>
+        <button class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-12">
+          <a  th:href="@{'/pagar/'+${planes[0].idPlan}}" class="font-semibold text-white">Pagar</a>
+        </button>
       </div>
     </div>
 
-    <div class="lg:w-[24%] w-[90%] mx-auto bg-[#323232] rounded-3xl">
-      <h1 class="text-white text-2xl text-center mt-4 font-bold">Más popular</h1>
-      <div class="bg-[#5C67DE] rounded-3xl pt-8 pb-8 pl-4 pr-4 mt-2">
-        <h1 class="text-white text-xl font-semibold">Premio</h1>
-        <h2 class="text-white text-xl"><strong class="text-2xl">$9.99</strong>/mes</h2>
-        <ul class="flex flex-col gap-10 mt-6">
-          <li class="flex text-white ">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Voice messages anywhere
-          </li>
-          <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Voice messages anywhere
-          </li>
-          <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Voice messages anywhere
-          </li>
-        </ul>
-        <div class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-28">
-          <a href="#" class="font-semibold text-white">Pagar</a>
-        </div>
-      </div>
-    </div>
-
-
-    <div class="lg:w-[22%] w-[90%] mx-auto rounded-3xl">
-      <div class="bg-[#FF0FAD] rounded-3xl pt-8 pb-8 pl-4 pr-4 lg:mt-16 ">
-        <h1 class="text-white text-xl font-semibold">Premio</h1>
-        <h2 class="text-white text-xl"><strong class="text-2xl">$9.99</strong>/mes</h2>
-        <ul class="flex flex-col gap-6 mt-6">
-          <li class="flex text-white ">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Acceso ilimitado a <br> los podcasts
-          </li>
-          <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Pueden generar listas de <br> reproducción personalizadas <br> con todas  las notas que <br> deseen escuchar.                   </li>
-          <li class="flex text-white">
-            <img src="/public/imgs/listaOfertas.png" class="w-[18px] h-[24px] mr-2">
-            Voice messages anywhere
-          </li>
-        </ul>
-        <div class="bg-[#323232] rounded-xl w-[70%] h-[34px] mx-auto flex items-center justify-center mt-10">
-          <a href="#" class="font-semibold text-white">Pagar</a>
-        </div>
-      </div>
-    </div>
 
   </div>
 </main>
 <footer>
 
 </footer>
+
+<script src="https://cdn.jsdelivr.net/npm/tw-elements/dist/js/tw-elements.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+
+<script>
+const words = ["o)))", "¡Suscríbete a Sunn, tu comunidad de noticias!"];
+let i = 0;
+let j = 0;
+let currentWord = "";
+let isDeleting = false;
+
+function type() {
+  currentWord = words[i];
+  if (isDeleting) {
+    document.getElementById("typewriter").textContent = currentWord.substring(0, j-1);
+    j--;
+    if (j == 0) {
+      isDeleting = false;
+      i++;
+      if (i == words.length) {
+        i = 0;
+      }
+    }
+  } else {
+    document.getElementById("typewriter").textContent = currentWord.substring(0, j+1);
+    j++;
+    if (j == currentWord.length) {
+      isDeleting = true;
+    }
+  }
+  setTimeout(type, 100);
+}
+
+type();
+</script>
 </body>
 </html>
