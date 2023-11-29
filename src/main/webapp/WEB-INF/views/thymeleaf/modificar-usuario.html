@@ -15,13 +15,81 @@
 </head>
 
 <body class="bg-black">
+<!-- Main navigation container -->
+<nav style="background-color: black" class="flex-no-wrap relative flex w-full items-center justify-between bg-[#FBFBFB] py-2 shadow-md shadow-black/5 dark:bg-black dark:shadow-black/10 lg:flex-wrap lg:justify-start lg:py-4">
 
+    <div class="flex w-full flex-wrap items-center justify-between px-3">
+        <!-- Logo -->
+        <a class="mb-4 ml-1  mt-3 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 dark:text-neutral-200 dark:hover:text-neutral-400 dark:focus:text-neutral-400 lg:mb-0 lg:mt-0"
+           th:href="@{/home}">
+            <img src="https://www.metal-archives.com/images/6/1/2/612_logo.jpg?5737" style="height: 15px"
+                 alt="TE Logo" loading="lazy" />
+        </a>
+
+        <!-- Right elements -->
+        <div class="relative flex items-center">
+
+            <div class="relative">
+                <a class="mr-4 flex items-center" th:href="@{/notificaciones}" style="color:white">
+                    <span class="[&>svg]:w-5">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="h-5 w-5">
+                                <path fill-rule="evenodd"
+                                      d="M5.25 9a6.75 6.75 0 0113.5 0v.75c0 2.123.8 4.057 2.118 5.52a.75.75 0 01-.297 1.206c-1.544.57-3.16.99-4.831 1.243a3.75 3.75 0 11-7.48 0 24.585 24.585 0 01-4.831-1.244.75.75 0 01-.298-1.205A8.217 8.217 0 005.25 9.75V9zm4.502 8.9a2.25 2.25 0 104.496 0 25.057 25.057 0 01-4.496 0z"
+                                      clip-rule="evenodd" />
+                            </svg>
+                    </span>
+                    <span id="cantidadNotificaciones" class="absolute -mt-4 ml-2.5 rounded-full bg-danger px-[0.35em] py-[0.15em] text-[0.6rem] font-bold leading-none text-white"
+                          th:text="${notificaciones}"></span>
+                </a>
+            </div>
+
+            <!-- Second dropdown container -->
+            <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
+                <!-- Second dropdown trigger -->
+                <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
+                   href="" id="dropdownMenuButton2" role="button" data-te-dropdown-toggle-ref
+                   aria-expanded="false">
+                    <!-- User avatar -->
+                    <img th:src="@{${usuario.fotoPerfil}}" class="rounded-full"
+                         style="height: 25px; width: 25px" th:alt="@{${usuario.altFotoPerfil}}" loading="lazy" />
+                </a>
+                <!-- Second dropdown menu -->
+                <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
+                    aria-labelledby="dropdownMenuButton2" data-te-dropdown-menu-ref>
+                    <!-- Second dropdown menu items -->
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/perfil}" data-te-dropdown-item-ref>Ver Perfil</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/siguiendo}" data-te-dropdown-item-ref>Siguiendo</a>
+                    </li>
+
+                    <li>
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/listaReproduccion}" data-te-dropdown-item-ref>Ver lista de reproducción</a>
+                    </li>
+
+                    <li class="bg-danger">
+                        <a class="block w-full whitespace-nowrap bg-transparent px-4 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-200 dark:hover:bg-white/30"
+                           th:href="@{/cerrar-sesion}" data-te-dropdown-item-ref>Cerrar Sesion</a>
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+
+    </div>
+
+</nav>
 <main class=" container m-auto">
 
-    <h1 class="mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white text-center">
+    <h1 class="my-8 text-4xl font-extrabold leading-none tracking-tight text-white md:text-5xl lg:text-6xl dark:text-white text-center">
         Modificar datos del usuario</h1>
 
-    <section class="mt-10">
+    <section class="mt-10 ">
 
         <form th:action="@{/perfil/modificar}" method="POST" th:object="${usuario}" enctype="multipart/form-data">
 
@@ -33,70 +101,69 @@
                     <input type="hidden" th:field="*{fotoPerfil}">
                     <input type="hidden" th:field="*{altFotoPerfil}">
 
-                    <div class="w-[80%] mx-auto">
-                        <label class="text-white text-2xl">Nombre:</label>
-                        <input type="text" th:field="*{nombre}"
-                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
-                               placeholder="Nombre">
-                    </div>
-
-                    <div class="w-[80%] mx-auto mt-4">
-                        <label class="text-white text-2xl">Apellido:</label>
-                        <input type="text" th:field="*{apellido}"
-                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
-                               placeholder="Apellido">
-                    </div>
-
-
-                    <div class="w-[80%] mx-auto mt-4">
-                        <label class="text-white text-2xl">Email:</label>
-                        <input type="email" th:field="*{email}"
-                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
-                               placeholder="Email">
-                    </div>
-
-                    <div class="w-[80%] mx-auto mt-4">
-                        <label class="text-white text-2xl">Contraseña:</label>
-                        <input type="password" th:field="*{password}"
-                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
-                               placeholder="Contraseña">
-                    </div>
-
-                    <div class="w-[80%] mx-auto mt-4">
-                        <label class="text-white text-2xl">Pais:</label>
-                        <input type="text" th:field="*{pais}"
-                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
-                               placeholder="Pais">
-                    </div>
-                    <div class="w-[80%] mx-auto mt-4">
-                        <label class="text-white text-2xl">Ciudad:</label>
-                        <input type="text" th:field="*{ciudad}"
-                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
-                               placeholder="Ciudad">
-                    </div>
-                    <div class="w-[80%] mx-auto mt-4">
-                        <label class="text-white text-2xl">Fecha de nacimiento:</label>
-                        <input type="date" th:field="*{fechaDeNacimiento}"
-                               class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black">
-                    </div>
-
-                    <div class="w-[80%] mx-auto mt-4">
-
-                        <div class="w-[60%] mb-4">
-                            <p class="text-white text-2xl">Foto de perfil actual:</p>
-                            <img class="mt-4 border border-white border-1" th:src="@{*{fotoPerfil}}" th:alt="*{altFotoPerfil}">
+                        <div class="w-[80%] mx-auto">
+                            <label class="text-white text-2xl">Nombre:</label>
+                            <input type="text" th:field="*{nombre}"
+                                   class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                                   placeholder="Nombre">
                         </div>
 
-                        <label class="text-white text-2xl" for="imagenFile">¿Desea cambiar su foto de perfil?</label>
-                        <br>
-                        <input name="imagenFile" type="file" id="imagenFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black">
-                    </div>
+                        <div class="w-[80%] mx-auto mt-4">
+                            <label class="text-white text-2xl">Apellido:</label>
+                            <input type="text" th:field="*{apellido}"
+                                   class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                                   placeholder="Apellido">
+                        </div>
 
-                    <div class="w-[80%] mx-auto">
-                        <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto text-white"
+
+                        <div class="w-[80%] mx-auto mt-4">
+                            <label class="text-white text-2xl">Email:</label>
+                            <input type="email" th:field="*{email}"
+                                   class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                                   placeholder="Email">
+                        </div>
+
+                        <div class="w-[80%] mx-auto mt-4">
+                            <label class="text-white text-2xl">Contraseña:</label>
+                            <input type="password" th:field="*{password}"
+                                   class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                                   placeholder="Contraseña">
+                        </div>
+
+                        <div class="w-[80%] mx-auto mt-4">
+                            <label class="text-white text-2xl">Pais:</label>
+                            <input type="text" th:field="*{pais}"
+                                   class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                                   placeholder="Pais">
+                        </div>
+                        <div class="w-[80%] mx-auto mt-4">
+                            <label class="text-white text-2xl">Ciudad:</label>
+                            <input type="text" th:field="*{ciudad}"
+                                   class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black"
+                                   placeholder="Ciudad">
+                        </div>
+                        <div class="w-[80%] mx-auto mt-4">
+                            <label class="text-white text-2xl">Fecha de nacimiento:</label>
+                            <input type="date" th:field="*{fechaDeNacimiento}"
+                                   class="mt-2 w-[100%] h-[35px] text-white text-xl pl-2 border border-black border-b-[#444] bg-black">
+                        </div>
+
+                        <div class="w-[80%] mx-auto mt-4">
+
+                            <div class="w-[60%] mb-4">
+                                <p class="text-white text-2xl">Foto de perfil actual:</p>
+                                <img class="mt-4 border border-white border-1" th:src="@{*{fotoPerfil}}" th:alt="*{altFotoPerfil}">
+                            </div>
+
+                            <label class="text-white text-2xl" for="imagenFile">¿Desea cambiar su foto de perfil?</label>
+                            <br>
+                            <input name="imagenFile" type="file" id="imagenFile" class=" mt-2 w-[100%] h-[35px] text-white text-xl pl-2 mx-auto border border-black bg-black">
+                        </div>
+                    <div class="w-[80%] ml-14">
+                        <input type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] mx-7 rounded-2xl text-white"
                                value="Actualizar" name="modificarDatos" style="cursor: pointer">
-                        <a th:href="@{/perfil}" type="submit" class="mt-8 mb-10 lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] rounded-2xl mx-auto text-white align-content-center"
-                           style="cursor: pointer; text-align-all: center">Volver</a>
+                        <a th:href="@{/perfil}" type="submit" class="mt-8 mb-10 align-middle lg:w-[15%] w-[50%] h-[40px] text-xl bg-[#5C67DE] mx-7 rounded-2xl text-white"
+                           style="cursor: pointer; text-align: center">Volver</a>
                     </div>
 
                 </div>
