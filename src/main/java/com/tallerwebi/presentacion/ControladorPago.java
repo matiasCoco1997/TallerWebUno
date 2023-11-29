@@ -12,6 +12,7 @@ import com.mercadopago.net.MPResultsResourcesPage;
 import com.mercadopago.net.MPSearchRequest;
 import com.mercadopago.resources.payment.Payment;
 import com.mercadopago.resources.preference.Preference;
+import com.tallerwebi.dominio.entidades.Notificacion;
 import com.tallerwebi.dominio.entidades.Plan;
 import com.tallerwebi.dominio.entidades.Rol;
 import com.tallerwebi.dominio.entidades.Usuario;
@@ -57,6 +58,7 @@ public class ControladorPago {
         Usuario usuario= (Usuario) session.getAttribute("sessionUsuarioLogueado");
         List<Plan> planes = servicioPlanes.traerPlanes();
 
+
         model.put("planes", planes);
 
         if(usuario != null){
@@ -66,8 +68,11 @@ public class ControladorPago {
         }else{
             return new ModelAndView("redirect:/login");
         }
+        List<Notificacion> notificaciones = servicioUsuario.obtenerMisNotificacionesSinLeer(usuario.getIdUsuario());
 
         model.put("usuario",usuario);
+        model.put("notificaciones", notificaciones.size());
+
 
         return new ModelAndView("suscripciones", model);
     }
