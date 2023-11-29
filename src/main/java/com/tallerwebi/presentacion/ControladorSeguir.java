@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -68,50 +69,58 @@ public class ControladorSeguir {
             return ResponseEntity.badRequest().build();
         }
     }
-    @GetMapping("/siguiendo")
-    public ModelAndView mostrarLosUsuariosQueEstoySiguiendo(HttpSession session) {
+    @GetMapping("/siguiendo/{idUsuarioSeguidor}")
+    public ModelAndView mostrarLosUsuariosQueEstoySiguiendo(@PathVariable Long idUsuarioSeguidor) {
 
-        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
+        try {
 
-        if(usuarioLogueado == null){
+            Usuario usuarioSeguidor = servicioUsuario.obtenerUsuarioPorId(idUsuarioSeguidor);
+
+            ModelMap model = new ModelMap();
+            List<Usuario> usuariosSugeridos = servicioUsuario.listarUsuarioseguidos(usuarioSeguidor.getIdUsuario());
+
+            List<Notificacion> notificaciones= servicioHome.obtenerMisNotificacionesSinLeer(usuarioSeguidor.getIdUsuario());
+
+            if (usuariosSugeridos.isEmpty()) {
+                model.put("error", "No estás siguiendo a ningún usuario.");
+            }
+
+            model.put("notificaciones", notificaciones.size());
+            model.put("pagina", "Siguiendo");
+            model.put("seguidos", usuariosSugeridos);
+            model.put("usuario", usuarioSeguidor);
+            return new ModelAndView("siguiendo-seguidores",model);
+
+        } catch (Exception e) {
             return new ModelAndView("redirect:/login");
         }
 
-        ModelMap model = new ModelMap();
-        List<Usuario> usuariosSugeridos = servicioUsuario.listarUsuarioseguidos(usuarioLogueado.getIdUsuario());
-        
-        List<Notificacion> notificaciones= servicioHome.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
-
-        if (usuariosSugeridos.isEmpty()) {
-            model.put("error", "No estás siguiendo a ningún usuario.");
-        }
-
-        model.put("notificaciones", notificaciones.size());
-        model.put("pagina", "Siguiendo");
-        model.put("seguidos", usuariosSugeridos);
-        model.put("usuario", usuarioLogueado);
-        return new ModelAndView("siguiendo-seguidores",model);
     }
-    @GetMapping("/seguidores")
-    public ModelAndView mostrarLosUsuariosQueMeSiguen(HttpSession session) {
-        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
-        if(usuarioLogueado == null){
+    @GetMapping("/seguidores/{idUsuarioSeguido}")
+    public ModelAndView mostrarLosUsuariosQueMeSiguen(@PathVariable Long idUsuarioSeguido) {
+
+        try {
+
+            Usuario usuarioSeguido = servicioUsuario.obtenerUsuarioPorId(idUsuarioSeguido);
+            ModelMap model = new ModelMap();
+            List<Usuario> seguidores = servicioUsuario.listarUsuarioQueMeSiguen(usuarioSeguido.getIdUsuario());
+
+            List<Notificacion> notificaciones = servicioHome.obtenerMisNotificacionesSinLeer(usuarioSeguido.getIdUsuario());
+
+            if (seguidores.isEmpty()) {
+                model.put("error", "No tenes seguidores.");
+            }
+
+            model.put("notificaciones", notificaciones.size());
+            model.put("pagina", "Seguidores");
+            model.put("seguidores", seguidores);
+            model.put("usuario", usuarioSeguido);
+            return new ModelAndView("siguiendo-seguidores", model);
+
+        } catch (Exception e) {
             return new ModelAndView("redirect:/login");
         }
-        ModelMap model = new ModelMap();
-        List<Usuario> seguidores = servicioUsuario.listarUsuarioQueMeSiguen(usuarioLogueado.getIdUsuario());
 
-        List<Notificacion> notificaciones= servicioHome.obtenerMisNotificacionesSinLeer(usuarioLogueado.getIdUsuario());
-
-        if (seguidores.isEmpty()) {
-            model.put("error", "No tenes seguidores.");
-        }
-
-        model.put("notificaciones", notificaciones.size());
-        model.put("pagina", "Seguidores");
-        model.put("seguidores", seguidores);
-        model.put("usuario", usuarioLogueado);
-        return new ModelAndView("siguiendo-seguidores",model);
     }
 
 }
