@@ -63,7 +63,7 @@ public class RepositorioHomeImpl implements RepositorioHome{
     @Override
     public List<Noticia> obtenerNoticiasPorCategoria(String descripcion) {
         final Session session = sessionFactory.getCurrentSession();
-        return session.createQuery("FROM Noticia WHERE activa=true and categoria = :descripcion")
+        return session.createQuery("FROM Noticia WHERE activa=true AND categoria = :descripcion ORDER BY fechaDePublicacion DESC")
                 .setParameter("descripcion", descripcion)
                 .list();
     }
