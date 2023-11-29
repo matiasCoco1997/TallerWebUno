@@ -106,6 +106,8 @@ public class ControladorPago {
         }
         if(Objects.equals(status, "approved")){
             servicioUsuario.guardarPlan(usuario.getIdUsuario(), plan);
+            usuario.setPlan(plan);
+            session.setAttribute("sessionUsuarioLogueado", usuario);
             return new ModelAndView("redirect:/home");
         }
 
