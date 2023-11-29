@@ -17,5 +17,4 @@ public class Plan {
     private Long idPlan;
     private String descripcion;
     private Double precio;
-    private Integer cantidadUsuarioDisponibles;
 }
