@@ -98,8 +98,8 @@
             </div>
 
             <div class="flex justify-around mt-10">
-                <a href="/sunn/seguidores"><p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidores')} + ' seguidores'"> </p></a>
-                <a href="/sunn/siguiendo"><p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidos')} + ' seguidos'"> </p></a>
+                <a th:href="'/sunn/seguidores/'+${usuarioBuscado.getIdUsuario()}"><p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidores')} + ' seguidores'"> </p></a>
+                <a th:href="'/sunn/siguiendo/'+${usuarioBuscado.getIdUsuario()}"><p  class="text-white text-xl" th:text="${datosSeguidos.get('seguidos')} + ' seguidos'"> </p></a>
             </div>
         </div>
     </div>

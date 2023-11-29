@@ -146,44 +146,42 @@ public class ControladorSeguirTest {
         verify(servicioUsuarioMock, times(1)).obtenerUsuarioPorId(1L);
     }
     @Test
-    public void siEstoyLogueadoQueMeLleveALaPaginaDeSiguiendo(){
-        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(sessionMock);
+    public void siEstoyLogueadoQueMeLleveALaPaginaDeSiguiendo() throws Exception {
+        when(servicioUsuarioMock.obtenerUsuarioPorId(1L)).thenReturn(usuarioMock);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(usuarioMock.getIdUsuario());
         assertEquals("siguiendo-seguidores", model.getViewName());
         assertEquals("Usuario", model.getModel().get("usuario").getClass().getSimpleName());
     }
     @Test
     public void siNoEstoyLogueadoNoPuedoVerLosUsuariosQueEstoySiguiendoyMeLlelvaAlLogin(){
-        when(sessionMock.getAttribute(anyString())).thenReturn(null);
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(sessionMock);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(usuarioMock.getIdUsuario());
         assertEquals("redirect:/login", model.getViewName());
     }
     @Test
-    public void siLaListaDeSeguidosEstaVaciaEnviaUnMensajeConErrorALaVistaDeSeguiendo(){
-        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+    public void siLaListaDeSeguidosEstaVaciaEnviaUnMensajeConErrorALaVistaDeSeguiendo() throws Exception {
+        when(servicioUsuarioMock.obtenerUsuarioPorId(1L)).thenReturn(usuarioMock);
         when(servicioUsuarioMock.listarUsuarioseguidos(anyLong())).thenReturn(new ArrayList<Usuario>());
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(sessionMock);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueEstoySiguiendo(usuarioMock.getIdUsuario());
         assertEquals("siguiendo-seguidores", model.getViewName());
         assertEquals("No estás siguiendo a ningún usuario.",model.getModel().get("error"));
     }
     @Test
-    public void siQuieroVerMisSeguidoresMeEnviaALaVistaConLaListaDeSeguidores(){
-        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(sessionMock);
+    public void siQuieroVerMisSeguidoresMeEnviaALaVistaConLaListaDeSeguidores() throws Exception {
+        when(servicioUsuarioMock.obtenerUsuarioPorId(1L)).thenReturn(usuarioMock);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(usuarioMock.getIdUsuario());
         assertEquals("siguiendo-seguidores", model.getViewName());
     }
 
     @Test
     public void siNoEstoyLogueadoNoPuedoVerLosUsuariosQueMeSiguenYMeLlelvaAlLogin(){
-        when(sessionMock.getAttribute(anyString())).thenReturn(null);
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(sessionMock);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(usuarioMock.getIdUsuario());
         assertEquals("redirect:/login", model.getViewName());
     }
     @Test
-    public void siLaListaDeSeguidoresEstaVaciaEnviaUnMensajeConErrorALaVistaDeSeguidores(){
-        when(sessionMock.getAttribute(anyString())).thenReturn(usuarioMock);
+    public void siLaListaDeSeguidoresEstaVaciaEnviaUnMensajeConErrorALaVistaDeSeguidores() throws Exception {
+        when(servicioUsuarioMock.obtenerUsuarioPorId(1L)).thenReturn(usuarioMock);
         when(servicioUsuarioMock.listarUsuarioQueMeSiguen(anyLong())).thenReturn(new ArrayList<Usuario>());
-        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(sessionMock);
+        ModelAndView model = controladorSeguirMock.mostrarLosUsuariosQueMeSiguen(usuarioMock.getIdUsuario());
         assertEquals("siguiendo-seguidores", model.getViewName());
         assertEquals("No tenes seguidores.",model.getModel().get("error"));
     }
