@@ -49,6 +49,8 @@ public class RepositorioNoticiaTest {
     private Noticia noticia4;
     private Noticia noticia5;
     private Noticia noticia6;
+    private Noticia noticiaBorrador1;
+    private Noticia noticiaBorrador2;
 
     @BeforeEach
     public void init(){
@@ -56,26 +58,42 @@ public class RepositorioNoticiaTest {
         noticia1.setCategoria("Deporte");
         noticia1.setTitulo("Titulo Deporte");
         noticia1.setLikes(2);
+        noticia1.setActiva(true);
 
         noticia2 = new Noticia();
         noticia2.setCategoria("Tecnología");
         noticia2.setTitulo("Titulo Tecnología");
+        noticia2.setActiva(true);
 
         noticia3 = new Noticia();
         noticia3.setCategoria("Política");
         noticia3.setTitulo("Titulo Política");
+        noticia3.setActiva(true);
 
         noticia4 = new Noticia();
         noticia4.setCategoria("Economía");
         noticia4.setTitulo("Titulo Economía");
+        noticia4.setActiva(true);
 
         noticia5 = new Noticia();
         noticia5.setCategoria("Entretenimiento");
         noticia5.setTitulo("Titulo Entretenimiento");
+        noticia5.setActiva(true);
 
         noticia6 = new Noticia();
         noticia6.setCategoria("Economía");
         noticia6.setTitulo("Titulo Economía");
+        noticia6.setActiva(true);
+
+        noticiaBorrador1 = new Noticia();
+        noticiaBorrador1.setCategoria("Entretenimiento");
+        noticiaBorrador1.setTitulo("Titulo Entretenimiento");
+        noticiaBorrador1.setActiva(false);
+
+        noticiaBorrador2 = new Noticia();
+        noticiaBorrador2.setCategoria("Economía");
+        noticiaBorrador2.setTitulo("Titulo Economía");
+        noticiaBorrador2.setActiva(false);
 
         usuario1 = new Usuario();
     }
@@ -316,4 +334,33 @@ public class RepositorioNoticiaTest {
 
         assertEquals(5, noticias.size());
     }
+  /*  @Transactional
+    @Rollback
+    @Test
+    public void ObtenerNoticiasPorCategoriaMeGustaNoTraerNoticiasEnEstadoBorrador(){
+        repositorioNoticia.guardar(noticia1);
+        repositorioNoticia.guardar(noticia2);
+        repositorioNoticia.guardar(noticiaBorrador1);
+        repositorioNoticia.guardar(noticiaBorrador2);
+
+        repositorioUsuario.guardar(usuario1);
+
+        MeGusta meGusta1 = new MeGusta();
+        meGusta1.setNoticia(noticia1);
+        meGusta1.setUsuario(usuario1);
+
+        MeGusta meGusta2 = new MeGusta();
+        meGusta2.setNoticia(noticia2);
+        meGusta2.setUsuario(usuario1);
+
+
+        repositorioLike.guardarLike(meGusta1);
+        repositorioLike.guardarLike(meGusta2);
+
+        List<String> categorias = repositorioLike.traerCategoriasLikeadasPorUnUsuario(usuario1.getIdUsuario());
+
+        List<Noticia> noticias = repositorioNoticia.obtenerNoticiasCategoria(5, categorias);
+
+        assertEquals(2, noticias.size());
+    }*/
 }
