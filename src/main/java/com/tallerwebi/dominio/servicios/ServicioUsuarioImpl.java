@@ -105,7 +105,15 @@ public class ServicioUsuarioImpl implements ServicioUsuario{
 
     @Override
     public List<Usuario> listarUsuarioParaSeguir(long idSeguidor){
-        return repositorioUsuario.listarUsuariosRecomendadosSinSeguir(idSeguidor);
+        List<Usuario> usuariosRolUsuario = new ArrayList<>();
+        List<Usuario> usuariosActivos = repositorioUsuario.listarUsuariosRecomendadosSinSeguir(idSeguidor);
+
+        for (Usuario usuario : usuariosActivos){
+            if(usuario.getRol().toString().equals("USER")){
+                usuariosRolUsuario.add(usuario);
+            }
+        }
+        return usuariosRolUsuario;
     }
 
     @Override

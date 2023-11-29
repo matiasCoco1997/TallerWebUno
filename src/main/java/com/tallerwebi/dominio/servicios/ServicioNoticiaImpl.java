@@ -227,7 +227,18 @@ public class ServicioNoticiaImpl implements ServicioNoticia {
     @Override
     public List<Noticia> obtenerNoticiasCategoria(long idUsuario, int cantidadNoticias) {
         List<String> categorias = repositorioLike.traerCategoriasLikeadasPorUnUsuario(idUsuario);
-        return repositorioNoticia.obtenerNoticiasCategoria(cantidadNoticias, categorias);
+
+        List<Noticia> noticias = repositorioNoticia.obtenerNoticiasCategoria(cantidadNoticias, categorias);
+
+        List<Noticia> noticiasCarrousel = new ArrayList<>();
+
+        for (Noticia noticia : noticias) {
+            if(noticia.getActiva()){
+                noticiasCarrousel.add(noticia);
+            }
+        }
+
+        return noticiasCarrousel;
     }
 
     @Override
