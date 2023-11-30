@@ -144,7 +144,7 @@
             </div>
             <div class="mt-2 flex">
                 <div class="mr-2">
-                    <a class="text-2xl font-bold hover:text-gray-300" href="#" th:text="${noticia.titulo}"></a>
+                    <a class="text-2xl font-bold hover:text-gray-300" th:href="'/sunn/publicacion/'+${noticia.idNoticia}" th:text="${noticia.titulo}"></a>
                     <p class="mt-2 sm:block hidden" th:text="${noticia.resumen}"></p>
                 </div>
                 <div class="imagen-noticia">
