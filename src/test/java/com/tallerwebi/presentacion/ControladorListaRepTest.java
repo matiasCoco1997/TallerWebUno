@@ -74,7 +74,7 @@ public class ControladorListaRepTest {
         when(servicioListaRepMock.obtenerListaReproduccionDelUsuarioLogueado(usuarioMock.getIdUsuario())).thenReturn(listaReproduccion);
         when(sessionMock.getAttribute("sessionUsuarioLogueado")).thenReturn(usuarioMock);
         String modelAndView= controladorListaRep.obtenerListas(sessionMock).getViewName();
-        assertThat(modelAndView,is("listasReproduccion"));
+        assertThat(modelAndView,is("playlist"));
     }
     @Test
     public void queAlListarDosListasDeReproduccionSeCargueEnElHome(){

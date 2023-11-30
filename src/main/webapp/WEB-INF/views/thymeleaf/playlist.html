@@ -92,7 +92,7 @@
     <div class="">
         <h3 class="text-white text-6xl font-bold ml-6 mb-6 md:text-center">Mis Listas de Reproducción</h3>
 
-        <div th:if="${listaReproduccion != null and listaReproduccion.size() > 0}"
+        <div id="headerPlay" th:if="${listaReproduccion != null and listaReproduccion.size() > 0}"
              th:style="'background-image: url(/sunn/' + ${listaReproduccion[0].noticia.rutaDeimagen} + ');'"
              class="relative overflow-hidden bg-cover bg-no-repeat bg-[50%] h-[600px]">
             <div
@@ -103,19 +103,19 @@
                             <a class="hidden-arrow flex items-center whitespace-nowrap transition duration-150 ease-in-out motion-reduce:transition-none"
                                href="#" role="button" data-te-dropdown-toggle-ref aria-expanded="false">
                                 <!-- User avatar -->
-                                <img class="mr-3 w-10 h-10 object-cover rounded-full"
+                                <img id="img-usuario-noticia" class="mr-3 w-10 h-10 object-cover rounded-full"
                                      th:src="'/sunn'+${listaReproduccion[0].noticia.usuario.fotoPerfil}"
                                      alt="foto de messi.jpeg">
-                                <span class="font-bold" th:text="${listaReproduccion[0].noticia.usuario.nombre}"></span>
-                                <span th:text="${listaReproduccion[0].noticia.fechaDePublicacion}" class="ml-4"></span>
+                                <span id="nombre-usuario-noticia" class="font-bold" th:text="${listaReproduccion[0].noticia.usuario.nombre}"></span>
+                                <span id="fecha-publicacion-noticia" th:text="${listaReproduccion[0].noticia.fechaDePublicacion}" class="ml-4"></span>
                             </a>
                         </div>
 
-                        <h1 th:text="${listaReproduccion[0].noticia.titulo}"
+                        <h1 id="titulo-noticia-headerPlay" th:text="${listaReproduccion[0].noticia.titulo}"
                             class="mt-6 mb-10 text-3xl lg:text-5xl xl:text-5xl font-bold text-left">
                         </h1>
 
-                        <p th:text="${listaReproduccion[0].noticia.resumen}" class="mt-3 xl:mb-16 text-xl text-left">
+                        <p id="resumen-noticia-headerPlay" th:text="${listaReproduccion[0].noticia.resumen}" class="mt-3 xl:mb-16 text-xl text-left">
                         </p>
 
                     </div>
@@ -128,21 +128,21 @@
                                     <path d="M267.5 440.6c9.5 7.9 22.8 9.7 34.1 4.4s18.4-16.6 18.4-29V96c0-12.4-7.2-23.7-18.4-29s-24.5-3.6-34.1 4.4l-192 160L64 241V96c0-17.7-14.3-32-32-32S0 78.3 0 96V416c0 17.7 14.3 32 32 32s32-14.3 32-32V271l11.5 9.6 192 160z"/>
                                 </svg>
                             </button>
-                            <button class="btnReproducirPausa m-10" onclick="wavesurfer.playPause()">
+                            <button class="btnReproducirPausa m-10 md:my-4" >
                                 <svg xmlns="http://www.w3.org/2000/svg" height="10em" viewBox="0 0 512 512">
                                     <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                     <style>svg{fill:#ffffff}</style>
                                     <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
                                 </svg>
                             </button>
-                            <button class="btnReproducirPausa m-10" onclick="wavesurfer.playPause()" hidden>
+                            <button class="btnReproducirPausa m-10 md:my-4" hidden>
                                 <svg xmlns="http://www.w3.org/2000/svg" height="10em" viewBox="0 0 320 512">
                                     <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                     <style>svg{fill:#ffffff}</style>
                                     <path d="M48 64C21.5 64 0 85.5 0 112V400c0 26.5 21.5 48 48 48H80c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H48zm192 0c-26.5 0-48 21.5-48 48V400c0 26.5 21.5 48 48 48h32c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48H240z"/>
                                 </svg>
                             </button>
-                            <button class="btnReproducirAnterior">
+                            <button class="btnReproducirSiguiente">
                                 <svg xmlns="http://www.w3.org/2000/svg" height="5em" viewBox="0 0 320 512">
                                     <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                     <style>svg{fill:#ffffff}</style>
@@ -156,7 +156,7 @@
                                 <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zm192-96H320c17.7 0 32 14.3 32 32V320c0 17.7-14.3 32-32 32H192c-17.7 0-32-14.3-32-32V192c0-17.7 14.3-32 32-32z"/>
                             </svg>
                         </button>
-                        <audio id="audio" th:src="'/sunn'+${listaReproduccion[0].noticia.rutaDeAudioPodcast}"></audio>
+                        <audio id="audio-noticia" th:src="'/sunn'+${listaReproduccion[0].noticia.rutaDeAudioPodcast}"></audio>
                         <div id="waveform" class="w-full h-24">
 
                         </div>
@@ -164,16 +164,16 @@
                 </div>
             </div>
         </div>
-        <div class="pb-4">
-            <div id="play-list" th:each="lista : ${listaReproduccion}" class="mx-auto">
-                <div class="flex xl:p-10 xl:px-32 py-4 px-1">
+        <div class="pb-4" id="listaReproduccion">
+            <div th:each="lista, iterStat : ${listaReproduccion}" th:id="'audio' + ${lista.noticia.idNoticia}" th:class="${iterStat.first} ? 'mx-auto bg-gray-900' : 'mx-auto'">
+                <div class="flex flex-wrap xl:p-10 xl:px-52 py-4 px-1">
                     <div class="w-16 h-16 overflow-hidden my-auto">
                         <img th:src="@{${lista.noticia.rutaDeimagen}}"
                              class="w-full h-full object-cover rounded-md">
                     </div>
 
                     <div class="w-[58%] m-auto">
-                        <p th:text="${lista.noticia.titulo}" class="text-white font-semibold text-3xl ml-6"></p>
+                        <p th:id="'titulo'+${lista.noticia.idNoticia}" th:text="${lista.noticia.titulo}" class="text-white font-semibold text-xl ml-6"></p>
                         <!--<img th:src="@{/imagenes/basura.png}" class="h-[15%] w-[7%] mt-10 ml-6">-->
                     </div>
                     <div class="text-white w-[10%] text-center my-auto">
@@ -191,7 +191,7 @@
                                 <path d="M464 256A208 208 0 1 0 48 256a208 208 0 1 0 416 0zM0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c7.6-4.2 16.8-4.1 24.3 .5l144 88c7.1 4.4 11.5 12.1 11.5 20.5s-4.4 16.1-11.5 20.5l-144 88c-7.4 4.5-16.7 4.7-24.3 .5s-12.3-12.2-12.3-20.9V168c0-8.7 4.7-16.7 12.3-20.9z"/>
                             </svg>
                         </button>
-                        <button class="removeButton" th:name="${lista.noticia.idNoticia}">
+                        <button class="removeButton"  name="eliminarNoticiaLista" th:value="${lista.noticia.idNoticia}">
                             <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512">
                                 <!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. -->
                                 <style>svg{fill:#ffffff}</style>
@@ -199,8 +199,9 @@
                             </svg>
                         </button>
                     </div>
+                    <hr class=" w-full mt-4">
                 </div>
-                <hr class="xl:mx-32">
+
             </div>
 
         </div>
@@ -214,79 +215,12 @@
 <!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!--<script>
-    $(document).ready(function () {
-
-        $('.playButton').on('click', function () {
-            var idAudio = "#" + $(this).attr("name");
-            var elementoAudio = $(idAudio)[0];
-
-            if (elementoAudio.paused) {
-                elementoAudio.play();
-            } else {
-                elementoAudio.pause();
-            }
-        });
-    });
-</script>-->
 
 <script src="https://unpkg.com/wavesurfer.js@7"></script>
-<script>
-$(document).ready(function () {
-    $(document).on("click", ".btnReproducirPausa", function () {
-        // Encuentra el botón que se hizo clic
-        var clickedButton = $(this);
 
-        // Oculta el botón clicado
-        clickedButton.hide();
-
-        // Muestra el siguiente botón con la misma clase o el primero si no hay uno siguiente
-        var nextButton = clickedButton.next(".btnReproducirPausa");
-        if (nextButton.length === 0) {
-            nextButton = clickedButton.siblings(".btnReproducirPausa:first");
-        }
-        nextButton.show();
-    });
-
-
-});
-
-
-
-
- // Inicializa Wavesurfer Podcast
-        const wavesurfer = WaveSurfer.create({
-            container: '#waveform',
-            waveColor: 'Gray',
-            progressColor: 'white',
-            cursorColor: 'white',
-        });
-
-        // Carga un archivo de audio
-        wavesurfer.load($("#audio").attr("src"));
-
-        wavesurfer.on('finish', function () {
-        // Muestra el primer botón y oculta el sunguno
-        $(".btnReproducirPausa").first().show();
-        $(".btnReproducirPausa").last().hide();
-        });
-
-        function reproducirAudio(audioData) {
-        var blob = new Blob([audioData], { type: "audio/wav" });
-        var audioUrl = URL.createObjectURL(blob);
-        $("#reproductor").attr("src", audioUrl);
-        $("#reproductor")[0].load();
-        $("#reproductor")[0].play();
-        }
-
-
-
-
-</script>
 <script th:src="@{/js/duracionAudios.js}"></script>
-
-
 <script th:src="@{/js/likearNoticia.js}"></script>
 <script th:src="@{/js/playList.js}"></script>
+<!--<script th:src="@{/js/eliminarNoticiaListaReproduccion.js}"></script>-->
 </body>
 </html>

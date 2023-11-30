@@ -334,33 +334,4 @@ public class RepositorioNoticiaTest {
 
         assertEquals(5, noticias.size());
     }
-  /*  @Transactional
-    @Rollback
-    @Test
-    public void ObtenerNoticiasPorCategoriaMeGustaNoTraerNoticiasEnEstadoBorrador(){
-        repositorioNoticia.guardar(noticia1);
-        repositorioNoticia.guardar(noticia2);
-        repositorioNoticia.guardar(noticiaBorrador1);
-        repositorioNoticia.guardar(noticiaBorrador2);
-
-        repositorioUsuario.guardar(usuario1);
-
-        MeGusta meGusta1 = new MeGusta();
-        meGusta1.setNoticia(noticia1);
-        meGusta1.setUsuario(usuario1);
-
-        MeGusta meGusta2 = new MeGusta();
-        meGusta2.setNoticia(noticia2);
-        meGusta2.setUsuario(usuario1);
-
-
-        repositorioLike.guardarLike(meGusta1);
-        repositorioLike.guardarLike(meGusta2);
-
-        List<String> categorias = repositorioLike.traerCategoriasLikeadasPorUnUsuario(usuario1.getIdUsuario());
-
-        List<Noticia> noticias = repositorioNoticia.obtenerNoticiasCategoria(5, categorias);
-
-        assertEquals(2, noticias.size());
-    }*/
 }
