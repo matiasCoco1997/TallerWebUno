@@ -139,7 +139,7 @@
                     Fecha de publicación: <span class="font-light" th:text="${noticia.fechaDePublicacion}"></span>
                 </p>
 
-                <div th:if="${ usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario() }">
+                <div th:if="${ usuarioBuscado.getIdUsuario() == usuarioLogueado.getIdUsuario() && usuarioLogueado.getIdUsuario() == noticia.getUsuario().getIdUsuario() }">
                     <a th:href="@{/noticia/editar/} + ${noticia.getIdNoticia()}" style="padding: 10px; background-color: blue; ">
                         Editar
                     </a>
