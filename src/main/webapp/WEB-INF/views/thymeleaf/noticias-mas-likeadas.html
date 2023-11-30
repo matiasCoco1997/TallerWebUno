@@ -33,8 +33,6 @@
 
         <!-- Right elements -->
         <div class="relative flex items-center">
-
-
             <!-- Second dropdown container -->
             <div class="relative" data-te-dropdown-ref data-te-dropdown-alignment="end">
                 <!-- Second dropdown trigger -->
@@ -43,7 +41,7 @@
                    aria-expanded="false">
                     <!-- User avatar -->
                     <img th:src="@{${usuario.getFotoPerfil()}}" th:alt="@{${usuario.getAltFotoPerfil()}}" class="rounded-full"
-                         style="height: 25px; width: 25px" alt="" loading="lazy"/>
+                         style="height: 25px; width: 25px" loading="lazy"/>
                 </a>
                 <!-- Second dropdown menu -->
                 <ul class="absolute z-[1000] float-left m-0 hidden min-w-max list-none overflow-hidden rounded-lg border-none bg-white bg-clip-padding text-left text-base shadow-lg dark:bg-neutral-700 [&[data-te-dropdown-show]]:block"
@@ -72,7 +70,6 @@
                 </ul>
             </div>
         </div>
-
     </div>
 </nav>
 
