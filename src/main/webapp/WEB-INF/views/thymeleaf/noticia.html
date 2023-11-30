@@ -178,8 +178,8 @@
                                         <img
                                                 class="mr-2 w-6 h-6 rounded-full"
                                                 th:src="'/sunn/'+${comentario.usuario.fotoPerfil}">
-                                        <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold" th:text="${usuarioNombre}"></p>
-                                        <p class="text-sm text-gray-600 dark:text-gray-400"><time th:text="${fecha}"></time></p>
+                                        <p class="inline-flex items-center mr-3 text-sm text-gray-900 dark:text-white font-semibold" th:text="${comentario.usuario.Nombre}"></p>
+                                        <p class="text-sm text-gray-600 dark:text-gray-400"><time th:text="${fechaPublicacion}"></time></p>
                                     </div>
                                     <th:block  th:if="${comentario.usuario.idUsuario} eq ${usuarioLogueado.getIdUsuario()}" >
                                         <div class="relative">
