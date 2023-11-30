@@ -70,7 +70,8 @@ public class ControladorSeguir {
         }
     }
     @GetMapping("/siguiendo/{idUsuarioSeguidor}")
-    public ModelAndView mostrarLosUsuariosQueEstoySiguiendo(@PathVariable Long idUsuarioSeguidor) {
+    public ModelAndView mostrarLosUsuariosQueEstoySiguiendo(@PathVariable Long idUsuarioSeguidor, HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
         try {
 
@@ -89,6 +90,7 @@ public class ControladorSeguir {
             model.put("pagina", "Siguiendo");
             model.put("seguidos", usuariosSugeridos);
             model.put("usuario", usuarioSeguidor);
+            model.put("usuarioLogueado", usuarioLogueado);
             return new ModelAndView("siguiendo-seguidores",model);
 
         } catch (Exception e) {
@@ -97,7 +99,8 @@ public class ControladorSeguir {
 
     }
     @GetMapping("/seguidores/{idUsuarioSeguido}")
-    public ModelAndView mostrarLosUsuariosQueMeSiguen(@PathVariable Long idUsuarioSeguido) {
+    public ModelAndView mostrarLosUsuariosQueMeSiguen(@PathVariable Long idUsuarioSeguido, HttpSession session) {
+        Usuario usuarioLogueado = (Usuario) session.getAttribute("sessionUsuarioLogueado");
 
         try {
 
@@ -115,6 +118,7 @@ public class ControladorSeguir {
             model.put("pagina", "Seguidores");
             model.put("seguidores", seguidores);
             model.put("usuario", usuarioSeguido);
+            model.put("usuarioLogueado", usuarioLogueado);
             return new ModelAndView("siguiendo-seguidores", model);
 
         } catch (Exception e) {
